@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/Doomsdayrs/novelreader-extensions.svg)](https://jitpack.io/#Doomsdayrs/novelreader-extensions)
+[![](https://jitpack.io/v/Doomsdayrs/shosetsu-extensions.svg)](https://jitpack.io/#Doomsdayrs/shosetsu-extensions)
 # novelreader-extensions
 
 Extensions to the core program
