@@ -30,6 +30,6 @@ import java.io.IOException;
 class Test {
     public static void main(String[] args) throws IOException, InterruptedException {
         Formatter formatter = new BestLightNovel(1);
-        System.out.println(formatter.parseNovel("https://bestlightnovel.com/novel_888117820"));
+        System.out.println(formatter.parseNovel("https://bestlightnovel.com/novel_888141041"));
     }
 }

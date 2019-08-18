@@ -166,27 +166,32 @@ public class BestLightNovel extends ScrapeFormat {
         }
         // Chapters
         {
-            Elements chapters = document.selectFirst("div.chapter-list").select("div.row");
-            List<NovelChapter> novelChapters = new ArrayList<>();
-            for (Element row : chapters) {
-                NovelChapter novelChapter = new NovelChapter();
-                Elements elements = row.select("span");
-                for (int x = 0; x < elements.size(); x++) {
-                    switch (x) {
-                        case 0:
-                            Element titleLink = elements.get(x).selectFirst("a");
-                            novelChapter.chapterNum = titleLink.attr("title");
-                            novelChapter.link = titleLink.attr("href");
-                            break;
-                        case 1:
-                            novelChapter.release = elements.get(x).text();
-                            break;
+            Element e = document.selectFirst("div.chapter-list");
+            if (e != null) {
+                Elements chapters = e.select("div.row");
+                List<NovelChapter> novelChapters = new ArrayList<>();
+                for (Element row : chapters) {
+                    NovelChapter novelChapter = new NovelChapter();
+                    Elements elements = row.select("span");
+                    for (int x = 0; x < elements.size(); x++) {
+                        switch (x) {
+                            case 0:
+                                Element titleLink = elements.get(x).selectFirst("a");
+                                novelChapter.chapterNum = titleLink.attr("title");
+                                novelChapter.link = titleLink.attr("href");
+                                break;
+                            case 1:
+                                novelChapter.release = elements.get(x).text();
+                                break;
+                        }
                     }
+                    novelChapters.add(novelChapter);
                 }
-                novelChapters.add(novelChapter);
+                Collections.reverse(novelChapters);
+                novelPage.novelChapters = novelChapters;
             }
-            Collections.reverse(novelChapters);
-            novelPage.novelChapters = novelChapters;
+            novelPage.novelChapters = new ArrayList<>();
+
         }
         return novelPage;
     }
