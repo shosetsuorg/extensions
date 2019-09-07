@@ -167,6 +167,8 @@ public class BestLightNovel extends ScrapeFormat {
         // Chapters
         {
             Element e = document.selectFirst("div.chapter-list");
+            novelPage.novelChapters = new ArrayList<>();
+
             if (e != null) {
                 Elements chapters = e.select("div.row");
                 List<NovelChapter> novelChapters = new ArrayList<>();
@@ -190,8 +192,6 @@ public class BestLightNovel extends ScrapeFormat {
                 Collections.reverse(novelChapters);
                 novelPage.novelChapters = novelChapters;
             }
-            novelPage.novelChapters = new ArrayList<>();
-
         }
         return novelPage;
     }
