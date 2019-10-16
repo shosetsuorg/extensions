@@ -1,8 +1,9 @@
 package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en;
 
-import com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.bestlightnovel.BestLightNovel;
+import com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.novel_full.NovelFull;
 import com.github.Doomsdayrs.api.shosetsu.services.core.dep.Formatter;
-
+import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelChapter;
+import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelPage;
 
 import java.io.IOException;
 
@@ -29,8 +30,23 @@ import java.io.IOException;
  */
 class Test {
     public static void main(String[] args) throws IOException, InterruptedException {
-        Formatter formatter = new BestLightNovel(1);
-        System.out.println(formatter.parseNovel("https://bestlightnovel.com/novel_888141072"));
+        Formatter formatter = new NovelFull(1);
+
+        NovelPage novelPage = formatter.parseNovel("http://novelfull.com/my-cold-and-elegant-ceo-wife.html");
+
+        //     ArrayList<NovelChapter> novelChapters = new ArrayList<>(novelPage.novelChapters);
+        for (int x = 1; x < novelPage.maxChapterPage; x++) {
+            if (x==39){
+                System.out.println("Check");
+            }
+
+            novelPage = formatter.parseNovel("http://novelfull.com/my-cold-and-elegant-ceo-wife.html", x);
+            //  novelChapters.addAll(novelPage.novelChapters);
+            for (NovelChapter novelChapter : novelPage.novelChapters) {
+                System.out.println(novelChapter);
+            }
+        }
+
 
     }
 }

@@ -157,13 +157,13 @@ public class NovelFull extends ScrapeFormat {
         {
             List<NovelChapter> novelChapters = new ArrayList<>();
             Elements lists = document.select("ul.list-chapter");
+            int a;
+            if (increment > 1)
+                a = (increment - 1) * 50;
+            else a = 0;
+
             for (Element list : lists) {
                 Elements chapters = list.select("li");
-                int a;
-                if (increment > 1)
-                    a = (increment - 1) * 50;
-                else a = 0;
-
                 for (Element chapter : chapters) {
                     NovelChapter novelChapter = new NovelChapter();
                     Element chapterData = chapter.selectFirst("a");
