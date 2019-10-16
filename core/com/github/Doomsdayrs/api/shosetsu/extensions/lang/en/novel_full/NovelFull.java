@@ -159,7 +159,11 @@ public class NovelFull extends ScrapeFormat {
             Elements lists = document.select("ul.list-chapter");
             for (Element list : lists) {
                 Elements chapters = list.select("li");
-                int a = 0;
+                int a;
+                if (increment > 1)
+                    a = (increment - 1) * 50;
+                else a = 0;
+
                 for (Element chapter : chapters) {
                     NovelChapter novelChapter = new NovelChapter();
                     Element chapterData = chapter.selectFirst("a");
@@ -167,8 +171,10 @@ public class NovelFull extends ScrapeFormat {
                     if (link != null)
                         novelChapter.link = baseURL + link;
 
-                    novelChapter.chapterNum = chapterData.attr("title");
-                    if (!novelChapter.chapterNum.isEmpty() && !novelChapter.link.contains("null")) {
+                    novelChapter.title = chapterData.attr("title");
+                    if (!novelChapter.title.isEmpty() && !novelChapter.link.contains("null")) {
+                        novelChapter.order = a;
+                        a++;
                         novelChapters.add(novelChapter);
                     }
                 }

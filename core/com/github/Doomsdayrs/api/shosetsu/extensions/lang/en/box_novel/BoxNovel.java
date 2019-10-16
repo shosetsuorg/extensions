@@ -107,10 +107,8 @@ public class BoxNovel extends ScrapeFormat {
                 Elements subElements;
                 switch (x) {
                     case 0:
-                        break;
-                    case 1:
-                        break;
                     case 2:
+                    case 1:
                         break;
                     case 3://AUTHORS
                         subElements = elements.get(x).select("a");
@@ -144,6 +142,7 @@ public class BoxNovel extends ScrapeFormat {
             for (int x = 0; x < elements.size(); x++) {
                 switch (x) {
                     case 0:
+                    case 2:
                         break;
                     case 1:
                         String stat = elements.get(x).select("div.summary-content").text();
@@ -156,8 +155,6 @@ public class BoxNovel extends ScrapeFormat {
                                 break;
                         }
                         break;
-                    case 2:
-                        break;
                 }
             }
 
@@ -167,11 +164,14 @@ public class BoxNovel extends ScrapeFormat {
         {
             novelPage.novelChapters = new ArrayList<>();
             Elements elements = document.select("li.wp-manga-chapter");
+            int a = 0;
             for (Element element : elements) {
                 NovelChapter novelChapter = new NovelChapter();
                 novelChapter.link = element.selectFirst("a").attr("href");
-                novelChapter.chapterNum = element.selectFirst("a").text();
+                novelChapter.title = element.selectFirst("a").text();
                 novelChapter.release = element.selectFirst("i").text();
+                novelChapter.order = a;
+                a++;
                 novelPage.novelChapters.add(novelChapter);
             }
             Collections.reverse(novelPage.novelChapters);

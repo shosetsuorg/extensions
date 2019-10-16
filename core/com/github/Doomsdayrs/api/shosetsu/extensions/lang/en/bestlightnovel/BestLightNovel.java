@@ -172,6 +172,7 @@ public class BestLightNovel extends ScrapeFormat {
             if (e != null) {
                 Elements chapters = e.select("div.row");
                 List<NovelChapter> novelChapters = new ArrayList<>();
+                int y = 0;
                 for (Element row : chapters) {
                     NovelChapter novelChapter = new NovelChapter();
                     Elements elements = row.select("span");
@@ -179,7 +180,7 @@ public class BestLightNovel extends ScrapeFormat {
                         switch (x) {
                             case 0:
                                 Element titleLink = elements.get(x).selectFirst("a");
-                                novelChapter.chapterNum = titleLink.attr("title");
+                                novelChapter.title = titleLink.attr("title");
                                 novelChapter.link = titleLink.attr("href");
                                 break;
                             case 1:
@@ -187,6 +188,8 @@ public class BestLightNovel extends ScrapeFormat {
                                 break;
                         }
                     }
+                    novelChapter.order = y;
+                    y++;
                     novelChapters.add(novelChapter);
                 }
                 Collections.reverse(novelChapters);

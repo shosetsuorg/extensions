@@ -1,7 +1,10 @@
 package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.syosetu;
 
 import com.github.Doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.*;
+import com.github.Doomsdayrs.api.shosetsu.services.core.objects.Novel;
+import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelChapter;
+import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelGenre;
+import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelPage;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.jsoup.nodes.Document;
@@ -130,11 +133,14 @@ public class Syosetu extends ScrapeFormat {
         {
             List<NovelChapter> novelChapters = new ArrayList<>();
             Elements elements = document.select("dl.novel_sublist2");
+            int x = 0;
             for (Element element : elements) {
                 NovelChapter novelChapter = new NovelChapter();
-                novelChapter.chapterNum = element.selectFirst("a").text();
+                novelChapter.title = element.selectFirst("a").text();
                 novelChapter.link = passageURL + element.selectFirst("a").attr("href");
                 novelChapter.release = element.selectFirst("dt.long_update").text();
+                novelChapter.order = x;
+                x++;
                 novelChapters.add(novelChapter);
             }
             novelPage.novelChapters = novelChapters;
