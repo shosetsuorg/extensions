@@ -164,14 +164,14 @@ public class BoxNovel extends ScrapeFormat {
         {
             novelPage.novelChapters = new ArrayList<>();
             Elements elements = document.select("li.wp-manga-chapter");
-            int a = 0;
+            int a = elements.size();
             for (Element element : elements) {
                 NovelChapter novelChapter = new NovelChapter();
                 novelChapter.link = element.selectFirst("a").attr("href");
                 novelChapter.title = element.selectFirst("a").text();
                 novelChapter.release = element.selectFirst("i").text();
                 novelChapter.order = a;
-                a++;
+                a--;
                 novelPage.novelChapters.add(novelChapter);
             }
             Collections.reverse(novelPage.novelChapters);
