@@ -40,20 +40,20 @@ public class Syosetu extends ScrapeFormat {
     private final String baseURL = "https://yomou.syosetu.com";
     private final String passageURL = "https://ncode.syosetu.com";
 
-    public Syosetu(int id) {
-        super(id);
+    public Syosetu() {
+        super(3);
     }
 
-    public Syosetu(int id, Request.Builder builder) {
-        super(id, builder);
+    public Syosetu(Request.Builder builder) {
+        super(3, builder);
     }
 
-    public Syosetu(int id, OkHttpClient client) {
-        super(id, client);
+    public Syosetu(OkHttpClient client) {
+        super(3, client);
     }
 
-    public Syosetu(int id, Request.Builder builder, OkHttpClient client) {
-        super(id, builder, client);
+    public Syosetu(Request.Builder builder, OkHttpClient client) {
+        super(3, builder, client);
     }
 
 
@@ -68,9 +68,15 @@ public class Syosetu extends ScrapeFormat {
     }
 
     @Override
-    public String getNovelPassage(String s) throws IOException {
-        s = verify(passageURL, s);
-        Document document = docFromURL(s);
+    public String getLatestURL(int i) {
+        if (i == 0)
+            i = 1;
+        return baseURL + "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" + i;
+    }
+
+
+    @Override
+    public String getNovelPassage(Document document) {
         Elements elements = document.select("div");
         boolean found = false;
         for (int x = 0; x < elements.size() && !found; x++)
@@ -103,10 +109,8 @@ public class Syosetu extends ScrapeFormat {
      * NOVELCHAPTERS: YES
      */
     @Override
-    public NovelPage parseNovel(String s) throws IOException {
+    public NovelPage parseNovel(Document document) {
         NovelPage novelPage = new NovelPage();
-        s = verify(passageURL, s);
-        Document document = docFromURL(s);
         novelPage.authors = new String[]{document.selectFirst("div.novel_writername").text().replace("作者：", "")};
         novelPage.title = document.selectFirst("p.novel_title").text();
         // Description
@@ -148,24 +152,14 @@ public class Syosetu extends ScrapeFormat {
         return novelPage;
     }
 
-    @Deprecated
     @Override
-    public NovelPage parseNovel(String s, int i) throws IOException {
-        return parseNovel(s);
+    public String novelPageCombiner(String s, int i) {
+        return null;
     }
 
     @Override
-    public String getLatestURL(int i) {
-        if (i == 0)
-            i = 1;
-        return baseURL + "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" + i;
-    }
-
-    @Override
-    public List<Novel> parseLatest(String s) throws IOException {
-        s = verify(baseURL, s);
+    public List<Novel> parseLatest(Document document) {
         List<Novel> novels = new ArrayList<>();
-        Document document = docFromURL(s);
         Elements elements = document.select("div.searchkekka_box");
         for (Element element : elements) {
             Novel novel = new Novel();
@@ -181,12 +175,21 @@ public class Syosetu extends ScrapeFormat {
     }
 
     @Override
-    public List<Novel> search(String s) throws IOException {
+    public NovelPage parseNovel(Document document, int i) {
+        return parseNovel(document);
+    }
+
+    @Override
+    public String getSearchString(String s) {
         s = s.replaceAll("\\+", "%2");
         s = s.replaceAll(" ", "\\+");
         s = baseURL + "/search.php?&word=" + s;
+        return s;
+    }
+
+    @Override
+    public List<Novel> parseSearch(Document document) {
         List<Novel> novels = new ArrayList<>();
-        Document document = docFromURL(s);
         Elements elements = document.select("div.searchkekka_box");
         for (Element element : elements) {
             Novel novel = new Novel();
@@ -199,6 +202,37 @@ public class Syosetu extends ScrapeFormat {
             novels.add(novel);
         }
         return novels;
+    }
+
+
+
+
+
+    @Deprecated
+    public String getNovelPassage(String s) throws IOException {
+        return null;
+    }
+
+
+    @Deprecated
+    public NovelPage parseNovel(String s) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public NovelPage parseNovel(String s, int i) throws IOException {
+        return null;
+    }
+
+
+    @Deprecated
+    public List<Novel> parseLatest(String s) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public List<Novel> search(String s) throws IOException {
+        return null;
     }
 
     @Override

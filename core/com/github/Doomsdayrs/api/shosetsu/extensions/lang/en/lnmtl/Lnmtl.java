@@ -65,6 +65,40 @@ public class Lnmtl extends ScrapeFormat {
         return null;
     }
 
+    @Override
+    public String getNovelPassage(Document document) {
+        return null;
+    }
+
+    @Override
+    public NovelPage parseNovel(Document document) {
+        return null;
+    }
+
+    @Override
+    public String novelPageCombiner(String s, int i) {
+        return null;
+    }
+
+    @Override
+    public List<Novel> parseLatest(Document document) {
+        return null;
+    }
+
+    @Override
+    public NovelPage parseNovel(Document document, int i) {
+        return null;
+    }
+
+    @Override
+    public String getSearchString(String s) {
+        return null;
+    }
+
+    @Override
+    public List<Novel> parseSearch(Document document) {
+        return null;
+    }
 
 
     @Override

@@ -34,24 +34,23 @@ import java.util.List;
  *
  * @author github.com/doomsdayrs
  */
-//TODO
 public class BoxNovel extends ScrapeFormat {
     private final String baseURL = "https://boxnovel.com";
 
-    public BoxNovel(int id) {
-        super(id);
+    public BoxNovel() {
+        super(2);
     }
 
-    public BoxNovel(int id, Request.Builder builder) {
-        super(id, builder);
+    public BoxNovel( Request.Builder builder) {
+        super(2, builder);
     }
 
-    public BoxNovel(int id, OkHttpClient client) {
-        super(id, client);
+    public BoxNovel(OkHttpClient client) {
+        super(2, client);
     }
 
-    public BoxNovel(int id, Request.Builder builder, OkHttpClient client) {
-        super(id, builder, client);
+    public BoxNovel( Request.Builder builder, OkHttpClient client) {
+        super(2, builder, client);
     }
 
     @Override
@@ -183,6 +182,11 @@ public class BoxNovel extends ScrapeFormat {
     }
 
     @Override
+    public NovelPage parseNovel(Document document, int i) {
+        return parseNovel(document);
+    }
+
+    @Override
     public String novelPageCombiner(String s, int i) {
         return null;
     }
@@ -201,6 +205,8 @@ public class BoxNovel extends ScrapeFormat {
         }
         return novels;
     }
+
+
 
     @Override
     public String getSearchString(String s) {

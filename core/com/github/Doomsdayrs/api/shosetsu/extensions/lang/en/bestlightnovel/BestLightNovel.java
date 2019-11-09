@@ -37,20 +37,20 @@ import java.util.List;
 public class BestLightNovel extends ScrapeFormat {
     private final String baseURL = "https://bestlightnovel.com";
 
-    public BestLightNovel(int id) {
-        super(id);
+    public BestLightNovel() {
+        super(5);
     }
 
-    public BestLightNovel(int id, Request.Builder builder) {
-        super(id, builder);
+    public BestLightNovel(Request.Builder builder) {
+        super(5, builder);
     }
 
-    public BestLightNovel(int id, OkHttpClient client) {
-        super(id, client);
+    public BestLightNovel(OkHttpClient client) {
+        super(5, client);
     }
 
-    public BestLightNovel(int id, Request.Builder builder, OkHttpClient client) {
-        super(id, builder, client);
+    public BestLightNovel(Request.Builder builder, OkHttpClient client) {
+        super(5, builder, client);
     }
 
     @Override
@@ -64,9 +64,15 @@ public class BestLightNovel extends ScrapeFormat {
     }
 
     @Override
-    public String getNovelPassage(String s) throws IOException {
-        s = verify(baseURL, s);
-        Document document = docFromURL(s);
+    public String getLatestURL(int i) {
+        if (i <= 0)
+            i = 1;
+        return baseURL + "/novel_list?type=latest&category=all&state=all&page=" + i;
+    }
+
+
+    @Override
+    public String getNovelPassage(Document document) {
         Elements elements = document.selectFirst("div.vung_doc").select("p");
         StringBuilder stringBuilder = new StringBuilder();
         if (elements.size() != 0) {
@@ -89,10 +95,9 @@ public class BestLightNovel extends ScrapeFormat {
      * MAXCHAPTERPAGE: NO
      * NOVELCHAPTERS: YES
      */
+
     @Override
-    public NovelPage parseNovel(String s) throws IOException {
-        s = verify(baseURL, s);
-        Document document = docFromURL(s);
+    public NovelPage parseNovel(Document document) {
         NovelPage novelPage = new NovelPage();
         // Image
         {
@@ -200,21 +205,12 @@ public class BestLightNovel extends ScrapeFormat {
     }
 
     @Override
-    public NovelPage parseNovel(String s, int i) throws IOException {
-        return parseNovel(s);
+    public String novelPageCombiner(String s, int i) {
+        return null;
     }
 
     @Override
-    public String getLatestURL(int i) {
-        if (i <= 0)
-            i = 1;
-        return baseURL + "/novel_list?type=latest&category=all&state=all&page=" + i;
-    }
-
-    @Override
-    public List<Novel> parseLatest(String s) throws IOException {
-        s = verify(baseURL, s);
-        Document document = docFromURL(s);
+    public List<Novel> parseLatest(Document document) {
         List<Novel> novels = new ArrayList<>();
         Elements elements = document.select("div.update_item.list_category");
         for (Element element : elements) {
@@ -231,11 +227,20 @@ public class BestLightNovel extends ScrapeFormat {
     }
 
     @Override
-    public List<Novel> search(String s) throws IOException {
+    public NovelPage parseNovel(Document document, int i) {
+        return parseNovel(document);
+    }
+
+    @Override
+    public String getSearchString(String s) {
         s = s.replaceAll(" ", "_");
         s = baseURL + "/search_novels/" + s;
+        return s;
+    }
+
+    @Override
+    public List<Novel> parseSearch(Document document) {
         List<Novel> novels = new ArrayList<>();
-        Document document = docFromURL(s);
         Elements elements = document.select("div.update_item.list_category");
         for (Element element : elements) {
             Novel novel = new Novel();
@@ -247,8 +252,30 @@ public class BestLightNovel extends ScrapeFormat {
             novel.imageURL = element.selectFirst("img").attr("src");
             novels.add(novel);
         }
-
         return novels;
+    }
+
+
+    @Deprecated
+    public String getNovelPassage(String s) throws IOException {
+        return null;
+    }
+    @Deprecated
+    public NovelPage parseNovel(String s) throws IOException {
+        return null;
+    }
+    @Deprecated
+    public NovelPage parseNovel(String s, int i) throws IOException {
+        return null;
+    }
+    @Deprecated
+    public List<Novel> parseLatest(String s) throws IOException {
+        return null;
+
+    }
+    @Deprecated
+    public List<Novel> search(String s) throws IOException {
+        return null;
     }
 
     @Override

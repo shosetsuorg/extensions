@@ -36,23 +36,23 @@ import java.util.List;
 public class NovelFull extends ScrapeFormat {
     private final String baseURL = "http://novelfull.com";
 
-    public NovelFull(int id) {
-        super(id);
+    public NovelFull() {
+        super(1);
         super.isIncrementingChapterList(true);
     }
 
-    public NovelFull(int id, Request.Builder builder) {
-        super(id, builder);
+    public NovelFull(Request.Builder builder) {
+        super(1, builder);
         super.isIncrementingChapterList(true);
     }
 
-    public NovelFull(int id, OkHttpClient client) {
-        super(id, client);
+    public NovelFull(OkHttpClient client) {
+        super(1, client);
         super.isIncrementingChapterList(true);
     }
 
-    public NovelFull(int id, Request.Builder builder, OkHttpClient client) {
-        super(id, builder, client);
+    public NovelFull(Request.Builder builder, OkHttpClient client) {
+        super(1, builder, client);
         super.isIncrementingChapterList(true);
     }
 
@@ -105,43 +105,6 @@ public class NovelFull extends ScrapeFormat {
         return stringBuilder.toString();
     }
 
-    @Override
-    public NovelPage parseNovel(Document document) {
-        return null;
-    }
-
-    @Override
-    public String novelPageCombiner(String s, int i) {
-        return null;
-    }
-
-    @Override
-    public List<Novel> parseLatest(Document document) {
-        return null;
-    }
-
-    @Override
-    public String getSearchString(String s) {
-        return null;
-    }
-
-    @Override
-    public List<Novel> parseSearch(Document document) {
-        return null;
-    }
-
-
-
-    @Deprecated
-    public String getNovelPassage(String URL) throws IOException {
-        return null;
-    }
-
-    public NovelPage parseNovel(String URL) throws IOException {
-        URL = verify(baseURL, URL);
-        return this.parseNovel(URL, 1);
-    }
-
     /**
      * TITLE:YES
      * IMAGEURL: YES
@@ -155,11 +118,13 @@ public class NovelFull extends ScrapeFormat {
      * MAXCHAPTERPAGE: YES
      * NOVELCHAPTERS: YES
      */
-    public NovelPage parseNovel(String URL, int increment) throws IOException {
-        URL = verify(baseURL, URL);
-        if (increment > 1)
-            URL = URL + "?page=" + increment;
-        Document document = docFromURL(URL);
+    @Override
+    public NovelPage parseNovel(Document document) {
+        return this.parseNovel(document, 1);
+    }
+
+    @Override
+    public NovelPage parseNovel(Document document, int i) {
         NovelPage novelPage = new NovelPage();
 
         //Sets image
@@ -172,7 +137,7 @@ public class NovelFull extends ScrapeFormat {
                 lastPageURL = baseURL + lastPageURL;
                 lastPageURL = lastPageURL.substring(lastPageURL.indexOf("?page=") + 6, lastPageURL.indexOf("&per-page="));
                 novelPage.maxChapterPage = Integer.parseInt(lastPageURL);
-            } else novelPage.maxChapterPage = increment;
+            } else novelPage.maxChapterPage = i;
         }
         // Sets description
         {
@@ -193,8 +158,8 @@ public class NovelFull extends ScrapeFormat {
             List<NovelChapter> novelChapters = new ArrayList<>();
             Elements lists = document.select("ul.list-chapter");
             int a;
-            if (increment > 1)
-                a = (increment - 1) * 50;
+            if (i > 1)
+                a = (i - 1) * 50;
             else a = 0;
 
             for (Element list : lists) {
@@ -263,11 +228,17 @@ public class NovelFull extends ScrapeFormat {
         return novelPage;
     }
 
+    @Override
+    public String novelPageCombiner(String s, int i) {
+        s = verify(baseURL, s);
+        if (i > 1)
+            s = s + "?page=" + i;
+        return s;
+    }
 
-    public List<Novel> parseLatest(String URL) throws IOException {
-        URL = verify(baseURL, URL);
+    @Override
+    public List<Novel> parseLatest(Document document) {
         List<Novel> novels = new ArrayList<>();
-        Document document = docFromURL(URL);
         Elements divMAIN = document.select("div.container");
         for (Element element : divMAIN) {
             if (element.id().equals("list-page")) {
@@ -288,9 +259,13 @@ public class NovelFull extends ScrapeFormat {
     }
 
     @Override
-    public List<Novel> search(String query) throws IOException {
+    public String getSearchString(String s) {
+        return baseURL + "/search?keyword=" + s.replaceAll(" ", "%20");
+    }
+
+    @Override
+    public List<Novel> parseSearch(Document document) {
         List<Novel> novels = new ArrayList<>();
-        Document document = docFromURL(baseURL + "/search?keyword=" + query.replaceAll(" ", "%20"));
         Elements listP = document.select("div.container");
         for (Element list : listP)
             if (list.id().equals("list-page")) {
@@ -306,7 +281,30 @@ public class NovelFull extends ScrapeFormat {
     }
 
 
+    @Deprecated
+    public String getNovelPassage(String URL) throws IOException {
+        return null;
+    }
 
+    @Deprecated
+    public NovelPage parseNovel(String URL) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public NovelPage parseNovel(String URL, int increment) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public List<Novel> parseLatest(String URL) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public List<Novel> search(String query) throws IOException {
+        return null;
+    }
 
 
     @Override
