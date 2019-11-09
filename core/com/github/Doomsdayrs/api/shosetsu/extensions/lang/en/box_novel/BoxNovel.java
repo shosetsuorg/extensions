@@ -65,9 +65,8 @@ public class BoxNovel extends ScrapeFormat {
     }
 
     @Override
-    public String getNovelPassage(String s) throws IOException {
-        s = verify(baseURL, s);
-        Elements paragraphs = docFromURL(s).select("div.text-left").select("p");
+    public String getNovelPassage(Document document) {
+        Elements paragraphs = document.select("div.text-left").select("p");
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Element element : paragraphs)
@@ -78,6 +77,12 @@ public class BoxNovel extends ScrapeFormat {
                 .replaceAll("<p>", "")
                 .replaceAll("</p>", "");
     }
+
+    @Override
+    public String getLatestURL(int i) {
+        return baseURL + "/novel/page/" + i + "/?m_orderby=latest";
+    }
+
 
     /**
      * TITLE:YES
@@ -93,10 +98,8 @@ public class BoxNovel extends ScrapeFormat {
      * NOVELCHAPTERS: YES
      */
     @Override
-    public NovelPage parseNovel(String s) throws IOException {
-        s = verify(baseURL, s);
+    public NovelPage parseNovel(Document document) {
         NovelPage novelPage = new NovelPage();
-        Document document = docFromURL(s);
         novelPage.imageURL = document.selectFirst("div.summary_image").selectFirst("img.img-responsive").attr("src");
         novelPage.title = document.selectFirst("h3").text();
         novelPage.description = document.selectFirst("p").text();
@@ -180,20 +183,13 @@ public class BoxNovel extends ScrapeFormat {
     }
 
     @Override
-    public NovelPage parseNovel(String s, int i) throws IOException {
-        return parseNovel(s);
+    public String novelPageCombiner(String s, int i) {
+        return null;
     }
 
     @Override
-    public String getLatestURL(int i) {
-        return baseURL + "/novel/page/" + i + "/?m_orderby=latest";
-    }
-
-    @Override
-    public List<Novel> parseLatest(String s) throws IOException {
-        s = verify(baseURL, s);
+    public List<Novel> parseLatest(Document document) {
         List<Novel> novels = new ArrayList<>();
-        Document document = docFromURL(s);
         Elements novelsHTML = document.select("div.col-xs-12.col-md-6");
         for (Element novelHTML : novelsHTML) {
             Novel novel = new Novel();
@@ -207,16 +203,19 @@ public class BoxNovel extends ScrapeFormat {
     }
 
     @Override
-    public List<Novel> search(String s) throws IOException {
+    public String getSearchString(String s) {
         s = s.replaceAll("\\+", "%2");
         s = s.replaceAll(" ", "\\+");
+
         //Turns query into a URL
         s = baseURL + "/?s=" + s + "&post_type=wp-manga";
+        return s;
+    }
 
-        List<Novel> novels = new ArrayList<>();
-        Document document = docFromURL(s);
+    @Override
+    public List<Novel> parseSearch(Document document) {
         Elements novelsHTML = document.select("div.c-tabs-item__content");
-
+        List<Novel> novels = new ArrayList<>();
         for (Element novelHTML : novelsHTML) {
             Novel novel = new Novel();
             Element data = novelHTML.selectFirst("a");
@@ -226,6 +225,37 @@ public class BoxNovel extends ScrapeFormat {
             novels.add(novel);
         }
         return novels;
+    }
+
+
+
+
+
+
+
+    @Deprecated
+    public String getNovelPassage(String s) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public NovelPage parseNovel(String s) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public NovelPage parseNovel(String s, int i) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public List<Novel> parseLatest(String s) throws IOException {
+        return null;
+    }
+
+    @Deprecated
+    public List<Novel> search(String s) throws IOException {
+        return null;
     }
 
     @Override

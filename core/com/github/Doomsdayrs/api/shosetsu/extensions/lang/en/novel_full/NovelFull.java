@@ -90,16 +90,51 @@ public class NovelFull extends ScrapeFormat {
         }
     }
 
+    public String getLatestURL(int page) {
+        return baseURL + "/latest-release-novel?page=" + page;
+    }
 
-    public String getNovelPassage(String URL) throws IOException {
-        URL = verify(baseURL, URL);
-        Document document = docFromURL(URL);
+
+    @Override
+    public String getNovelPassage(Document document) {
         Elements paragraphs = document.select("div.chapter-c").select("p");
         StringBuilder stringBuilder = new StringBuilder();
         for (Element element : paragraphs)
             stringBuilder.append(element.text()).append("\n");
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public NovelPage parseNovel(Document document) {
+        return null;
+    }
+
+    @Override
+    public String novelPageCombiner(String s, int i) {
+        return null;
+    }
+
+    @Override
+    public List<Novel> parseLatest(Document document) {
+        return null;
+    }
+
+    @Override
+    public String getSearchString(String s) {
+        return null;
+    }
+
+    @Override
+    public List<Novel> parseSearch(Document document) {
+        return null;
+    }
+
+
+
+    @Deprecated
+    public String getNovelPassage(String URL) throws IOException {
+        return null;
     }
 
     public NovelPage parseNovel(String URL) throws IOException {
@@ -228,9 +263,6 @@ public class NovelFull extends ScrapeFormat {
         return novelPage;
     }
 
-    public String getLatestURL(int page) {
-        return baseURL + "/latest-release-novel?page=" + page;
-    }
 
     public List<Novel> parseLatest(String URL) throws IOException {
         URL = verify(baseURL, URL);
@@ -272,6 +304,9 @@ public class NovelFull extends ScrapeFormat {
             }
         return novels;
     }
+
+
+
 
 
     @Override
