@@ -1,19 +1,11 @@
-package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.syosetu;
+package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.syosetu
 
-import com.github.Doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.Novel;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelChapter;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelGenre;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelPage;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.*
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import java.util.*
 
 /*
  * This file is part of shosetsu-extensions.
@@ -29,70 +21,51 @@ import java.util.List;
  * along with shosetsu-extensions.  If not, see https://www.gnu.org/licenses/.
  * ====================================================================
  */
-
 /**
  * novelreaderextensions
  * 14 / 07 / 2019
  *
  * @author github.com/doomsdayrs
  */
-public class Syosetu extends ScrapeFormat {
-    private final String baseURL = "https://yomou.syosetu.com";
-    private final String passageURL = "https://ncode.syosetu.com";
+class Syosetu : ScrapeFormat(3) {
+    private val baseURL = "https://yomou.syosetu.com"
+    private val passageURL = "https://ncode.syosetu.com"
 
-    public Syosetu() {
-        super(3);
+
+    override val name: String
+        get() = "Syosetu"
+
+    override val genres: Array<NovelGenre>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+
+    override val imageURL: String
+        get() = "https://static.syosetu.com/view/images/common/logo_yomou.png"
+
+    override fun getLatestURL(page: Int): String {
+        var i = page
+        if (i == 0) i = 1
+        return "$baseURL/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=$i"
     }
 
-    public Syosetu(Request.Builder builder) {
-        super(3, builder);
-    }
-
-    public Syosetu(OkHttpClient client) {
-        super(3, client);
-    }
-
-    public Syosetu(Request.Builder builder, OkHttpClient client) {
-        super(3, builder, client);
-    }
-
-
-    @Override
-    public String getName() {
-        return "Syosetu";
-    }
-
-    @Override
-    public String getImageURL() {
-        return "https://static.syosetu.com/view/images/common/logo_yomou.png";
-    }
-
-    @Override
-    public String getLatestURL(int i) {
-        if (i == 0)
-            i = 1;
-        return baseURL + "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" + i;
-    }
-
-
-    @Override
-    public String getNovelPassage(Document document) {
-        Elements elements = document.select("div");
-        boolean found = false;
-        for (int x = 0; x < elements.size() && !found; x++)
-            if (elements.get(x).id().equals("novel_contents")) {
-                found = true;
-                elements = elements.get(x).select("p");
+    override fun getNovelPassage(document: Document): String {
+        var elements = document.select("div")
+        var found = false
+        var x = 0
+        while (x < elements.size && !found) {
+            if (elements[x].id() == "novel_contents") {
+                found = true
+                elements = elements[x].select("p")
             }
-
-        if (found) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (Element element : elements) {
-                stringBuilder.append(element.text()).append("\n");
-            }
-            return stringBuilder.toString().replaceAll("<br>", "\n\n");
+            x++
         }
-        return "INVALID PARSING, CONTACT DEVELOPERS";
+        if (found) {
+            val stringBuilder = StringBuilder()
+            for (element in elements) {
+                stringBuilder.append(element.text()).append("\n")
+            }
+            return stringBuilder.toString().replace("<br>".toRegex(), "\n\n")
+        }
+        return "INVALID PARSING, CONTACT DEVELOPERS"
     }
 
     /**
@@ -108,135 +81,94 @@ public class Syosetu extends ScrapeFormat {
      * MAXCHAPTERPAGE: NO
      * NOVELCHAPTERS: YES
      */
-    @Override
-    public NovelPage parseNovel(Document document) {
-        NovelPage novelPage = new NovelPage();
-        novelPage.authors = new String[]{document.selectFirst("div.novel_writername").text().replace("作者：", "")};
-        novelPage.title = document.selectFirst("p.novel_title").text();
+    override fun parseNovel(document: Document): NovelPage {
+        val novelPage = NovelPage()
+        novelPage.authors = arrayOf(document.selectFirst("div.novel_writername").text().replace("作者：", ""))
+        novelPage.title = document.selectFirst("p.novel_title").text()
         // Description
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            Element element = null;
-            boolean found = false;
-            Elements elements = document.select("div");
-            for (int x = 0; x < elements.size() && !found; x++)
-                if (elements.get(x).id().equals("novel_color")) {
-                    element = elements.get(x);
-                    found = true;
+        run {
+            var element: Element? = null
+            var found = false
+            val elements = document.select("div")
+            var x = 0
+            while (x < elements.size && !found) {
+                if (elements[x].id() == "novel_color") {
+                    element = elements[x]
+                    found = true
                 }
+                x++
+            }
             if (found) {
-                String desc = element.text();
-                desc = desc.replaceAll("<br>\n<br>", "\n");
-                desc = desc.replaceAll("<br>", "\n");
-                novelPage.description = desc;
+                var desc = element!!.text()
+                desc = desc.replace("<br>\n<br>".toRegex(), "\n")
+                desc = desc.replace("<br>".toRegex(), "\n")
+                novelPage.description = desc
             }
         }
-
-
         //Chapters
-        {
-            List<NovelChapter> novelChapters = new ArrayList<>();
-            Elements elements = document.select("dl.novel_sublist2");
-            int x = 0;
-            for (Element element : elements) {
-                NovelChapter novelChapter = new NovelChapter();
-                novelChapter.title = element.selectFirst("a").text();
-                novelChapter.link = passageURL + element.selectFirst("a").attr("href");
-                novelChapter.release = element.selectFirst("dt.long_update").text();
-                novelChapter.order = x;
-                x++;
-                novelChapters.add(novelChapter);
+        run {
+            val novelChapters: MutableList<NovelChapter> = ArrayList()
+            val elements = document.select("dl.novel_sublist2")
+            for ((x, element) in elements.withIndex()) {
+                val novelChapter = NovelChapter()
+                novelChapter.title = element.selectFirst("a").text()
+                novelChapter.link = passageURL + element.selectFirst("a").attr("href")
+                novelChapter.release = element.selectFirst("dt.long_update").text()
+                novelChapter.order = x.toDouble()
+                novelChapters.add(novelChapter)
             }
-            novelPage.novelChapters = novelChapters;
+            novelPage.novelChapters = novelChapters
         }
-        return novelPage;
+        return novelPage
     }
 
-    @Override
-    public String novelPageCombiner(String s, int i) {
-        return null;
-    }
 
-    @Override
-    public List<Novel> parseLatest(Document document) {
-        List<Novel> novels = new ArrayList<>();
-        Elements elements = document.select("div.searchkekka_box");
-        for (Element element : elements) {
-            Novel novel = new Novel();
-            {
-                Element e = element.selectFirst("div.novel_h").selectFirst("a.tl");
-                novel.link = e.attr("href");
-                novel.title = e.text();
+    override fun parseLatest(document: Document): List<Novel> {
+        val novels: MutableList<Novel> = ArrayList()
+        val elements = document.select("div.searchkekka_box")
+        for (element in elements) {
+            val novel = Novel()
+            run {
+                val e = element.selectFirst("div.novel_h").selectFirst("a.tl")
+                novel.link = e.attr("href")
+                novel.title = e.text()
             }
-            novel.imageURL = null;
-            novels.add(novel);
+            novel.imageURL = ""
+            novels.add(novel)
         }
-        return novels;
+        return novels
     }
 
-    @Override
-    public NovelPage parseNovel(Document document, int i) {
-        return parseNovel(document);
+    override fun parseNovel(document: Document, increment: Int): NovelPage {
+        return parseNovel(document)
     }
 
-    @Override
-    public String getSearchString(String s) {
-        s = s.replaceAll("\\+", "%2");
-        s = s.replaceAll(" ", "\\+");
-        s = baseURL + "/search.php?&word=" + s;
-        return s;
+    override fun getSearchString(query: String): String {
+        var s = query
+        s = s.replace("\\+".toRegex(), "%2")
+        s = s.replace(" ".toRegex(), "\\+")
+        s = "$baseURL/search.php?&word=$s"
+        return s
     }
 
-    @Override
-    public List<Novel> parseSearch(Document document) {
-        List<Novel> novels = new ArrayList<>();
-        Elements elements = document.select("div.searchkekka_box");
-        for (Element element : elements) {
-            Novel novel = new Novel();
-            {
-                Element e = element.selectFirst("div.novel_h").selectFirst("a.tl");
-                novel.link = e.attr("href");
-                novel.title = e.text();
+    override fun novelPageCombiner(url: String, increment: Int): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun parseSearch(document: Document): List<Novel> {
+        val novels: MutableList<Novel> = ArrayList()
+        val elements = document.select("div.searchkekka_box")
+        for (element in elements) {
+            val novel = Novel()
+            run {
+                val e = element.selectFirst("div.novel_h").selectFirst("a.tl")
+                novel.link = e.attr("href")
+                novel.title = e.text()
             }
-            novel.imageURL = null;
-            novels.add(novel);
+            novel.imageURL = ""
+            novels.add(novel)
         }
-        return novels;
+        return novels
     }
 
-
-
-
-
-    @Deprecated
-    public String getNovelPassage(String s) throws IOException {
-        return null;
-    }
-
-
-    @Deprecated
-    public NovelPage parseNovel(String s) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public NovelPage parseNovel(String s, int i) throws IOException {
-        return null;
-    }
-
-
-    @Deprecated
-    public List<Novel> parseLatest(String s) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public List<Novel> search(String s) throws IOException {
-        return null;
-    }
-
-    @Override
-    public NovelGenre[] getGenres() {
-        return new NovelGenre[0];
-    }
 }

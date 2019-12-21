@@ -1,16 +1,10 @@
-package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.novel_full;
+package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.novel_full
 
-import com.github.Doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.*
+import org.jsoup.nodes.Document
+import org.jsoup.select.Elements
 
 /*
  * This file is part of shosetsu-extensions.
@@ -26,83 +20,60 @@ import java.util.List;
  * along with shosetsu-extensions.  If not, see https://www.gnu.org/licenses/.
  * ====================================================================
  */
-
 /**
  * novelreader-extensions
  * 30 / May / 2019
  *
  * @author github.com/doomsdayrs
  */
-public class NovelFull extends ScrapeFormat {
-    private final String baseURL = "http://novelfull.com";
+class NovelFull : ScrapeFormat(1) {
+    private val baseURL = "http://novelfull.com"
 
-    public NovelFull() {
-        super(1);
-        super.isIncrementingChapterList(true);
-    }
+    override val name: String = "NovelFull"
 
-    public NovelFull(Request.Builder builder) {
-        super(1, builder);
-        super.isIncrementingChapterList(true);
-    }
+    override val imageURL = ""
 
-    public NovelFull(OkHttpClient client) {
-        super(1, client);
-        super.isIncrementingChapterList(true);
-    }
-
-    public NovelFull(Request.Builder builder, OkHttpClient client) {
-        super(1, builder, client);
-        super.isIncrementingChapterList(true);
-    }
-
-    @Override
-    public String getName() {
-        return "NovelFull";
-    }
-
-
-    @Override
-    public String getImageURL() {
-        return null;
-    }
-
-    private void stripListing(Elements data, Novel novel) {
-        for (int y = 0; y < data.size(); y++) {
-            Element coloum = data.get(y);
-            switch (y) {
-                case 0: {
-                    Element image = coloum.selectFirst("img");
-                    if (image != null)
-                        novel.imageURL = baseURL + image.attr("src");
-                }
-                case 1: {
-                    Element header = coloum.selectFirst("h3");
-                    if (header != null) {
-                        Element titleLink = header.selectFirst("a");
-                        novel.title = titleLink.attr("title");
-                        novel.link = baseURL + titleLink.attr("href");
+    private fun stripListing(data: Elements, novel: Novel) {
+        for (y in data.indices) {
+            val coloum = data[y]
+            when (y) {
+                0 -> {
+                    run {
+                        val image = coloum.selectFirst("img")
+                        if (image != null) novel.imageURL = baseURL + image.attr("src")
+                    }
+                    run {
+                        val header = coloum.selectFirst("h3")
+                        if (header != null) {
+                            val titleLink = header.selectFirst("a")
+                            novel.title = titleLink.attr("title")
+                            novel.link = baseURL + titleLink.attr("href")
+                        }
                     }
                 }
-                default:
-                    break;
+                1 -> {
+                    val header = coloum.selectFirst("h3")
+                    if (header != null) {
+                        val titleLink = header.selectFirst("a")
+                        novel.title = titleLink.attr("title")
+                        novel.link = baseURL + titleLink.attr("href")
+                    }
+                }
+                else -> {
+                }
             }
         }
     }
 
-    public String getLatestURL(int page) {
-        return baseURL + "/latest-release-novel?page=" + page;
+    override fun getLatestURL(page: Int): String {
+        return "$baseURL/latest-release-novel?page=$page"
     }
 
-
-    @Override
-    public String getNovelPassage(Document document) {
-        Elements paragraphs = document.select("div.chapter-c").select("p");
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Element element : paragraphs)
-            stringBuilder.append(element.text()).append("\n");
-
-        return stringBuilder.toString();
+    override fun getNovelPassage(document: Document): String {
+        val paragraphs = document.select("div.chapter-c").select("p")
+        val stringBuilder = StringBuilder()
+        for (element in paragraphs) stringBuilder.append(element.text()).append("\n")
+        return stringBuilder.toString()
     }
 
     /**
@@ -118,233 +89,182 @@ public class NovelFull extends ScrapeFormat {
      * MAXCHAPTERPAGE: YES
      * NOVELCHAPTERS: YES
      */
-    @Override
-    public NovelPage parseNovel(Document document) {
-        return this.parseNovel(document, 1);
+    override fun parseNovel(document: Document): NovelPage {
+        return this.parseNovel(document, 1)
     }
 
-    @Override
-    public NovelPage parseNovel(Document document, int i) {
-        NovelPage novelPage = new NovelPage();
-
+    override fun parseNovel(document: Document, increment: Int): NovelPage {
+        val novelPage = NovelPage()
         //Sets image
-        novelPage.imageURL = baseURL + document.selectFirst("div.book").selectFirst("img").attr("src");
-
+        novelPage.imageURL = baseURL + document.selectFirst("div.book").selectFirst("img").attr("src")
         // Gets max page
-        {
-            String lastPageURL = document.selectFirst("ul.pagination.pagination-sm").selectFirst("li.last").select("a").attr("href");
-            if (!lastPageURL.isEmpty()) {
-                lastPageURL = baseURL + lastPageURL;
-                lastPageURL = lastPageURL.substring(lastPageURL.indexOf("?page=") + 6, lastPageURL.indexOf("&per-page="));
-                novelPage.maxChapterPage = Integer.parseInt(lastPageURL);
-            } else novelPage.maxChapterPage = i;
+        run {
+            var lastPageURL = document.selectFirst("ul.pagination.pagination-sm").selectFirst("li.last").select("a").attr("href")
+            if (lastPageURL.isNotEmpty()) {
+                lastPageURL = baseURL + lastPageURL
+                lastPageURL = lastPageURL.substring(lastPageURL.indexOf("?page=") + 6, lastPageURL.indexOf("&per-page="))
+                novelPage.maxChapterPage = lastPageURL.toInt()
+            } else novelPage.maxChapterPage = increment
         }
         // Sets description
-        {
-            Element titleDescription = document.selectFirst("div.col-xs-12.col-sm-8.col-md-8.desc");
-            novelPage.title = titleDescription.selectFirst("h3").text();
-
-            Element description = titleDescription.selectFirst("div.desc-text");
-            Elements text = description.select("p");
-            StringBuilder stringBuilder = new StringBuilder();
-            for (Element paragraph : text) {
-                stringBuilder.append(paragraph.text()).append("\n");
+        run {
+            val titleDescription = document.selectFirst("div.col-xs-12.col-sm-8.col-md-8.desc")
+            novelPage.title = titleDescription.selectFirst("h3").text()
+            val description = titleDescription.selectFirst("div.desc-text")
+            val text = description.select("p")
+            val stringBuilder = StringBuilder()
+            for (paragraph in text) {
+                stringBuilder.append(paragraph.text()).append("\n")
             }
-            novelPage.description = stringBuilder.toString();
+            novelPage.description = stringBuilder.toString()
         }
-
         // Formats the chapters
-        {
-            List<NovelChapter> novelChapters = new ArrayList<>();
-            Elements lists = document.select("ul.list-chapter");
-            int a;
-            if (i > 1)
-                a = (i - 1) * 50;
-            else a = 0;
-
-            for (Element list : lists) {
-                Elements chapters = list.select("li");
-                for (Element chapter : chapters) {
-                    NovelChapter novelChapter = new NovelChapter();
-                    Element chapterData = chapter.selectFirst("a");
-                    String link = chapterData.attr("href");
-                    if (link != null)
-                        novelChapter.link = baseURL + link;
-
-                    novelChapter.title = chapterData.attr("title");
-                    if (!novelChapter.title.isEmpty() && !novelChapter.link.contains("null")) {
-                        novelChapter.order = a;
-                        a++;
-                        novelChapters.add(novelChapter);
+        run {
+            val novelChapters: ArrayList<NovelChapter> = arrayListOf()
+            val lists = document.select("ul.list-chapter")
+            var a: Int = if (increment > 1) (increment - 1) * 50 else 0
+            for (list in lists) {
+                val chapters = list.select("li")
+                for (chapter in chapters) {
+                    val novelChapter = NovelChapter()
+                    val chapterData = chapter.selectFirst("a")
+                    val link = chapterData.attr("href")
+                    if (link != null) novelChapter.link = baseURL + link
+                    novelChapter.title = chapterData.attr("title")
+                    if (novelChapter.title.isNotEmpty() && !novelChapter.link.contains("null")) {
+                        novelChapter.order = a.toDouble()
+                        a++
+                        novelChapters.add(novelChapter)
                     }
                 }
-
             }
-            novelPage.novelChapters = novelChapters;
+            novelPage.novelChapters = novelChapters
         }
-
         // Sets info Author, Genre, Source, Status
-        {
-            Elements elements = document.selectFirst("div.info").select("div.info").select("div");
-            for (int x = 0; x < elements.size(); x++) {
-                Elements subelemets;
-                switch (x) {
-                    case 0:
-                        break;
-                    case 1:
-                        subelemets = elements.get(x).select("a");
-                        String[] authors = new String[subelemets.size()];
-                        for (int y = 0; y < subelemets.size(); y++)
-                            authors[y] = subelemets.get(y).text();
-                        novelPage.authors = authors;
-                        break;
-                    case 2:
-                        subelemets = elements.get(x).select("a");
-                        String[] genres = new String[subelemets.size()];
-                        for (int y = 0; y < subelemets.size(); y++)
-                            genres[y] = subelemets.get(y).text();
-                        novelPage.genres = genres;
-                        break;
-                    case 3:
-                        //Source
-                        break;
-                    case 4:
-                        String status = elements.get(x).select("a").text();
-                        switch (status) {
-                            case "Completed":
-                                novelPage.status = Stati.COMPLETED;
-                                break;
-                            case "Ongoing":
-                                novelPage.status = Stati.PUBLISHING;
-                                break;
-                            default:
-                                break;
+        run {
+            val elements = document.selectFirst("div.info").select("div.info").select("div")
+            for (x in elements.indices) {
+                var subelemets: Elements
+                when (x) {
+                    0 -> {
+                    }
+                    1 -> {
+                        subelemets = elements[x].select("a")
+                        val authors: ArrayList<String> = arrayListOf()
+                        var y = 0
+                        while (y < subelemets.size) {
+                            authors[y] = subelemets[y].text()
+                            y++
                         }
-                        break;
+                        novelPage.authors = authors.toArray(arrayOf(""))
+                    }
+                    2 -> {
+                        subelemets = elements[x].select("a")
+                        val genres: ArrayList<String> = arrayListOf()
+                        var y = 0
+                        while (y < subelemets.size) {
+                            genres[y] = subelemets[y].text()
+                            y++
+                        }
+                        novelPage.genres = genres.toArray(arrayOf(""))
+                    }
+                    3 -> {
+                    }
+                    4 -> {
+                        when (elements[x].select("a").text()) {
+                            "Completed" -> novelPage.status = NovelStatus.COMPLETED
+                            "Ongoing" -> novelPage.status = NovelStatus.PUBLISHING
+                            else -> {
+                            }
+                        }
+                    }
                 }
             }
-
         }
-        return novelPage;
+        return novelPage
     }
 
-    @Override
-    public String novelPageCombiner(String s, int i) {
-        s = verify(baseURL, s);
-        if (i > 1)
-            s = s + "?page=" + i;
-        return s;
+    override fun novelPageCombiner(url: String, increment: Int): String {
+        var s = url
+        //s = verify(baseURL, s)
+        if (increment > 1) s = "$s?page=$increment"
+        return s
     }
 
-    @Override
-    public List<Novel> parseLatest(Document document) {
-        List<Novel> novels = new ArrayList<>();
-        Elements divMAIN = document.select("div.container");
-        for (Element element : divMAIN) {
-            if (element.id().equals("list-page")) {
-                Element list = element.selectFirst("div");
-                Elements releases = list.select("div.row");
+    override fun parseLatest(document: Document): List<Novel> {
+        val novels: ArrayList<Novel> = arrayListOf()
+        val divMAIN = document.select("div.container")
+        for (element in divMAIN) {
+            if (element.id() == "list-page") {
+                val list = element.selectFirst("div")
+                val releases = list.select("div.row")
                 //For each novel
-                for (Element release : releases) {
-                    Novel novel = new Novel();
-                    Elements data = release.select("div");
+                for (release in releases) {
+                    val novel = Novel()
+                    val data = release.select("div")
                     //For each coloum
-                    this.stripListing(data, novel);
-                    if (novel.link != null && novel.title != null)
-                        novels.add(novel);
+                    stripListing(data, novel)
+                    novels.add(novel)
                 }
             }
         }
-        return novels;
+        return novels
     }
 
-    @Override
-    public String getSearchString(String s) {
-        return baseURL + "/search?keyword=" + s.replaceAll(" ", "%20");
+    override fun getSearchString(query: String): String {
+        return baseURL + "/search?keyword=" + query.replace(" ".toRegex(), "%20")
     }
 
-    @Override
-    public List<Novel> parseSearch(Document document) {
-        List<Novel> novels = new ArrayList<>();
-        Elements listP = document.select("div.container");
-        for (Element list : listP)
-            if (list.id().equals("list-page")) {
-                Elements queries = list.select("div.row");
-                for (Element q : queries) {
-                    Novel novel = new Novel();
-                    this.stripListing(q.select("div"), novel);
-                    if (novel.link != null && novel.title != null)
-                        novels.add(novel);
-                }
+    override fun parseSearch(document: Document): List<Novel> {
+        val novels: ArrayList<Novel> = arrayListOf()
+        val listP = document.select("div.container")
+        for (list in listP) if (list.id() == "list-page") {
+            val queries = list.select("div.row")
+            for (q in queries) {
+                val novel = Novel()
+                stripListing(q.select("div"), novel)
+                novels.add(novel)
             }
-        return novels;
+        }
+        return novels
     }
 
 
-    @Deprecated
-    public String getNovelPassage(String URL) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public NovelPage parseNovel(String URL) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public NovelPage parseNovel(String URL, int increment) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public List<Novel> parseLatest(String URL) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public List<Novel> search(String query) throws IOException {
-        return null;
-    }
-
-
-    @Override
-    public NovelGenre[] getGenres() {
-        String url = baseURL + "/genre/";
-        return new NovelGenre[]{
-                new NovelGenre("Shounen", true, url + "Shounen"),
-                new NovelGenre("Harem", true, url + "Harem"),
-                new NovelGenre("Comedy", true, url + "Comedy"),
-                new NovelGenre("Martial Arts", true, url + "Martial Arts"),
-                new NovelGenre("School Life", true, url + "School Life"),
-                new NovelGenre("Mystery", true, url + "Mystery"),
-                new NovelGenre("Shoujo", true, url + "Shoujo"),
-                new NovelGenre("Romance", true, url + "Romance"),
-                new NovelGenre("Sci-fi", true, url + "Sci-fi"),
-                new NovelGenre("Gender Bender", true, url + "Gender Bender"),
-                new NovelGenre("Mature", true, url + "Mature"),
-                new NovelGenre("Fantasy", true, url + "Fantasy"),
-                new NovelGenre("Horror", true, url + "Horror"),
-                new NovelGenre("Drama", true, url + "Drama"),
-                new NovelGenre("Tragedy", true, url + "Tragedy"),
-                new NovelGenre("Supernatural", true, url + "Supernatural"),
-                new NovelGenre("Ecchi", true, url + "Ecchi"),
-                new NovelGenre("Xuanhuan", true, url + "Xuanhuan"),
-                new NovelGenre("Adventure", true, url + "Adventure"),
-                new NovelGenre("Action", true, url + "Action"),
-                new NovelGenre("Psychological", true, url + "Psychological"),
-                new NovelGenre("Xianxia", true, url + "Xianxia"),
-                new NovelGenre("Wuxia", true, url + "Wuxia"),
-                new NovelGenre("Historical", true, url + "Historical"),
-                new NovelGenre("Slice of Life", true, url + "Slice of Life"),
-                new NovelGenre("Seinen", true, url + "Seinen"),
-                new NovelGenre("Lolicon", true, url + "Lolicon"),
-                new NovelGenre("Adult", true, url + "Adult"),
-                new NovelGenre("Josei", true, url + "Josei"),
-                new NovelGenre("Sports", true, url + "Sports"),
-                new NovelGenre("Smut", true, url + "Smut"),
-                new NovelGenre("Mecha", true, url + "Mecha"),
-        };
-    }
-
-
+    override val genres: Array<NovelGenre>
+        get() {
+            val url = "$baseURL/genre/"
+            return arrayOf(
+                    NovelGenre("Shounen", true, url + "Shounen"),
+                    NovelGenre("Harem", true, url + "Harem"),
+                    NovelGenre("Comedy", true, url + "Comedy"),
+                    NovelGenre("Martial Arts", true, url + "Martial Arts"),
+                    NovelGenre("School Life", true, url + "School Life"),
+                    NovelGenre("Mystery", true, url + "Mystery"),
+                    NovelGenre("Shoujo", true, url + "Shoujo"),
+                    NovelGenre("Romance", true, url + "Romance"),
+                    NovelGenre("Sci-fi", true, url + "Sci-fi"),
+                    NovelGenre("Gender Bender", true, url + "Gender Bender"),
+                    NovelGenre("Mature", true, url + "Mature"),
+                    NovelGenre("Fantasy", true, url + "Fantasy"),
+                    NovelGenre("Horror", true, url + "Horror"),
+                    NovelGenre("Drama", true, url + "Drama"),
+                    NovelGenre("Tragedy", true, url + "Tragedy"),
+                    NovelGenre("Supernatural", true, url + "Supernatural"),
+                    NovelGenre("Ecchi", true, url + "Ecchi"),
+                    NovelGenre("Xuanhuan", true, url + "Xuanhuan"),
+                    NovelGenre("Adventure", true, url + "Adventure"),
+                    NovelGenre("Action", true, url + "Action"),
+                    NovelGenre("Psychological", true, url + "Psychological"),
+                    NovelGenre("Xianxia", true, url + "Xianxia"),
+                    NovelGenre("Wuxia", true, url + "Wuxia"),
+                    NovelGenre("Historical", true, url + "Historical"),
+                    NovelGenre("Slice of Life", true, url + "Slice of Life"),
+                    NovelGenre("Seinen", true, url + "Seinen"),
+                    NovelGenre("Lolicon", true, url + "Lolicon"),
+                    NovelGenre("Adult", true, url + "Adult"),
+                    NovelGenre("Josei", true, url + "Josei"),
+                    NovelGenre("Sports", true, url + "Sports"),
+                    NovelGenre("Smut", true, url + "Smut"),
+                    NovelGenre("Mecha", true, url + "Mecha"))
+        }
 }

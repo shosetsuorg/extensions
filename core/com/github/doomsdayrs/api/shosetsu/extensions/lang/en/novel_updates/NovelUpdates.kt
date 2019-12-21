@@ -1,17 +1,12 @@
-package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.novel_updates;
+package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.novel_updates
 
-import com.github.Doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.Novel
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelGenre
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage
+import org.jsoup.nodes.Document
+import java.io.IOException
+import java.util.*
 
 /*
  * This file is part of shosetsu-extensions.
@@ -27,151 +22,108 @@ import java.util.List;
  * along with shosetsu-extensions.  If not, see https://www.gnu.org/licenses/.
  * ====================================================================
  */
-
 /**
  * novelreader-extensions
  * 29 / May / 2019
  *
  * @author github.com/doomsdayrs
  */
-@Deprecated
-//TODO Create very complicated and advanced dynamic resource selector
-public class NovelUpdates extends ScrapeFormat {
-    private final String baseURL = "https://www.novelupdates.com";
+@Deprecated("not enough time to complete")
+class NovelUpdates : ScrapeFormat() {
+    private val baseURL = "https://www.novelupdates.com"
 
-    public NovelUpdates(int id) {
-        super(id);
+    val iD: Int
+        get() = 0
+    override val genres: Array<NovelGenre>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    override val imageURL: String
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+
+    override val name: String
+        get() = "NovelUpdates"
+
+
+    @Throws(IOException::class)
+    fun getNovelPassage(responseBody: String?): String? {
+        val document = docFromURL(responseBody!!)
+        return null
     }
 
-    public NovelUpdates(int id, Request.Builder builder) {
-        super(id, builder);
-    }
-
-    public NovelUpdates(int id, OkHttpClient client) {
-        super(id, client);
-    }
-
-    public NovelUpdates(int id, Request.Builder builder, OkHttpClient client) {
-        super(id, builder, client);
-    }
-
-
-    @Override
-    public int getID() {
-        return 0;
-    }
-
-    @Override
-    public String getName() {
-        return "NovelUpdates";
-    }
-
-    @Override
-    public String getImageURL() {
-        return null;
-    }
-
-    @Override
-    public String getNovelPassage(Document document) {
-        return null;
-    }
-
-    @Override
-    public NovelPage parseNovel(Document document) {
-        return null;
-    }
-
-    @Override
-    public String novelPageCombiner(String s, int i) {
-        return null;
-    }
-
-    @Override
-    public List<Novel> parseLatest(Document document) {
-        return null;
-    }
-
-    @Override
-    public NovelPage parseNovel(Document document, int i) {
-        return null;
-    }
-
-    @Override
-    public String getSearchString(String s) {
-        return null;
-    }
-
-    @Override
-    public List<Novel> parseSearch(Document document) {
-        return null;
-    }
-
-
-    public String getNovelPassage(String responseBody) throws IOException {
-        Document document = docFromURL(responseBody);
-        return null;
-    }
-
-    public NovelPage parseNovel(String URL) throws IOException {
-        Document document = docFromURL(URL);
-        Elements chapters = document.select("table").get(1).select("tr");
-        for (Element element : chapters) {
-            Elements elements = element.select("td");
+    @Throws(IOException::class)
+    fun parseNovel(URL: String?): NovelPage? {
+        val document = docFromURL(URL!!)
+        val chapters = document.select("table")[1].select("tr")
+        for (element in chapters) {
+            val elements = element.select("td")
         }
-        return null;
+        return null
     }
 
-    public NovelPage parseNovel(String responseBody, int increment) {
-        return null;
+    fun parseNovel(responseBody: String?, increment: Int): NovelPage? {
+        return null
     }
 
-    public String getLatestURL(int page) {
-        if (page > 1)
-            return baseURL + "/?pg=" + page;
-        else return baseURL;
+    override fun getLatestURL(page: Int): String {
+        return if (page > 1) "$baseURL/?pg=$page" else baseURL
     }
 
-    public List<Novel> parseLatest(String URL) throws IOException {
-        List<Novel> novels = new ArrayList<>();
-        Document document = docFromURL(URL);
-        Elements elements = document.select("table");
-        for (int y = 0; y < elements.size(); y++) {
+    override fun getNovelPassage(document: Document): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getSearchString(query: String): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun novelPageCombiner(url: String, increment: Int): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun parseLatest(document: Document): List<Novel> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun parseNovel(document: Document): NovelPage {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun parseNovel(document: Document, increment: Int): NovelPage {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun parseSearch(document: Document): List<Novel> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    @Throws(IOException::class)
+    fun parseLatest(URL: String?): List<Novel> {
+        val novels: MutableList<Novel> = ArrayList()
+        val document = docFromURL(URL!!)
+        val elements = document.select("table")
+        for (y in elements.indices) {
             if (y != 0) {
-                Element element = elements.get(y);
-                for (Element element1 : element.select("tr")) {
-                    Elements elements1 = element1.select("a");
-                    String title = null;
-                    String link = null;
-                    for (int x = 0; x < elements1.size(); x++) {
-                        Element element2 = elements1.get(x);
-
+                val element = elements[y]
+                for (element1 in element.select("tr")) {
+                    val elements1 = element1.select("a")
+                    var title: String? = null
+                    var link: String? = null
+                    for (x in elements1.indices) {
+                        val element2 = elements1[x]
                         if (x == 0) {
-                            title = element2.attr("title");
-                            link = element2.attr("href");
+                            title = element2.attr("title")
+                            link = element2.attr("href")
                         }
-
                     }
-
                     if (title != null && link != null) {
-                        Novel novel = new Novel();
-                        novel.link = link;
-                        novel.title = title;
-                        novels.add(novel);
-
+                        val novel = Novel()
+                        novel.link = link
+                        novel.title = title
+                        novels.add(novel)
                     }
                 }
             }
         }
-        return novels;
+        return novels
     }
 
-    @Override
-    public List<Novel> search(String query) {
-        return null;
-    }
-
-    @Override
-    public NovelGenre[] getGenres() {
-        return new NovelGenre[0];
-    }
 }

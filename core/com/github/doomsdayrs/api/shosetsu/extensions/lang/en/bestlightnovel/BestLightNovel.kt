@@ -1,4 +1,6 @@
-package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.bestlightnovel;
+@file:Suppress("unused")
+
+package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.bestlightnovel
 
 /*
  * This file is part of shosetsu-extensions.
@@ -14,72 +16,40 @@ package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.bestlightnovel;
  * along with shosetsu-extensions.  If not, see https://www.gnu.org/licenses/.
  * ====================================================================
  */
-
-import com.github.Doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.*
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 
 /**
- * novelreaderextensions
+ * shosetsu-extensions
  * 02 / 08 / 2019
  *
  * @author github.com/doomsdayrs
  */
-public class BestLightNovel extends ScrapeFormat {
-    private final String baseURL = "https://bestlightnovel.com";
+class BestLightNovel : ScrapeFormat(5) {
+    private val baseURL = "https://bestlightnovel.com"
 
-    public BestLightNovel() {
-        super(5);
+
+    override val name: String = "BestLightNovel"
+
+
+    override val imageURL: String = ""
+
+    override fun getLatestURL(page: Int): String {
+        var i = page
+        if (i <= 0) i = 1
+        return "$baseURL/novel_list?type=latest&category=all&state=all&page=$i"
     }
 
-    public BestLightNovel(Request.Builder builder) {
-        super(5, builder);
-    }
-
-    public BestLightNovel(OkHttpClient client) {
-        super(5, client);
-    }
-
-    public BestLightNovel(Request.Builder builder, OkHttpClient client) {
-        super(5, builder, client);
-    }
-
-    @Override
-    public String getName() {
-        return "BestLightNovel";
-    }
-
-    @Override
-    public String getImageURL() {
-        return null;
-    }
-
-    @Override
-    public String getLatestURL(int i) {
-        if (i <= 0)
-            i = 1;
-        return baseURL + "/novel_list?type=latest&category=all&state=all&page=" + i;
-    }
-
-
-    @Override
-    public String getNovelPassage(Document document) {
-        Elements elements = document.selectFirst("div.vung_doc").select("p");
-        StringBuilder stringBuilder = new StringBuilder();
-        if (elements.size() != 0) {
-            for (Element element : elements)
-                stringBuilder.append(element.text()).append("\n");
-        } else stringBuilder.append("NOT YET TRANSLATED");
-        return stringBuilder.toString();
+    override fun getNovelPassage(document: Document): String {
+        val elements = document.selectFirst("div.vung_doc").select("p")
+        val stringBuilder = StringBuilder()
+        if (elements.size != 0) {
+            for (element in elements) stringBuilder.append(element.text()).append("\n")
+        } else stringBuilder.append("NOT YET TRANSLATED")
+        return stringBuilder.toString()
     }
 
     /**
@@ -95,191 +65,148 @@ public class BestLightNovel extends ScrapeFormat {
      * MAXCHAPTERPAGE: NO
      * NOVELCHAPTERS: YES
      */
-
-    @Override
-    public NovelPage parseNovel(Document document) {
-        NovelPage novelPage = new NovelPage();
+    override fun parseNovel(document: Document): NovelPage {
+        val novelPage = NovelPage()
         // Image
-        {
-            Element element = document.selectFirst("div.truyen_info_left");
-            novelPage.imageURL = element.selectFirst("img").attr("src");
+        run {
+            val element = document.selectFirst("div.truyen_info_left")
+            novelPage.imageURL = element.selectFirst("img").attr("src")
         }
         // Bulk data
-        {
-            Element element = document.selectFirst("ul.truyen_info_right");
-            Elements elements = element.select("li");
-            StringBuilder stringBuilder = new StringBuilder("");
-            String text;
-            Element subElement;
-            Elements subElements;
-            String[] strings;
-            for (int x = 0; x < elements.size(); x++) {
-                Element e = elements.get(x);
-                switch (x) {
-                    case 0:
-                        novelPage.title = e.selectFirst("h1").text();
-                        break;
-
-                    case 1:
-                        stringBuilder = new StringBuilder("");
-                        subElements = e.select("a");
-                        strings = new String[subElements.size()];
-                        for (int y = 0; y < strings.length; y++)
-                            strings[y] = subElements.get(y).text();
-                        novelPage.authors = strings;
-                        break;
-
-                    case 2:
-                        stringBuilder = new StringBuilder("");
-                        subElements = e.select("a");
-                        strings = new String[subElements.size()];
-                        for (int y = 0; y < strings.length; y++)
-                            strings[y] = subElements.get(y).text();
-                        novelPage.genres = strings;
-                        break;
-
-                    case 3:
-                        subElement = e.selectFirst("a");
-                        text = subElement.text();
-                        switch (text) {
-                            case "ongoing":
-                                novelPage.status = Stati.PUBLISHING;
-                                break;
-                            case "completed":
-                                novelPage.status = Stati.COMPLETED;
-                                break;
-                            default:
-                                break;
+        run {
+            val element = document.selectFirst("ul.truyen_info_right")
+            val elements = element.select("li")
+            var text: String
+            var subElement: Element
+            var subElements: Elements
+            var strings: ArrayList<String>
+            for (x in elements.indices) {
+                val e = elements[x]
+                when (x) {
+                    0 -> novelPage.title = e.selectFirst("h1").text()
+                    1 -> {
+                        subElements = e.select("a")
+                        strings = arrayListOf()
+                        var y = 0
+                        while (y < strings.size) {
+                            strings[y] = subElements[y].text()
+                            y++
                         }
-                        break;
-
-                    default:
-                        break;
+                        novelPage.authors = strings.toArray(arrayOf(""))
+                    }
+                    2 -> {
+                        subElements = e.select("a")
+                        strings = arrayListOf()
+                        var y = 0
+                        while (y < strings.size) {
+                            strings[y] = subElements[y].text()
+                            y++
+                        }
+                        novelPage.genres = strings.toArray(arrayOf(""))
+                    }
+                    3 -> {
+                        subElement = e.selectFirst("a")
+                        text = subElement.text()
+                        when (text) {
+                            "ongoing" -> novelPage.status = NovelStatus.PUBLISHING
+                            "completed" -> novelPage.status = NovelStatus.COMPLETED
+                            else -> {
+                            }
+                        }
+                    }
+                    else -> {
+                    }
                 }
             }
         }
         // Description
-        {
-            Elements elements = document.selectFirst("div.entry-header").select("div");
-            for (Element div : elements) {
-                if (div.id().equals("noidungm")) {
-                    String unformatted = div.text();
-                    unformatted = unformatted.replaceAll("<br>", "\n");
-                    novelPage.description = unformatted;
+        run {
+            val elements = document.selectFirst("div.entry-header").select("div")
+            for (div in elements) {
+                if (div.id() == "noidungm") {
+                    var unformatted = div.text()
+                    unformatted = unformatted.replace("<br>".toRegex(), "\n")
+                    novelPage.description = unformatted
                 }
             }
         }
         // Chapters
-        {
-            Element e = document.selectFirst("div.chapter-list");
-            novelPage.novelChapters = new ArrayList<>();
-
+        run {
+            val e = document.selectFirst("div.chapter-list")
+            novelPage.novelChapters = arrayListOf()
             if (e != null) {
-                Elements chapters = e.select("div.row");
-                List<NovelChapter> novelChapters = new ArrayList<>();
-                int y = 0;
-                for (Element row : chapters) {
-                    NovelChapter novelChapter = new NovelChapter();
-                    Elements elements = row.select("span");
-                    for (int x = 0; x < elements.size(); x++) {
-                        switch (x) {
-                            case 0:
-                                Element titleLink = elements.get(x).selectFirst("a");
-                                novelChapter.title = titleLink.attr("title");
-                                novelChapter.link = titleLink.attr("href");
-                                break;
-                            case 1:
-                                novelChapter.release = elements.get(x).text();
-                                break;
+                val chapters = e.select("div.row")
+                val novelChapters: ArrayList<NovelChapter> = arrayListOf()
+                for ((y, row) in chapters.withIndex()) {
+                    val novelChapter = NovelChapter()
+                    val elements = row.select("span")
+                    for (x in elements.indices) {
+                        when (x) {
+                            0 -> {
+                                val titleLink = elements[x].selectFirst("a")
+                                novelChapter.title = titleLink.attr("title")
+                                novelChapter.link = titleLink.attr("href")
+                            }
+                            1 -> novelChapter.release = elements[x].text()
                         }
                     }
-                    novelChapter.order = y;
-                    y++;
-                    novelChapters.add(novelChapter);
+                    novelChapter.order = y.toDouble()
+                    novelChapters.add(novelChapter)
                 }
-                Collections.reverse(novelChapters);
-                novelPage.novelChapters = novelChapters;
+                novelChapters.reverse()
+                novelPage.novelChapters = novelChapters
             }
         }
-        return novelPage;
+        return novelPage
     }
 
-    @Override
-    public String novelPageCombiner(String s, int i) {
-        return null;
+    override fun novelPageCombiner(url: String, increment: Int): String {
+        return ""
     }
 
-    @Override
-    public List<Novel> parseLatest(Document document) {
-        List<Novel> novels = new ArrayList<>();
-        Elements elements = document.select("div.update_item.list_category");
-        for (Element element : elements) {
-            Novel novel = new Novel();
-            {
-                Element e = element.selectFirst("h3.nowrap").selectFirst("a");
-                novel.title = e.attr("title");
-                novel.link = e.attr("href");
+    override fun parseLatest(document: Document): List<Novel> {
+        val novels: ArrayList<Novel> = arrayListOf()
+        val elements = document.select("div.update_item.list_category")
+        for (element in elements) {
+            val novel = Novel()
+            run {
+                val e = element.selectFirst("h3.nowrap").selectFirst("a")
+                novel.title = e.attr("title")
+                novel.link = e.attr("href")
             }
-            novel.imageURL = element.selectFirst("img").attr("src");
-            novels.add(novel);
+            novel.imageURL = element.selectFirst("img").attr("src")
+            novels.add(novel)
         }
-        return novels;
+        return novels
     }
 
-    @Override
-    public NovelPage parseNovel(Document document, int i) {
-        return parseNovel(document);
+    override fun parseNovel(document: Document, increment: Int): NovelPage {
+        return parseNovel(document)
     }
 
-    @Override
-    public String getSearchString(String s) {
-        s = s.replaceAll(" ", "_");
-        s = baseURL + "/search_novels/" + s;
-        return s;
+    override fun getSearchString(query: String): String {
+        var s = query
+        s = s.replace(" ".toRegex(), "_")
+        s = "$baseURL/search_novels/$s"
+        return s
     }
 
-    @Override
-    public List<Novel> parseSearch(Document document) {
-        List<Novel> novels = new ArrayList<>();
-        Elements elements = document.select("div.update_item.list_category");
-        for (Element element : elements) {
-            Novel novel = new Novel();
-            {
-                Element e = element.selectFirst("h3.nowrap").selectFirst("a");
-                novel.title = e.attr("title");
-                novel.link = e.attr("href");
+
+    override fun parseSearch(document: Document): List<Novel> {
+        val novels: MutableList<Novel> = ArrayList()
+        val elements = document.select("div.update_item.list_category")
+        for (element in elements) {
+            val novel = Novel()
+            run {
+                val e = element.selectFirst("h3.nowrap").selectFirst("a")
+                novel.title = e.attr("title")
+                novel.link = e.attr("href")
             }
-            novel.imageURL = element.selectFirst("img").attr("src");
-            novels.add(novel);
+            novel.imageURL = element.selectFirst("img").attr("src")
+            novels.add(novel)
         }
-        return novels;
+        return novels
     }
 
-
-    @Deprecated
-    public String getNovelPassage(String s) throws IOException {
-        return null;
-    }
-    @Deprecated
-    public NovelPage parseNovel(String s) throws IOException {
-        return null;
-    }
-    @Deprecated
-    public NovelPage parseNovel(String s, int i) throws IOException {
-        return null;
-    }
-    @Deprecated
-    public List<Novel> parseLatest(String s) throws IOException {
-        return null;
-
-    }
-    @Deprecated
-    public List<Novel> search(String s) throws IOException {
-        return null;
-    }
-
-    @Override
-    public NovelGenre[] getGenres() {
-        return new NovelGenre[0];
-    }
+    override val genres: Array<NovelGenre> = arrayOf()
 }

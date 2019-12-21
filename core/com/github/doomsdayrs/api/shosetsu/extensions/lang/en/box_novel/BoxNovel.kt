@@ -1,17 +1,11 @@
-package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.box_novel;
+@file:Suppress("unused")
 
-import com.github.Doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.box_novel
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.*
+import org.jsoup.nodes.Document
+import org.jsoup.select.Elements
 
 /*
  * This file is part of shosetsu-extensions.
@@ -27,61 +21,32 @@ import java.util.List;
  * along with shosetsu-extensions.  If not, see https://www.gnu.org/licenses/.
  * ====================================================================
  */
-
 /**
- * novelreader-extensions
+ * shosetsu-extensions
  * 11 / June / 2019
  *
  * @author github.com/doomsdayrs
  */
-public class BoxNovel extends ScrapeFormat {
-    private final String baseURL = "https://boxnovel.com";
+class BoxNovel : ScrapeFormat(2) {
+    private val baseURL = "https://boxnovel.com"
 
-    public BoxNovel() {
-        super(2);
-    }
+    override val name: String = "BoxNovel"
 
-    public BoxNovel( Request.Builder builder) {
-        super(2, builder);
-    }
+    override val imageURL: String = "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png"
 
-    public BoxNovel(OkHttpClient client) {
-        super(2, client);
-    }
-
-    public BoxNovel( Request.Builder builder, OkHttpClient client) {
-        super(2, builder, client);
-    }
-
-    @Override
-    public String getName() {
-        return "BoxNovel";
-    }
-
-    @Override
-    public String getImageURL() {
-        return "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png";
-    }
-
-    @Override
-    public String getNovelPassage(Document document) {
-        Elements paragraphs = document.select("div.text-left").select("p");
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (Element element : paragraphs)
-            stringBuilder.append(element.toString()).append("\n");
-
+    override fun getNovelPassage(document: Document): String {
+        val paragraphs = document.select("div.text-left").select("p")
+        val stringBuilder = StringBuilder()
+        for (element in paragraphs) stringBuilder.append(element.toString()).append("\n")
         return stringBuilder
                 .toString()
-                .replaceAll("<p>", "")
-                .replaceAll("</p>", "");
+                .replace("<p>".toRegex(), "")
+                .replace("</p>".toRegex(), "")
     }
 
-    @Override
-    public String getLatestURL(int i) {
-        return baseURL + "/novel/page/" + i + "/?m_orderby=latest";
+    override fun getLatestURL(i: Int): String {
+        return "$baseURL/novel/page/$i/?m_orderby=latest"
     }
-
 
     /**
      * TITLE:YES
@@ -96,176 +61,134 @@ public class BoxNovel extends ScrapeFormat {
      * MAXCHAPTERPAGE: NO
      * NOVELCHAPTERS: YES
      */
-    @Override
-    public NovelPage parseNovel(Document document) {
-        NovelPage novelPage = new NovelPage();
-        novelPage.imageURL = document.selectFirst("div.summary_image").selectFirst("img.img-responsive").attr("src");
-        novelPage.title = document.selectFirst("h3").text();
-        novelPage.description = document.selectFirst("p").text();
-
-        {
-            Elements elements = document.selectFirst("div.post-content").select("div.post-content_item");
-            for (int x = 0; x < elements.size(); x++) {
-                Elements subElements;
-                switch (x) {
-                    case 0:
-                    case 2:
-                    case 1:
-                        break;
-                    case 3://AUTHORS
-                        subElements = elements.get(x).select("a");
-                        String[] authors = new String[subElements.size()];
-                        for (int y = 0; y < subElements.size(); y++) {
-                            authors[y] = subElements.get(y).text();
+    override fun parseNovel(document: Document): NovelPage {
+        val novelPage = NovelPage()
+        novelPage.imageURL = document.selectFirst("div.summary_image").selectFirst("img.img-responsive").attr("src")
+        novelPage.title = document.selectFirst("h3").text()
+        novelPage.description = document.selectFirst("p").text()
+        run {
+            var elements = document.selectFirst("div.post-content").select("div.post-content_item")
+            for (x in elements.indices) {
+                var subElements: Elements
+                when (x) {
+                    0, 2, 1 -> {
+                    }
+                    3 -> {
+                        subElements = elements[x].select("a")
+                        val authors: ArrayList<String> = arrayListOf()
+                        var y = 0
+                        while (y < subElements.size) {
+                            authors[y] = subElements[y].text()
+                            y++
                         }
-                        novelPage.authors = authors;
-                        break;
-                    case 4:
-                        subElements = elements.get(x).select("a");
-                        String[] artists = new String[subElements.size()];
-                        for (int y = 0; y < subElements.size(); y++) {
-                            artists[y] = subElements.get(y).text();
+                        novelPage.authors = authors.toArray(arrayOf(""))
+                    }
+                    4 -> {
+                        subElements = elements[x].select("a")
+                        val artists: ArrayList<String> = arrayListOf()
+                        var y = 0
+                        while (y < subElements.size) {
+                            artists[y] = subElements[y].text()
+                            y++
                         }
-                        novelPage.artists = artists;
-                        break;
-                    case 5:
-                        subElements = elements.get(x).select("a");
-                        String[] genres = new String[subElements.size()];
-                        for (int y = 0; y < subElements.size(); y++) {
-                            genres[y] = subElements.get(y).text();
+                        novelPage.artists = artists.toArray(arrayOf(""))
+                    }
+                    5 -> {
+                        subElements = elements[x].select("a")
+                        val genres: ArrayList<String> = arrayListOf()
+                        var y = 0
+                        while (y < subElements.size) {
+                            genres[y] = subElements[y].text()
+                            y++
                         }
-                        novelPage.genres = genres;
-                        break;
-                    case 6:
-                        break;
+                        novelPage.genres = genres.toArray(arrayOf(""))
+                    }
+                    6 -> {
+                    }
                 }
             }
-            elements = document.selectFirst("div.post-status").select("div.post-content_item");
-            for (int x = 0; x < elements.size(); x++) {
-                switch (x) {
-                    case 0:
-                    case 2:
-                        break;
-                    case 1:
-                        String stat = elements.get(x).select("div.summary-content").text();
-                        switch (stat) {
-                            case "OnGoing":
-                                novelPage.status = Stati.PUBLISHING;
-                                break;
-                            case "Completed":
-                                novelPage.status = Stati.COMPLETED;
-                                break;
+            elements = document.selectFirst("div.post-status").select("div.post-content_item")
+            for (x in elements.indices) {
+                when (x) {
+                    0, 2 -> {
+                    }
+                    1 -> {
+                        when (elements[x].select("div.summary-content").text()) {
+                            "OnGoing" -> novelPage.status = NovelStatus.PUBLISHING
+                            "Completed" -> novelPage.status = NovelStatus.COMPLETED
                         }
-                        break;
+                    }
                 }
             }
-
         }
-
         // Chapters
-        {
-            novelPage.novelChapters = new ArrayList<>();
-            Elements elements = document.select("li.wp-manga-chapter");
-            int a = elements.size();
-            for (Element element : elements) {
-                NovelChapter novelChapter = new NovelChapter();
-                novelChapter.link = element.selectFirst("a").attr("href");
-                novelChapter.title = element.selectFirst("a").text();
-                novelChapter.release = element.selectFirst("i").text();
-                novelChapter.order = a;
-                a--;
-                novelPage.novelChapters.add(novelChapter);
+        run {
+            val novelChapters: ArrayList<NovelChapter> = arrayListOf()
+            val elements = document.select("li.wp-manga-chapter")
+            var a = elements.size
+            for (element in elements) {
+                val novelChapter = NovelChapter()
+                novelChapter.link = element.selectFirst("a").attr("href")
+                novelChapter.title = element.selectFirst("a").text()
+                novelChapter.release = element.selectFirst("i").text()
+                novelChapter.order = a.toDouble()
+                a--
+                novelChapters.add(novelChapter)
             }
-            Collections.reverse(novelPage.novelChapters);
+            novelChapters.reverse()
+            novelPage.novelChapters = novelChapters
         }
-        return novelPage;
+        return novelPage
     }
 
-    @Override
-    public NovelPage parseNovel(Document document, int i) {
-        return parseNovel(document);
+    override fun parseNovel(document: Document, i: Int): NovelPage {
+        return parseNovel(document)
     }
 
-    @Override
-    public String novelPageCombiner(String s, int i) {
-        return null;
+    fun novelPageCombiner(i: Int, s: String?): String {
+        return ""
     }
 
-    @Override
-    public List<Novel> parseLatest(Document document) {
-        List<Novel> novels = new ArrayList<>();
-        Elements novelsHTML = document.select("div.col-xs-12.col-md-6");
-        for (Element novelHTML : novelsHTML) {
-            Novel novel = new Novel();
-            Element data = novelHTML.selectFirst("a");
-            novel.title = data.attr("title");
-            novel.link = data.attr("href");
-            novel.imageURL = data.selectFirst("img").attr("src");
-            novels.add(novel);
+    override fun parseLatest(document: Document): List<Novel> {
+        val novels: MutableList<Novel> = ArrayList()
+        val novelsHTML = document.select("div.col-xs-12.col-md-6")
+        for (novelHTML in novelsHTML) {
+            val novel = Novel()
+            val data = novelHTML.selectFirst("a")
+            novel.title = data.attr("title")
+            novel.link = data.attr("href")
+            novel.imageURL = data.selectFirst("img").attr("src")
+            novels.add(novel)
         }
-        return novels;
+        return novels
     }
 
-
-
-    @Override
-    public String getSearchString(String s) {
-        s = s.replaceAll("\\+", "%2");
-        s = s.replaceAll(" ", "\\+");
-
+    override fun getSearchString(s: String): String {
+        var s = s
+        s = s.replace("\\+".toRegex(), "%2")
+        s = s.replace(" ".toRegex(), "\\+")
         //Turns query into a URL
-        s = baseURL + "/?s=" + s + "&post_type=wp-manga";
-        return s;
+        s = "$baseURL/?s=$s&post_type=wp-manga"
+        return s
     }
 
-    @Override
-    public List<Novel> parseSearch(Document document) {
-        Elements novelsHTML = document.select("div.c-tabs-item__content");
-        List<Novel> novels = new ArrayList<>();
-        for (Element novelHTML : novelsHTML) {
-            Novel novel = new Novel();
-            Element data = novelHTML.selectFirst("a");
-            novel.title = data.attr("title");
-            novel.link = data.attr("href");
-            novel.imageURL = data.selectFirst("img").attr("src");
-            novels.add(novel);
+    override fun novelPageCombiner(url: String, increment: Int): String {
+        return ""
+    }
+
+    override fun parseSearch(document: Document): List<Novel> {
+        val novelsHTML = document.select("div.c-tabs-item__content")
+        val novels: MutableList<Novel> = ArrayList()
+        for (novelHTML in novelsHTML) {
+            val novel = Novel()
+            val data = novelHTML.selectFirst("a")
+            novel.title = data.attr("title")
+            novel.link = data.attr("href")
+            novel.imageURL = data.selectFirst("img").attr("src")
+            novels.add(novel)
         }
-        return novels;
+        return novels
     }
 
-
-
-
-
-
-
-    @Deprecated
-    public String getNovelPassage(String s) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public NovelPage parseNovel(String s) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public NovelPage parseNovel(String s, int i) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public List<Novel> parseLatest(String s) throws IOException {
-        return null;
-    }
-
-    @Deprecated
-    public List<Novel> search(String s) throws IOException {
-        return null;
-    }
-
-    @Override
-    public NovelGenre[] getGenres() {
-        return new NovelGenre[0];
-    }
+    override val genres: Array<NovelGenre> = arrayOf()
 }

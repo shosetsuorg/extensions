@@ -1,13 +1,14 @@
-package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.web_novel;
+package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.web_novel
 
-import com.github.Doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.*;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import org.jsoup.nodes.Document;
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.Novel
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelGenre
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.jsoup.nodes.Document
+import java.io.IOException
 
-import java.io.IOException;
-import java.util.List;
 /*
  * This file is part of shosetsu-extensions.
  * shosetsu-extensions is free software: you can redistribute it and/or modify
@@ -22,7 +23,6 @@ import java.util.List;
  * along with shosetsu-extensions.  If not, see https://www.gnu.org/licenses/.
  * ====================================================================
  */
-
 /**
  * novelreader-extensions
  * 11 / June / 2019
@@ -30,102 +30,44 @@ import java.util.List;
  * @author github.com/doomsdayrs
  */
 //TODO, When you scrape your competitor
-@Deprecated
-public class WebNovel extends ScrapeFormat {
-    public WebNovel(int id) {
-        super(id);
+@Deprecated("")
+class WebNovel : ScrapeFormat() {
+    override val genres: Array<NovelGenre>
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    override val imageURL: String
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+    override val name: String
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+
+    override fun getLatestURL(page: Int): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    public WebNovel(int id, Request.Builder builder) {
-        super(id, builder);
+    override fun getNovelPassage(document: Document): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    public WebNovel(int id, OkHttpClient client) {
-        super(id, client);
+    override fun getSearchString(query: String): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    public WebNovel(int id, Request.Builder builder, OkHttpClient client) {
-        super(id, builder, client);
+    override fun novelPageCombiner(url: String, increment: Int): String {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    @Override
-    public String getName() {
-        return null;
+    override fun parseLatest(document: Document): List<Novel> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    @Override
-    public String getImageURL() {
-        return null;
+    override fun parseNovel(document: Document): NovelPage {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    @Override
-    public String getNovelPassage(Document document) {
-        return null;
+    override fun parseNovel(document: Document, increment: Int): NovelPage {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    @Override
-    public NovelPage parseNovel(Document document) {
-        return null;
-    }
-
-    @Override
-    public String novelPageCombiner(String s, int i) {
-        return null;
-    }
-
-    @Override
-    public List<Novel> parseLatest(Document document) {
-        return null;
-    }
-
-    @Override
-    public NovelPage parseNovel(Document document, int i) {
-        return null;
-    }
-
-    @Override
-    public String getSearchString(String s) {
-        return null;
-    }
-
-    @Override
-    public List<Novel> parseSearch(Document document) {
-        return null;
-    }
-
-
-    @Override
-    public String getNovelPassage(String s) throws IOException {
-        return null;
-    }
-
-    @Override
-    public NovelPage parseNovel(String s) throws IOException {
-        return null;
-    }
-
-    @Override
-    public NovelPage parseNovel(String s, int i) throws IOException {
-        return null;
-    }
-
-    @Override
-    public String getLatestURL(int i) {
-        return null;
-    }
-
-    @Override
-    public List<Novel> parseLatest(String s) throws IOException {
-        return null;
-    }
-
-    @Override
-    public List<Novel> search(String s) throws IOException {
-        return null;
-    }
-
-    @Override
-    public NovelGenre[] getGenres() {
-        return new NovelGenre[0];
+    override fun parseSearch(document: Document): List<Novel> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

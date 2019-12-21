@@ -1,18 +1,15 @@
-package com.github.Doomsdayrs.api.shosetsu.extensions.lang.en;
+package com.github.doomsdayrs.api.shosetsu.extensions.lang.en
 
-import com.github.Doomsdayrs.api.shosetsu.extensions.lang.en.novel_full.NovelFull;
-import com.github.Doomsdayrs.api.shosetsu.services.core.dep.Formatter;
-import com.github.Doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelChapter;
-import com.github.Doomsdayrs.api.shosetsu.services.core.objects.NovelPage;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.ResponseBody;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
-import java.net.URL;
+import com.github.doomsdayrs.api.shosetsu.extensions.lang.en.novel_full.NovelFull
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.Formatter
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.ResponseBody
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import java.io.IOException
+import java.net.URL
 
 /*
  * This file is part of shosetsu-extensions.
@@ -28,47 +25,46 @@ import java.net.URL;
  * along with shosetsu-extensions.  If not, see https://www.gnu.org/licenses/.
  * ====================================================================
  */
-
 /**
  * novelreader-extensions
  * 03 / June / 2019
  *
  * @author github.com/doomsdayrs
  */
-class Test {
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Formatter formatter = new NovelFull();
+internal class Test {
+    // The below is methods robbed from ScrapeFormat class
+    private val builder: Request.Builder? = null
+    private val client: OkHttpClient? = null
+    @Throws(IOException::class)
+    private fun request(url: String?): ResponseBody? {
+        println(url)
+        val u = URL(url)
+        val request = builder!!.url(u).build()
+        return client!!.newCall(request).execute().body()
+    }
 
-        NovelPage novelPage = formatter.parseNovel("http://novelfull.com/my-cold-and-elegant-ceo-wife.html");
+    @Throws(IOException::class)
+    private fun docFromURL(URL: String): Document {
+        return Jsoup.parse(request(URL)!!.string())
+    }
 
-        //     ArrayList<NovelChapter> novelChapters = new ArrayList<>(novelPage.novelChapters);
-        for (int x = 1; x < novelPage.maxChapterPage; x++) {
-            if (x==39){
-                System.out.println("Check");
-            }
-
-            novelPage = formatter.parseNovel("http://novelfull.com/my-cold-and-elegant-ceo-wife.html", x);
-            //  novelChapters.addAll(novelPage.novelChapters);
-            for (NovelChapter novelChapter : novelPage.novelChapters) {
-                System.out.println(novelChapter);
+    companion object {
+        @Throws(IOException::class, InterruptedException::class)
+        @JvmStatic
+        fun main(args: Array<String>) {
+            val formatter: Formatter = NovelFull()
+            var novelPage: NovelPage = formatter.parseNovel("http://novelfull.com/my-cold-and-elegant-ceo-wife.html")
+            //     ArrayList<NovelChapter> novelChapters = new ArrayList<>(novelPage.novelChapters);
+            for (x in 1 until novelPage.maxChapterPage) {
+                if (x == 39) {
+                    println("Check")
+                }
+                novelPage = formatter.parseNovel("http://novelfull.com/my-cold-and-elegant-ceo-wife.html", x)
+                //  novelChapters.addAll(novelPage.novelChapters);
+                for (novelChapter in novelPage.novelChapters) {
+                    System.out.println(novelChapter)
+                }
             }
         }
-
     }
-
-    // The below is methods robbed from ScrapeFormat class
-    private Request.Builder builder;
-    private OkHttpClient client;
-
-    protected ResponseBody request(String url) throws IOException {
-        System.out.println(url);
-        URL u = new URL(url);
-        Request request = this.builder.url(u).build();
-        return this.client.newCall(request).execute().body();
-    }
-
-    private Document docFromURL(String URL) throws IOException {
-        return Jsoup.parse(this.request(URL).string());
-    }
-
 }

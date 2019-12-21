@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.Doomsdayrs.api</groupId>
+    <groupId>com.github.doomsdayrs.api</groupId>
     <artifactId>shosetsu-extensions</artifactId>
     <version>0.1.5</version>
     <build>
@@ -30,15 +30,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.github.Doomsdayrs</groupId>
+            <groupId>com.github.doomsdayrs</groupId>
             <artifactId>shosetsu-services</artifactId>
-            <version>0.1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-            <scope>compile</scope>
+            <version>0.2.4</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
