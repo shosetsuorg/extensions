@@ -5,6 +5,7 @@ package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.box_novel
 import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
 import com.github.doomsdayrs.api.shosetsu.services.core.objects.*
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
 /*
@@ -44,8 +45,8 @@ class BoxNovel : ScrapeFormat(2) {
                 .replace("</p>".toRegex(), "")
     }
 
-    override fun getLatestURL(i: Int): String {
-        return "$baseURL/novel/page/$i/?m_orderby=latest"
+    override fun getLatestURL(page: Int): String {
+        return "$baseURL/novel/page/$page/?m_orderby=latest"
     }
 
     /**
@@ -76,31 +77,19 @@ class BoxNovel : ScrapeFormat(2) {
                     3 -> {
                         subElements = elements[x].select("a")
                         val authors: ArrayList<String> = arrayListOf()
-                        var y = 0
-                        while (y < subElements.size) {
-                            authors[y] = subElements[y].text()
-                            y++
-                        }
+                        for (element: Element in subElements) authors.add(element.text())
                         novelPage.authors = authors.toArray(arrayOf(""))
                     }
                     4 -> {
                         subElements = elements[x].select("a")
                         val artists: ArrayList<String> = arrayListOf()
-                        var y = 0
-                        while (y < subElements.size) {
-                            artists[y] = subElements[y].text()
-                            y++
-                        }
+                        for (element: Element in subElements) artists.add(element.text())
                         novelPage.artists = artists.toArray(arrayOf(""))
                     }
                     5 -> {
                         subElements = elements[x].select("a")
                         val genres: ArrayList<String> = arrayListOf()
-                        var y = 0
-                        while (y < subElements.size) {
-                            genres[y] = subElements[y].text()
-                            y++
-                        }
+                        for (element: Element in subElements) genres.add(element.text())
                         novelPage.genres = genres.toArray(arrayOf(""))
                     }
                     6 -> {
@@ -141,12 +130,8 @@ class BoxNovel : ScrapeFormat(2) {
         return novelPage
     }
 
-    override fun parseNovel(document: Document, i: Int): NovelPage {
+    override fun parseNovel(document: Document, increment: Int): NovelPage {
         return parseNovel(document)
-    }
-
-    fun novelPageCombiner(i: Int, s: String?): String {
-        return ""
     }
 
     override fun parseLatest(document: Document): List<Novel> {
@@ -163,8 +148,8 @@ class BoxNovel : ScrapeFormat(2) {
         return novels
     }
 
-    override fun getSearchString(s: String): String {
-        var s = s
+    override fun getSearchString(query: String): String {
+        var s = query
         s = s.replace("\\+".toRegex(), "%2")
         s = s.replace(" ".toRegex(), "\\+")
         //Turns query into a URL

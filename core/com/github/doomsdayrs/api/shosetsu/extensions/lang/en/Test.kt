@@ -1,7 +1,10 @@
 package com.github.doomsdayrs.api.shosetsu.extensions.lang.en
 
+import com.github.doomsdayrs.api.shosetsu.extensions.lang.en.bestlightnovel.BestLightNovel
+import com.github.doomsdayrs.api.shosetsu.extensions.lang.en.box_novel.BoxNovel
 import com.github.doomsdayrs.api.shosetsu.extensions.lang.en.novel_full.NovelFull
 import com.github.doomsdayrs.api.shosetsu.services.core.dep.Formatter
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.Novel
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.ResponseBody
@@ -34,14 +37,14 @@ internal class Test {
 
     companion object {
         // The below is methods robbed from ScrapeFormat class
-        private val builder: Request.Builder? = null
-        private val client: OkHttpClient? = null
+        private val builder: Request.Builder = Request.Builder()
+        private val client: OkHttpClient = OkHttpClient()
         @Throws(IOException::class)
         private fun request(url: String?): ResponseBody? {
             println(url)
             val u = URL(url)
-            val request = builder!!.url(u).build()
-            return client!!.newCall(request).execute().body()
+            val request = builder.url(u).build()
+            return client.newCall(request).execute().body()
         }
 
         @Throws(IOException::class)
@@ -52,19 +55,10 @@ internal class Test {
         @Throws(IOException::class, InterruptedException::class)
         @JvmStatic
         fun main(args: Array<String>) {
-           // val formatter: Formatter = NovelFull()
-            //var novelPage: NovelPage = formatter.parseNovel("http://novelfull.com/my-cold-and-elegant-ceo-wife.html")
-            //     ArrayList<NovelChapter> novelChapters = new ArrayList<>(novelPage.novelChapters);
-            //  for (x in 1 until novelPage.maxChapterPage) {
-            //      if (x == 39) {
-            //           println("Check")
-            //       }
-            //      novelPage = formatter.parseNovel("http://novelfull.com/my-cold-and-elegant-ceo-wife.html", x)
-            //  novelChapters.addAll(novelPage.novelChapters);
-            //      for (novelChapter in novelPage.novelChapters) {
-            //           System.out.println(novelChapter)
-            //       }
-            //   }
+            val formatter: Formatter = BoxNovel()
+            val novelPages: List<Novel> = formatter.parseLatest(docFromURL(formatter.getLatestURL(1)))
+            for (novel: Novel in novelPages)
+                println(formatter.parseNovel(docFromURL(novel.link)))
         }
     }
 }

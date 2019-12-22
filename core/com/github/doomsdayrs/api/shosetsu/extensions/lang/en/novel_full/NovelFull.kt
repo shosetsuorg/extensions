@@ -4,6 +4,7 @@ package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.novel_full
 import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
 import com.github.doomsdayrs.api.shosetsu.services.core.objects.*
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
 /*
@@ -32,6 +33,8 @@ class NovelFull : ScrapeFormat(1) {
     override val name: String = "NovelFull"
 
     override val imageURL = ""
+
+    override var isIncrementingChapterList: Boolean = true
 
     private fun stripListing(data: Elements, novel: Novel) {
         for (y in data.indices) {
@@ -151,21 +154,13 @@ class NovelFull : ScrapeFormat(1) {
                     1 -> {
                         subelemets = elements[x].select("a")
                         val authors: ArrayList<String> = arrayListOf()
-                        var y = 0
-                        while (y < subelemets.size) {
-                            authors[y] = subelemets[y].text()
-                            y++
-                        }
+                        for (element: Element in subelemets) authors.add(element.text())
                         novelPage.authors = authors.toArray(arrayOf(""))
                     }
                     2 -> {
                         subelemets = elements[x].select("a")
                         val genres: ArrayList<String> = arrayListOf()
-                        var y = 0
-                        while (y < subelemets.size) {
-                            genres[y] = subelemets[y].text()
-                            y++
-                        }
+                        for (element: Element in subelemets) genres.add(element.text())
                         novelPage.genres = genres.toArray(arrayOf(""))
                     }
                     3 -> {
@@ -228,7 +223,6 @@ class NovelFull : ScrapeFormat(1) {
         }
         return novels
     }
-
 
     override val genres: Array<NovelGenre>
         get() {
