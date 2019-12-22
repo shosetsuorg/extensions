@@ -4,8 +4,6 @@ import com.github.doomsdayrs.api.shosetsu.services.core.dep.ScrapeFormat
 import com.github.doomsdayrs.api.shosetsu.services.core.objects.Novel
 import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelGenre
 import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.jsoup.nodes.Document
 
 //TODO, complete this

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.github.doomsdayrs.api.shosetsu.extensions.lang.en.syosetu
 
 

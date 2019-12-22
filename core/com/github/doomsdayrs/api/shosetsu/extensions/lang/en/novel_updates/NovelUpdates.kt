@@ -32,8 +32,6 @@ import java.util.*
 class NovelUpdates : ScrapeFormat() {
     private val baseURL = "https://www.novelupdates.com"
 
-    val iD: Int
-        get() = 0
     override val genres: Array<NovelGenre>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
     override val imageURL: String
@@ -44,8 +42,8 @@ class NovelUpdates : ScrapeFormat() {
 
 
     @Throws(IOException::class)
-    fun getNovelPassage(responseBody: String?): String? {
-        val document = docFromURL(responseBody!!)
+    fun getNovelPassage(): String? {
+       // val document = docFromURL(responseBody!!)
         return null
     }
 
@@ -54,12 +52,8 @@ class NovelUpdates : ScrapeFormat() {
         val document = docFromURL(URL!!)
         val chapters = document.select("table")[1].select("tr")
         for (element in chapters) {
-            val elements = element.select("td")
+           // val elements = element.select("td")
         }
-        return null
-    }
-
-    fun parseNovel(responseBody: String?, increment: Int): NovelPage? {
         return null
     }
 
