@@ -144,7 +144,7 @@ class BestLightNovel : ScrapeFormat(5) {
                         when (x) {
                             0 -> {
                                 val titleLink = elements[x].selectFirst("a")
-                                novelChapter.title = titleLink.attr("title")
+                                novelChapter.title = titleLink.attr("title").replace(novelPage.title,"")
                                 novelChapter.link = titleLink.attr("href")
                             }
                             1 -> novelChapter.release = elements[x].text()
@@ -190,7 +190,6 @@ class BestLightNovel : ScrapeFormat(5) {
         s = "$baseURL/search_novels/$s"
         return s
     }
-
 
     override fun parseSearch(document: Document): List<Novel> {
         val novels: MutableList<Novel> = ArrayList()

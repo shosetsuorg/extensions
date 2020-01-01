@@ -6,7 +6,7 @@
 
     <groupId>com.github.doomsdayrs.api</groupId>
     <artifactId>shosetsu-extensions</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
     <properties>
         <kotlin.version>1.3.61</kotlin.version>
     </properties>
