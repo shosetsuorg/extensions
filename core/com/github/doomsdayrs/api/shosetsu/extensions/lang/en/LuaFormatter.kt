@@ -69,10 +69,7 @@ class LuaFormatter(val luaObject: LuaValue) : ScrapeFormat(luaObject.get("getID"
     }
 
     override fun parseNovel(document: Document): NovelPage {
-        val func  = luaObject.get("parseNovel")
-        val doc = coerce(document)
-        val result = func.call(doc)
-        return CoerceLuaToJava.coerce(result, NovelPage::class.java) as NovelPage
+        return CoerceLuaToJava.coerce(luaObject.get("parseNovel").call(coerce(document)), NovelPage::class.java) as NovelPage
     }
 
     override fun parseNovel(document: Document, increment: Int): NovelPage {
