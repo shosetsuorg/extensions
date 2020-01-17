@@ -59,6 +59,8 @@ internal class Test {
             println(luaFormatter.name)
             println(luaFormatter.formatterID)
             println(luaFormatter.imageURL)
+            println(luaFormatter.getLatestURL(0))
+            println(luaFormatter.getNovelPassage(docFromURL("https://bestlightnovel.com/novel_888153453/chapter_286")))
         }
     }
 }

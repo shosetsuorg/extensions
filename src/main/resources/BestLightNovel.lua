@@ -3,11 +3,11 @@
 --- Created by doomsdayrs.
 --- DateTime: 1/16/20 9:25 PM
 ---
+local baseURL = "https://bestlightnovel.com"
 
 function getID()
     return 5
 end
-
 
 function getName()
     return "BestLightNovel"
@@ -15,4 +15,26 @@ end
 
 function getImageURL()
     return "None"
+end
+
+function getLatestURL(page)
+    i = page
+    if i <= 0 then
+        i = 1
+    end
+    return baseURL .. "/novel_list?type=latest&category=all&state=all&page=" .. i
+end
+
+function getNovelPassage(document)
+    elements = document:selectFirst("div.vung_doc"):select("p")
+    print(elements:size())
+    if  elements:size()> 0 then
+        local passage = ""
+        for i = 0, elements:size()-1, 1 do
+            passage = passage .. elements:get(i):text() .. "\n"
+        end
+        return passage
+    else
+        return "NOT YET TRANSLATED"
+    end
 end

@@ -6,6 +6,7 @@ import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelGenre
 import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage
 import org.jsoup.nodes.Document
 import org.luaj.vm2.LuaValue
+import org.luaj.vm2.lib.jse.CoerceJavaToLua
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -39,16 +40,18 @@ class LuaFormatter(val luaObject: LuaValue) : ScrapeFormat(luaObject.get("getID"
 
     override val imageURL: String
         get() = luaObject.get("getImageURL").call().toString()
+
     override val name: String
         get() = luaObject.get("getName").call().toString()
 
 
     override fun getLatestURL(page: Int): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return luaObject.get("getLatestURL").call(LuaValue.valueOf(page)).toString()
     }
 
     override fun getNovelPassage(document: Document): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val doc = CoerceJavaToLua.coerce(document)
+        return luaObject.get("getNovelPassage").call(doc).toString()
     }
 
     override fun getSearchString(query: String): String {
