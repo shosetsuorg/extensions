@@ -111,5 +111,11 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.luaj</groupId>
+            <artifactId>luaj-jse</artifactId>
+            <version>3.0.1</version>
+        </dependency>
     </dependencies>
 </project>
