@@ -10,7 +10,15 @@ function newNovelPage()
 end
 
 function ArrayList()
-    return luajava.newInstance("java.util.Arraylist")
+    return luajava.newInstance("java.util.ArrayList")
+end
+
+function StringArray()
+    return luajava.newInstance("com.github.doomsdayrs.api.shosetsu.extensions.lang.en.StringArrays")
+end
+
+function NovelStatus()
+
 end
 
 local baseURL = "https://bestlightnovel.com"
@@ -61,19 +69,35 @@ function parseNovel(document)
     subElement = nil
     subElements = nil
     strings = ArrayList()
-    for i = 1, elements:size() - 1, 1 do
+    for i = 0, elements:size() - 1, 1 do
         e = elements:get(i)
         if i == 0 then
             novelPage:setTitle(e:selectFirst("h1"):text())
         elseif i == 1 then
-            strings = ArrayList()
+            strings = StringArray()
             subElements = e:select("a")
-            for y = 0, subElements:size(), 1 do
-                strings:add(subElements:get(y):text())
+            strings:setSize(subElements:size())
+            for y = 0, subElements:size() - 1, 1 do
+                strings:setPosition(y, subElements:get(y):text())
             end
-            novelPage:setAuthors(strings:toArray())
+            novelPage:setAuthors(strings:getStrings())
         elseif i == 2 then
+            strings = StringArray()
+            subElements = e:select("a")
+            strings:setSize(subElements:size())
+            for y = 0, subElements:size() - 1, 1 do
+                strings:setPosition(y, subElements:get(y):text())
+            end
+            novelPage:setGenres(strings:getStrings())
         elseif i == 3 then
+            subElement = e:select("a")
+            text = subElement:text()
+            if text == "" then
+                novelPage:setStatus()
+            elseif text == "" then
+                novelPage:setStatus()
+            else
+            end
         end
     end
     return novelPage

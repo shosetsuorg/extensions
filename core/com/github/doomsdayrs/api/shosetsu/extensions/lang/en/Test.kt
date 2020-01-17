@@ -63,7 +63,7 @@ internal class Test {
             println(luaFormatter.getLatestURL(0))
             //   println(luaFormatter.getNovelPassage(docFromURL("https://bestlightnovel.com/novel_888153453/chapter_286")))
             println(luaFormatter.getSearchString("search a b c"))
-            print(luaFormatter.parseNovel(docFromURL("https://bestlightnovel.com/novel_888153453")))
+            print(luaFormatter.parseNovel(docFromURL("https://bestlightnovel.com/novel_888141076")))
         }
     }
 }
