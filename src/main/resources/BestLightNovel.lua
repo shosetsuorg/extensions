@@ -4,22 +4,7 @@ require("luajava")
 --- Created by doomsdayrs.
 --- DateTime: 1/16/20 9:25 PM
 ---
-
-function newNovelPage()
-    return luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage")
-end
-
-function ArrayList()
-    return luajava.newInstance("java.util.ArrayList")
-end
-
-function StringArray()
-    return luajava.newInstance("com.github.doomsdayrs.api.shosetsu.extensions.lang.en.StringArrays")
-end
-
-function NovelStatus()
-
-end
+local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.extensions.lang.en.LuaSupport")
 
 local baseURL = "https://bestlightnovel.com"
 
@@ -58,7 +43,7 @@ function getNovelPassage(document)
 end
 
 function parseNovel(document)
-    novelPage = newNovelPage()
+    novelPage = LuaSupport:getNovelPage()
     -- Image
     element = document:selectFirst("div.truyen_info_left")
     novelPage:setImageURL(element:selectFirst("img"):attr("src"))
@@ -68,13 +53,13 @@ function parseNovel(document)
     elements = element:select("li")
     subElement = nil
     subElements = nil
-    strings = ArrayList()
+
     for i = 0, elements:size() - 1, 1 do
         e = elements:get(i)
         if i == 0 then
             novelPage:setTitle(e:selectFirst("h1"):text())
         elseif i == 1 then
-            strings = StringArray()
+            strings = LuaSupport:getStringArray()
             subElements = e:select("a")
             strings:setSize(subElements:size())
             for y = 0, subElements:size() - 1, 1 do
@@ -82,7 +67,7 @@ function parseNovel(document)
             end
             novelPage:setAuthors(strings:getStrings())
         elseif i == 2 then
-            strings = StringArray()
+            strings = LuaSupport:getStringArray()
             subElements = e:select("a")
             strings:setSize(subElements:size())
             for y = 0, subElements:size() - 1, 1 do
@@ -92,14 +77,55 @@ function parseNovel(document)
         elseif i == 3 then
             subElement = e:select("a")
             text = subElement:text()
-            if text == "" then
-                novelPage:setStatus()
-            elseif text == "" then
-                novelPage:setStatus()
+            if text == "ongoing" then
+                novelPage:setStatus(LuaSupport:getStatus(0))
+            elseif text == "completed" then
+                novelPage:setStatus(LuaSupport:getStatus(1))
             else
+                novelPage:setStatus(LuaSupport:getStatus(3))
             end
         end
     end
+    -- Description
+    elements = document:selectFirst("div.entry-header"):select("div")
+    for i = 0, elements:size() - 1, 1 do
+        div = elements:get(i)
+        if div:id() == "noidungm" then
+            unformatted = div:text()
+            unformatted = string.gsub(unformatted, "<br>", "\n")
+            novelPage:setDescription(unformatted)
+        end
+    end
+    -- Chapters
+    e = document.selectFirst("div.chapter-list")
+    novelPage:setNovelChapters(LuaSupport:getChapterArrayList())
+    if not e == nil then
+        chapters = e.select("div.row")
+        novelChapters = LuaSupport:getChapterArrayList()
+        for i = 0, chapters:size() - 1, 1 do
+            row = chapters:get(i)
+            novelChapter = LuaSupport:getNovelChapter()
+            elements = row.select("span")
+            for x = 0, elements:size() - 1, 1 do
+                if x == 0 then
+                    titleLink = elements[x].selectFirst("a")
+                    novelChapter.title = titleLink.attr("title").replace(novelPage.title, "")
+                    novelChapter.link = titleLink.attr("href")
+                elseif x == 1 then
+                    novelChapter.release = elements[x].text()
+                end
+            end
+            novelChapter.order = y.toDouble()
+            novelChapters.add(novelChapter)
+        end
+        novelChapters.reverse()
+        novelPage.novelChapters = novelChapters
+    end
+
+
+
+
+
     return novelPage
 end
 

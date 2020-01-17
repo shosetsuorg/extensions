@@ -9,7 +9,7 @@ import java.util.Arrays;
  *
  * @author github.com/doomsdayrs
  */
-public class StringArrays {
+public class StringArray {
     public String[] strings;
 
     public void setSize(int size){
