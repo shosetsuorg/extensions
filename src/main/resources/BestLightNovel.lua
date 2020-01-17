@@ -97,34 +97,32 @@ function parseNovel(document)
         end
     end
     -- Chapters
-    e = document.selectFirst("div.chapter-list")
+    e = document:selectFirst("div.chapter-list")
     novelPage:setNovelChapters(LuaSupport:getChapterArrayList())
     if not e == nil then
-        chapters = e.select("div.row")
+        chapters = e:select("div.row")
         novelChapters = LuaSupport:getChapterArrayList()
         for i = 0, chapters:size() - 1, 1 do
             row = chapters:get(i)
             novelChapter = LuaSupport:getNovelChapter()
-            elements = row.select("span")
+            elements = row:select("span")
             for x = 0, elements:size() - 1, 1 do
                 if x == 0 then
-                    titleLink = elements[x].selectFirst("a")
-                    novelChapter.title = titleLink.attr("title").replace(novelPage.title, "")
-                    novelChapter.link = titleLink.attr("href")
+                    titleLink = elements[x]:selectFirst("a")
+                    novelChapter:setTitle(titleLink:attr("title"):replace(novelPage.title, ""))
+                    novelChapter:setLink(titleLink:attr("href"))
                 elseif x == 1 then
-                    novelChapter.release = elements[x].text()
+                    novelChapter:setRelease(elements[x]:text())
                 end
             end
-            novelChapter.order = y.toDouble()
-            novelChapters.add(novelChapter)
+            novelChapter:setOrder(y)
+            novelChapters:add(novelChapter)
         end
-        novelChapters.reverse()
-        novelPage.novelChapters = novelChapters
+        novelChapters:reverse()
+        LuaSupport:printOut((novelChapters))
+        novelPage:setNovelChapters(novelChapters)
+        LuaSupport:printOut(novelPage:getNovelChapters())
     end
-
-
-
-
 
     return novelPage
 end

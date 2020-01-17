@@ -5,6 +5,7 @@ import okhttp3.Request
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.luaj.vm2.Lua
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.jse.JsePlatform
 import java.io.IOException
@@ -54,7 +55,7 @@ internal class Test {
         @Throws(IOException::class, InterruptedException::class)
         @JvmStatic
         fun main(args: Array<String>) {
-            val globals: LuaValue = JsePlatform.standardGlobals();
+            val globals: LuaValue = JsePlatform.debugGlobals();
             globals.get("dofile").call(LuaValue.valueOf("./BestLightNovel.lua"));
             val luaFormatter: LuaFormatter = LuaFormatter(globals)
             println(luaFormatter.name)
@@ -63,7 +64,9 @@ internal class Test {
             println(luaFormatter.getLatestURL(0))
             //   println(luaFormatter.getNovelPassage(docFromURL("https://bestlightnovel.com/novel_888153453/chapter_286")))
             println(luaFormatter.getSearchString("search a b c"))
-            print(luaFormatter.parseNovel(docFromURL("https://bestlightnovel.com/novel_888141076")))
+            println(luaFormatter.parseNovel(docFromURL("https://bestlightnovel.com/novel_888141076")))
+            println("DEBUG")
+            LuaSupport.printBuffer()
         }
     }
 }

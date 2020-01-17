@@ -11,6 +11,18 @@ import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelStatus
  * @author github.com/doomsdayrs
  */
 class LuaSupport {
+
+    companion object {
+        val buffer: ArrayList<String> = ArrayList()
+        fun printBuffer() {
+            if (buffer.size > 0)
+                for (buf in buffer)
+                    println(buf)
+            else println("Empty buffer")
+            buffer.clear()
+        }
+    }
+
     /**
      * type Type of NovelStatus {0:PUBLISHING,1:COMPLETED,2:PAUSED,3:UNKNOWN}
      */
@@ -34,4 +46,9 @@ class LuaSupport {
 
     val novelChapter: NovelChapter
         get() = NovelChapter()
+
+    fun printOut(any: Any?) {
+        if (any != null)
+            buffer.add("LUA:\t$any")
+    }
 }
