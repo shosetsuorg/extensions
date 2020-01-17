@@ -35,6 +35,10 @@ class LuaSupport {
         }
     }
 
+    fun getCAL(): ArrayList<NovelChapter> {
+        return ArrayList()
+    }
+
     val chapterArrayList: ArrayList<NovelChapter>
         get() = ArrayList()
 
@@ -44,8 +48,9 @@ class LuaSupport {
     val stringArray: StringArray
         get() = StringArray()
 
-    val novelChapter: NovelChapter
-        get() = NovelChapter()
+    fun getNovelChapter(): NovelChapter {
+        return NovelChapter()
+    }
 
     fun printOut(any: Any?) {
         if (any != null)

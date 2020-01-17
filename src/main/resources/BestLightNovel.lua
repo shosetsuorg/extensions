@@ -99,9 +99,10 @@ function parseNovel(document)
     -- Chapters
     e = document:selectFirst("div.chapter-list")
     novelPage:setNovelChapters(LuaSupport:getChapterArrayList())
+    local novelChapters = LuaSupport:getCAL()
+    local novelChapter = LuaSupport:getNovelChapter()
     if not e == nil then
         chapters = e:select("div.row")
-        novelChapters = LuaSupport:getChapterArrayList()
         for i = 0, chapters:size() - 1, 1 do
             row = chapters:get(i)
             novelChapter = LuaSupport:getNovelChapter()
@@ -119,12 +120,11 @@ function parseNovel(document)
             novelChapters:add(novelChapter)
         end
         novelChapters:reverse()
-        LuaSupport:printOut((novelChapters))
+        print((novelChapters))
         novelPage:setNovelChapters(novelChapters)
-        LuaSupport:printOut(novelPage:getNovelChapters())
+        print(novelPage:getNovelChapters())
     end
-
-    return novelPage
+    return novelChapters
 end
 
 function getSearchString(query)
