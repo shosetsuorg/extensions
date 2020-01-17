@@ -5,7 +5,6 @@ import okhttp3.Request
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.luaj.vm2.Lua
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.jse.JsePlatform
 import java.io.IOException
@@ -58,13 +57,24 @@ internal class Test {
             val globals: LuaValue = JsePlatform.debugGlobals();
             globals.get("dofile").call(LuaValue.valueOf("./BestLightNovel.lua"));
             val luaFormatter: LuaFormatter = LuaFormatter(globals)
+
+            // Data
+            println(luaFormatter.genres)
             println(luaFormatter.name)
             println(luaFormatter.formatterID)
             println(luaFormatter.imageURL)
+
+            // Latest
             println(luaFormatter.getLatestURL(0))
-            //   println(luaFormatter.getNovelPassage(docFromURL("https://bestlightnovel.com/novel_888153453/chapter_286")))
-            println(luaFormatter.getSearchString("search a b c"))
-            println(luaFormatter.parseNovel(docFromURL("https://bestlightnovel.com/novel_888141076")))
+            println(luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(0))))
+
+            // Search
+            println(luaFormatter.getSearchString("reinca"))
+            println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
+
+            // Parse novel passage
+            println(luaFormatter.getNovelPassage(docFromURL("https://bestlightnovel.com/novel_888153453/chapter_286")))
+
             println("DEBUG")
             LuaSupport.printBuffer()
         }

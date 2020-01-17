@@ -1,8 +1,6 @@
 package com.github.doomsdayrs.api.shosetsu.extensions.lang.en
 
-import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelChapter
-import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage
-import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelStatus
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.*
 
 /**
  * com.github.doomsdayrs.api.shosetsu.extensions.lang.en
@@ -35,6 +33,19 @@ class LuaSupport {
         }
     }
 
+    fun getGAL(): Array<NovelGenre> {
+        return arrayOf()
+    }
+
+    fun reverseAL(array: ArrayList<Any>): ArrayList<Any> {
+        array.reverse();
+        return array
+    }
+
+    fun getNAL(): ArrayList<Novel> {
+        return ArrayList()
+    }
+
     fun getCAL(): ArrayList<NovelChapter> {
         return ArrayList()
     }
@@ -47,6 +58,11 @@ class LuaSupport {
 
     val stringArray: StringArray
         get() = StringArray()
+
+    fun getNovel(): Novel {
+        return Novel()
+    }
+
 
     fun getNovelChapter(): NovelChapter {
         return NovelChapter()

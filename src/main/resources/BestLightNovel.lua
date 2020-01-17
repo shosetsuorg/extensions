@@ -5,8 +5,11 @@ require("luajava")
 --- DateTime: 1/16/20 9:25 PM
 ---
 local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.extensions.lang.en.LuaSupport")
-
 local baseURL = "https://bestlightnovel.com"
+
+function genres()
+    return LuaSupport:getGAL()
+end
 
 function getID()
     return 5
@@ -99,32 +102,64 @@ function parseNovel(document)
     -- Chapters
     e = document:selectFirst("div.chapter-list")
     novelPage:setNovelChapters(LuaSupport:getChapterArrayList())
-    local novelChapters = LuaSupport:getCAL()
-    local novelChapter = LuaSupport:getNovelChapter()
-    if not e == nil then
-        chapters = e:select("div.row")
-        for i = 0, chapters:size() - 1, 1 do
-            row = chapters:get(i)
-            novelChapter = LuaSupport:getNovelChapter()
-            elements = row:select("span")
-            for x = 0, elements:size() - 1, 1 do
-                if x == 0 then
-                    titleLink = elements[x]:selectFirst("a")
-                    novelChapter:setTitle(titleLink:attr("title"):replace(novelPage.title, ""))
-                    novelChapter:setLink(titleLink:attr("href"))
-                elseif x == 1 then
-                    novelChapter:setRelease(elements[x]:text())
-                end
+    novelChapters = LuaSupport:getCAL()
+    novelChapter = LuaSupport:getNovelChapter()
+    chapters = e:select("div.row")
+    for i = 0, chapters:size() - 1, 1 do
+        row = chapters:get(i)
+        novelChapter = LuaSupport:getNovelChapter()
+        elements = row:select("span")
+        for x = 0, elements:size() - 1, 1 do
+            if x == 0 then
+                titleLink = elements:get(x):selectFirst("a")
+                titleAttr = titleLink:attr("title")
+                pageTitle = novelPage:getTitle()
+                novelChapter:setTitle(string.gsub(titleAttr, pageTitle, ""):match("^%s*(.-)%s*$"))
+                novelChapter:setLink(titleLink:attr("href"))
+            elseif x == 1 then
+                novelChapter:setRelease(elements:get(x):text())
             end
-            novelChapter:setOrder(y)
-            novelChapters:add(novelChapter)
         end
-        novelChapters:reverse()
-        print((novelChapters))
-        novelPage:setNovelChapters(novelChapters)
-        print(novelPage:getNovelChapters())
+        novelChapter:setOrder(y)
+        novelChapters:add(novelChapter)
     end
-    return novelChapters
+    novelChapters = LuaSupport:reverseAL(novelChapters)
+    novelPage:setNovelChapters(novelChapters)
+    return novelPage
+end
+
+function novelPageCombiner(url, increment)
+    return ""
+end
+
+function parseLatest(document)
+    novels = LuaSupport:getNAL()
+    elements = document:select("div.update_item.list_category")
+    for i = 1, elements:size() - 1, 1 do
+        element = elements:get(i)
+        novel = LuaSupport:getNovel()
+        e = element:selectFirst("h3.nowrap"):selectFirst("a")
+        novel:setTitle(  e:attr("title"))
+        novel:setLink (  e:attr("href"))
+        novel:setImageURL (  element:selectFirst("img"):attr("src"))
+        novels:add(novel)
+    end
+    return novels
+end
+
+function parseSearch(document)
+    novels = LuaSupport:getNAL()
+    elements = document:select("div.update_item.list_category")
+    for i = 1, elements:size() - 1, 1 do
+        element = elements:get(i)
+        novel = LuaSupport:getNovel()
+        e = element:selectFirst("h3.nowrap"):selectFirst("a")
+        novel:setTitle(  e:attr("title"))
+        novel:setLink (  e:attr("href"))
+        novel:setImageURL (  element:selectFirst("img"):attr("src"))
+        novels:add(novel)
+    end
+    return novels
 end
 
 function getSearchString(query)

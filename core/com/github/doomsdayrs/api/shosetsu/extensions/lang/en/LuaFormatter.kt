@@ -6,7 +6,6 @@ import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelGenre
 import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage
 import org.jsoup.nodes.Document
 import org.luaj.vm2.LuaValue
-import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import org.luaj.vm2.lib.jse.CoerceJavaToLua.coerce
 import org.luaj.vm2.lib.jse.CoerceLuaToJava
 
@@ -39,7 +38,7 @@ class LuaFormatter(val luaObject: LuaValue) : ScrapeFormat(luaObject.get("getID"
 
 
     override val genres: Array<NovelGenre>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+        get() = CoerceLuaToJava.coerce(luaObject.get("genres").call(), Array<NovelGenre>::class.java) as Array<NovelGenre>
 
     override val imageURL: String
         get() = luaObject.get("getImageURL").call().toString()
@@ -61,18 +60,18 @@ class LuaFormatter(val luaObject: LuaValue) : ScrapeFormat(luaObject.get("getID"
     }
 
     override fun novelPageCombiner(url: String, increment: Int): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val out = luaObject.get("novelPageCombiner").call(LuaValue.valueOf(url), LuaValue.valueOf(increment))
+        return out.toString()
     }
 
     override fun parseLatest(document: Document): List<Novel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val out = luaObject.get("parseLatest").call(coerce(document))
+        return CoerceLuaToJava.coerce(out, ArrayList::class.java) as ArrayList<Novel>
     }
 
     override fun parseNovel(document: Document): NovelPage {
         val out = luaObject.get("parseNovel").call(coerce(document))
-        println(out.tojstring())
-        //   return CoerceLuaToJava.coerce(, NovelPage::class.java) as NovelPage
-        return NovelPage()
+        return CoerceLuaToJava.coerce(out, NovelPage::class.java) as NovelPage
     }
 
     override fun parseNovel(document: Document, increment: Int): NovelPage {
@@ -80,6 +79,7 @@ class LuaFormatter(val luaObject: LuaValue) : ScrapeFormat(luaObject.get("getID"
     }
 
     override fun parseSearch(document: Document): List<Novel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val out = luaObject.get("parseSearch").call(coerce(document))
+        return CoerceLuaToJava.coerce(out, ArrayList::class.java) as ArrayList<Novel>
     }
 }
