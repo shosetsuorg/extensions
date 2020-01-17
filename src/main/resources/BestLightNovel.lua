@@ -9,6 +9,10 @@ function newNovelPage()
     return luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage")
 end
 
+function ArrayList()
+    return luajava.newInstance("java.util.Arraylist")
+end
+
 local baseURL = "https://bestlightnovel.com"
 
 function getID()
@@ -56,12 +60,18 @@ function parseNovel(document)
     elements = element:select("li")
     subElement = nil
     subElements = nil
-    arraylist = require("arraylist").Create()
+    strings = ArrayList()
     for i = 1, elements:size() - 1, 1 do
         e = elements:get(i)
         if i == 0 then
             novelPage:setTitle(e:selectFirst("h1"):text())
         elseif i == 1 then
+            strings = ArrayList()
+            subElements = e:select("a")
+            for y = 0, subElements:size(), 1 do
+                strings:add(subElements:get(y):text())
+            end
+            novelPage:setAuthors(strings:toArray())
         elseif i == 2 then
         elseif i == 3 then
         end
