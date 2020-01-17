@@ -37,6 +37,7 @@ internal class Test {
         // The below is methods robbed from ScrapeFormat class
         private val builder: Request.Builder = Request.Builder()
         private val client: OkHttpClient = OkHttpClient()
+
         @Throws(IOException::class)
         private fun request(url: String?): ResponseBody? {
             println(url)
@@ -60,7 +61,9 @@ internal class Test {
             println(luaFormatter.formatterID)
             println(luaFormatter.imageURL)
             println(luaFormatter.getLatestURL(0))
-            println(luaFormatter.getNovelPassage(docFromURL("https://bestlightnovel.com/novel_888153453/chapter_286")))
+            //   println(luaFormatter.getNovelPassage(docFromURL("https://bestlightnovel.com/novel_888153453/chapter_286")))
+            println(luaFormatter.getSearchString("search a b c"))
+            print(luaFormatter.parseNovel(docFromURL("https://bestlightnovel.com/novel_888153453")))
         }
     }
 }

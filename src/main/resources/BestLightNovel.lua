@@ -3,6 +3,11 @@
 --- Created by doomsdayrs.
 --- DateTime: 1/16/20 9:25 PM
 ---
+
+function newNovelPage()
+    return luajava:newinstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage")
+end
+
 local baseURL = "https://bestlightnovel.com"
 
 function getID()
@@ -29,7 +34,7 @@ function getNovelPassage(document)
     elements = document:selectFirst("div.vung_doc"):select("p")
     print(elements:size())
     if  elements:size()> 0 then
-        local passage = ""
+        passage = ""
         for i = 0, elements:size()-1, 1 do
             passage = passage .. elements:get(i):text() .. "\n"
         end
@@ -38,3 +43,14 @@ function getNovelPassage(document)
         return "NOT YET TRANSLATED"
     end
 end
+
+
+function parseNovel(document)
+    novelPage = newNovelPage()
+    return novelPage
+end
+
+function getSearchString(query)
+     return baseURL .. "/search_novels/" .. string.gsub(query," ","_")
+end
+

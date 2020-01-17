@@ -31,9 +31,7 @@ import org.jsoup.select.Elements
 class BestLightNovel : ScrapeFormat(5) {
     private val baseURL = "https://bestlightnovel.com"
 
-
     override val name: String = "BestLightNovel"
-
 
     override val imageURL: String = ""
 

@@ -7,6 +7,8 @@ import com.github.doomsdayrs.api.shosetsu.services.core.objects.NovelPage
 import org.jsoup.nodes.Document
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.jse.CoerceJavaToLua
+import org.luaj.vm2.lib.jse.CoerceJavaToLua.coerce
+import org.luaj.vm2.lib.jse.CoerceLuaToJava
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -35,6 +37,7 @@ import org.luaj.vm2.lib.jse.CoerceJavaToLua
  */
 class LuaFormatter(val luaObject: LuaValue) : ScrapeFormat(luaObject.get("getID").call().toint()) {
 
+
     override val genres: Array<NovelGenre>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
@@ -50,12 +53,11 @@ class LuaFormatter(val luaObject: LuaValue) : ScrapeFormat(luaObject.get("getID"
     }
 
     override fun getNovelPassage(document: Document): String {
-        val doc = CoerceJavaToLua.coerce(document)
-        return luaObject.get("getNovelPassage").call(doc).toString()
+        return luaObject.get("getNovelPassage").call(coerce(document)).toString()
     }
 
     override fun getSearchString(query: String): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return luaObject.get("getSearchString").call(query).toString()
     }
 
     override fun novelPageCombiner(url: String, increment: Int): String {
@@ -67,11 +69,14 @@ class LuaFormatter(val luaObject: LuaValue) : ScrapeFormat(luaObject.get("getID"
     }
 
     override fun parseNovel(document: Document): NovelPage {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val func  = luaObject.get("parseNovel")
+        val doc = coerce(document)
+        val result = func.call(doc)
+        return CoerceLuaToJava.coerce(result, NovelPage::class.java) as NovelPage
     }
 
     override fun parseNovel(document: Document, increment: Int): NovelPage {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return parseNovel(document)
     }
 
     override fun parseSearch(document: Document): List<Novel> {
