@@ -95,7 +95,7 @@ function parseNovel(document)
             subElements = elements:get(i):select("a")
             authors = LuaSupport:getStringArray()
             authors:setSize(subElements:size())
-            for y = 0, subElements:size(), 1 do
+            for y = 0, subElements:size()-1, 1 do
                 authors:setPosition(y, subElements:get(y):text())
             end
             novelPage:setAuthors(authors:getStrings())
@@ -103,7 +103,7 @@ function parseNovel(document)
             subElements = elements:get(i):select("a")
             artists = LuaSupport:getStringArray()
             artists:setSize(subElements:size())
-            for y = 0, subElements:size(), 1 do
+            for y = 0, subElements:size()-1, 1 do
                 artists:setPosition(y, subElements:get(y):text())
             end
             novelPage:setArtists(artists:getStrings())
@@ -111,7 +111,7 @@ function parseNovel(document)
             subElements = elements:get(i):select("a")
             genres = LuaSupport:getStringArray()
             genres:setSize(subElements:size())
-            for y = 0, subElements:size(), 1 do
+            for y = 0, subElements:size()-1, 1 do
                 genres:setPosition(y, subElements:get(y):text())
             end
             novelPage:setArtists(genres:getStrings())
@@ -135,7 +135,7 @@ function parseNovel(document)
     novelChapters = LuaSupport:getCAL()
     elements = document:select("li.wp-manga-chapter")
     a = elements:size()
-    for i = 0, elements:size(), 1 do
+    for i = 0, elements:size()-1, 1 do
         novelChapter = LuaSupport:getNovelChapter()
         novelChapter:setLink(element:selectFirst("a"):attr("href"))
         novelChapter:setTitle(element:selectFirst("a"):text())
