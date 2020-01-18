@@ -28,12 +28,11 @@ import org.jsoup.select.Elements
  *
  * @author github.com/doomsdayrs
  */
+@Deprecated("Lua version")
 class BestLightNovel : ScrapeFormat(5) {
     private val baseURL = "https://bestlightnovel.com"
 
-
     override val name: String = "BestLightNovel"
-
 
     override val imageURL: String = ""
 
@@ -47,7 +46,8 @@ class BestLightNovel : ScrapeFormat(5) {
         val elements = document.selectFirst("div.vung_doc").select("p")
         val stringBuilder = StringBuilder()
         if (elements.size != 0) {
-            for (element in elements) stringBuilder.append(element.text()).append("\n")
+            for (element in elements)
+                stringBuilder.append(element.text()).append("\n")
         } else stringBuilder.append("NOT YET TRANSLATED")
         return stringBuilder.toString()
     }

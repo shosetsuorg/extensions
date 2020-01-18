@@ -1,17 +1,19 @@
 package com.github.doomsdayrs.api.shosetsu.extensions.lang.en
 
-import com.github.doomsdayrs.api.shosetsu.extensions.lang.en.bestlightnovel.BestLightNovel
-import com.github.doomsdayrs.api.shosetsu.extensions.lang.en.box_novel.BoxNovel
-import com.github.doomsdayrs.api.shosetsu.extensions.lang.en.novel_full.NovelFull
-import com.github.doomsdayrs.api.shosetsu.services.core.dep.Formatter
-import com.github.doomsdayrs.api.shosetsu.services.core.objects.Novel
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.LuaFormatter
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.luaj.vm2.LuaValue
+import org.luaj.vm2.lib.jse.JsePlatform
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.net.URL
+import java.util.concurrent.TimeUnit
+
 
 /*
  * This file is part of shosetsu-extensions.
@@ -39,6 +41,7 @@ internal class Test {
         // The below is methods robbed from ScrapeFormat class
         private val builder: Request.Builder = Request.Builder()
         private val client: OkHttpClient = OkHttpClient()
+
         @Throws(IOException::class)
         private fun request(url: String?): ResponseBody? {
             println(url)
@@ -55,10 +58,41 @@ internal class Test {
         @Throws(IOException::class, InterruptedException::class)
         @JvmStatic
         fun main(args: Array<String>) {
-            val formatter: Formatter = BoxNovel()
-            val novelPages: List<Novel> = formatter.parseLatest(docFromURL(formatter.getLatestURL(1)))
-            for (novel: Novel in novelPages)
-                println(formatter.parseNovel(docFromURL(novel.link)))
+            val globals: LuaValue = JsePlatform.debugGlobals();
+            globals.get("dofile").call(LuaValue.valueOf("./Syosetsu.lua"));
+            globals.checkglobals().STDOUT = System.out
+
+            val luaFormatter: LuaFormatter = LuaFormatter(globals)
+
+
+            // Data
+            println(luaFormatter.genres)
+            println(luaFormatter.name)
+            println(luaFormatter.formatterID)
+            println(luaFormatter.imageURL)
+
+            // Latest
+            TimeUnit.SECONDS.sleep(1)
+            val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
+            println()
+
+            // Search
+            TimeUnit.SECONDS.sleep(1)
+            println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
+            println()
+
+            // Novel
+            TimeUnit.SECONDS.sleep(1)
+            val novel = luaFormatter.parseNovel(docFromURL(luaFormatter.novelPageCombiner(list[0].link,2)),2)
+            println(novel)
+
+            // Parse novel passage
+            TimeUnit.SECONDS.sleep(1)
+            println(luaFormatter.getNovelPassage(docFromURL(novel.novelChapters[0].link)))
+            println()
+
+            println("DEBUG")
+            LuaSupport.printBuffer()
         }
     }
 }

@@ -1,0 +1,25 @@
+{
+  "comments": [
+    "This is a file downloaded from the repo",
+    "Each entry is it's own formatter",
+    "Key is the name of the file, ID has to be unique, md5 is to confirm legitimacy of file",
+    "If the md5 of the file on the phone is different then what this says, the application will refuse to run the MD5"
+  ],
+
+  "BestLightNovel": {
+    "id": 5,
+    "md5": "30aa6dd46af82824ab1ba66e9897afd0"
+  },
+  "BoxNovel": {
+    "id": 2,
+    "md5": "2c04f7dd4df5786c28b1eaae02620405"
+  },
+  "NovelFull": {
+    "id": 1,
+    "md5": "63eee09671ef20e71955c757394af431"
+  },
+  "Syosetsu": {
+    "id": 3,
+    "md5": "394584f38257724e9778e1d1f70fb8d9"
+  }
+}
