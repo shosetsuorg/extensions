@@ -1,3 +1,4 @@
+-- {"id":1}
 --- @author Doomsdayrs
 --- @version 1.0.0
 
@@ -195,12 +196,12 @@ function parseNovelI(document, increment)
                 novelChapter:setLink(baseURL .. link)
             end
             novelChapter:setTitle(chapterData:attr("title"))
-         --   print(novelChapter)
-           -- if not (string.find(novelChapter:getLink(), "null") == nil) then
-                novelChapter:setOrder(a)
-                a = a + 1
-                novelChapters:add(novelChapter)
-        --    end
+            --   print(novelChapter)
+            -- if not (string.find(novelChapter:getLink(), "null") == nil) then
+            novelChapter:setOrder(a)
+            a = a + 1
+            novelChapters:add(novelChapter)
+            --    end
         end
     end
     novelPage:setNovelChapters(novelChapters)
