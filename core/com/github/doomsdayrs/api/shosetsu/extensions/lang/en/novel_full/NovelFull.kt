@@ -96,7 +96,8 @@ class NovelFull : ScrapeFormat(1) {
         return this.parseNovel(document, 1)
     }
 
-    override fun parseNovel(document: Document, increment: Int): NovelPage {
+    override fun parseNovel(document: Document, increment: Int): NovelPage
+    {
         val novelPage = NovelPage()
         //Sets image
         novelPage.imageURL = baseURL + document.selectFirst("div.book").selectFirst("img").attr("src")

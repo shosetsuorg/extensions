@@ -167,6 +167,10 @@ function parseNovel(document)
     return novelPage
 end
 
+function parseNovelI(document, increment)
+    return parseNovel(document)
+end
+
 function novelPageCombiner(url, increment)
     return ""
 end

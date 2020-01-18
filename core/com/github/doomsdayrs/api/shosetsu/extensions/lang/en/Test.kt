@@ -9,8 +9,10 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.jse.JsePlatform
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.net.URL
+import java.util.concurrent.TimeUnit
 
 
 /*
@@ -57,8 +59,11 @@ internal class Test {
         @JvmStatic
         fun main(args: Array<String>) {
             val globals: LuaValue = JsePlatform.debugGlobals();
-            globals.get("dofile").call(LuaValue.valueOf("./BestLightNovel.lua"));
+            globals.get("dofile").call(LuaValue.valueOf("./NovelFull.lua"));
+            globals.checkglobals().STDOUT = System.out
+
             val luaFormatter: LuaFormatter = LuaFormatter(globals)
+
 
             // Data
             println(luaFormatter.genres)
@@ -67,15 +72,24 @@ internal class Test {
             println(luaFormatter.imageURL)
 
             // Latest
-            println(luaFormatter.getLatestURL(0))
-            println(luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(0))))
+            TimeUnit.SECONDS.sleep(1)
+            val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(0)))
+            println()
 
             // Search
-            println(luaFormatter.getSearchString("reinca"))
+            TimeUnit.SECONDS.sleep(1)
             println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
+            println()
+
+            // Novel
+            TimeUnit.SECONDS.sleep(1)
+            val novel = luaFormatter.parseNovel(docFromURL(luaFormatter.novelPageCombiner(list[0].link,2)),2)
+            println(novel)
 
             // Parse novel passage
-            println(luaFormatter.getNovelPassage(docFromURL("https://bestlightnovel.com/novel_888153453/chapter_286")))
+            TimeUnit.SECONDS.sleep(1)
+            println(luaFormatter.getNovelPassage(docFromURL(novel.novelChapters[0].link)))
+            println()
 
             println("DEBUG")
             LuaSupport.printBuffer()

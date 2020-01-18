@@ -97,7 +97,7 @@ end
 --- @param document : Jsoup document of the novel information page
 --- @param increment number : Page #
 --- @return NovelPage : java object
-function parseNovel(document, increment)
+function parseNovelI(document, increment)
     novelPage = LuaSupport:getNovelPage()
     -- TODO Complete
     return novelPage
