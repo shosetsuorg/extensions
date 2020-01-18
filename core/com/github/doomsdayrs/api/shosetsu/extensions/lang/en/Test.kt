@@ -1,5 +1,7 @@
 package com.github.doomsdayrs.api.shosetsu.extensions.lang.en
 
+import com.github.doomsdayrs.api.shosetsu.services.core.dep.LuaFormatter
+import com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.ResponseBody
