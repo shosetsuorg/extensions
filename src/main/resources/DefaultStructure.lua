@@ -4,7 +4,8 @@
 
 luajava = require("luajava")
 
-local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
+-- This variable is only for testing sake, Please comment it out when done or the application WILL crash
+--local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
 local baseURL = "TODO"
 
 --- @return boolean

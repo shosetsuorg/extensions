@@ -9,7 +9,7 @@ luajava = require("luajava")
 --- Created by doomsdayrs.
 --- DateTime: 1/16/20 9:25 PM
 ---
-local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
+--local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
 local baseURL = "https://bestlightnovel.com"
 
 --- @return boolean

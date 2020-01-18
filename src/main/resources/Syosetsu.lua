@@ -4,7 +4,7 @@
 
 luajava = require("luajava")
 
-local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
+--local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
 
