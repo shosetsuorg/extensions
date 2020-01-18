@@ -27,6 +27,7 @@ import org.jsoup.select.Elements
  *
  * @author github.com/doomsdayrs
  */
+@Deprecated("Lua version")
 class NovelFull : ScrapeFormat(1) {
     private val baseURL = "http://novelfull.com"
 
@@ -96,8 +97,7 @@ class NovelFull : ScrapeFormat(1) {
         return this.parseNovel(document, 1)
     }
 
-    override fun parseNovel(document: Document, increment: Int): NovelPage
-    {
+    override fun parseNovel(document: Document, increment: Int): NovelPage {
         val novelPage = NovelPage()
         //Sets image
         novelPage.imageURL = baseURL + document.selectFirst("div.book").selectFirst("img").attr("src")

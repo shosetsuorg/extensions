@@ -92,6 +92,8 @@ end
 --- @param page number value
 --- @return string url of said latest page
 function getLatestURL(page)
+    print(baseURL)
+    print(page)
     return baseURL .. "/latest-release-novel?page=" .. page
 end
 

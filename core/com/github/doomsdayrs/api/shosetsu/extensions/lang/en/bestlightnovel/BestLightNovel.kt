@@ -28,6 +28,7 @@ import org.jsoup.select.Elements
  *
  * @author github.com/doomsdayrs
  */
+@Deprecated("Lua version")
 class BestLightNovel : ScrapeFormat(5) {
     private val baseURL = "https://bestlightnovel.com"
 

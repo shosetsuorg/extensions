@@ -28,6 +28,7 @@ import org.jsoup.select.Elements
  *
  * @author github.com/doomsdayrs
  */
+@Deprecated("Lua version")
 class BoxNovel : ScrapeFormat(2) {
     private val baseURL = "https://boxnovel.com"
 

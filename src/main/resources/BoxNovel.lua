@@ -162,7 +162,7 @@ end
 --- @param url string       url of novel page
 --- @param increment number which page
 function novelPageCombiner(url, increment)
-    return ""
+    return url
 end
 
 --- @param document : Jsoup document of latest listing

@@ -59,7 +59,7 @@ internal class Test {
         @JvmStatic
         fun main(args: Array<String>) {
             val globals: LuaValue = JsePlatform.debugGlobals();
-            globals.get("dofile").call(LuaValue.valueOf("./NovelFull.lua"));
+            globals.get("dofile").call(LuaValue.valueOf("./Syosetsu.lua"));
             globals.checkglobals().STDOUT = System.out
 
             val luaFormatter: LuaFormatter = LuaFormatter(globals)
@@ -73,7 +73,7 @@ internal class Test {
 
             // Latest
             TimeUnit.SECONDS.sleep(1)
-            val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(0)))
+            val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
             println()
 
             // Search

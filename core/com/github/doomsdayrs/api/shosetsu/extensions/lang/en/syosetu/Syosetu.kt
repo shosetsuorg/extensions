@@ -29,6 +29,7 @@ import java.util.*
  *
  * @author github.com/doomsdayrs
  */
+@Deprecated("Lua version")
 class Syosetu : ScrapeFormat(3) {
     private val baseURL = "https://yomou.syosetu.com"
     private val passageURL = "https://ncode.syosetu.com"
