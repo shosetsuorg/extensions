@@ -119,12 +119,9 @@ function parseNovelI(document, increment)
     do
         local lastPageURL = document:selectFirst("ul.pagination.pagination-sm"):selectFirst("li.last"):select("a"):attr("href")
         print("Lua: LastPageURL ", lastPageURL)
-        if lastPageURL ~= "" then
-            local _,l = lastPageURL:match("?page=(.+)&per-page=")
-            novelPage:setMaxChapterPage(tonumber(l))
-        else
-            novelPage:setMaxChapterPage(increment)
-        end
+        novelPage:setMaxChapterPage(lastPageURL ~= ""
+                and tonumber(lastPageURL:match("?page=(.+)&per-page="))
+                or increment)
     end
 
     -- description
