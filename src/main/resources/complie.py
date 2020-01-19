@@ -1,4 +1,4 @@
-# Simple
+# Simple tool to update hashes
 import hashlib
 import json
 
@@ -21,7 +21,7 @@ keys.remove('comments')
 
 for k in keys:
     jsonFormatter = data[k]
-    jsonFormatter['md5'] = md5("./" + k + ".lua")
+    jsonFormatter['md5'] = md5("./src/" + k + ".lua")
     data[k] = jsonFormatter
 
 print(data)

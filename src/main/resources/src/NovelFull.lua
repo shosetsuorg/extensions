@@ -1,6 +1,6 @@
--- {"id":1,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":1,"version":"1.1.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.0.0
+--- @version 1.1.0
 
 local luajava = require("luajava")
 
