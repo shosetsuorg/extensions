@@ -17,12 +17,12 @@ function isIncrementingPassagePage()
     return false
 end
 
---- @return Ordering java object
+--- @return Ordering
 function chapterOrder()
     return LuaSupport:getOrdering(0)
 end
 
---- @return Ordering java object
+--- @return Ordering
 function latestOrder()
     return LuaSupport:getOrdering(0)
 end

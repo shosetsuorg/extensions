@@ -20,13 +20,13 @@ function isIncrementingPassagePage()
     return false
 end
 
----@return Ordering java object
+---@return Ordering
 function chapterOrder()
     -- TODO Complete
     return LuaSupport:getOrdering(0)
 end
 
----@return Ordering java object
+---@return Ordering
 function latestOrder()
     -- TODO Complete
     return LuaSupport:getOrdering(0)
@@ -50,46 +50,46 @@ function hasGenres()
     return true
 end
 
----@return Array of genres
+---@return Array @Array<Genre>
 function genres()
     -- TODO Complete
     return LuaSupport:getGAL()
 end
 
----@return number ID
+---@return number @ID
 function getID()
-    -- TODO Use random number generator. between 10 and 10000, Make sure the number hasn't already been used
+    -- TODO If the site doesn't provide their own IDs, then use random number generator. between 10 and 10000, Make sure the number hasn't already been used
     return -1
 end
 
----@return string name of site
+---@return string @name of site
 function getName()
     -- TODO Complete
     return ""
 end
 
----@return string image url of site
+---@return string @image url of site
 function getImageURL()
     -- TODO Complete
     return ""
 end
 
----@param page number value
----@return string url of said latest page
+---@param page number @value
+---@return string @url of said latest page
 function getLatestURL(page)
     -- TODO Complete
     return ""
 end
 
 ---@param document Document @Jsoup document of the page with chapter text on it
----@return string passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
+---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 function getNovelPassage(document)
     -- TODO Complete
     return ""
 end
 
 ---@param document Document @Jsoup document of the novel information page
----@return NovelPage @java object
+---@return NovelPage
 function parseNovel(document)
     local novelPage = LuaSupport:getNovelPage()
     -- TODO Complete
@@ -98,7 +98,7 @@ end
 
 ---@param document Document @Jsoup document of the novel information page
 ---@param increment number @Page #
----@return NovelPage @java object
+---@return NovelPage
 function parseNovelI(document, increment)
     local novelPage = LuaSupport:getNovelPage()
     -- TODO Complete
@@ -128,8 +128,8 @@ function parseSearch(document)
     return novels
 end
 
----@param query string query to use
----@return string url
+---@param query string @query to use
+---@return string @url
 function getSearchString(query)
     -- TODO Complete
     return ""

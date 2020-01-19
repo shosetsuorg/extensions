@@ -17,12 +17,12 @@ function isIncrementingPassagePage()
     return false
 end
 
---- @return Ordering java object
+--- @return Ordering
 function chapterOrder()
     return LuaSupport:getOrdering(0)
 end
 
---- @return Ordering java object
+--- @return Ordering
 function latestOrder()
     return LuaSupport:getOrdering(0)
 end
@@ -42,34 +42,34 @@ function hasGenres()
     return false
 end
 
---- @return Array of genres
+--- @return Array @Array<NovelGenre>
 function genres()
     return LuaSupport:getGAL()
 end
 
---- @return number ID
+--- @return number @ID
 function getID()
     return 2
 end
 
---- @return string name of site
+--- @return string @name of site
 function getName()
     return "BoxNovel"
 end
 
---- @return string image url of site
+--- @return string @image url of site
 function getImageURL()
     return "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png"
 end
 
---- @param page number value
---- @return string url of said latest page
+--- @param page number @value
+--- @return string @url of said latest page
 function getLatestURL(page)
     return baseURL .. "/novel/page/" .. page .. "/?m_orderby=latest"
 end
 
---- @param document Document Jsoup document of the page with chapter text on it
---- @return string passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
+--- @param document Document @Jsoup document of the page with chapter text on it
+--- @return string @passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
 function getNovelPassage(document)
     local paragraphs = document:select("div.text-left"):select("p")
     local t = {}
@@ -79,7 +79,7 @@ function getNovelPassage(document)
     return table.concat(t, "\n"):gsub("</?p>", "")
 end
 
---- @param document Document Jsoup document of the novel information page
+--- @param document Document @Jsoup document of the novel information page
 --- @return NovelPage @java object
 function parseNovel(document)
     local novelPage = LuaSupport:getNovelPage()
@@ -149,7 +149,7 @@ function parseNovel(document)
     return novelPage
 end
 
---- @param document Document Jsoup document of the novel information page
+--- @param document Document @Jsoup document of the novel information page
 --- @param increment number @Page #
 --- @return NovelPage @java object
 function parseNovelI(document, increment)
@@ -157,8 +157,8 @@ function parseNovelI(document, increment)
     return parseNovel(document)
 end
 
---- @param url string       url of novel page
---- @param increment number which page
+--- @param url string @url of novel page
+--- @param increment number @which page
 function novelPageCombiner(url, increment)
     return url
 end
@@ -177,20 +177,20 @@ local function parseNovelList(doc, sel)
     return novels
 end
 
---- @param document Document Jsoup document of latest listing
+--- @param document Document @Jsoup document of latest listing
 --- @return Array @Novel array list
 function parseLatest(document)
     return parseNovelList(document, "div.col-xs-12.col-md-6")
 end
 
---- @param document Document Jsoup document of search results
+--- @param document Document @Jsoup document of search results
 --- @return Array @Novel array list
 function parseSearch(document)
     return parseNovelList(document, "div.c-tabs-item__content")
 end
 
---- @param query string query to use
---- @return string url
+--- @param query string @query to use
+--- @return string @url
 function getSearchString(query)
     return baseURL .. "/?s=" .. query:gsub(query, "%+", "%2"):gsub(query, " ", "+") .. "&post_type=wp-manga"
 end

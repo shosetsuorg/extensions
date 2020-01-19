@@ -41,13 +41,16 @@ do
     ---@class Element : Node
     local Element = {}
 
-    ---@param attributeKey string
-    ---@return string
-    function Element:attr(attributeKey)  end
-
     ---@param query string
     ---@return Elements
     function Element:select(query) end
+
+    ---@param query string
+    ---@return Elements
+    function Element:selectFirst(query) end
+
+    ---@return string
+    function Element:text()  end
 
 
     ---@class Elements : ArrayList
@@ -61,6 +64,13 @@ do
     ---@return Elements
     function Elements:select(query) end
 
+    ---@param query string
+    ---@return Elements
+    function Elements:selectFirst(query) end
+
+    ---@return string
+    function Elements:text()  end
+
 
 
     ---@class Node
@@ -69,7 +79,6 @@ do
     ---@param attributeKey string
     ---@return string
     function Node:attr(attributeKey)  end
-
 end
 
 -- everything else
