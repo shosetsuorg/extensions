@@ -115,10 +115,10 @@ function parseNovel(document)
     -- Status
     do
         local s = elements:get(3):select("a"):text()
-        novelPage:setStatus(
+        novelPage:setStatus(LuaSupport:getStatus(
             s == "ongoing" and 0 or
                 (s == "completed" and 1 or 3)
-        )
+        ))
     end
 
     -- Description
