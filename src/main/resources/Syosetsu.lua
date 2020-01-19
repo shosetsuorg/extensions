@@ -117,7 +117,7 @@ function parseNovel(document)
         end
 
         if elem then
-            novelPage:setDescription(element:text():gsub("<br>\n<br>", "\n"):gsub("<br>", "\n"))
+            novelPage:setDescription(elem:text():gsub("<br>\n<br>", "\n"):gsub("<br>", "\n"))
         end
     end
 
