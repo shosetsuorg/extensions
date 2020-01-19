@@ -2,35 +2,29 @@
 --- @author Doomsdayrs
 --- @version 1.0.0
 
-luajava = require("luajava")
+local luajava = require("luajava")
 
 --local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
 local baseURL = "http://novelfull.com"
 
 local function isempty(s)
-    return s == nil or s == ''
+    return s == '' or not s
 end
 
 function stripListing(elements, novel)
-    for i = 0, elements:size() - 1, 1 do
-        coloum = elements:get(i)
-        if i == 0 then
-            image = coloum:selectFirst("img")
-            if not (image == nil) then
-                novel:setImageURL(baseURL .. image:attr("src"))
-            end
-
-            header = coloum:selectFirst("h3")
-            if not (header == nil) then
-                titleLink = header:selectFirst("a")
-                novel:setTitle(titleLink:attr("title"))
-                novel:setLink(baseURL .. titleLink:attr("href"))
-            end
-
-        elseif i == 1 then
-
-        end
+    local col = elements:get(0)
+    local image = col:selectFirst("img")
+    if image then
+        novel:setImageURL(baseURL .. image:attr("src"))
     end
+
+    local header = col:selectFirst("h3")
+    if header then
+        local titleLink = header:selectFirst("a")
+        novel:setTitle(titleLink:attr("title"))
+        novel:setLink(baseURL .. titleLink:attr("href"))
+    end
+
     return novel
 end
 
@@ -93,20 +87,19 @@ end
 --- @param page number value
 --- @return string url of said latest page
 function getLatestURL(page)
-    print(baseURL)
-    print(page)
+    print(baseURL, page)
     return baseURL .. "/latest-release-novel?page=" .. page
 end
 
 --- @param document : Jsoup document of the page with chapter text on it
 --- @return string passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
 function getNovelPassage(document)
-    paragraphs = document:select("div.chapter-c"):select("p")
-    passage = ""
-    for i = 0, paragraphs:size() - 1, 1 do
-        passage = passage .. paragraphs:get(i):text() .. "\n"
+    local paragraphs = document:select("div.chapter-c"):select("p")
+    local t = {}
+    for i=1, paragraphs:size(), 1 do
+        t[i] = paragraphs:get(i-1):text()
     end
-    return passage
+    return table.concat(t, "\n")
 end
 
 --- @param document : Jsoup document of the novel information page
@@ -119,92 +112,84 @@ end
 --- @param increment number : Page #
 --- @return NovelPage : java object
 function parseNovelI(document, increment)
-    novelPage = LuaSupport:getNovelPage()
+    local novelPage = LuaSupport:getNovelPage()
     novelPage:setImageURL(baseURL .. document:selectFirst("div.book"):selectFirst("img"):attr("src"))
+    
     -- max page
-    lastPageURL = document:selectFirst("ul.pagination.pagination-sm"):selectFirst("li.last"):select("a"):attr("href")
-    print("LUA: LastPageURL " .. lastPageURL)
-    if not isempty(lastPageURL) then
-        lastPageURL = baseURL .. lastPageURL
-        lastPageURL = string.sub(lastPageURL, string.find(lastPageURL, "?page=") + 6, string.find(lastPageURL, "&per-page="))
-        novelPage:setMaxChapterPage(tonumber(lastPageURL))
-    else
-        novelPage:setMaxChapterPage(increment)
+    do
+        local lastPageURL = document:selectFirst("ul.pagination.pagination-sm"):selectFirst("li.last"):select("a"):attr("href")
+        print("Lua: LastPageURL ", lastPageURL)
+        if lastPageURL ~= "" then
+            local _,l = lastPageURL:match("?page=(.+)&per-page=")
+            novelPage:setMaxChapterPage(tonumber(l))
+        else
+            novelPage:setMaxChapterPage(increment)
+        end
     end
 
-    -- Sets description
-    titleDescription = document:selectFirst("div.col-xs-12.col-sm-8.col-md-8.desc")
-    novelPage:setTitle(titleDescription:selectFirst("h3"):text())
-    description = titleDescription:selectFirst("div.desc-text")
-    text = description:select("p")
-    desPassage = ""
-    for i = 0, text:size() - 1, 1 do
-        paragraph = text:get(i)
-        desPassage = desPassage .. paragraph:text() .. "\n"
+    -- description
+    do
+        local titleDescription = document:selectFirst("div.col-xs-12.col-sm-8.col-md-8.desc")
+        novelPage:setTitle(titleDescription:selectFirst("h3"):text())
+        local desc = titleDescription:selectFirst("div.desc-text"):select("p")
+        
+        local t = {}
+        for i=1, desc:size() do
+            t[i] = desc:get(i):text()
+        end
+        novelPage:setDescription(table.concat(t, "\n"))
     end
-    novelPage:setDescription(desPassage)
 
     -- set information
-    elements = document:selectFirst("div.info"):select("div.info"):select("div")
-    for i = 0, elements:size() - 1, 1 do
-        subElements = nil
-        if not (i == 0) or not (i == 3) then
-            if i == 1 then
-                subElements = elements:get(i):select("a")
-                authors = LuaSupport:getStringArray()
-                authors:setSize(subElements:size())
-                for i = 0, subElements:size() - 1, 1 do
-                    authors:setPosition(i, subElements:get(i):text())
-                end
-                novelPage:setAuthors(authors:getStrings())
-            elseif i == 2 then
-                subElements = elements:get(i):select("a")
-                genres = LuaSupport:getStringArray()
-                genres:setSize(subElements:size())
-                for i = 0, subElements:size() - 1, 1 do
-                    genres:setPosition(i, subElements:get(i):text())
-                end
-                novelPage:setGenres(genres:getStrings())
-            elseif i == 4 then
-                status = elements:get(i):select("a"):text()
-                if status == "Completed" then
-                    novelPage:setStatus(LuaSupport:getStatus(1))
-                elseif status == "Ongoing" then
-                    novelPage:setStatus(LuaSupport:getStatus(0))
-                end
+    do
+        local elements = document:selectFirst("div.info"):select("div.info"):select("div")
+        do
+            local authorE = elements:get(1):select("a")
+            local authors = LuaSupport:getStringArray()
+            authors:setSize(authorE:size())
+            for i = 0, authorE:size() - 1, 1 do
+                authors:setPosition(i, authorE:get(i):text())
             end
+            novelPage:setAuthors(authors:getStrings())
         end
+        do
+            local genreE = elements:get(2):select("a")
+            local genres = LuaSupport:getStringArray()
+            genres:setSize(genreE:size())
+            for i = 0, genreE:size() - 1, 1 do
+                genres:setPosition(i, genreE:get(i):text())
+            end
+            novelPage:setGenres(genres:getStrings())
+        end
+
+        novelPage:setStatus(LuaSupport:getStatus(
+            elements:get(4):select("a"):text() == "Completed" and 1 or 0
+        ))
     end
 
     -- formats chapters
-    novelChapters = LuaSupport:getCAL()
-    lists = document:select("ul.list-chapter")
-    a = -1
-    if increment > 1 then
-        a = (increment - 1) * 50
-    else
-        a = 0
-    end
-    for i = 0, lists:size() - 1, 1 do
-        list = lists:get(i)
-        chapters = list:select("li")
-        for y = 0, chapters:size() - 1, 1 do
-            novelChapter = LuaSupport:getNovelChapter()
-            chapterData = chapters:get(y):selectFirst("a")
-            link = chapterData:attr("href")
-            if link ~= nil then
-                novelChapter:setLink(baseURL .. link)
+    do
+        local novelChapters = LuaSupport:getCAL()
+        local lists = document:select("ul.list-chapter")
+        local a = (increment > 1) and (increment - 1) * 50 or 0
+
+        for i = 0, lists:size() - 1, 1 do
+            local chapters = lists:get(i):select("li")
+            for y = 0, chapters:size() - 1, 1 do
+                local novelChapter = LuaSupport:getNovelChapter()
+                local chapterData = chapters:get(y):selectFirst("a")
+                local link = chapterData:attr("href")
+                if link then
+                    novelChapter:setLink(baseURL .. link)
+                end
+                novelChapter:setTitle(chapterData:attr("title"))
+                novelChapter:setOrder(a)
+                a = a + 1
+                novelChapters:add(novelChapter)
             end
-            novelChapter:setTitle(chapterData:attr("title"))
-            --   print(novelChapter)
-            -- if not (string.find(novelChapter:getLink(), "null") == nil) then
-            novelChapter:setOrder(a)
-            a = a + 1
-            novelChapters:add(novelChapter)
-            --    end
         end
+        novelPage:setNovelChapters(novelChapters)
     end
-    novelPage:setNovelChapters(novelChapters)
 
     return novelPage
 end
@@ -221,16 +206,14 @@ end
 --- @param document : Jsoup document of latest listing
 --- @return Array : Novel array list
 function parseLatest(document)
-    novels = LuaSupport:getNAL()
-    listP = document:select("div.container")
+    local novels = LuaSupport:getNAL()
+    local listP = document:select("div.container")
     for i = 0, listP:size() - 1, 1 do
-        list = listP:get(i)
+        local list = listP:get(i)
         if list:id() == "list-page" then
-            queries = list:select("div.row")
+            local queries = list:select("div.row")
             for x = 0, queries:size() - 1, 1 do
-                novel = LuaSupport:getNovel()
-                novel = stripListing(queries:get(x):select("div"), novel)
-                novels:add(novel)
+                novels:add(stripListing(queries:get(x):select("div"), LuaSupport:getNovel()))
             end
         end
     end
@@ -240,16 +223,14 @@ end
 --- @param document : Jsoup document of search results
 --- @return Array : Novel array list
 function parseSearch(document)
-    novels = LuaSupport:getNAL()
-    listP = document:select("div.container")
+    local novels = LuaSupport:getNAL()
+    local listP = document:select("div.container")
     for i = 0, listP:size() - 1, 1 do
-        list = listP:get(i)
+        local list = listP:get(i)
         if list:id() == "list-page" then
-            queries = list:select("div.row")
+            local queries = list:select("div.row")
             for x = 0, queries:size() - 1, 1 do
-                novel = LuaSupport:getNovel()
-                novel = stripListing(queries:get(x):select("div"), novel)
-                novels:add(novel)
+                novels:add(stripListing(queries:get(x):select("div"), LuaSupport:getNovel()))
             end
         end
     end
