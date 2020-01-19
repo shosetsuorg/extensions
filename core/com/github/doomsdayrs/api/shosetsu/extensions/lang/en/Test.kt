@@ -8,6 +8,7 @@ import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.luaj.vm2.LuaValue
+import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import org.luaj.vm2.lib.jse.JsePlatform
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -58,41 +59,52 @@ internal class Test {
         @Throws(IOException::class, InterruptedException::class)
         @JvmStatic
         fun main(args: Array<String>) {
-            val globals: LuaValue = JsePlatform.debugGlobals();
-            globals.get("dofile").call(LuaValue.valueOf("./Syosetsu.lua"));
-            globals.checkglobals().STDOUT = System.out
+            val formatters = arrayOf(
+                    "./BestLightNovel.lua",
+                    "./BoxNovel.lua",
+                    "./NovelFull.lua",
+                    "./Syosetsu.lua"
+                    )
+            for (format in formatters){
+                println("========== $format ==========")
+                val globals: LuaValue = JsePlatform.debugGlobals();
+                globals.get("dofile").call(LuaValue.valueOf(format));
+                globals.checkglobals().STDOUT = System.out
+                val support = LuaSupport()
+                globals.checkglobals().set("LuaSupport", CoerceJavaToLua.coerce(support))
 
-            val luaFormatter: LuaFormatter = LuaFormatter(globals)
+                val luaFormatter = LuaFormatter(globals)
 
+                // Data
+                println(luaFormatter.genres)
+                println(luaFormatter.name)
+                println(luaFormatter.formatterID)
+                println(luaFormatter.imageURL)
 
-            // Data
-            println(luaFormatter.genres)
-            println(luaFormatter.name)
-            println(luaFormatter.formatterID)
-            println(luaFormatter.imageURL)
+                // Latest
+                TimeUnit.SECONDS.sleep(1)
+                val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
+                println()
 
-            // Latest
-            TimeUnit.SECONDS.sleep(1)
-            val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
-            println()
+                // Search
+                TimeUnit.SECONDS.sleep(1)
+                println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
+                println()
 
-            // Search
-            TimeUnit.SECONDS.sleep(1)
-            println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
-            println()
+                // Novel
+                TimeUnit.SECONDS.sleep(1)
+                val novel = luaFormatter.parseNovel(docFromURL(luaFormatter.novelPageCombiner(list[0].link,2)),2)
+                println(novel)
 
-            // Novel
-            TimeUnit.SECONDS.sleep(1)
-            val novel = luaFormatter.parseNovel(docFromURL(luaFormatter.novelPageCombiner(list[0].link,2)),2)
-            println(novel)
+                // Parse novel passage
+                TimeUnit.SECONDS.sleep(1)
+                println(luaFormatter.getNovelPassage(docFromURL(novel.novelChapters[0].link)))
+                println()
 
-            // Parse novel passage
-            TimeUnit.SECONDS.sleep(1)
-            println(luaFormatter.getNovelPassage(docFromURL(novel.novelChapters[0].link)))
-            println()
+                println("DEBUG")
+                LuaSupport.printBuffer()
+            }
 
-            println("DEBUG")
-            LuaSupport.printBuffer()
         }
     }
 }
