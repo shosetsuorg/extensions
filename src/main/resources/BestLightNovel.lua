@@ -1,4 +1,4 @@
--- {"id":5}
+-- {"id":5,"version":"1.0.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
 --- @version 1.0.0
 
