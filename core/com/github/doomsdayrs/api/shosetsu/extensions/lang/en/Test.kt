@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import org.luaj.vm2.lib.jse.JsePlatform
+import java.io.File
 import java.io.IOException
 import java.net.URL
 import java.util.concurrent.TimeUnit
@@ -59,17 +60,12 @@ internal class Test {
         @JvmStatic
         fun main(args: Array<String>) {
             val formatters = arrayOf(
-                    "./src/BestLightNovel.lua"
+                    "src/main/resources/src/BestLightNovel.lua"
             )
             for (format in formatters){
                 println("========== $format ==========")
-                val globals: LuaValue = JsePlatform.debugGlobals();
-                globals.get("dofile").call(LuaValue.valueOf(format));
-                globals.checkglobals().STDOUT = System.out
-                val support = LuaSupport()
-                globals.checkglobals().set("LuaSupport", CoerceJavaToLua.coerce(support))
 
-                val luaFormatter = LuaFormatter(globals)
+                val luaFormatter = LuaFormatter(File(format))
 
                 // Data
                 println(luaFormatter.genres)
