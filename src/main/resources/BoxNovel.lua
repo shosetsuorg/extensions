@@ -192,6 +192,6 @@ end
 --- @param query string @query to use
 --- @return string @url
 function getSearchString(query)
-    return baseURL .. "/?s=" .. query:gsub(query, "%+", "%2"):gsub(query, " ", "+") .. "&post_type=wp-manga"
+    return baseURL .. "/?s=" .. query:gsub("%+", "%2"):gsub(" ", "+") .. "&post_type=wp-manga"
 end
 

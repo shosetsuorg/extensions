@@ -1,135 +1,135 @@
 -- {"id":-1}
---- @author Doomsdayrs
---- @version 1.0.0
+---@author Doomsdayrs
+---@version 1.0.0
 
-luajava = require("luajava")
+local luajava = require("luajava")
 
 -- This variable is only for testing sake, Please comment it out when done or the application WILL crash
 --local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
 local baseURL = "TODO"
 
---- @return boolean
+---@return boolean
 function isIncrementingChapterList()
     -- TODO Complete
     return false
 end
 
---- @return boolean
+---@return boolean
 function isIncrementingPassagePage()
     -- TODO Complete
     return false
 end
 
---- @return Ordering java object
+---@return Ordering
 function chapterOrder()
     -- TODO Complete
     return LuaSupport:getOrdering(0)
 end
 
---- @return Ordering java object
+---@return Ordering
 function latestOrder()
     -- TODO Complete
     return LuaSupport:getOrdering(0)
 end
 
---- @return boolean
+---@return boolean
 function hasCloudFlare()
     -- TODO Complete
     return false
 end
 
---- @return boolean
+---@return boolean
 function hasSearch()
     -- TODO Complete
     return true
 end
 
---- @return boolean
+---@return boolean
 function hasGenres()
     -- TODO Complete
     return true
 end
 
---- @return Array of genres
+---@return Array @Array<Genre>
 function genres()
     -- TODO Complete
     return LuaSupport:getGAL()
 end
 
---- @return number ID
+---@return number @ID
 function getID()
-    -- TODO Use random number generator. between 10 and 10000, Make sure the number hasn't already been used
+    -- TODO If the site doesn't provide their own IDs, then use random number generator. between 10 and 10000, Make sure the number hasn't already been used
     return -1
 end
 
---- @return string name of site
+---@return string @name of site
 function getName()
     -- TODO Complete
     return ""
 end
 
---- @return string image url of site
+---@return string @image url of site
 function getImageURL()
     -- TODO Complete
     return ""
 end
 
---- @param page number value
---- @return string url of said latest page
+---@param page number @value
+---@return string @url of said latest page
 function getLatestURL(page)
     -- TODO Complete
     return ""
 end
 
---- @param document : Jsoup document of the page with chapter text on it
---- @return string passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
+---@param document Document @Jsoup document of the page with chapter text on it
+---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 function getNovelPassage(document)
     -- TODO Complete
     return ""
 end
 
---- @param document : Jsoup document of the novel information page
---- @return NovelPage : java object
+---@param document Document @Jsoup document of the novel information page
+---@return NovelPage
 function parseNovel(document)
-    novelPage = LuaSupport:getNovelPage()
+    local novelPage = LuaSupport:getNovelPage()
     -- TODO Complete
     return novelPage
 end
 
---- @param document : Jsoup document of the novel information page
---- @param increment number : Page #
---- @return NovelPage : java object
+---@param document Document @Jsoup document of the novel information page
+---@param increment number @Page #
+---@return NovelPage
 function parseNovelI(document, increment)
-    novelPage = LuaSupport:getNovelPage()
+    local novelPage = LuaSupport:getNovelPage()
     -- TODO Complete
     return novelPage
 end
 
---- @param url string       url of novel page
---- @param increment number which page
+---@param url string @url of novel page
+---@param increment number @which page
 function novelPageCombiner(url, increment)
     -- TODO Complete
     return ""
 end
 
---- @param document : Jsoup document of latest listing
---- @return Array : Novel array list
+---@param document Document @Jsoup document of latest listing
+---@return Array @Novel array list
 function parseLatest(document)
-    novels = LuaSupport:getNAL()
+    local novels = LuaSupport:getNAL()
     -- TODO Complete
     return novels
 end
 
---- @param document : Jsoup document of search results
---- @return Array : Novel array list
+---@param document Document @Jsoup document of search results
+---@return Array @Novel array list
 function parseSearch(document)
-    novels = LuaSupport:getNAL()
+    local novels = LuaSupport:getNAL()
     -- TODO Complete
     return novels
 end
 
---- @param query string query to use
---- @return string url
+---@param query string @query to use
+---@return string @url
 function getSearchString(query)
     -- TODO Complete
     return ""

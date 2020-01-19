@@ -1,4 +1,4 @@
--- {"id":1}
+-- {"id":1,"version":"1.0.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
 --- @version 1.0.0
 
@@ -38,12 +38,12 @@ function isIncrementingPassagePage()
     return false
 end
 
---- @return Ordering java object
+--- @return Ordering
 function chapterOrder()
     return LuaSupport:getOrdering(0)
 end
 
---- @return Ordering java object
+--- @return Ordering
 function latestOrder()
     return LuaSupport:getOrdering(0)
 end
@@ -63,36 +63,36 @@ function hasGenres()
     return true
 end
 
---- @return Array of genres
+--- @return Array @Array<NovelGenre>
 function genres()
     -- TODO Complete
     return LuaSupport:getGAL()
 end
 
---- @return number ID
+--- @return number @ID
 function getID()
     return 1
 end
 
---- @return string name of site
+--- @return string @name of site
 function getName()
     return "NovelFull"
 end
 
---- @return string image url of site
+--- @return string @image url of site
 function getImageURL()
     return ""
 end
 
---- @param page number value
---- @return string url of said latest page
+--- @param page number @value
+--- @return string @url of said latest page
 function getLatestURL(page)
     print(baseURL, page)
     return baseURL .. "/latest-release-novel?page=" .. page
 end
 
---- @param document : Jsoup document of the page with chapter text on it
---- @return string passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
+--- @param document Document @Jsoup document of the page with chapter text on it
+--- @return string @passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
 function getNovelPassage(document)
     local paragraphs = document:select("div.chapter-c"):select("p")
     local t = {}
@@ -102,15 +102,15 @@ function getNovelPassage(document)
     return table.concat(t, "\n")
 end
 
---- @param document : Jsoup document of the novel information page
---- @return NovelPage : java object
+--- @param document Document @Jsoup document of the novel information page
+--- @return NovelPage
 function parseNovel(document)
     return parseNovelI(document, 1)
 end
 
---- @param document : Jsoup document of the novel information page
---- @param increment number : Page #
---- @return NovelPage : java object
+--- @param document Document @Jsoup document of the novel information page
+--- @param increment number @Page #
+--- @return NovelPage
 function parseNovelI(document, increment)
     local novelPage = LuaSupport:getNovelPage()
     novelPage:setImageURL(baseURL .. document:selectFirst("div.book"):selectFirst("img"):attr("src"))
@@ -191,14 +191,14 @@ function parseNovelI(document, increment)
     return novelPage
 end
 
---- @param url string       url of novel page
---- @param increment number which page
+--- @param url string @url of novel page
+--- @param increment number @which page
 function novelPageCombiner(url, increment)
     return (increment > 1 and (url .. "?page=" .. increment) or url)
 end
 
---- @param document : Jsoup document of latest listing
---- @return Array : Novel array list
+--- @param document Document @Jsoup document of latest listing
+--- @return Array @Novel array list
 function parseLatest(document)
     local novels = LuaSupport:getNAL()
     local listP = document:select("div.container")
@@ -206,16 +206,16 @@ function parseLatest(document)
         local list = listP:get(i)
         if list:id() == "list-page" then
             local queries = list:select("div.row")
-            for x = 0, queries:size() - 1, 1 do
-                novels:add(stripListing(queries:get(x):select("div"), LuaSupport:getNovel()))
+            for j = 0, queries:size() - 1, 1 do
+                novels:add(stripListing(queries:get(j):select("div"), LuaSupport:getNovel()))
             end
         end
     end
     return novels
 end
 
---- @param document : Jsoup document of search results
---- @return Array : Novel array list
+--- @param document Document @Jsoup document of search results
+--- @return Array @Novel array list
 function parseSearch(document)
     local novels = LuaSupport:getNAL()
     local listP = document:select("div.container")
@@ -231,8 +231,8 @@ function parseSearch(document)
     return novels
 end
 
---- @param query string query to use
---- @return string url
+--- @param query string @query to use
+--- @return string @url
 function getSearchString(query)
     return baseURL .. "/search?keyword=" .. query:gsub(" ", "%20")
 end
