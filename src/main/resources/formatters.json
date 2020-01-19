@@ -3,23 +3,39 @@
     "This is a file downloaded from the repo",
     "Each entry is it's own formatter",
     "Key is the name of the file, ID has to be unique, md5 is to confirm legitimacy of file",
-    "If the md5 of the file on the phone is different then what this says, the application will refuse to run the MD5"
+    "If the md5 of the file on the phone is different then what this says, the application will refuse to run the MD5",
+    "The following is an example",
+    {
+      "example": {
+        "id": -1917,
+        "imageURL": "",
+        "version": "1.0.0",
+        "md5": "magic numbers from md5sum"
+      }
+    }
   ],
-
   "BestLightNovel": {
     "id": 5,
+    "imageURL": "",
+    "version": "1.0.0",
     "md5": "beb9d6bb9cb9ed7e55d5c223bd566efe"
   },
   "BoxNovel": {
     "id": 2,
+    "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
+    "version": "1.0.0",
     "md5": "52f5bfd901edb65f4003b7003bd097ba"
   },
   "NovelFull": {
     "id": 1,
+    "imageURL": "",
+    "version": "1.0.0",
     "md5": "572ec3d3f7986b229e5b98f1a71eb019"
   },
   "Syosetsu": {
     "id": 3,
+    "imageURL": "https://static.syosetu.com/view/images/common/logo_yomou.png",
+    "version": "1.0.0",
     "md5": "8822bdaa824e28beb17b5f40bed83193"
   }
 }
