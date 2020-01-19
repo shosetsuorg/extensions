@@ -91,7 +91,7 @@ function getLatestURL(page)
     return baseURL .. "/latest-release-novel?page=" .. page
 end
 
---- @param document Document Jsoup document of the page with chapter text on it
+--- @param document : Jsoup document of the page with chapter text on it
 --- @return string passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
 function getNovelPassage(document)
     local paragraphs = document:select("div.chapter-c"):select("p")
@@ -102,15 +102,15 @@ function getNovelPassage(document)
     return table.concat(t, "\n")
 end
 
---- @param document Document Jsoup document of the novel information page
---- @return NovelPage @java object
+--- @param document : Jsoup document of the novel information page
+--- @return NovelPage : java object
 function parseNovel(document)
     return parseNovelI(document, 1)
 end
 
---- @param document Document Jsoup document of the novel information page
---- @param increment number @Page #
---- @return NovelPage @java object
+--- @param document : Jsoup document of the novel information page
+--- @param increment number : Page #
+--- @return NovelPage : java object
 function parseNovelI(document, increment)
     local novelPage = LuaSupport:getNovelPage()
     novelPage:setImageURL(baseURL .. document:selectFirst("div.book"):selectFirst("img"):attr("src"))
@@ -197,8 +197,8 @@ function novelPageCombiner(url, increment)
     return (increment > 1 and (url .. "?page=" .. increment) or url)
 end
 
---- @param document Document Jsoup document of latest listing
---- @return Array @Novel array list
+--- @param document : Jsoup document of latest listing
+--- @return Array : Novel array list
 function parseLatest(document)
     local novels = LuaSupport:getNAL()
     local listP = document:select("div.container")
@@ -206,16 +206,16 @@ function parseLatest(document)
         local list = listP:get(i)
         if list:id() == "list-page" then
             local queries = list:select("div.row")
-            for j = 0, queries:size() - 1, 1 do
-                novels:add(stripListing(queries:get(j):select("div"), LuaSupport:getNovel()))
+            for x = 0, queries:size() - 1, 1 do
+                novels:add(stripListing(queries:get(x):select("div"), LuaSupport:getNovel()))
             end
         end
     end
     return novels
 end
 
---- @param document Document Jsoup document of search results
---- @return Array @Novel array list
+--- @param document : Jsoup document of search results
+--- @return Array : Novel array list
 function parseSearch(document)
     local novels = LuaSupport:getNAL()
     local listP = document:select("div.container")

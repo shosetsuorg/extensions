@@ -68,7 +68,7 @@ function getLatestURL(page)
     return baseURL .. "/novel/page/" .. page .. "/?m_orderby=latest"
 end
 
---- @param document Document Jsoup document of the page with chapter text on it
+--- @param document : Jsoup document of the page with chapter text on it
 --- @return string passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
 function getNovelPassage(document)
     local paragraphs = document:select("div.text-left"):select("p")
@@ -79,8 +79,8 @@ function getNovelPassage(document)
     return table.concat(t, "\n"):gsub("</?p>", "")
 end
 
---- @param document Document Jsoup document of the novel information page
---- @return NovelPage @java object
+--- @param document : Jsoup document of the novel information page
+--- @return NovelPage : java object
 function parseNovel(document)
     local novelPage = LuaSupport:getNovelPage()
     novelPage:setImageURL(document:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"))
@@ -149,9 +149,9 @@ function parseNovel(document)
     return novelPage
 end
 
---- @param document Document Jsoup document of the novel information page
---- @param increment number @Page #
---- @return NovelPage @java object
+--- @param document : Jsoup document of the novel information page
+--- @param increment number : Page #
+--- @return NovelPage : java object
 function parseNovelI(document, increment)
     print("Lua: Passing novel")
     return parseNovel(document)
@@ -177,16 +177,16 @@ local function parseNovelList(doc, sel)
     return novels
 end
 
---- @param document Document Jsoup document of latest listing
---- @return Array @Novel array list
+--- @param document : Jsoup document of latest listing
+--- @return Array : Novel array list
 function parseLatest(document)
-    return parseNovelList(document, "div.col-xs-12.col-md-6")
+    return parseNovelList("div.col-xs-12.col-md-6")
 end
 
---- @param document Document Jsoup document of search results
---- @return Array @Novel array list
+--- @param document : Jsoup document of search results
+--- @return Array : Novel array list
 function parseSearch(document)
-    return parseNovelList(document, "div.c-tabs-item__content")
+    return parseNovelList("div.c-tabs-item__content")
 end
 
 --- @param query string query to use

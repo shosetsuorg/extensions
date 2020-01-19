@@ -70,7 +70,7 @@ function getLatestURL(page)
     return baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. page
 end
 
---- @param document Document Jsoup document of the page with chapter text on it
+--- @param document : Jsoup document of the page with chapter text on it
 --- @return string passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
 function getNovelPassage(document)
     local elements = document:select("div")
@@ -92,8 +92,8 @@ function getNovelPassage(document)
     return table.concat(t, "\n"):gsub("<br>", "\n\n")
 end
 
---- @param document Document Jsoup document of the novel information page
---- @return NovelPage @java object
+--- @param document : Jsoup document of the novel information page
+--- @return NovelPage : java object
 function parseNovel(document)
     local novelPage = LuaSupport:getNovelPage()
 
@@ -140,13 +140,12 @@ function parseNovel(document)
     return novelPage
 end
 
---- @param document Document Jsoup document of the novel information page
---- @param increment number @Page #
---- @return NovelPage @java object
+--- @param document : Jsoup document of the novel information page
+--- @param increment number : Page #
+--- @return NovelPage : java object
 function parseNovelI(document, increment)
     return parseNovel(document)
 end
-
 
 --- @param url string       url of novel page
 --- @param increment number which page
@@ -154,8 +153,8 @@ function novelPageCombiner(url, increment)
     return url
 end
 
---- @param document Document Jsoup document of latest listing
---- @return Array @Novel array list
+--- @param document : Jsoup document of latest listing
+--- @return Array : Novel array list
 function parseLatest(document)
     local novels = LuaSupport:getNAL()
     local elements = document:select("div.searchkekka_box")
@@ -169,8 +168,8 @@ function parseLatest(document)
     return novels
 end
 
---- @param document Document Jsoup document of search results
---- @return Array @Novel array list
+--- @param document : Jsoup document of search results
+--- @return Array : Novel array list
 function parseSearch(document)
     local novels = LuaSupport:getNAL()
     local elements = document:select("div.searchkekka_box")
