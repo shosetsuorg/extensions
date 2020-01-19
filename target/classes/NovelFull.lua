@@ -132,7 +132,7 @@ function parseNovelI(document, increment)
         
         local t = {}
         for i=1, desc:size() do
-            t[i] = desc:get(i-1):text()
+            t[i] = desc:get(i):text()
         end
         novelPage:setDescription(table.concat(t, "\n"))
     end
