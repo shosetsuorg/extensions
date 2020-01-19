@@ -1,3 +1,4 @@
+---@author TechnoJo4
 -- ! ! ! ! !  DO NOT RUN AS AN EXTENSION  ! ! ! ! !
 -- ! THIS FILE CONTAINS EmmyLua CLASS DEFINITIONS !
 -- ! ! ! ! !  DO NOT RUN AS AN EXTENSION  ! ! ! ! !
