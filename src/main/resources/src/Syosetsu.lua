@@ -189,3 +189,4 @@ end
 function getSearchString(query)
     return baseURL .. "/search.php?&word=" .. query:gsub("%+", "%2"):gsub(" ", "\\+")
 end
+

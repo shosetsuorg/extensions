@@ -194,3 +194,4 @@ end
 function getSearchString(query)
     return baseURL .. "/search_novels/" .. query:gsub(" ", "_")
 end
+
