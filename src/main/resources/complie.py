@@ -21,7 +21,9 @@ keys.remove('comments')
 
 for k in keys:
     jsonFormatter = data[k]
-    jsonFormatter['md5'] = md5("./src/" + k + ".lua")
+    m = md5("./src/" + k + ".lua")
+    print(k + ":\t"+m)
+    jsonFormatter['md5'] = m
     data[k] = jsonFormatter
 
 print(data)
