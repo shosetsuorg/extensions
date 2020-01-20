@@ -1,3 +1,4 @@
+-- {"id":-999,"version":"0.0.0","author":"TechnoJo4","repo":""}
 ---@author TechnoJo4
 -- ! ! ! ! !  DO NOT RUN AS AN EXTENSION  ! ! ! ! !
 -- ! THIS FILE CONTAINS EmmyLua CLASS DEFINITIONS !
@@ -160,7 +161,7 @@ do
     ---@return void
     function NovelPage:setAuthors(authors) end
 
-    ---@param status NovelStatus
+    ---@param status "LuaSupport:getStatus(3)" | NovelStatus
     ---@return void
     function NovelPage:setStatus(status) end
 
