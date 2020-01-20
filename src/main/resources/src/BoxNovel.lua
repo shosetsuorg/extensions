@@ -194,4 +194,3 @@ end
 function getSearchString(query)
     return baseURL .. "/?s=" .. query:gsub("%+", "%2"):gsub(" ", "+") .. "&post_type=wp-manga"
 end
-

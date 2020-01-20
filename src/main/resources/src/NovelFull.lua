@@ -236,4 +236,3 @@ end
 function getSearchString(query)
     return baseURL .. "/search?keyword=" .. query:gsub(" ", "%20")
 end
-
