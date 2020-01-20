@@ -1,6 +1,6 @@
--- {"id":3,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":3,"version":"1.1.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.0.0
+--- @version 1.1.0
 
 local luajava = require("luajava")
 
@@ -117,7 +117,7 @@ function parseNovel(document)
         end
 
         if elem then
-            novelPage:setDescription(element:text():gsub("<br>\n<br>", "\n"):gsub("<br>", "\n"))
+            novelPage:setDescription(elem:text():gsub("<br>\n<br>", "\n"):gsub("<br>", "\n"))
         end
     end
 
@@ -189,4 +189,3 @@ end
 function getSearchString(query)
     return baseURL .. "/search.php?&word=" .. query:gsub("%+", "%2"):gsub(" ", "\\+")
 end
-

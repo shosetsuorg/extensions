@@ -1,6 +1,6 @@
--- {"id":5,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":5,"version":"1.1.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.0.0
+--- @version 1.1.0
 
 local luajava = require("luajava")
 
@@ -194,4 +194,3 @@ end
 function getSearchString(query)
     return baseURL .. "/search_novels/" .. query:gsub(" ", "_")
 end
-

@@ -1,6 +1,6 @@
--- {"id":2,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":2,"version":"1.1.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.0.0
+--- @version 1.1.0
 
 local luajava = require("luajava")
 
@@ -192,6 +192,5 @@ end
 --- @param query string @query to use
 --- @return string @url
 function getSearchString(query)
-    return baseURL .. "/?s=" .. query:gsub(query, "%+", "%2"):gsub(query, " ", "+") .. "&post_type=wp-manga"
+    return baseURL .. "/?s=" .. query:gsub("%+", "%2"):gsub(" ", "+") .. "&post_type=wp-manga"
 end
-

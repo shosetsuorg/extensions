@@ -27,7 +27,7 @@ import org.jsoup.nodes.Document
  * @author github.com/doomsdayrs
  */
 //TODO, Requires post requests
-@Deprecated("")
+@Deprecated("Requires POST requests")
 class WuxiaWorld : ScrapeFormat() {
     override val genres: Array<NovelGenre>
         get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.

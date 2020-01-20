@@ -7,35 +7,35 @@
     "The following is an example",
     {
       "example": {
-        "id": -1917,
         "imageURL": "",
+        "id": -1917,
         "version": "1.0.0",
         "md5": "magic numbers from md5sum"
       }
     }
   ],
-  "BestLightNovel": {
-    "id": 5,
+  "NovelFull": {
     "imageURL": "",
-    "version": "1.0.0",
-    "md5": "dd85d9d5c5d3de6cd98432be7c8e9a88"
+    "id": 1,
+    "version": "1.1.0",
+    "md5": "72975c441cb25381f24a54f510b54c4"
+  },
+  "BestLightNovel": {
+    "imageURL": "",
+    "id": 5,
+    "version": "1.1.0",
+    "md5": "adb0dfda5bdedf57a25adfbaf0a6d3"
   },
   "BoxNovel": {
-    "id": 2,
     "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
-    "version": "1.0.0",
-    "md5": "f4f94a1cab412ca1c9bc738db3ae9051"
-  },
-  "NovelFull": {
-    "id": 1,
-    "imageURL": "",
-    "version": "1.0.0",
-    "md5": "f596b1e7ce6b28fb960dc88beee5a898"
+    "id": 2,
+    "version": "1.1.0",
+    "md5": "141afdcf4b7ae32d6695daf9ea3f2"
   },
   "Syosetsu": {
-    "id": 3,
     "imageURL": "https://static.syosetu.com/view/images/common/logo_yomou.png",
-    "version": "1.0.0",
-    "md5": "f2adfee34c61978f5d9e930a16c33d0b"
+    "id": 3,
+    "version": "1.1.0",
+    "md5": "32d318f9d281636c9708c2a9246312"
   }
 }

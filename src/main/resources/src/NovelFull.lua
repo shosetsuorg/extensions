@@ -1,6 +1,6 @@
--- {"id":1,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":1,"version":"1.1.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.0.0
+--- @version 1.1.0
 
 local luajava = require("luajava")
 
@@ -132,7 +132,7 @@ function parseNovelI(document, increment)
         
         local t = {}
         for i=1, desc:size() do
-            t[i] = desc:get(i):text()
+            t[i] = desc:get(i-1):text()
         end
         novelPage:setDescription(table.concat(t, "\n"))
     end
@@ -236,4 +236,3 @@ end
 function getSearchString(query)
     return baseURL .. "/search?keyword=" .. query:gsub(" ", "%20")
 end
-
