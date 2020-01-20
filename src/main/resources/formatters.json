@@ -18,24 +18,24 @@
     "id": 5,
     "imageURL": "",
     "version": "1.1.0",
-    "md5": "2ef68582d17171843463bad72ddb4c7e"
+    "md5": "fe03cdd56a0c211c0baed5b84b4ab83fab18155b1352e45b46cf988ce77480df"
   },
   "BoxNovel": {
     "id": 2,
     "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
     "version": "1.1.0",
-    "md5": "4afa0904de6001e00c7e689cab2c45ca"
+    "md5": "903ec3a6da61643f9d31a12dc82e66582bf744490f4ec5323ff3c20f13753592"
   },
   "NovelFull": {
     "id": 1,
     "imageURL": "",
     "version": "1.1.0",
-    "md5": "6841b23d13eda23ddd16b68a05a623b1"
+    "md5": "04de922122ac6a90217b77ac9c7a011ff0e26e87282e4ec05044d0a73009a142"
   },
   "Syosetsu": {
     "id": 3,
     "imageURL": "https://static.syosetu.com/view/images/common/logo_yomou.png",
     "version": "1.1.0",
-    "md5": "e48bb0bd456f351df2e94e212e8e5cb9"
+    "md5": "6e488c1cd4d0f8b0cd5da8220b3e8fd03113e30ef524a58b92dc236e53b18860"
   }
 }
