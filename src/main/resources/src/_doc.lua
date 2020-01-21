@@ -129,18 +129,6 @@ do
     ---@class NovelPage
     local NovelPage = {}
 
-    --[[
-    var title: String = "unknown"
-    var imageURL: String = ""
-    var description: String = "unknown"
-    var genres: Array<String> = arrayOf()
-    var authors: Array<String> = arrayOf()
-    var status = NovelStatus.UNKNOWN
-    var tags: Array<String> = arrayOf()
-    var artists: Array<String> = arrayOf()
-    var language: String = "unknown"
-    ]]
-
     ---@param title string
     ---@return void
     function NovelPage:setTitle(title) end
@@ -178,4 +166,35 @@ do
     function NovelPage:setLanguage(language) end
 end
 
--- TODO: ShosetsuLib
+-- ShosetsuLib
+do
+    ---@return ArrayList
+    function List() end
+
+    ---@param arr table | Array
+    ---@return ArrayList
+    function AsList(arr) end
+
+    ---@param arr ArrayList
+    ---@return void
+    function Reverse(arr) end
+
+
+    ---@return Novel
+    function Novel() end
+
+    ---@return NovelPage
+    function NovelPage() end
+
+    ---@return NovelChapter
+    function NovelChapter() end
+
+    ---@param type int
+    ---@return NovelStatus
+    function NovelStatus(type) end
+
+    ---@param type int
+    ---@return Ordering
+    function Ordering(type) end
+end
+
