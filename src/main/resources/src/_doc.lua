@@ -35,7 +35,7 @@ do
     function ArrayList:size() end
 end
 
--- libraries
+-- jsoup
 do
     ---@class Document : Element
     local Document
@@ -178,55 +178,4 @@ do
     function NovelPage:setLanguage(language) end
 end
 
--- LuaSupport
-do
-    ---@class LuaSupport
-    ---@type LuaSupport
-    LuaSupport = {}
-
-    ---@param type "0" | "1" | "2" | "3" | int @Type of NovelStatus { 0: PUBLISHING, 1: COMPLETED, 2: PAUSED, 3: UNKNOWN }
-    ---@return NovelStatus
-    function LuaSupport:getStatus(type) end
-
-    ---@param type "0" | "1" | int @TopBottomLatestOldest, BottomTopLatestOldest
-    ---@return NovelStatus
-    function LuaSupport:getOrdering(type) end
-
-    ---@return Array
-    function LuaSupport:getGAL() end
-
-    ---@return NovelStatus
-    function LuaSupport:getOrdering() end
-
-    ---@param array ArrayList
-    ---@return ArrayList
-    function LuaSupport:reverseAL(array) end
-
-    ---@return ArrayList
-    function LuaSupport:getNAL() end
-
-    ---@return ArrayList
-    function LuaSupport:getCAL() end
-
-    ---@return ArrayList
-    function LuaSupport:getChapterArrayList() end
-
-    ---@return NovelPage
-    function LuaSupport:getNovelPage() end
-
-    ---@return ArrayList
-    function LuaSupport:getStringArray() end
-
-    ---@return ArrayList
-    function LuaSupport:getChapterArrayList() end
-
-    ---@return Novel
-    function LuaSupport:getNovel() end
-
-    ---@return NovelChapter
-    function LuaSupport:getNovelChapter() end
-
-    ---@param any any
-    ---@return void
-    function LuaSupport:printOut(any) end
-end
+-- TODO: ShosetsuLib

@@ -2,10 +2,16 @@
 --- @author Doomsdayrs
 --- @version 1.1.0
 
-local luajava = require("luajava")
-
---local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
 local baseURL = "https://bestlightnovel.com"
+
+local function map(o, f)
+    local t = {}
+    for i=1, o:size() do
+        t[i] = f(o:get(i-1))
+    end
+    return t
+end
+
 
 --- @return boolean
 function isIncrementingChapterList()
@@ -19,12 +25,12 @@ end
 
 --- @return Ordering
 function chapterOrder()
-    return LuaSupport:getOrdering(0)
+    return Ordering(0)
 end
 
 --- @return Ordering
 function latestOrder()
-    return LuaSupport:getOrdering(0)
+    return Ordering(0)
 end
 
 --- @return boolean
@@ -44,7 +50,7 @@ end
 
 ---@return ArrayList
 function genres()
-    return LuaSupport:getGAL()
+    return {}
 end
 
 ---@return int
@@ -69,55 +75,30 @@ end
 
 ---@return string
 function getNovelPassage(document)
-    local elements = document:selectFirst("div.vung_doc"):select("p")
-    print(elements:size())
-    if elements:size() > 0 then
-        local t = {}
-        for i=1, elements:size(), 1 do
-            t[i] = elements:get(i-1):text()
-        end
-        return table.concat(t, "\n")
-    else
-        return "NOT YET TRANSLATED"
-    end
+    local e = document:selectFirst("div.vung_doc"):select("p")
+    if e:size() == 0 then return "NOT YET TRANSLATED" end
+    return table.concat(map(e, function(v) return v:text() end), "\n")
 end
 
 ---@return Novel
 function parseNovel(document)
-    local novelPage = LuaSupport:getNovelPage()
+    local novelPage = NovelPage()
     -- Image
     novelPage:setImageURL(document:selectFirst("div.truyen_info_left"):selectFirst("img"):attr("src"))
 
     -- Bulk data
     local elements = document:selectFirst("ul.truyen_info_right"):select("li")
     novelPage:setTitle(elements:get(0):selectFirst("h1"):text())
-    
-    -- Authors
-    do
-        local strings = LuaSupport:getStringArray()
-        local subElements = elements:get(1):select("a")
-        strings:setSize(subElements:size())
-        for y = 0, subElements:size() - 1, 1 do
-            strings:setPosition(y, subElements:get(y):text())
-        end
-        novelPage:setAuthors(strings:getStrings())
-    end
 
+    -- Authors
+    novelPage:setAuthors(map(elements:get(1):select("a"), function(v) return v:text() end))
     -- Genres
-    do
-        local strings = LuaSupport:getStringArray()
-        local subElements = elements:get(2):select("a")
-        strings:setSize(subElements:size())
-        for y = 0, subElements:size() - 1, 1 do
-            strings:setPosition(y, subElements:get(y):text())
-        end
-        novelPage:setGenres(strings:getStrings())
-    end
+    novelPage:setGenres(map(elements:get(2):select("a"), function(v) return v:text() end))
 
     -- Status
     do
         local s = elements:get(3):select("a"):text()
-        novelPage:setStatus(LuaSupport:getStatus(
+        novelPage:setStatus(NovelStatus(
             s == "ongoing" and 0 or
                 (s == "completed" and 1 or 3)
         ))
@@ -132,24 +113,24 @@ function parseNovel(document)
         break end
     end
 
-
     -- Chapters
-    novelPage:setNovelChapters(LuaSupport:getChapterArrayList())
-    local novelChapters = LuaSupport:getCAL()
     local chapters = document:selectFirst("div.chapter-list"):select("div.row")
     local a = chapters:size()
-    for i = 0, chapters:size() - 1, 1 do
-        local novelChapter = LuaSupport:getNovelChapter()
-        local elements = chapters:get(i):select("span")
-        local titleLink = elements:get(0):selectFirst("a")
-        novelChapter:setTitle(titleLink:attr("title"):gsub(novelPage:getTitle(), ""):match("^%s*(.-)%s*$"))
-        novelChapter:setLink(titleLink:attr("href"))
-        novelChapter:setRelease(elements:get(1):text())
-        novelChapter:setOrder(a-i)
-        novelChapters:add(novelChapter)
-    end
-    novelChapters = LuaSupport:reverseAL(novelChapters)
-    novelPage:setNovelChapters(novelChapters)
+    local c = AsList(map(chapters, function(v)
+        local chap = NovelChapter()
+        local e = v:select("span")
+        local titLink = e:get(0):selectFirst("a")
+        chap:setTitle(titLink:attr("title"):gsub(novelPage:getTitle(), ""):match("^%s*(.-)%s*$"))
+        chap:setLink(titLink:attr("href"))
+        chap:setRelease(e:get(1):text())
+        chap:setOrder(a)
+        a = a - 1
+        return chap
+    end))
+    Reverse(c)
+    novelPage:setNovelChapters((c))
+
+
     return novelPage
 end
 
@@ -161,34 +142,26 @@ function novelPageCombiner(url, increment)
     return url
 end
 
-function parseLatest(document)
-    local novels = LuaSupport:getNAL()
-    local elements = document:select("div.update_item.list_category")
-    for i = 1, elements:size() - 1, 1 do
-        local element = elements:get(i)
-        local novel = LuaSupport:getNovel()
-        local e = element:selectFirst("h3.nowrap"):selectFirst("a")
+function parseLatest(doc)
+    return AsList(map(doc:select("div.update_item.list_category"), function(v)
+        local novel = Novel()
+        local e = v:selectFirst("h3.nowrap"):selectFirst("a")
         novel:setTitle(e:attr("title"))
         novel:setLink(e:attr("href"))
-        novel:setImageURL(element:selectFirst("img"):attr("src"))
-        novels:add(novel)
-    end
-    return novels
+        novel:setImageURL(v:selectFirst("img"):attr("src"))
+        return novel
+    end))
 end
 
-function parseSearch(document)
-    local novels = LuaSupport:getNAL()
-    local elements = document:select("div.update_item.list_category")
-    for i = 1, elements:size() - 1, 1 do
-        local element = elements:get(i)
-        local novel = LuaSupport:getNovel()
-        local e = element:selectFirst("h3.nowrap"):selectFirst("a")
+function parseSearch(doc)
+    return AsList(map(doc:select("div.update_item.list_category"), function(v)
+        local novel = Novel()
+        local e = v:selectFirst("h3.nowrap"):selectFirst("a")
         novel:setTitle(e:attr("title"))
         novel:setLink(e:attr("href"))
-        novel:setImageURL(element:selectFirst("img"):attr("src"))
-        novels:add(novel)
-    end
-    return novels
+        novel:setImageURL(v:selectFirst("img"):attr("src"))
+        return novel
+    end))
 end
 
 function getSearchString(query)

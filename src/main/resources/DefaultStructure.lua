@@ -2,11 +2,16 @@
 ---@author Doomsdayrs
 ---@version 1.0.0
 
-local luajava = require("luajava")
-
--- This variable is only for testing sake, Please comment it out when done or the application WILL crash
---local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
 local baseURL = "TODO"
+
+local function map(o, f)
+    local t = {}
+    for i=1, o:size() do
+        t[i] = f(o:get(i-1))
+    end
+    return t
+end
+
 
 ---@return boolean
 function isIncrementingChapterList()
