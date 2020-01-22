@@ -2,7 +2,7 @@
 ---@author Doomsdayrs
 ---@version 0.1.0
 
-local baseURL = "https://fastnovel.net/"
+local baseURL = "https://fastnovel.net"
 
 ---@param o Elements
 ---@param f fun(v:Element):any
@@ -129,17 +129,19 @@ function parseNovel(document)
     -- chapters
     local volumeName = ""
     local chapterIndex = 0
-    local chapters = AsList(map2flat(document:select("div.list-chapter"),
+    local chapters = AsList(map2flat(
+            document:select("div.list-chapter"),
             function(element)
                 volumeName = element:selectFirst("div.title"):selectFirst("a.accordion-toggle"):text()
                 return element:select("li")
-            end
-    , function(element)
+            end,
+            function(element)
                 local chapter = NovelChapter()
                 local data = element:selectFirst("a.class")
                 chapter:setTitle(volumeName .. " " .. data:text())
                 chapter:setLink(baseURL .. data:attr("href"))
                 chapter:setOrder(chapterIndex)
+                print(chapterIndex)
                 chapterIndex = chapterIndex + 1
                 return chapter
             end))

@@ -73,6 +73,11 @@ do
         return
     end
 
+    ---@return string
+    function Element:id()
+        return
+    end
+
     ---@return number
     function Elements:size()
         return
