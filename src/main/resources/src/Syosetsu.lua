@@ -1,6 +1,6 @@
 -- {"id":3,"version":"1.1.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.1.0
+--- @version 1.1.1
 
 local luajava = require("luajava")
 
@@ -55,7 +55,7 @@ end
 
 --- @return string @name of site
 function getName()
-    return "Syosetu"
+    return "Syosetsu"
 end
 
 --- @return string @image url of site

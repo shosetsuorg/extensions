@@ -80,7 +80,7 @@ object compile {
                 formatters.put(it, form)
             }
         }
-
+  
 
         val writer = BufferedWriter(FileWriter(formFile))
         writer.write(formatters.toString(2))
