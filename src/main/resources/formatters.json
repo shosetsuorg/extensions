@@ -5,14 +5,12 @@
     "Key is the name of the file, ID has to be unique, md5 is to confirm legitimacy of file",
     "If the md5 of the file on the phone is different then what this says, the application will refuse to run the MD5",
     "The following is an example",
-    {
-      "example": {
-        "imageURL": "",
-        "id": -1917,
-        "version": "1.0.0",
-        "md5": "magic numbers from md5sum"
-      }
-    }
+    {"example": {
+      "imageURL": "",
+      "id": -1917,
+      "version": "1.0.0",
+      "md5": "magic numbers from md5sum"
+    }}
   ],
   "NovelFull": {
     "imageURL": "",
@@ -36,6 +34,6 @@
     "imageURL": "https://static.syosetu.com/view/images/common/logo_yomou.png",
     "id": 3,
     "version": "1.1.0",
-    "md5": "c54501505e75f8eb83c147a197cbfe"
+    "md5": "c4554a869a7b6509e2edb501ca0d77d"
   }
 }
