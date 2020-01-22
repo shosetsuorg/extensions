@@ -130,18 +130,17 @@ function parseNovel(document)
     local volumeName = ""
     local chapterIndex = 0
     local chapters = AsList(map2flat(
-            document:select("div.list-chapter"),
+            document:selectFirst("div.block-film"):select("div.book"),
             function(element)
                 volumeName = element:selectFirst("div.title"):selectFirst("a.accordion-toggle"):text()
                 return element:select("li")
             end,
             function(element)
                 local chapter = NovelChapter()
-                local data = element:selectFirst("a.class")
+                local data = element:selectFirst("a.chapter")
                 chapter:setTitle(volumeName .. " " .. data:text())
                 chapter:setLink(baseURL .. data:attr("href"))
                 chapter:setOrder(chapterIndex)
-                print(chapterIndex)
                 chapterIndex = chapterIndex + 1
                 return chapter
             end))
