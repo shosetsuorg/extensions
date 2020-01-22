@@ -1,6 +1,6 @@
--- {"id":1,"version":"1.2.0","author":"Doomsdayrs","repo":""}
+-- {"id":1,"version":"1.2.1","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.2.0
+--- @version 1.2.1
 
 local baseURL = "http://novelfull.com"
 ---@param o Elements
