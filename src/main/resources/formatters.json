@@ -15,14 +15,20 @@
   "NovelFull": {
     "imageURL": "",
     "id": 1,
-    "version": "1.2.0",
-    "md5": "8bab597a6b35f5e53c5dea3bdff5d4f"
+    "version": "1.2.1",
+    "md5": "cb3c2bf9e9f547463beb2fd822b15d6"
   },
   "BestLightNovel": {
     "imageURL": "",
     "id": 5,
     "version": "1.2.0",
     "md5": "a1d183dae8ec505ecc6e448f13da65e"
+  },
+  "FastNovel": {
+    "imageURL": "https://fastnovel.net/skin/images/logo.png",
+    "id": 3,
+    "version": "0.1.0",
+    "md5": "308e78f6acd3ce19f4bbd6ecd7de7f6"
   },
   "BoxNovel": {
     "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",

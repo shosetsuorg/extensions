@@ -86,7 +86,7 @@
         <dependency>
             <groupId>com.github.doomsdayrs</groupId>
             <artifactId>shosetsu-services</artifactId>
-            <version>v0.4.0</version>
+            <version>v0.4.2</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>

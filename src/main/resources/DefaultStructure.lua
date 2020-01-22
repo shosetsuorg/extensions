@@ -4,14 +4,34 @@
 
 local baseURL = "TODO"
 
-local function map(o, f)
+---@param elements Elements
+---@param f fun(v:Element):any
+---@return table|Array
+local function map(elements, f)
     local t = {}
-    for i=1, o:size() do
-        t[i] = f(o:get(i-1))
+    for i = 1, elements:size() do
+        t[i] = f(elements:get(i - 1))
     end
     return t
 end
 
+---@param el Elements
+---@param f1 fun(element:Element):Elements|Array|table
+---@param f2 fun(v:Element):table|Array
+local function map2flat(el, f1, f2)
+    local t = {}
+    local i = 1
+    for j = 1, el:size() do
+        local o2 = f1(el:get(j - 1))
+        if o2 then
+            for k = 1, o2:size() do
+                t[i] = f2(o2:get(k - 1))
+                i = i + 1
+            end
+        end
+    end
+    return t
+end
 
 ---@return boolean
 function isIncrementingChapterList()
@@ -28,13 +48,13 @@ end
 ---@return Ordering
 function chapterOrder()
     -- TODO Complete
-    return LuaSupport:getOrdering(0)
+    return Ordering(0)
 end
 
 ---@return Ordering
 function latestOrder()
     -- TODO Complete
-    return LuaSupport:getOrdering(0)
+    return Ordering(0)
 end
 
 ---@return boolean
@@ -58,7 +78,7 @@ end
 ---@return Array @Array<Genre>
 function genres()
     -- TODO Complete
-    return LuaSupport:getGAL()
+    return {}
 end
 
 ---@return number @ID
@@ -96,7 +116,7 @@ end
 ---@param document Document @Jsoup document of the novel information page
 ---@return NovelPage
 function parseNovel(document)
-    local novelPage = LuaSupport:getNovelPage()
+    local novelPage = NovelPage()
     -- TODO Complete
     return novelPage
 end
@@ -105,7 +125,7 @@ end
 ---@param increment number @Page #
 ---@return NovelPage
 function parseNovelI(document, increment)
-    local novelPage = LuaSupport:getNovelPage()
+    local novelPage = NovelPage()
     -- TODO Complete
     return novelPage
 end
@@ -120,17 +140,15 @@ end
 ---@param document Document @Jsoup document of latest listing
 ---@return Array @Novel array list
 function parseLatest(document)
-    local novels = LuaSupport:getNAL()
     -- TODO Complete
-    return novels
+    return {}
 end
 
 ---@param document Document @Jsoup document of search results
 ---@return Array @Novel array list
 function parseSearch(document)
-    local novels = LuaSupport:getNAL()
     -- TODO Complete
-    return novels
+    return {}
 end
 
 ---@param query string @query to use
