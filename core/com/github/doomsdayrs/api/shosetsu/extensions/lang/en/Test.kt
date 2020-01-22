@@ -6,6 +6,8 @@ import okhttp3.Request
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 import org.luaj.vm2.LuaValue
 import org.luaj.vm2.lib.jse.CoerceJavaToLua
 import org.luaj.vm2.lib.jse.JsePlatform
@@ -59,19 +61,17 @@ internal class Test {
         @JvmStatic
         fun main(args: Array<String>) {
             val formatters = arrayOf(
-                    "src/main/resources/src/BestLightNovel.lua"
+                    "src/main/resources/src/FastNovel.lua"
             )
             for (format in formatters){
                 println("========== $format ==========")
 
                 val luaFormatter = LuaFormatter(File(format))
-
                 // Data
                 println(luaFormatter.genres)
                 println(luaFormatter.name)
                 println(luaFormatter.formatterID)
                 println(luaFormatter.imageURL)
-
                 // Latest
                 TimeUnit.SECONDS.sleep(1)
                 val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
