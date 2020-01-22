@@ -1,6 +1,6 @@
--- {"id":5,"version":"1.1.0","author":"Doomsdayrs","repo":""}
+-- {"id":5,"version":"1.2.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.1.0
+--- @version 1.2.0
 
 local baseURL = "https://bestlightnovel.com"
 

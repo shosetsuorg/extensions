@@ -1,6 +1,6 @@
--- {"id":3,"version":"1.1.1","author":"Doomsdayrs","repo":""}
+-- {"id":3,"version":"1.2.0","author":"Doomsdayrs","repo":""}
 --- @author Doomsdayrs
---- @version 1.1.1
+--- @version 1.2.0
 
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
