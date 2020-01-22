@@ -9,8 +9,11 @@ assignees: ''
 
 # URL of the site
 {url}
-# List of features
-- search?
-- advanced search (with genres, etc)
-- login?
-- cloudflare?
+
+## Has search, And what options
+
+## Has a login system
+
+## Has Cloudflare protection
+
+## Addtional notes 
