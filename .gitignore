@@ -1,5 +1,4 @@
-.idea/*
-resources/*
-test/*
-target/*
-novelreaderextensions.iml
+.idea
+*.iml
+*/test/*
+*/target/*

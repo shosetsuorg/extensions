@@ -2,11 +2,23 @@
 --- @author Doomsdayrs
 --- @version 1.1.1
 
-local luajava = require("luajava")
-
---local LuaSupport = luajava.newInstance("com.github.doomsdayrs.api.shosetsu.services.core.objects.LuaSupport")
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
+
+local function map(o, f)
+    local t = {}
+    for i=1, o:size() do
+        t[i] = f(o:get(i-1), i)
+    end
+    return t
+end
+local function first(o, f)
+    for i=1, o:size() do
+        local v = o:get(i-1)
+        if f(v) then return v end
+    end
+end
+
 
 --- @return boolean
 function isIncrementingChapterList()
@@ -20,12 +32,12 @@ end
 
 --- @return Ordering
 function chapterOrder()
-    return LuaSupport:getOrdering(0)
+    return Ordering(0)
 end
 
 --- @return Ordering
 function latestOrder()
-    return LuaSupport:getOrdering(0)
+    return Ordering(0)
 end
 
 --- @return boolean
@@ -45,7 +57,7 @@ end
 
 --- @return Array @Array<NovelGenre>
 function genres()
-    return LuaSupport:getGAL()
+    return {}
 end
 
 --- @return number @ID
@@ -73,69 +85,35 @@ end
 --- @param document Document @Jsoup document of the page with chapter text on it
 --- @return string @passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
 function getNovelPassage(document)
-    local elements = document:select("div")
-    local elem
-    for i=0, elements:size()-1 do
-        if elements:get(i):id() == "novel_contents" then
-            elem = elements:get(i):select("p")
-            break
-        end
-    end
-    if not elem then
-        return "INVALID PARSING, CONTACT DEVELOPERS"
-    end
-
-    local t = {}
-    for i=1, elem:size(), 1 do
-        t[i] = elem:get(i-1):text()
-    end
-    return table.concat(t, "\n"):gsub("<br>", "\n\n")
+    local e = first(document:select("div"), function(v) return v:id() == "novel_contents" end)
+    if not e then return "INVALID PARSING, CONTACT DEVELOPERS" end
+    return table.concat(map(e:select("p"), function(v) return v:text() end), "\n"):gsub("<br>", "\n\n")
 end
 
 --- @param document Document @Jsoup document of the novel information page
 --- @return NovelPage @java object
 function parseNovel(document)
-    local novelPage = LuaSupport:getNovelPage()
+    local novelPage = NovelPage()
 
-    do
-        local authors = LuaSupport:getStringArray()
-        authors:setSize(1)
-        authors:setPosition(0, document:selectFirst("div.novel_writername"):text():gsub("作者：", ""))
-        novelPage:setAuthors(authors:getStrings())
-        novelPage:setTitle(document:selectFirst("p.novel_title"):text())
-    end
+    novelPage:setAuthors({ document:selectFirst("div.novel_writername"):text():gsub("作者：", "") })
+    novelPage:setTitle(document:selectFirst("p.novel_title"):text())
 
     -- Description
-    do
-        local elements = document:select("div")
-        local elem
-        for i=0, elements:size()-1 do
-            if elements:get(i):id() == "novel_color" then
-                elem = elements:get(i)
-                break
-            end
-        end
-
-        if elem then
-            novelPage:setDescription(elem:text():gsub("<br>\n<br>", "\n"):gsub("<br>", "\n"))
-        end
+    local e = first(document:select("div"), function(v) return v:id() == "novel_color" end)
+    if e then
+        novelPage:setDescription(e:text():gsub("<br>\n<br>", "\n"):gsub("<br>", "\n"))
     end
 
     -- Chapters
-    do
-        local novelChapters = LuaSupport:getCAL()
-        local elements = document:select("dl.novel_sublist2")
-        for i = 0, elements:size() - 1, 1 do
-            local element = elements:get(i)
-            local novelChapter = LuaSupport:getNovelChapter()
-            novelChapter:setTitle(element:selectFirst("a"):text())
-            novelChapter:setLink(passageURL .. element:selectFirst("a"):attr("href"))
-            novelChapter:setRelease(element:selectFirst("dt.long_update"):text())
-            novelChapter:setOrder(i+1)
-            novelChapters:add(novelChapter)
-        end
-        novelPage:setNovelChapters(novelChapters)
-    end
+    novelPage:setNovelChapters(AsList(map(document:select("dl.novel_sublist2"), function(v, i)
+        local chap = NovelChapter()
+        chap:setTitle(v:selectFirst("a"):text())
+        chap:setLink(passageURL .. v:selectFirst("a"):attr("href"))
+        chap:setRelease(v:selectFirst("dt.long_update"):text())
+        chap:setOrder(i)
+        return chap
+    end)))
+
 
     return novelPage
 end
@@ -157,31 +135,25 @@ end
 --- @param document Document @Jsoup document of latest listing
 --- @return Array @Novel array list
 function parseLatest(document)
-    local novels = LuaSupport:getNAL()
-    local elements = document:select("div.searchkekka_box")
-    for i = 0, elements:size() - 1, 1 do
-        local novel = LuaSupport:getNovel()
-        local e = elements:get(i):selectFirst("div.novel_h"):selectFirst("a.tl")
+    return AsList(map(document:select("div.searchkekka_box"), function(v)
+        local novel = Novel()
+        local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
         novel:setLink(e:attr("href"))
         novel:setTitle(e:text())
-        novels:add(novel)
-    end
-    return novels
+        return novel
+    end))
 end
 
 --- @param document Document @Jsoup document of search results
 --- @return Array @Novel array list
 function parseSearch(document)
-    local novels = LuaSupport:getNAL()
-    local elements = document:select("div.searchkekka_box")
-    for i = 0, elements:size() - 1, 1 do
-        local novel = LuaSupport:getNovel()
-        local e = elements:get(i):selectFirst("div.novel_h"):selectFirst("a.tl")
+    return AsList(map(document:select("div.searchkekka_box"), function(v)
+        local novel = Novel()
+        local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
         novel:setLink(e:attr("href"))
         novel:setTitle(e:text())
-        novels:add(novel)
-    end
-    return novels
+        return novel
+    end))
 end
 
 --- @param query string @query to use

@@ -1,3 +1,5 @@
+-- {"id":-999,"version":"0.0.0","author":"TechnoJo4","repo":""}
+---@author TechnoJo4
 -- ! ! ! ! !  DO NOT RUN AS AN EXTENSION  ! ! ! ! !
 -- ! THIS FILE CONTAINS EmmyLua CLASS DEFINITIONS !
 -- ! ! ! ! !  DO NOT RUN AS AN EXTENSION  ! ! ! ! !
@@ -33,7 +35,7 @@ do
     function ArrayList:size() end
 end
 
--- libraries
+-- jsoup
 do
     ---@class Document : Element
     local Document
@@ -127,18 +129,6 @@ do
     ---@class NovelPage
     local NovelPage = {}
 
-    --[[
-    var title: String = "unknown"
-    var imageURL: String = ""
-    var description: String = "unknown"
-    var genres: Array<String> = arrayOf()
-    var authors: Array<String> = arrayOf()
-    var status = NovelStatus.UNKNOWN
-    var tags: Array<String> = arrayOf()
-    var artists: Array<String> = arrayOf()
-    var language: String = "unknown"
-    ]]
-
     ---@param title string
     ---@return void
     function NovelPage:setTitle(title) end
@@ -159,7 +149,7 @@ do
     ---@return void
     function NovelPage:setAuthors(authors) end
 
-    ---@param status NovelStatus
+    ---@param status "LuaSupport:getStatus(3)" | NovelStatus
     ---@return void
     function NovelPage:setStatus(status) end
 
@@ -176,55 +166,35 @@ do
     function NovelPage:setLanguage(language) end
 end
 
--- LuaSupport
+-- ShosetsuLib
 do
-    ---@class LuaSupport
-    ---@type LuaSupport
-    LuaSupport = {}
-
-    ---@param type "0" | "1" | "2" | "3" | int @Type of NovelStatus { 0: PUBLISHING, 1: COMPLETED, 2: PAUSED, 3: UNKNOWN }
-    ---@return NovelStatus
-    function LuaSupport:getStatus(type) end
-
-    ---@param type "0" | "1" | int @TopBottomLatestOldest, BottomTopLatestOldest
-    ---@return NovelStatus
-    function LuaSupport:getOrdering(type) end
-
-    ---@return Array
-    function LuaSupport:getGAL() end
-
-    ---@return NovelStatus
-    function LuaSupport:getOrdering() end
-
-    ---@param array ArrayList
     ---@return ArrayList
-    function LuaSupport:reverseAL(array) end
+    function List() end
 
+    ---@param arr table | Array
     ---@return ArrayList
-    function LuaSupport:getNAL() end
+    function AsList(arr) end
 
-    ---@return ArrayList
-    function LuaSupport:getCAL() end
+    ---@param arr ArrayList
+    ---@return void
+    function Reverse(arr) end
 
-    ---@return ArrayList
-    function LuaSupport:getChapterArrayList() end
-
-    ---@return NovelPage
-    function LuaSupport:getNovelPage() end
-
-    ---@return ArrayList
-    function LuaSupport:getStringArray() end
-
-    ---@return ArrayList
-    function LuaSupport:getChapterArrayList() end
 
     ---@return Novel
-    function LuaSupport:getNovel() end
+    function Novel() end
+
+    ---@return NovelPage
+    function NovelPage() end
 
     ---@return NovelChapter
-    function LuaSupport:getNovelChapter() end
+    function NovelChapter() end
 
-    ---@param any any
-    ---@return void
-    function LuaSupport:printOut(any) end
+    ---@param type int
+    ---@return NovelStatus
+    function NovelStatus(type) end
+
+    ---@param type int
+    ---@return Ordering
+    function Ordering(type) end
 end
+
