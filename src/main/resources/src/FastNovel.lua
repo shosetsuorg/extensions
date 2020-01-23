@@ -1,6 +1,6 @@
--- {"id":258,"version":"0.1.0","author":"Doomsdayrs","repo":""}
+-- {"id":258,"version":"0.1.1","author":"Doomsdayrs","repo":""}
 ---@author Doomsdayrs
----@version 0.1.0
+---@version 0.1.1
 
 local baseURL = "https://fastnovel.net"
 
@@ -165,7 +165,7 @@ end
 ---@param document Document @Jsoup document of latest listing
 ---@return Array @Novel array list
 function parseLatest(document)
-    return AsList(map(document:select("ul.list-film"), function(v)
+    return AsList(map(document:selectFirst("ul.list-film"):select("li.film-item"), function(v)
         local novel = Novel()
         local data = v:selectFirst("a")
         novel:setLink(baseURL .. data:attr("href"))
