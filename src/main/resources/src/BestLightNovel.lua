@@ -4,6 +4,9 @@
 
 local baseURL = "https://bestlightnovel.com"
 
+---@param o Elements
+---@param f fun(v:Element):any
+---@return table
 local function map(o, f)
     local t = {}
     for i=1, o:size() do
@@ -12,88 +15,36 @@ local function map(o, f)
     return t
 end
 
-
---- @return boolean
-function isIncrementingChapterList()
-    return false
-end
-
---- @return boolean
-function isIncrementingPassagePage()
-    return false
-end
-
---- @return Ordering
-function chapterOrder()
-    return Ordering(0)
-end
-
---- @return Ordering
-function latestOrder()
-    return Ordering(0)
-end
-
---- @return boolean
-function hasCloudFlare()
-    return false
-end
-
---- @return boolean
-function hasSearch()
-    return true
-end
-
---- @return boolean
-function hasGenres()
-    return false
-end
-
----@return ArrayList
-function genres()
-    return {}
-end
-
----@return int
-function getID()
-    return 5
-end
-
 ---@return string
-function getName()
-    return "BestLightNovel"
-end
-
----@return string
-function getImageURL()
-    return ""
-end
-
----@return string
-function getLatestURL(page)
+local function getLatestURL(page)
     return baseURL .. "/novel_list?type=latest&category=all&state=all&page=" .. (page <= 0 and 1 or page)
 end
 
+---@param document Document
 ---@return string
-function getNovelPassage(document)
+local function getNovelPassage(document)
     local e = document:selectFirst("div.vung_doc"):select("p")
     if e:size() == 0 then return "NOT YET TRANSLATED" end
     return table.concat(map(e, function(v) return v:text() end), "\n")
 end
 
----@return Novel
-function parseNovel(document)
+---@param document Document
+---@return NovelPage
+local function parseNovel(document)
     local novelPage = NovelPage()
     -- Image
     novelPage:setImageURL(document:selectFirst("div.truyen_info_left"):selectFirst("img"):attr("src"))
 
     -- Bulk data
-    local elements = document:selectFirst("ul.truyen_info_right"):select("li")
-    novelPage:setTitle(elements:get(0):selectFirst("h1"):text())
+    do
+        local elements = document:selectFirst("ul.truyen_info_right"):select("li")
+        novelPage:setTitle(elements:get(0):selectFirst("h1"):text())
 
-    -- Authors
-    novelPage:setAuthors(map(elements:get(1):select("a"), function(v) return v:text() end))
-    -- Genres
-    novelPage:setGenres(map(elements:get(2):select("a"), function(v) return v:text() end))
+        -- Authors
+        novelPage:setAuthors(map(elements:get(1):select("a"), function(v) return v:text() end))
+        -- Genres
+        novelPage:setGenres(map(elements:get(2):select("a"), function(v) return v:text() end))
+    end
 
     -- Status
     do
@@ -105,12 +56,14 @@ function parseNovel(document)
     end
 
     -- Description
-    local elements = document:selectFirst("div.entry-header"):select("div")
-    for i = 0, elements:size() - 1, 1 do
-        local div = elements:get(i)
-        if div:id() == "noidungm" then
-            novelPage:setDescription(div:text():gsub("<br>", "\n"))
-        break end
+    do
+        local elements = document:selectFirst("div.entry-header"):select("div")
+        for i = 0, elements:size() - 1, 1 do
+            local div = elements:get(i)
+            if div:id() == "noidungm" then
+                novelPage:setDescription(div:text():gsub("<br>", "\n"))
+                break end
+        end
     end
 
     -- Chapters
@@ -130,19 +83,19 @@ function parseNovel(document)
     Reverse(c)
     novelPage:setNovelChapters((c))
 
-
     return novelPage
 end
 
-function parseNovelI(document, increment)
+---@param document Document
+---@return NovelPage
+local function parseNovelI(document, increment)
     return parseNovel(document)
 end
 
-function novelPageCombiner(url, increment)
-    return url
-end
+local function novelPageCombiner(url, increment) return url end
 
-function parseLatest(doc)
+---@param doc Document
+local function parseLatest(doc)
     return AsList(map(doc:select("div.update_item.list_category"), function(v)
         local novel = Novel()
         local e = v:selectFirst("h3.nowrap"):selectFirst("a")
@@ -153,7 +106,8 @@ function parseLatest(doc)
     end))
 end
 
-function parseSearch(doc)
+---@param doc Document
+local function parseSearch(doc)
     return AsList(map(doc:select("div.update_item.list_category"), function(v)
         local novel = Novel()
         local e = v:selectFirst("h3.nowrap"):selectFirst("a")
@@ -164,6 +118,30 @@ function parseSearch(doc)
     end))
 end
 
-function getSearchString(query)
+---@param query string
+local function getSearchString(query)
     return baseURL .. "/search_novels/" .. query:gsub(" ", "_")
 end
+
+return {
+    id = 5,
+    name = "BestLightNovel",
+    imageURL = "",
+    genres = {},
+    hasCloudFlare = false,
+    latestOrder = Ordering(0),
+    chapterOrder = Ordering(0),
+    isIncrementingChapterList = false,
+    isIncrementingPassagePage = false,
+    hasSearch = true,
+    hasGenres = false,
+
+    getLatestURL = getLatestURL,
+    getNovelPassage = getNovelPassage,
+    parseNovel = parseNovel,
+    parseNovelI = parseNovelI,
+    novelPageCombiner = novelPageCombiner,
+    parseLatest = parseLatest,
+    parseSearch = parseSearch,
+    getSearchString = getSearchString
+}

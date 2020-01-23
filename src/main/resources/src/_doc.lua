@@ -13,35 +13,25 @@ do
 
     ---@param index int
     ---@return any
-    function Array:get(index)
-        return
-    end
+    function Array:get(index) return end
 
     ---@param index int
     ---@param value any
     ---@return
-    function Array:set(index, value)
-        return
-    end
+    function Array:set(index, value) return end
 
     ---@class ArrayList : Array
     local ArrayList = {}
 
     ---@param value any
     ---@return void
-    function ArrayList:add(value)
-        return
-    end
+    function ArrayList:add(value) return end
 
     ---@return void
-    function ArrayList:reverse()
-        return
-    end
+    function ArrayList:reverse() return end
 
     ---@return int
-    function ArrayList:size()
-        return
-    end
+    function ArrayList:size() return end
 end
 
 -- jsoup
@@ -57,69 +47,46 @@ do
 
     ---@param query string
     ---@return Elements
-    function Element:select(query)
-        return
-
-    end
+    function Element:select(query) return end
 
     ---@param query string
     ---@return Element
-    function Element:selectFirst(query)
-        return
-    end
+    function Element:selectFirst(query) return end
 
     ---@return string
-    function Element:text()
-        return
-    end
+    function Element:text() return end
 
     ---@return string
-    function Element:id()
-        return
-    end
+    function Element:id() return end
 
     ---@return number
-    function Elements:size()
-        return
-    end
+    function Elements:size() return end
 
     ---@param index number
     ---@return Element
-    function Elements:get(index)
-        return
-    end
+    function Elements:get(index) return end
 
     ---@param attributeKey string
     ---@return string
-    function Elements:attr(attributeKey)
-        return
-    end
+    function Elements:attr(attributeKey) return end
 
     ---@param query string
     ---@return Elements
-    function Elements:select(query)
-        return
-    end
+    function Elements:select(query) return end
 
     ---@param query string
     ---@return Elements
-    function Elements:selectFirst(query)
-        return
-    end
+    function Elements:selectFirst(query) return end
 
     ---@return string
-    function Elements:text()
-        return
-    end
+    function Elements:text() return end
 
     ---@class Node
     local Node
 
     ---@param attributeKey string
     ---@return string
-    function Node:attr(attributeKey)
-        return
-    end
+    function Node:attr(attributeKey) return end
 end
 
 -- everything else
@@ -134,158 +101,107 @@ do
 
     ---@param title string
     ---@return void
-    function Novel:setTitle(title)
-        return
-    end
+    function Novel:setTitle(title) return end
 
     ---@param link string
     ---@return void
-    function Novel:setLink(link)
-        return
-    end
+    function Novel:setLink(link) return end
 
     ---@param imageURL string
     ---@return void
-    function Novel:setImageURL(imageURL)
-        return
-    end
+    function Novel:setImageURL(imageURL) return end
 
     ---@class NovelChapter
     local NovelChapter = {}
 
     ---@param release string
     ---@return void
-    function NovelChapter:setRelease(release)
-        return
-    end
+    function NovelChapter:setRelease(release) return end
 
     ---@param title string
     ---@return void
-    function NovelChapter:setTitle(title)
-        return
-    end
+    function NovelChapter:setTitle(title) return end
 
     ---@param link string
     ---@return void
-    function NovelChapter:setLink(link)
-        return
-    end
+    function NovelChapter:setLink(link) return end
 
     ---@param order number
     ---@return void
-    function NovelChapter:setOrder(order)
-        return
-    end
+    function NovelChapter:setOrder(order) return end
 
     ---@class NovelPage
     local NovelPage = {}
 
     ---@param title string
     ---@return void
-    function NovelPage:setTitle(title)
-        return
-    end
+    function NovelPage:setTitle(title) return end
 
     ---@param imageURL string|any
     ---@return void
-    function NovelPage:setImageURL(imageURL)
-        return
-    end
+    function NovelPage:setImageURL(imageURL) return end
 
     ---@param description string
     ---@return void
-    function NovelPage:setDescription(description)
-        return
-    end
+    function NovelPage:setDescription(description) return end
 
-    ---@param genres Array
+    ---@param genres Array | table
     ---@return void
-    function NovelPage:setGenres(genres)
-        return
-    end
+    function NovelPage:setGenres(genres) return end
 
-    ---@param authors Array
+    ---@param authors Array | table
     ---@return void
-    function NovelPage:setAuthors(authors)
-        return
-    end
+    function NovelPage:setAuthors(authors) return end
 
     ---@param status "LuaSupport:getStatus(3)" | NovelStatus
     ---@return void
-    function NovelPage:setStatus(status)
-        return
-    end
+    function NovelPage:setStatus(status) return end
 
-    ---@param tags Array
+    ---@param tags Array | table
     ---@return void
-    function NovelPage:setTags(tags)
-        return
-    end
+    function NovelPage:setTags(tags) return end
 
-    ---@param artists Array
+    ---@param artists Array | table
     ---@return void
-    function NovelPage:setArtists(artists)
-        return
-    end
+    function NovelPage:setArtists(artists) return end
 
     ---@param language string
     ---@return void
-    function NovelPage:setLanguage(language)
-        return
-    end
+    function NovelPage:setLanguage(language) return end
 
     ---@param chapters ArrayList
     ---@return void
-    function NovelPage:setNovelChapters(chapters)
-        return
-    end
+    function NovelPage:setNovelChapters(chapters) return end
 end
 
 -- ShosetsuLib
 do
     ---@return ArrayList
-    function List()
-        return
-    end
+    function List() return end
 
-    ---@param arr table | Array
+    ---@param arr Array | table
     ---@return ArrayList
-    function AsList(arr)
-        return
-    end
+    function AsList(arr) return end
 
     ---@param arr ArrayList
     ---@return void
-    function Reverse(arr)
-        return
-    end
+    function Reverse(arr) return end
 
     ---@return Novel
-    function Novel()
-        return
-    end
+    function Novel() return end
 
     ---@return NovelPage
-    function NovelPage()
-        return
-    end
+    function NovelPage() return end
 
     ---@return NovelChapter
-    function NovelChapter()
-        return
-    end
+    function NovelChapter() return end
 
     ---@param type int
     ---@return NovelStatus
-    function NovelStatus(type)
-        return
-
-    end
+    function NovelStatus(type) return end
 
     ---@param type int
     ---@return Ordering
-    function Ordering(type)
-        return
-    end
+    function Ordering(type) return end
 end
 
