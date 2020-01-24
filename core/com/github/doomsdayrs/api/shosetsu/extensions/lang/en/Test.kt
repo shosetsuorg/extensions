@@ -75,8 +75,8 @@ internal class Test {
                 // Latest
                 TimeUnit.SECONDS.sleep(1)
                 val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
-                println()
-
+                for (novel in list)
+                    println(novel)
                 // Search
                 TimeUnit.SECONDS.sleep(1)
                 println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
