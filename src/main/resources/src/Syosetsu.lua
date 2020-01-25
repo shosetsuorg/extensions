@@ -20,79 +20,24 @@ local function first(o, f)
 end
 
 
---- @return boolean
-function isIncrementingChapterList()
-    return false
-end
-
---- @return boolean
-function isIncrementingPassagePage()
-    return false
-end
-
---- @return Ordering
-function chapterOrder()
-    return Ordering(0)
-end
-
---- @return Ordering
-function latestOrder()
-    return Ordering(0)
-end
-
---- @return boolean
-function hasCloudFlare()
-    return false
-end
-
---- @return boolean
-function hasSearch()
-    return true
-end
-
---- @return boolean
-function hasGenres()
-    return false
-end
-
---- @return Array @Array<NovelGenre>
-function genres()
-    return {}
-end
-
---- @return number @ID
-function getID()
-    return 3
-end
-
---- @return string @name of site
-function getName()
-    return "Syosetsu"
-end
-
---- @return string @image url of site
-function getImageURL()
-    return "https://static.syosetu.com/view/images/common/logo_yomou.png"
-end
-
---- @param page number @value
---- @return string @url of said latest page
-function getLatestURL(page)
+--- @param page number
+--- @return string
+local function getLatestURL(page)
     if page == 0 then page = 1 end
     return baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. page
 end
 
---- @param document Document @Jsoup document of the page with chapter text on it
---- @return string @passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
-function getNovelPassage(document)
+--- @param document Document
+--- @return string
+local function getNovelPassage(document)
     local e = first(document:select("div"), function(v) return v:id() == "novel_contents" end)
     if not e then return "INVALID PARSING, CONTACT DEVELOPERS" end
     return table.concat(map(e:select("p"), function(v) return v:text() end), "\n"):gsub("<br>", "\n\n")
 end
 
---- @param document Document @Jsoup document of the novel information page
---- @return NovelPage @java object
-function parseNovel(document)
+--- @param document Document
+--- @return NovelPage
+local function parseNovel(document)
     local novelPage = NovelPage()
 
     novelPage:setAuthors({ document:selectFirst("div.novel_writername"):text():gsub("作者：", "") })
@@ -118,23 +63,22 @@ function parseNovel(document)
     return novelPage
 end
 
---- @param document Document @Jsoup document of the novel information page
---- @param increment number @Page #
---- @return NovelPage @java object
-function parseNovelI(document, increment)
+--- @param document Document
+--- @param increment number
+--- @return NovelPage
+local function parseNovelI(document, increment)
     return parseNovel(document)
 end
 
-
---- @param url string       url of novel page
---- @param increment number which page
-function novelPageCombiner(url, increment)
+--- @param url string
+--- @param increment number
+local function novelPageCombiner(url, increment)
     return url
 end
 
---- @param document Document @Jsoup document of latest listing
---- @return Array @Novel array list
-function parseLatest(document)
+--- @param document Document
+--- @return ArrayList
+local function parseLatest(document)
     return AsList(map(document:select("div.searchkekka_box"), function(v)
         local novel = Novel()
         local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
@@ -144,9 +88,9 @@ function parseLatest(document)
     end))
 end
 
---- @param document Document @Jsoup document of search results
---- @return Array @Novel array list
-function parseSearch(document)
+--- @param document Document
+--- @return ArrayList
+local function parseSearch(document)
     return AsList(map(document:select("div.searchkekka_box"), function(v)
         local novel = Novel()
         local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
@@ -156,8 +100,31 @@ function parseSearch(document)
     end))
 end
 
---- @param query string @query to use
---- @return string @url
-function getSearchString(query)
+--- @param query string
+--- @return string
+local function getSearchString(query)
     return baseURL .. "/search.php?&word=" .. query:gsub("%+", "%2"):gsub(" ", "\\+")
 end
+
+return {
+    id = 3,
+    name = "Syosetsu",
+    imageURL = "https://static.syosetu.com/view/images/common/logo_yomou.png",
+    genres = {},
+    hasCloudFlare = false,
+    latestOrder = Ordering(0),
+    chapterOrder = Ordering(0),
+    isIncrementingChapterList = false,
+    isIncrementingPassagePage = false,
+    hasSearch = true,
+    hasGenres = false,
+
+    getLatestURL = getLatestURL,
+    getNovelPassage = getNovelPassage,
+    parseNovel = parseNovel,
+    parseNovelI = parseNovelI,
+    novelPageCombiner = novelPageCombiner,
+    parseLatest = parseLatest,
+    parseSearch = parseSearch,
+    getSearchString = getSearchString
+}

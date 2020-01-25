@@ -4,6 +4,7 @@
 
 local baseURL = "https://bestlightnovel.com"
 
+
 ---@param o Elements
 ---@param f fun(v:Element):any
 ---@return table
@@ -44,14 +45,11 @@ local function parseNovel(document)
         novelPage:setAuthors(map(elements:get(1):select("a"), function(v) return v:text() end))
         -- Genres
         novelPage:setGenres(map(elements:get(2):select("a"), function(v) return v:text() end))
-    end
-
-    -- Status
-    do
+        -- Status
         local s = elements:get(3):select("a"):text()
         novelPage:setStatus(NovelStatus(
-            s == "ongoing" and 0 or
-                (s == "completed" and 1 or 3)
+                s == "ongoing" and 0 or
+                        (s == "completed" and 1 or 3)
         ))
     end
 

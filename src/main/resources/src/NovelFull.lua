@@ -3,6 +3,7 @@
 --- @version 1.2.1
 
 local baseURL = "http://novelfull.com"
+
 ---@param o Elements
 ---@param f fun(v:Element):any
 ---@return table|Array
@@ -34,7 +35,7 @@ end
 
 ---@param elements Elements
 ---@param novel Novel
-function stripListing(elements, novel)
+local function stripListing(elements, novel)
     local col = elements:get(0)
     local image = col:selectFirst("img")
     if image then
@@ -51,71 +52,16 @@ function stripListing(elements, novel)
     return novel
 end
 
---- @return boolean
-function isIncrementingChapterList()
-    return true
-end
-
---- @return boolean
-function isIncrementingPassagePage()
-    return false
-end
-
---- @return Ordering
-function chapterOrder()
-    return Ordering(0)
-end
-
---- @return Ordering
-function latestOrder()
-    return Ordering(0)
-end
-
---- @return boolean
-function hasCloudFlare()
-    return false
-end
-
---- @return boolean
-function hasSearch()
-    return true
-end
-
---- @return boolean
-function hasGenres()
-    return true
-end
-
---- @return Array|table @Array<NovelGenre>
-function genres()
-    return {}
-end
-
---- @return number @ID
-function getID()
-    return 1
-end
-
---- @return string @name of site
-function getName()
-    return "NovelFull"
-end
-
---- @return string @image url of site
-function getImageURL()
-    return ""
-end
-
 --- @param page number @value
 --- @return string @url of said latest page
-function getLatestURL(page)
+local function getLatestURL(page)
     print(baseURL, page)
     return baseURL .. "/latest-release-novel?page=" .. page
 end
 
 --- @param document Document @Jsoup document of the page with chapter text on it
 --- @return string @passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
-function getNovelPassage(document)
+local function getNovelPassage(document)
     return table.concat(map(document:select("div.chapter-c"):select("p"), function(v)
         return v:text()
     end), "\n")
@@ -123,14 +69,14 @@ end
 
 --- @param document Document @Jsoup document of the novel information page
 --- @return NovelPage
-function parseNovel(document)
+local function parseNovel(document)
     return parseNovelI(document, 1)
 end
 
 --- @param document Document @Jsoup document of the novel information page
 --- @param increment number @Page #
 --- @return NovelPage
-function parseNovelI(document, increment)
+local function parseNovelI(document, increment)
     local novelPage = NovelPage()
     novelPage:setImageURL(baseURL .. document:selectFirst("div.book"):selectFirst("img"):attr("src"))
 
@@ -184,13 +130,13 @@ end
 
 --- @param url string @url of novel page
 --- @param increment number @which page
-function novelPageCombiner(url, increment)
+local function novelPageCombiner(url, increment)
     return (increment > 1 and (url .. "?page=" .. increment) or url)
 end
 
 --- @param document Document @Jsoup document of latest listing
 --- @return Array @Novel array list
-function parseLatest(document)
+local function parseLatest(document)
     return AsList(map2flat(document:select("div.container"), function(v)
         if v:id() == "list-page" then
             return v:select("div.row")
@@ -202,7 +148,7 @@ end
 
 --- @param document Document @Jsoup document of search results
 --- @return Array @Novel array list
-function parseSearch(document)
+local function parseSearch(document)
     return AsList(map2flat(document:select("div.container"), function(v)
         if v:id() == "list-page" then
             return v:select("div.row")
@@ -214,6 +160,29 @@ end
 
 --- @param query string @query to use
 --- @return string @url
-function getSearchString(query)
+local function getSearchString(query)
     return baseURL .. "/search?keyword=" .. query:gsub(" ", "%20")
 end
+
+return {
+    id = 1,
+    name = "NovelFull",
+    imageURL = "",
+    genres = {},
+    hasCloudFlare = false,
+    latestOrder = Ordering(0),
+    chapterOrder = Ordering(0),
+    isIncrementingChapterList = true,
+    isIncrementingPassagePage = false,
+    hasSearch = true,
+    hasGenres = true,
+
+    getLatestURL = getLatestURL,
+    getNovelPassage = getNovelPassage,
+    parseNovel = parseNovel,
+    parseNovelI = parseNovelI,
+    novelPageCombiner = novelPageCombiner,
+    parseLatest = parseLatest,
+    parseSearch = parseSearch,
+    getSearchString = getSearchString
+}

@@ -12,77 +12,21 @@ local function map(o, f)
     return t
 end
 
-
---- @return boolean
-function isIncrementingChapterList()
-    return false
-end
-
---- @return boolean
-function isIncrementingPassagePage()
-    return false
-end
-
---- @return Ordering
-function chapterOrder()
-    return Ordering(0)
-end
-
---- @return Ordering
-function latestOrder()
-    return Ordering(0)
-end
-
---- @return boolean
-function hasCloudFlare()
-    return false
-end
-
---- @return boolean
-function hasSearch()
-    return true
-end
-
---- @return boolean
-function hasGenres()
-    return false
-end
-
---- @return Array @Array<NovelGenre>
-function genres()
-    return {}
-end
-
---- @return number @ID
-function getID()
-    return 2
-end
-
---- @return string @name of site
-function getName()
-    return "BoxNovel"
-end
-
---- @return string @image url of site
-function getImageURL()
-    return "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png"
-end
-
 --- @param page number @value
 --- @return string @url of said latest page
-function getLatestURL(page)
+local function getLatestURL(page)
     return baseURL .. "/novel/page/" .. page .. "/?m_orderby=latest"
 end
 
 --- @param document Document @Jsoup document of the page with chapter text on it
 --- @return string @passage of chapter, If nothing can be parsed, then the text should be describing of why there isn't a chapter
-function getNovelPassage(document)
+local function getNovelPassage(document)
     return table.concat(map(document:select("div.text-left"):select("p"), function(v) v:text() end), "\n"):gsub("</?p>", "")
 end
 
 --- @param document Document @Jsoup document of the novel information page
 --- @return NovelPage @java object
-function parseNovel(document)
+local function parseNovel(document)
     local novelPage = NovelPage()
     novelPage:setImageURL(document:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"))
     novelPage:setTitle(document:selectFirst("h3"):text())
@@ -124,19 +68,19 @@ end
 --- @param document Document @Jsoup document of the novel information page
 --- @param increment number @Page #
 --- @return NovelPage @java object
-function parseNovelI(document, increment)
+local function parseNovelI(document, increment)
     return parseNovel(document)
 end
 
 --- @param url string @url of novel page
 --- @param increment number @which page
-function novelPageCombiner(url, increment)
+local function novelPageCombiner(url, increment)
     return url
 end
 
 --- @param document Document @Jsoup document of latest listing
 --- @return Array @Novel array list
-function parseLatest(document)
+local function parseLatest(document)
     return AsList(map(document:select("div.col-xs-12.col-md-6"), function(v)
         local novel = Novel()
         local data = v:selectFirst("a")
@@ -149,7 +93,7 @@ end
 
 --- @param document Document @Jsoup document of search results
 --- @return Array @Novel array list
-function parseSearch(document)
+local function parseSearch(document)
     return AsList(map(document:select("div.c-tabs-item__content"), function(v)
         local novel = Novel()
         local data = v:selectFirst("a")
@@ -162,6 +106,29 @@ end
 
 --- @param query string @query to use
 --- @return string @url
-function getSearchString(query)
+local function getSearchString(query)
     return baseURL .. "/?s=" .. query:gsub("%+", "%2"):gsub(" ", "+") .. "&post_type=wp-manga"
 end
+
+return {
+    id = 2,
+    name = "BoxNovel",
+    imageURL = "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
+    genres = {},
+    hasCloudFlare = false,
+    latestOrder = Ordering(0),
+    chapterOrder = Ordering(0),
+    isIncrementingChapterList = false,
+    isIncrementingPassagePage = false,
+    hasSearch = true,
+    hasGenres = false,
+
+    getLatestURL = getLatestURL,
+    getNovelPassage = getNovelPassage,
+    parseNovel = parseNovel,
+    parseNovelI = parseNovelI,
+    novelPageCombiner = novelPageCombiner,
+    parseLatest = parseLatest,
+    parseSearch = parseSearch,
+    getSearchString = getSearchString
+}
