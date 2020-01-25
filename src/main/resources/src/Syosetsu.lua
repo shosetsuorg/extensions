@@ -5,20 +5,6 @@
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
 
-local function map(o, f)
-    local t = {}
-    for i=1, o:size() do
-        t[i] = f(o:get(i-1), i)
-    end
-    return t
-end
-local function first(o, f)
-    for i=1, o:size() do
-        local v = o:get(i-1)
-        if f(v) then return v end
-    end
-end
-
 
 --- @param page number
 --- @return string

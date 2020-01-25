@@ -5,17 +5,6 @@
 local baseURL = "https://bestlightnovel.com"
 
 
----@param o Elements
----@param f fun(v:Element):any
----@return table
-local function map(o, f)
-    local t = {}
-    for i=1, o:size() do
-        t[i] = f(o:get(i-1))
-    end
-    return t
-end
-
 ---@return string
 local function getLatestURL(page)
     return baseURL .. "/novel_list?type=latest&category=all&state=all&page=" .. (page <= 0 and 1 or page)

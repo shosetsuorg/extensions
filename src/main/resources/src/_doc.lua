@@ -176,6 +176,42 @@ end
 
 -- ShosetsuLib
 do
+    -- OTHER
+
+    ---@param name string @Name of library to load
+    ---@return any
+    function Require(name) return end
+
+
+    -- EXTENSION METHODS
+
+    --- Maps values of an ArrayList or Elements to a table
+    ---@see ArrayList
+    ---@param o ArrayList | Elements @Target
+    ---@param f fun(v: any): any
+    ---@return table
+    function map(o, f) end
+
+    --- Maps values of an ArrayList or Elements to another ArrayList or Elements, and then to a table (using two functions).
+    --- Effectively flattens an array, which gives the function its name.
+    ---@see ArrayList
+    ---@see Elements
+    ---@param o ArrayList | Elements @Target
+    ---@param f1 fun(v: any): void | nil | ArrayList | Elements
+    ---@param f2 fun(v: any): any
+    ---@return table
+    function map2flat(o, f1, f2) end
+
+    --- Returns the first element of the ArrayList or Elements whose output from the function is true.
+    ---@see ArrayList
+    ---@param o ArrayList | Elements
+    ---@param f fun(v: any): boolean
+    ---@return any
+    function first(o, f) end
+
+
+    -- ArrayList CONSTRUCTORS
+
     ---@return ArrayList
     function List() return end
 
@@ -186,6 +222,9 @@ do
     ---@param arr ArrayList
     ---@return void
     function Reverse(arr) return end
+
+
+    -- CONSTRUCTORS
 
     ---@return Novel
     function Novel() return end

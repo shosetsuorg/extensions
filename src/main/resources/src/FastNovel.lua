@@ -4,34 +4,6 @@
 
 local baseURL = "https://fastnovel.net"
 
----@param o Elements
----@param f fun(v:Element):any
----@return table|Array
-local function map(o, f)
-    local t = {}
-    for i = 1, o:size() do
-        t[i] = f(o:get(i - 1))
-    end
-    return t
-end
-
----@param el Elements
----@param f1 fun(element:Element):Elements|Array|table
----@param f2 fun(v:Element):table|Array
-local function map2flat(el, f1, f2)
-    local t = {}
-    local i = 1
-    for j = 1, el:size() do
-        local o2 = f1(el:get(j - 1))
-        if o2 then
-            for k = 1, o2:size() do
-                t[i] = f2(o2:get(k - 1))
-                i = i + 1
-            end
-        end
-    end
-    return t
-end
 
 ---@param page number @value
 ---@return string @url of said latest page

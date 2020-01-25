@@ -4,34 +4,6 @@
 
 local baseURL = "http://novelfull.com"
 
----@param o Elements
----@param f fun(v:Element):any
----@return table|Array
-local function map(o, f)
-    local t = {}
-    for i = 1, o:size() do
-        t[i] = f(o:get(i - 1))
-    end
-    return t
-end
-
----@param o1 Elements
----@param f1 fun(element:Element):Elements|Array|table
----@param f2 fun(v:Element):table|Array
-local function map2flat(o1, f1, f2)
-    local t = {}
-    local i = 1
-    for j = 1, o1:size() do
-        local o2 = f1(o1:get(j - 1))
-        if o2 then
-            for k = 1, o2:size() do
-                t[i] = f2(o2:get(k - 1))
-                i = i + 1
-            end
-        end
-    end
-    return t
-end
 
 ---@param elements Elements
 ---@param novel Novel
