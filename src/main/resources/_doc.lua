@@ -37,7 +37,7 @@ end
 -- jsoup
 do
     ---@class Document : Element
-    local Document
+    local Document = {}
 
     ---@class Element : Node
     local Element = {}
@@ -82,7 +82,7 @@ do
     function Elements:text() return end
 
     ---@class Node
-    local Node
+    local Node = {}
 
     ---@param attributeKey string
     ---@return string
@@ -286,6 +286,13 @@ do
     ---@param f fun(v: any): boolean
     ---@return any
     function first(o, f) end
+
+    --- Wraps a function by creating a new one that prepends a specified argument then calls the underlying function.
+    --- A wrapper function W(...), for a given underlying function F and object O, is equivalent to F(O, ...).
+    ---@param o any @Prepended argument
+    ---@param f function @Function to wrap
+    ---@return function @Wrapper
+    function wrap(o, f) end
 
 
     -- ArrayList
