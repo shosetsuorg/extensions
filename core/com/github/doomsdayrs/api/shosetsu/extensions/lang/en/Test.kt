@@ -4,14 +4,9 @@ import com.github.doomsdayrs.api.shosetsu.services.core.dep.LuaFormatter
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.ResponseBody
+import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
-import org.luaj.vm2.LuaValue
-import org.luaj.vm2.lib.jse.CoerceJavaToLua
-import org.luaj.vm2.lib.jse.JsePlatform
-import java.io.File
 import java.io.IOException
 import java.net.URL
 import java.util.concurrent.TimeUnit
@@ -60,41 +55,41 @@ internal class Test {
         @Throws(IOException::class, InterruptedException::class)
         @JvmStatic
         fun main(args: Array<String>) {
-            val formatters = arrayOf(
-                    "src/main/resources/src/FastNovel.lua"
-            )
-            for (format in formatters){
-                println("========== $format ==========")
+            val formFile = compile.getFile("formatters.json")
+            val formatters = JSONObject(compile.getContent(formFile))
+            val keys = formatters.keys()
+            keys.forEach {
+                if (it != "comments") {
+                    println("\n=============================")
+                    println(it)
+                    val form = formatters.getJSONObject(it)
+                    val luaFormatter = LuaFormatter(compile.getFile("./src/${form.getString("lang")}/$it.lua"))
+                    // Data
+                    println(luaFormatter.genres)
+                    println(luaFormatter.name)
+                    println(luaFormatter.formatterID)
+                    println(luaFormatter.imageURL)
+                    // Latest
+                    TimeUnit.SECONDS.sleep(1)
+                    val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
+                    for (novel in list)
+                        println(novel)
+                    // Search
+                    TimeUnit.SECONDS.sleep(1)
+                    println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
+                    println()
 
-                val luaFormatter = LuaFormatter(File(format))
-                // Data
-                println(luaFormatter.genres)
-                println(luaFormatter.name)
-                println(luaFormatter.formatterID)
-                println(luaFormatter.imageURL)
-                // Latest
-                TimeUnit.SECONDS.sleep(1)
-                val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
-                for (novel in list)
+                    // Novel
+                    TimeUnit.SECONDS.sleep(1)
+                    val novel = luaFormatter.parseNovel(docFromURL(luaFormatter.novelPageCombiner(list[0].link, 2)), 2)
                     println(novel)
-                // Search
-                TimeUnit.SECONDS.sleep(1)
-                println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
-                println()
 
-                // Novel
-                TimeUnit.SECONDS.sleep(1)
-                val novel = luaFormatter.parseNovel(docFromURL(luaFormatter.novelPageCombiner(list[0].link,2)),2)
-                println(novel)
-
-                // Parse novel passage
-                TimeUnit.SECONDS.sleep(1)
-                println(luaFormatter.getNovelPassage(docFromURL(novel.novelChapters[0].link)))
-                println()
-
-                println("DEBUG")
+                    // Parse novel passage
+                    TimeUnit.SECONDS.sleep(1)
+                    println(luaFormatter.getNovelPassage(docFromURL(novel.novelChapters[0].link)))
+                    println()
+                }
             }
-
         }
     }
 }

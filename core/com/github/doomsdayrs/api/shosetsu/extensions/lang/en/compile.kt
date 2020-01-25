@@ -70,17 +70,17 @@ object compile {
         val keys = formatters.keys()
         keys.forEach {
             if (it != "comments") {
+                println("\n=============================")
                 println(it)
                 val form = formatters.getJSONObject(it)
                 println("Before:\t$form")
-                val md = md5(getContent(getFile("./src/$it.lua")))
-                println("MD5:\t$md")
+                val md = md5(getContent(getFile("./src/${form.getString("lang")}/$it.lua")))
                 form.put("md5", md)
                 println("After:\t$form")
                 formatters.put(it, form)
             }
         }
-  
+
 
         val writer = BufferedWriter(FileWriter(formFile))
         writer.write(formatters.toString(2))

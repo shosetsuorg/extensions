@@ -4,8 +4,6 @@
 
 local defaults = {
     latestNovelSel = "div.col-12.col-md-6",
-    novelListingURLPath = "novel",
-    novelPageTitleSel = "h3",
 
     hasCloudFlare = false,
     latestOrder = Ordering(0),
@@ -18,15 +16,13 @@ local defaults = {
 
 ---@return string
 function defaults:getLatestURL(page)
-    return self.___baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"
+    return self.___baseURL .. "/novel/page/" .. page .. "/?m_orderby=latest"
 end
 
 ---@param document Document
 ---@return string
 function defaults:getNovelPassage(document)
-    return table.concat(map(document:select("div.text-left p"), function(v)
-        return v:text()
-    end), "\n")
+    return table.concat(map(document:select("div.text-left p"), function(v) return v:text() end), "\n")
 end
 
 ---@param document Document
@@ -34,24 +30,18 @@ end
 function defaults:parseNovel(document)
     local novelPage = NovelPage()
     novelPage:setImageURL(document:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"))
-    novelPage:setTitle(document:selectFirst(self.novelPageTitleSel):text())
+    novelPage:setTitle(document:selectFirst("h3"):text())
     novelPage:setDescription(document:selectFirst("p"):text())
 
     -- Info
     local elements = document:selectFirst("div.post-content"):select("div.post-content_item")
 
     -- authors
-    novelPage:setAuthors(map(elements:get(3):select("a"), function(v)
-        return v:text()
-    end))
+    novelPage:setAuthors(map(elements:get(3):select("a"), function(v) return v:text() end))
     -- artists
-    novelPage:setArtists(map(elements:get(4):select("a"), function(v)
-        return v:text()
-    end))
+    novelPage:setArtists(map(elements:get(4):select("a"), function(v) return v:text() end))
     -- genres
-    novelPage:setGenres(map(elements:get(5):select("a"), function(v)
-        return v:text()
-    end))
+    novelPage:setGenres(map(elements:get(5):select("a"), function(v) return v:text() end))
 
     -- sorry for this extremely long line
     novelPage:setStatus(NovelStatus((
@@ -85,9 +75,7 @@ function defaults:parseNovelI(document, increment)
     return self.parseNovel(document)
 end
 
-function defaults:novelPageCombiner(url, increment)
-    return url
-end
+function defaults:novelPageCombiner(url, increment) return url end
 
 ---@param doc Document
 function defaults:parseLatest(doc)
@@ -97,9 +85,7 @@ function defaults:parseLatest(doc)
         novel:setTitle(data:attr("title"))
         novel:setLink(data:attr("href"))
         local img = data:selectFirst("img")
-        if img then
-            novel:setImageURL(img:attr("src"))
-        end
+        if img then novel:setImageURL(img:attr("src")) end
         return novel
     end))
 end
@@ -124,12 +110,12 @@ end
 return function(baseURL, _self)
     _self = _self or {}
     _self["___baseURL"] = baseURL
-    return setmetatable(_self, { __index = function(self, k)
+    return setmetatable(_self, {__index = function(self, k)
         if type(defaults[k]) == "function" then
             return function(...)
                 return defaults[k](self, ...)
             end
         end
         return defaults[k]
-    end })
+    end})
 end
