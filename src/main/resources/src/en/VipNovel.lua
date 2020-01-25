@@ -5,8 +5,5 @@ return Require("Madara")("https://vipnovel.com", {
     name = "VipNovel",
     imageURL = "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
     genres = {},
-
-    getLatestURL = function(page)
-        return "https://vipnovel.com/vipnovel/page/" .. page .. "/?m_orderby=latest"
-    end
+    novelListingURLPath = "vipnovel"
 })
