@@ -3,7 +3,7 @@
 --- @version 1.2.0
 
 local defaults = {
-    latestNovelSel = "div.col-xs-12.col-md-6",
+    latestNovelSel = "div.col-12.col-md-6",
 
     hasCloudFlare = false,
     latestOrder = Ordering(0),
@@ -107,10 +107,11 @@ return function(baseURL, _self)
     _self = _self or {}
     _self["___baseURL"] = baseURL
     return setmetatable(_self, {__index = function(self, k)
-        if defaults[k] then
+        if type(defaults[k]) == "function" then
             return function(...)
                 return defaults[k](self, ...)
             end
         end
+        return defaults[k]
     end})
 end
