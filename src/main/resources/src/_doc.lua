@@ -89,6 +89,83 @@ do
     function Node:attr(attributeKey) return end
 end
 
+-- okhttp
+do
+    -- You shouldn't use methods of these 3 classes in extension code.
+    ---@class Request
+    local Request = {}
+    ---@class Headers
+    local Headers = {}
+    ---@class FormBody
+    local FormBody = {}
+    ---@class CacheControl
+    local CacheControl = {}
+
+    do
+        ---@class RequestBuilder
+        local RequestBuilder = {}
+        ---@return Request
+        function RequestBuilder:build() return end
+
+        ---@param url string
+        ---@return RequestBuilder
+        function RequestBuilder:url(url) return end
+
+        ---@param name string
+        ---@param value string
+        ---@return RequestBuilder
+        function RequestBuilder:addHeader(name, value) return end
+
+        ---@param body string
+        ---@return RequestBuilder
+        function RequestBuilder:post(body) return end
+
+        ---@param headers Headers
+        ---@return RequestBuilder
+        function RequestBuilder:headers(headers) return end
+
+        ---@param cacheControl CacheControl
+        ---@return RequestBuilder
+        function RequestBuilder:cacheControl(cacheControl) return end
+
+        ---@return RequestBuilder
+        function RequestBuilder:get() return end
+    end
+
+    do
+        ---@class HeadersBuilder
+        local HeadersBuilder = {}
+        ---@return Headers
+        function HeadersBuilder:build() return end
+
+        ---@param name string
+        ---@return string
+        function HeadersBuilder:get(name) return end
+
+        ---@param name string
+        ---@param value string
+        ---@return HeadersBuilder
+        function HeadersBuilder:add(name, value) end
+
+        ---@param name string
+        ---@param value string
+        ---@return HeadersBuilder
+        function HeadersBuilder:set(name, value) end
+    end
+
+    do
+        ---@class FormBodyBuilder
+        local FormBodyBuilder = {}
+        ---@return FormBody
+        function FormBodyBuilder:build() return end
+
+        ---@param name string
+        ---@param value string
+        ---@return FormBodyBuilder
+        function FormBodyBuilder:add(name, value) return end
+    end
+end
+
 -- everything else
 do
     ---@class NovelStatus
@@ -243,4 +320,3 @@ do
     ---@return Ordering
     function Ordering(type) return end
 end
-

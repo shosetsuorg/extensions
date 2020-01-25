@@ -55,7 +55,10 @@ function defaults:parseNovel(document)
         local c = NovelChapter()
         c:setLink(v:selectFirst("a"):attr("href"))
         c:setTitle(v:selectFirst("a"):text())
-        c:setRelease(v:selectFirst("i"):text())
+
+        local i = v:selectFirst("i")
+        c:setRelease(i and i:text() or v:selectFirst("img[alt]"):attr("alt"))
+
         c:setOrder(a)
         a = a - 1
         return c
@@ -81,7 +84,8 @@ function defaults:parseLatest(doc)
         local data = v:selectFirst("a")
         novel:setTitle(data:attr("title"))
         novel:setLink(data:attr("href"))
-        novel:setImageURL(data:selectFirst("img"):attr("src"))
+        local img = data:selectFirst("img")
+        if img then novel:setImageURL(img:attr("src")) end
         return novel
     end))
 end
