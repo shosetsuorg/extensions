@@ -91,7 +91,8 @@ end
 
 -- okhttp
 do
-    -- You shouldn't use methods of these 3 classes in extension code.
+    -- You shouldn't use methods of these classes in extension code (ever),
+    -- So I didn't bother making documentation for them
     ---@class Request
     local Request = {}
     ---@class Headers
@@ -287,7 +288,7 @@ do
     function first(o, f) end
 
 
-    -- ArrayList CONSTRUCTORS
+    -- ArrayList
 
     ---@return ArrayList
     function List() return end
@@ -299,6 +300,30 @@ do
     ---@param arr ArrayList
     ---@return void
     function Reverse(arr) return end
+
+
+    -- OKHTTP3
+    ---@param url string
+    ---@param headers Headers
+    ---@param cacheControl CacheControl
+    ---@return Request
+    function GET(url, headers, cacheControl) return end
+
+    ---@param url string
+    ---@param headers Headers
+    ---@param body FormBody
+    ---@param cacheControl CacheControl
+    ---@return Request
+    function POST(url, headers, body, cacheControl) return end
+
+    ---@return RequestBuilder
+    function RequestBuilder() return end
+    ---@return HeadersBuilder
+    function HeadersBuilder() return end
+    ---@return FormBodyBuilder
+    function FormBodyBuilder() return end
+    ---@return CacheControl
+    function DefaultCacheControl() return end
 
 
     -- CONSTRUCTORS
