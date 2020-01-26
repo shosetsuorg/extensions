@@ -14,6 +14,16 @@
       }
     }
   ],
+  "libraries": [
+    {
+      "name": "247truyen",
+      "version": "1.0.0"
+    },
+    {
+      "name": "Madara",
+      "version": "1.0.0"
+    }
+  ],
   "NovelFull": {
     "imageURL": "",
     "lang": "en",

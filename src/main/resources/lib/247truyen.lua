@@ -1,3 +1,4 @@
+-- {"version":"1.0.0","author":"TechnoJo4"}
 local defaults = {
     genres = {},
     hasCloudFlare = false,
