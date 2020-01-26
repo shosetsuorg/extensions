@@ -59,6 +59,9 @@ do
     ---@return string
     function Element:id() return end
 
+    ---
+    function Element:children() end
+
     ---@return number
     function Elements:size() return end
 
@@ -263,10 +266,17 @@ do
 
     -- EXTENSION METHODS
 
+    --- map except if the value returned by f is nil, then it will not be added
+    ---@see ArrayList
+    ---@param o ArrayList | Elements @Target
+    ---@param f fun(v: any|Element): any
+    ---@return table
+    function mapNotNil() end
+
     --- Maps values of an ArrayList or Elements to a table
     ---@see ArrayList
     ---@param o ArrayList | Elements @Target
-    ---@param f fun(v: any): any
+    ---@param f fun(v: any|Element): any
     ---@return table
     function map(o, f) end
 
