@@ -103,7 +103,7 @@ end
 return {
     id = 234,
     name = "Tangsanshu",
-    imageURL = "",
+    imageURL = "http://www.tangsanshu.com/images/logo.png",
     genres = {},
     hasCloudFlare = false,
     latestOrder = Ordering(0),
