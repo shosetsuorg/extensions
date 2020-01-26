@@ -63,6 +63,8 @@ object compile {
         return File(javaClass.classLoader.getResource(file)!!.file)
     }
 
+    fun getMeta(s: String): JSONObject = JSONObject(s.dropWhile { it != '{' }.takeWhile { it != '\n' })
+
     @JvmStatic
     fun main(args: Array<String>) {
         val formFile = getFile("formatters.json")
@@ -70,12 +72,17 @@ object compile {
         val keys = formatters.keys()
         keys.forEach {
             if (it != "comments") {
-                println("\n=============================")
-                println(it)
+                println("\n============ $it ============\n")
                 val form = formatters.getJSONObject(it)
                 println("Before:\t$form")
-                val md = md5(getContent(getFile("./src/${form.getString("lang")}/$it.lua")))
-                form.put("md5", md)
+
+                val content = getContent(getFile("./src/${form.getString("lang")}/$it.lua"))
+                val meta = getMeta(content)
+                val hash = md5(content)
+                form.put("md5", hash)
+                form.put("id", meta.getInt("id"))
+                form.put("version", meta.getString("version"))
+
                 println("After:\t$form")
                 formatters.put(it, form)
             }

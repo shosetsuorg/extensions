@@ -25,7 +25,7 @@
     "imageURL": "",
     "lang": "en",
     "id": 5,
-    "version": "1.2.0",
+    "version": "2.0.0",
     "md5": "a1d183dae8ec505ecc6e448f13da65e"
   },
   "VipNovel": {
@@ -67,6 +67,20 @@
     "imageURL": "https://foxaholic.com/wp-content/uploads/2019/12/images-1.png",
     "id": 173,
     "lang": "en",
+    "version": "1.0.0",
+    "md5": ""
+  },
+  "Tangsanshu": {
+    "imageURL": "",
+    "id": 234,
+    "lang": "zn",
+    "version": "1.0.0",
+    "md5": ""
+  },
+  "247Truyen": {
+    "imageURL": "",
+    "id": 247,
+    "lang": "vi",
     "version": "1.0.0",
     "md5": ""
   }
