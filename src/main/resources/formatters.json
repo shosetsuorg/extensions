@@ -63,11 +63,25 @@
     "version": "1.2.0",
     "md5": "7eddc6e2dcac10b7bf9a175adfd9cf43"
   },
-  "Foxaholic":{
+  "Foxaholic": {
     "imageURL": "https://foxaholic.com/wp-content/uploads/2019/12/images-1.png",
     "id": 173,
     "lang": "en",
     "version": "1.0.0",
     "md5": ""
+  },
+  "247truyen": {
+    "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
+    "id": 247,
+    "lang": "vi",
+    "version": "1.0.0",
+    "md5": "7eddc6e2dcac10b7bf9a175adfd9cf43"
+  },
+  "Tangsanshu": {
+    "imageURL": "http://www.tangsanshu.com/images/logo.png",
+    "id": 234,
+    "lang": "zn",
+    "version": "1.0.0",
+    "md5": "7eddc6e2dcac10b7bf9a175adfd9cf43"
   }
 }
