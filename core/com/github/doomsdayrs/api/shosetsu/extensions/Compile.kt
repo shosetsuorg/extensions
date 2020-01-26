@@ -1,4 +1,4 @@
-package com.github.doomsdayrs.api.shosetsu.extensions.lang.en
+package com.github.doomsdayrs.api.shosetsu.extensions
 
 import org.json.JSONObject
 import java.io.*
@@ -30,7 +30,7 @@ import java.security.NoSuchAlgorithmException
  *
  * @author github.com/doomsdayrs
  */
-object compile {
+object Compile {
     fun getContent(file: File): String {
         val builder = StringBuilder()
         val br = BufferedReader(FileReader(file))

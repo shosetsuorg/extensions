@@ -1,4 +1,4 @@
-package com.github.doomsdayrs.api.shosetsu.extensions.lang.en
+package com.github.doomsdayrs.api.shosetsu.extensions
 
 import com.github.doomsdayrs.api.shosetsu.services.core.dep.LuaFormatter
 import okhttp3.OkHttpClient
@@ -55,15 +55,15 @@ internal class Test {
         @Throws(IOException::class, InterruptedException::class)
         @JvmStatic
         fun main(args: Array<String>) {
-            val formFile = compile.getFile("formatters.json")
-            val formatters = JSONObject(compile.getContent(formFile))
+            val formFile = Compile.getFile("formatters.json")
+            val formatters = JSONObject(Compile.getContent(formFile))
             val keys = formatters.keys()
             keys.forEach {
                 if (it != "comments") {
                     println("\n=============================")
                     println(it)
                     val form = formatters.getJSONObject(it)
-                    val luaFormatter = LuaFormatter(compile.getFile("./src/${form.getString("lang")}/$it.lua"))
+                    val luaFormatter = LuaFormatter(Compile.getFile("./src/${form.getString("lang")}/$it.lua"))
                     // Data
                     println(luaFormatter.genres)
                     println(luaFormatter.name)
