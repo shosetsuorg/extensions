@@ -125,11 +125,7 @@ return function(baseURL, _self)
     _self = _self or {}
     _self["___baseURL"] = baseURL
     return setmetatable(_self, { __index = function(self, k)
-        if type(defaults[k]) == "function" then
-            return function(...)
-                return defaults[k](self, ...)
-            end
-        end
-        return defaults[k]
+        local d = defaults[k]
+        return (type(d) == "function" and wrap(_self, d) or d)
     end })
 end
