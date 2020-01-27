@@ -1,9 +1,6 @@
--- {"id":1,"version":"1.2.1","author":"Doomsdayrs","repo":""}
---- @author Doomsdayrs
---- @version 1.2.1
+-- {"id":1,"version":"1.2.2","author":"Doomsdayrs","repo":""}
 
 local baseURL = "http://novelfull.com"
-
 
 ---@param elements Elements
 ---@param novel Novel
@@ -40,15 +37,10 @@ local function getNovelPassage(document)
 end
 
 --- @param document Document @Jsoup document of the novel information page
---- @return NovelPage
-local function parseNovel(document)
-    return parseNovelI(document, 1)
-end
-
---- @param document Document @Jsoup document of the novel information page
 --- @param increment number @Page #
 --- @return NovelPage
 local function parseNovelI(document, increment)
+    print("LUA: Starting")
     local novelPage = NovelPage()
     novelPage:setImageURL(baseURL .. document:selectFirst("div.book"):selectFirst("img"):attr("src"))
 
@@ -98,6 +90,12 @@ local function parseNovelI(document, increment)
     novelPage:setNovelChapters(chapters)
 
     return novelPage
+end
+
+--- @param document Document @Jsoup document of the novel information page
+--- @return NovelPage
+local function parseNovel(document)
+    return parseNovelI(document, 1)
 end
 
 --- @param url string @url of novel page

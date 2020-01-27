@@ -7,6 +7,7 @@ import okhttp3.ResponseBody
 import org.json.JSONObject
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import java.io.File
 import java.io.IOException
 import java.net.URL
 import java.util.concurrent.TimeUnit
@@ -55,7 +56,7 @@ internal class Test {
         @Throws(IOException::class, InterruptedException::class)
         @JvmStatic
         fun main(args: Array<String>) {
-            val formFile = Compile.getFile("formatters.json")
+            val formFile = File("formatters.json")
             val formatters = JSONObject(Compile.getContent(formFile))
             val keys = formatters.keys()
             keys.forEach {
@@ -63,7 +64,7 @@ internal class Test {
                     println("\n=============================")
                     println(it)
                     val form = formatters.getJSONObject(it)
-                    val luaFormatter = LuaFormatter(Compile.getFile("./src/${form.getString("lang")}/$it.lua"))
+                    val luaFormatter = LuaFormatter(File("./src/${form.getString("lang")}/$it.lua"))
                     // Data
                     println(luaFormatter.genres)
                     println(luaFormatter.name)
