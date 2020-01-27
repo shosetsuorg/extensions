@@ -1,6 +1,4 @@
--- {"id":258,"version":"0.1.1","author":"Doomsdayrs","repo":""}
----@author Doomsdayrs
----@version 0.1.1
+-- {"id":258,"version":"0.1.2","author":"Doomsdayrs","repo":""}
 
 local baseURL = "https://fastnovel.net"
 
@@ -108,7 +106,7 @@ end
 ---@param query string @query to use
 ---@return string @url
 local function getSearchString(query)
-    return baseURL .. "/search/" .. query:gsub(" ", "%20")
+    return baseURL .. "/search/" .. query:gsub(" ", "%%20")
 end
 
 return {
