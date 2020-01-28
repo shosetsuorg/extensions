@@ -1,4 +1,4 @@
--- {"id":1,"version":"1.2.2","author":"Doomsdayrs","repo":""}
+-- {"id":1,"version":"1.2.3","author":"Doomsdayrs","repo":""}
 
 local baseURL = "http://novelfull.com"
 
@@ -131,7 +131,7 @@ end
 --- @param query string @query to use
 --- @return string @url
 local function getSearchString(query)
-    return baseURL .. "/search?keyword=" .. query:gsub(" ", "%20")
+    return baseURL .. "/search?keyword=" .. query:gsub(" ", "%%20")
 end
 
 return {
