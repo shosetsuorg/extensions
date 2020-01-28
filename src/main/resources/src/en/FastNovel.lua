@@ -1,7 +1,6 @@
--- {"id":258,"version":"0.1.2","author":"Doomsdayrs","repo":""}
+-- {"id":258,"version":"0.1.3","author":"Doomsdayrs","repo":""}
 
 local baseURL = "https://fastnovel.net"
-
 
 ---@param page number @value
 ---@return string @url of said latest page
@@ -25,7 +24,7 @@ local function parseNovel(document)
     novelPage:setImageURL(document:selectFirst("div.book-cover"):attr("data-original"))
     novelPage:setTitle(document:selectFirst("h1.name"):text())
     novelPage:setDescription(table.concat(map(document:select("div.film-content"):select("p"), function(v)
-        v:text()
+        return v:text()
     end), "\n"))
 
     local elements = document:selectFirst("ul.meta-data"):select("li")
