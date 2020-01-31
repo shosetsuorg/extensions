@@ -1,4 +1,4 @@
--- {"id":1,"version":"1.2.3","author":"Doomsdayrs","repo":""}
+-- {"id":1,"version":"1.2.4","author":"Doomsdayrs","repo":""}
 
 local baseURL = "http://novelfull.com"
 
@@ -54,7 +54,7 @@ local function parseNovelI(document, increment)
     local titleDesc = document:selectFirst("div.col-xs-12.col-sm-8.col-md-8.desc")
     novelPage:setTitle(titleDesc:selectFirst("h3"):text())
     novelPage:setDescription(table.concat(map(titleDesc:selectFirst("div.desc-text"):select("p"), function(v)
-        v:text()
+        return v:text()
     end), "\n"))
 
     -- set information
