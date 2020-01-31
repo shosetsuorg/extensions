@@ -1,6 +1,4 @@
 -- {"id":-1,"version":"9.9.9","author":"","repo":""}
----@author Doomsdayrs
----@version 1.0.0
 
 local baseURL = "TODO"
 
@@ -64,8 +62,8 @@ local function getSearchString(query)
 end
 
 return{
-    id = 5,
-    name = "BestLightNovel",
+    id = -1,
+    name = "DEFAULT",
     imageURL = "",
     genres = {},
     hasCloudFlare = false,
@@ -75,7 +73,6 @@ return{
     isIncrementingPassagePage = false,
     hasSearch = true,
     hasGenres = false,
-
     getLatestURL = getLatestURL,
     getNovelPassage = getNovelPassage,
     parseNovel = parseNovel,
