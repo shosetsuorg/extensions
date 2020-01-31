@@ -31,7 +31,7 @@ import java.security.NoSuchAlgorithmException
  * @author github.com/doomsdayrs
  */
 object Compile {
-    fun getContent(file: File): String {
+    private fun getContent(file: File): String {
         val builder = StringBuilder()
         val br = BufferedReader(FileReader(file))
         var line = br.readLine()
@@ -42,7 +42,7 @@ object Compile {
         return builder.toString()
     }
 
-    fun md5(s: String): String? {
+    private fun md5(s: String): String? {
         try {
             // Create MD5 Hash
             val digest = MessageDigest.getInstance("MD5")
@@ -59,7 +59,7 @@ object Compile {
         return ""
     }
 
-    fun getMeta(s: String): JSONObject = JSONObject(s.dropWhile { it != '{' }.takeWhile { it != '\n' })
+    private fun getMeta(s: String): JSONObject = JSONObject(s.dropWhile { it != '{' }.takeWhile { it != '\n' })
 
     @JvmStatic
     fun main(args: Array<String>) {
