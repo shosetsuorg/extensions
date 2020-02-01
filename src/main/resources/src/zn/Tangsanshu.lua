@@ -17,7 +17,7 @@ end
 ---@param document Document @Jsoup document of the novel information page
 ---@return NovelInfo
 local function parseNovel(document)
-    local novelPage = NovelPage()
+    local novelPage = NovelInfo()
 
     -- Info
 
@@ -38,7 +38,7 @@ local function parseNovel(document)
     -- NovelChapters
     local found = false
     local i = 0
-    novelPage:setNovelChapters(AsList(mapNotNil(document:selectFirst("div.listmain"):selectFirst("dl"):children(), function(v)
+    novelPage:setChapters(AsList(mapNotNil(document:selectFirst("div.listmain"):selectFirst("dl"):children(), function(v)
         if found then
             local chapter = NovelChapter()
             chapter:setOrder(i)

@@ -278,7 +278,7 @@ do
 
     ---@param chapters ArrayList
     ---@return void
-    function NovelInfo:setNovelChapters(chapters) return end
+    function NovelInfo:setChapters(chapters) return end
 end
 
 -- ShosetsuLib
@@ -414,7 +414,7 @@ do
         function Novel() return end
 
         ---@return NovelInfo
-        function NovelPage() return end
+        function NovelInfo() return end
 
         ---@return NovelChapter
         function NovelChapter() return end

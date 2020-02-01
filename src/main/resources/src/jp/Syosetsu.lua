@@ -24,7 +24,7 @@ end
 --- @param document Document
 --- @return NovelInfo
 local function parseNovel(document)
-    local novelPage = NovelPage()
+    local novelPage = NovelInfo()
 
     novelPage:setAuthors({ document:selectFirst("div.novel_writername"):text():gsub("作者：", "") })
     novelPage:setTitle(document:selectFirst("p.novel_title"):text())
@@ -36,7 +36,7 @@ local function parseNovel(document)
     end
 
     -- Chapters
-    novelPage:setNovelChapters(AsList(map(document:select("dl.novel_sublist2"), function(v, i)
+    novelPage:setChapters(AsList(map(document:select("dl.novel_sublist2"), function(v, i)
         local chap = NovelChapter()
         chap:setTitle(v:selectFirst("a"):text())
         chap:setLink(passageURL .. v:selectFirst("a"):attr("href"))

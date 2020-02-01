@@ -41,7 +41,7 @@ end
 --- @return NovelInfo
 local function parseNovelI(document, increment)
     print("LUA: Starting")
-    local novelPage = NovelPage()
+    local novelPage = NovelInfo()
     novelPage:setImageURL(baseURL .. document:selectFirst("div.book"):selectFirst("img"):attr("src"))
 
     -- max page
@@ -87,7 +87,7 @@ local function parseNovelI(document, increment)
                 return chap
             end))
 
-    novelPage:setNovelChapters(chapters)
+    novelPage:setChapters(chapters)
 
     return novelPage
 end

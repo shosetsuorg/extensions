@@ -20,7 +20,7 @@ end
 ---@param document Document @Jsoup document of the novel information page
 ---@return NovelInfo
 local function parseNovel(document)
-    local novelPage = NovelPage()
+    local novelPage = NovelInfo()
     novelPage:setTitle(document:selectFirst("div.e45344-16.x-text.bK_C"):text())
     novelPage:setImageURL(document:selectFirst("img.book_cover"):attr("src"))
     novelPage:setAuthors({ document:selectFirst("div.e45344-18.x-text.bK_C"):selectFirst("a"):text() })

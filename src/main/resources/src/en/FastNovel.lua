@@ -19,7 +19,7 @@ end
 ---@param document Document @Jsoup document of the novel information page
 ---@return NovelInfo
 local function parseNovel(document)
-    local novelPage = NovelPage()
+    local novelPage = NovelInfo()
 
     novelPage:setImageURL(document:selectFirst("div.book-cover"):attr("data-original"))
     novelPage:setTitle(document:selectFirst("h1.name"):text())
@@ -59,7 +59,7 @@ local function parseNovel(document)
                 return chapter
             end))
 
-    novelPage:setNovelChapters(chapters)
+    novelPage:setChapters(chapters)
     return novelPage
 end
 

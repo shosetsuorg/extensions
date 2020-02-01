@@ -32,7 +32,7 @@ end
 ---@param document Document
 ---@return NovelInfo
 function defaults:parseNovel(document)
-    local novelPage = NovelPage()
+    local novelPage = NovelInfo()
     novelPage:setImageURL(document:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"))
     novelPage:setTitle(document:selectFirst(self.novelPageTitleSel):text())
     novelPage:setDescription(document:selectFirst("p"):text())
@@ -74,7 +74,7 @@ function defaults:parseNovel(document)
         return c
     end))
     Reverse(l)
-    novelPage:setNovelChapters(l)
+    novelPage:setChapters(l)
 
     return novelPage
 end
