@@ -44,7 +44,6 @@ end
 --- @param increment number @Page #
 --- @return NovelInfo
 local function parseNovel(novelURL)
-    print("LUA: Starting")
     local novelPage = NovelInfo()
     local document = GETDocument(novelURL)
 
