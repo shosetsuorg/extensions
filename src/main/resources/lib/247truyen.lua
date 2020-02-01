@@ -104,11 +104,6 @@ function defaults:parse(doc)
     end)
 end
 
----@param query string
-function defaults:getSearchString(query)
-    return
-end
-
 return function(baseURL, _self)
     _self = setmetatable(_self or {}, { __index = function(_, k)
         local d = defaults[k]

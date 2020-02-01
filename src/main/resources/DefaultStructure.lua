@@ -1,84 +1,67 @@
 -- {"id":-1,"version":"9.9.9","author":"","repo":""}
 
 local baseURL = "TODO"
+local settings = {}
 
----@param page number @value
----@return string @url of said latest page
-local function getLatestURL(page)
-    -- TODO Complete
-    return ""
+local function setSettings(setting)
+    settings = setting
 end
 
----@param document Document @Jsoup document of the page with chapter text on it
----@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
-local function getNovelPassage(document)
-    -- TODO Complete
-    return ""
-end
-
----@param document Document @Jsoup document of the novel information page
----@return NovelInfo
-local function parseNovel(document)
-    local novelPage = NovelInfo()
-    -- TODO Complete
-    return novelPage
-end
-
----@param document Document @Jsoup document of the novel information page
----@param increment number @Page #
----@return NovelInfo
-local function parseNovelI(document, increment)
-    local novelPage = NovelInfo()
-    -- TODO Complete
-    return novelPage
-end
-
----@param url string @url of novel page
----@param increment number @which page
-local function novelPageCombiner(url, increment)
-    -- TODO Complete
-    return ""
-end
-
----@param document Document @Jsoup document of latest listing
----@return Array @Novel array list
-local function parseLatest(document)
-    -- TODO Complete
+--- @return Novel[]
+local function someFunction()
     return {}
 end
 
----@param document Document @Jsoup document of search results
----@return Array @Novel array list
-local function parseSearch(document)
-    -- TODO Complete
+--- @param inc int @page of said
+--- @return Novel[]
+local function someFunctionInc(inc)
     return {}
 end
 
----@param query string @query to use
----@return string @url
-local function getSearchString(query)
-    -- TODO Complete
+--- @param chapterURL string @url of the chapter
+--- @return string @of chapter
+local function getPassage(chapterURL)
+    -- TODO
     return ""
 end
 
-return{
+--- @param novelURL string @URL of novel
+--- @return NovelInfo
+local function parseNovel(novelURL)
+    -- TODO
+    return NovelInfo()
+end
+
+--- @param data table @Table of values. Always has "query"
+--- @return Novel[]
+local function search(data)
+    -- TODO
+    return {}
+end
+
+return {
     id = -1,
     name = "DEFAULT",
     imageURL = "",
-    genres = {},
     hasCloudFlare = false,
-    latestOrder = Ordering(0),
-    chapterOrder = Ordering(0),
-    isIncrementingChapterList = false,
-    isIncrementingPassagePage = false,
     hasSearch = true,
-    hasGenres = false,
-    getLatestURL = getLatestURL,
-    getNovelPassage = getNovelPassage,
+    listings = {
+        Listing("Of something", false, someFunction),
+        Listing("Of something that increments", true, someFunctionInc)
+    },
+
+    -- Filters / Settings the app can use
+    filters = {
+        "We will define someday"
+    },
+    settings = {
+        "Settings that can be implemented / changed"
+    },
+
+
+    -- Default functions that had to be set
+    getPassage = getPassage,
     parseNovel = parseNovel,
-    parseNovelI = parseNovelI,
-    novelPageCombiner = novelPageCombiner,
-    parseLatest = parseLatest,
-    parseSearch = parseSearch,
-    getSearchString = getSearchString
+    search = search,
+    setSettings = setSettings
 }

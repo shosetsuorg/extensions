@@ -11,12 +11,11 @@ end
 ---@param document Document @Jsoup document of the page with chapter text on it
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 local function getNovelPassage(document)
-    return document:selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+","\n"):gsub("&nbsp;", "")
+    return document:selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+", "\n"):gsub("&nbsp;", "")
 end
 
----@param document Document @Jsoup document of the novel information page
 ---@return NovelInfo
-local function parseNovel(document)
+local function parseNovel(url, loadChapters)
     local novelPage = NovelInfo()
 
     -- Info
@@ -56,14 +55,6 @@ local function parseNovel(document)
     end)))
     return novelPage
 end
-
----@param document Document @Jsoup document of the novel information page
----@param increment number @Page #
----@return NovelInfo
-local function parseNovelI(document, increment)
-    return parseNovel(document)
-end
-
 ---@param url string @url of novel page
 ---@param increment number @which page
 local function novelPageCombiner(url, increment)
@@ -98,6 +89,11 @@ end
 ---@return string @url
 local function getSearchString(query)
     return baseURL .. "/s.php?ie=utf-8&q=" .. query:gsub("+", "%2B"):gsub(" ", "+")
+end
+
+---@param data table
+local function search(data)
+
 end
 
 return {
