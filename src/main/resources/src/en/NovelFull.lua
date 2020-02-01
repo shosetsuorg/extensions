@@ -38,7 +38,7 @@ end
 
 --- @param document Document @Jsoup document of the novel information page
 --- @param increment number @Page #
---- @return NovelPage
+--- @return NovelInfo
 local function parseNovelI(document, increment)
     print("LUA: Starting")
     local novelPage = NovelPage()
@@ -93,7 +93,7 @@ local function parseNovelI(document, increment)
 end
 
 --- @param document Document @Jsoup document of the novel information page
---- @return NovelPage
+--- @return NovelInfo
 local function parseNovel(document)
     return parseNovelI(document, 1)
 end

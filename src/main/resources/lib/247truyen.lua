@@ -1,34 +1,35 @@
 -- {"version":"1.0.0","author":"TechnoJo4"}
+local function _latest(self)
+    local latest = self.___baseURL.."/"..self.novelListPath.."?type=latest&category=all&state=all&page=" .. (page <= 0 and 1 or page)
+
+
+end
+
 local defaults = {
-    genres = {},
-    hasCloudFlare = false,
-    latestOrder = Ordering(0),
-    chapterOrder = Ordering(0),
-    isIncrementingChapterList = false,
-    isIncrementingPassagePage = false,
+    listings = {
+        Listing("Latest", false, function()
+            return _latest()
+        end)
+    },
     hasSearch = true,
-    hasGenres = false,
+    hasCloudFlare = false,
     imageURL = "https://247truyen.com/themes/home/images/favicon.png",
     novelListPath = "novel_list",
     novelSearchPath = "search_novels"
 }
 
----@return string
-function defaults:getLatestURL(page)
-    return self.___baseURL.."/"..self.novelListPath.."?type=latest&category=all&state=all&page=" .. (page <= 0 and 1 or page)
-end
-
 ---@param document Document
 ---@return string
-function defaults:getNovelPassage(document)
+function defaults:getPassage(document)
     local e = document:selectFirst("div.vung_doc"):select("p")
     if e:size() == 0 then return "NOT YET TRANSLATED" end
     return table.concat(map(e, function(v) return v:text() end), "\n")
 end
 
----@param document Document
----@return NovelPage
-function defaults:parseNovel(document)
+---@param url string
+---@return NovelInfo
+function defaults:parseNovel(url)
+    local document = GETDocument(url)
     local novelPage = NovelPage()
     -- Image
     novelPage:setImageURL(document:selectFirst("div.truyen_info_left"):selectFirst("img"):attr("src"))
@@ -78,27 +79,11 @@ function defaults:parseNovel(document)
 end
 
 ---@param document Document
----@return NovelPage
-function defaults:parseNovelI(document, increment)
-    return self.parseNovel(document)
-end
-
-function defaults:novelPageCombiner(url, increment) return url end
+---@return NovelInfo
+function defaults:parseNovelI(document, increment) return self.parseNovel(document) end
 
 ---@param doc Document
-function defaults:parseLatest(doc)
-    return AsList(map(doc:select("div.update_item.list_category"), function(v)
-        local novel = Novel()
-        local e = v:selectFirst("h3.nowrap"):selectFirst("a")
-        novel:setTitle(e:attr("title"))
-        novel:setLink(e:attr("href"))
-        novel:setImageURL(v:selectFirst("img"):attr("src"))
-        return novel
-    end))
-end
-
----@param doc Document
-function defaults:parseSearch(doc)
+function defaults:parse(doc)
     return AsList(map(doc:select("div.update_item.list_category"), function(v)
         local novel = Novel()
         local e = v:selectFirst("h3.nowrap"):selectFirst("a")
@@ -113,6 +98,8 @@ end
 function defaults:getSearchString(query)
     return self.___baseURL .. "/"..self.novelSearchPath.."/" .. query:gsub(" ", "_")
 end
+
+
 
 return function(baseURL, _self)
     _self = _self or {}

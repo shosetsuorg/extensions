@@ -18,7 +18,7 @@ local function getNovelPassage(document)
 end
 
 ---@param document Document @Jsoup document of the novel information page
----@return NovelPage
+---@return NovelInfo
 local function parseNovel(document)
     local novelPage = NovelPage()
     novelPage:setTitle(document:selectFirst("div.e45344-16.x-text.bK_C"):text())
@@ -58,7 +58,7 @@ end
 
 ---@param document Document @Jsoup document of the novel information page
 ---@param _ number @Page #
----@return NovelPage
+---@return NovelInfo
 local function parseNovelI(document, _)
     return parseNovel(document)
 end

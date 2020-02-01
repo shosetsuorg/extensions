@@ -17,7 +17,7 @@ local function getNovelPassage(document)
 end
 
 ---@param document Document @Jsoup document of the novel information page
----@return NovelPage
+---@return NovelInfo
 local function parseNovel(document)
     local novelPage = NovelPage()
     -- TODO Complete
@@ -26,7 +26,7 @@ end
 
 ---@param document Document @Jsoup document of the novel information page
 ---@param increment number @Page #
----@return NovelPage
+---@return NovelInfo
 local function parseNovelI(document, increment)
     local novelPage = NovelPage()
     -- TODO Complete

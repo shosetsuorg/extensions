@@ -22,7 +22,7 @@ local function getNovelPassage(document)
 end
 
 --- @param document Document
---- @return NovelPage
+--- @return NovelInfo
 local function parseNovel(document)
     local novelPage = NovelPage()
 
@@ -51,7 +51,7 @@ end
 
 --- @param document Document
 --- @param increment number
---- @return NovelPage
+--- @return NovelInfo
 local function parseNovelI(document, increment)
     return parseNovel(document)
 end

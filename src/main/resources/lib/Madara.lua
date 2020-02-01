@@ -30,7 +30,7 @@ function defaults:getNovelPassage(document)
 end
 
 ---@param document Document
----@return NovelPage
+---@return NovelInfo
 function defaults:parseNovel(document)
     local novelPage = NovelPage()
     novelPage:setImageURL(document:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"))
@@ -80,7 +80,7 @@ function defaults:parseNovel(document)
 end
 
 ---@param document Document
----@return NovelPage
+---@return NovelInfo
 function defaults:parseNovelI(document, increment)
     return self.parseNovel(document)
 end

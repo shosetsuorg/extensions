@@ -94,14 +94,14 @@ end
 
 -- okhttp
 do
-    -- You shouldn't use methods of these classes in extension code (ever),
-    -- So I didn't bother making documentation for them
+    -- You shouldn't use methods of these classes in extension code unless you know what you're doing anyways,
+    -- So I didn't bother making documentation for them.
     ---@class Request
     local Request = {}
     ---@class Headers
     local Headers = {}
-    ---@class FormBody
-    local FormBody = {}
+    ---@class RequestBody
+    local RequestBody = {}
     ---@class CacheControl
     local CacheControl = {}
 
@@ -160,7 +160,7 @@ do
     do
         ---@class FormBodyBuilder
         local FormBodyBuilder = {}
-        ---@return FormBody
+        ---@return RequestBody
         function FormBodyBuilder:build() return end
 
         ---@param name string
@@ -168,16 +168,42 @@ do
         ---@return FormBodyBuilder
         function FormBodyBuilder:add(name, value) return end
     end
+
+    do
+        ---@class Response
+        local Response = {}
+        ---@return ResponseBody
+        function Response:getBody() return end
+
+        ---@class ResponseBody
+        local ResponseBody = {}
+        ---@return string
+        function ResponseBody:string() return end
+    end
+end
+
+-- dkjson
+do
+    ---@class dkjson
+    local dkjson = {}
+
+    ---@return string
+    ---@param tbl table
+    function dkjson.encode(tbl) return end
+
+    ---@return table
+    ---@param str string @JSON string
+    function dkjson.decode(str) return end
 end
 
 -- everything else
 do
     ---@class NovelStatus
-    local NovelStatus
-    ---@class Ordering
-    local Ordering
+    local NovelStatus = {}
+    ---@class Listing
+    local Listing = {}
 
-    ---@class Novel
+    ---@class Novel @Novel.Listing
     local Novel = {}
 
     ---@param title string
@@ -211,154 +237,190 @@ do
     ---@return void
     function NovelChapter:setOrder(order) return end
 
-    ---@class NovelPage
-    local NovelPage = {}
+    ---@class NovelInfo
+    local NovelInfo = {}
 
     ---@param title string
     ---@return void
-    function NovelPage:setTitle(title) return end
+    function NovelInfo:setTitle(title) return end
 
     ---@param imageURL string|any
     ---@return void
-    function NovelPage:setImageURL(imageURL) return end
+    function NovelInfo:setImageURL(imageURL) return end
 
     ---@param description string
     ---@return void
-    function NovelPage:setDescription(description) return end
+    function NovelInfo:setDescription(description) return end
 
     ---@param genres Array | table
     ---@return void
-    function NovelPage:setGenres(genres) return end
+    function NovelInfo:setGenres(genres) return end
 
     ---@param authors Array | table
     ---@return void
-    function NovelPage:setAuthors(authors) return end
+    function NovelInfo:setAuthors(authors) return end
 
-    ---@param status "LuaSupport:getStatus(3)" | NovelStatus
+    ---@param status "NovelStatus(3)" | NovelStatus
     ---@return void
-    function NovelPage:setStatus(status) return end
+    function NovelInfo:setStatus(status) return end
 
     ---@param tags Array | table
     ---@return void
-    function NovelPage:setTags(tags) return end
+    function NovelInfo:setTags(tags) return end
 
     ---@param artists Array | table
     ---@return void
-    function NovelPage:setArtists(artists) return end
+    function NovelInfo:setArtists(artists) return end
 
     ---@param language string
     ---@return void
-    function NovelPage:setLanguage(language) return end
+    function NovelInfo:setLanguage(language) return end
 
     ---@param chapters ArrayList
     ---@return void
-    function NovelPage:setNovelChapters(chapters) return end
+    function NovelInfo:setNovelChapters(chapters) return end
 end
 
 -- ShosetsuLib
 do
     -- OTHER
-
     ---@param name string @Name of library to load
     ---@return any
     function Require(name) return end
 
-
     -- EXTENSION METHODS
+     do
+        --- Map and Filter combined.
+        ---@see ArrayList
+        ---@param o ArrayList | Elements @Target
+        ---@param f fun(v: any|Element): any
+        ---@return table
+        function mapNotNil(o, f) end
 
-    --- map except if the value returned by f is nil, then it will not be added
-    ---@see ArrayList
-    ---@param o ArrayList | Elements @Target
-    ---@param f fun(v: any|Element): any
-    ---@return table
-    function mapNotNil() end
+        --- Filters an array.
+        ---@see ArrayList
+        ---@param o ArrayList | Elements @Target
+        ---@param f fun(v: any|Element): any
+        ---@return table
+        function filter(o, f) end
 
-    --- Maps values of an ArrayList or Elements to a table
-    ---@see ArrayList
-    ---@param o ArrayList | Elements @Target
-    ---@param f fun(v: any|Element): any
-    ---@return table
-    function map(o, f) end
+        --- Maps values of an ArrayList or Elements to a table
+        ---@see ArrayList
+        ---@param o ArrayList | Elements @Target
+        ---@param f fun(v: any|Element): any
+        ---@return table
+        function map(o, f) end
 
-    --- Maps values of an ArrayList or Elements to another ArrayList or Elements, and then to a table (using two functions).
-    --- Effectively flattens an array, which gives the function its name.
-    ---@see ArrayList
-    ---@see Elements
-    ---@param o ArrayList | Elements @Target
-    ---@param f1 fun(v: any): void | nil | ArrayList | Elements
-    ---@param f2 fun(v: any): any
-    ---@return table
-    function map2flat(o, f1, f2) end
+        --- Maps values of an ArrayList or Elements to another ArrayList or Elements, and then to a table (using two functions).
+        --- Effectively flattens an array, which gives the function its name.
+        ---@see ArrayList
+        ---@see Elements
+        ---@param o ArrayList | Elements @Target
+        ---@param f1 fun(v: any): void | nil | ArrayList | Elements
+        ---@param f2 fun(v: any): any
+        ---@return table
+        function map2flat(o, f1, f2) end
 
-    --- Returns the first element of the ArrayList or Elements whose output from the function is true.
-    ---@see ArrayList
-    ---@param o ArrayList | Elements
-    ---@param f fun(v: any): boolean
-    ---@return any
-    function first(o, f) end
+        --- Returns the first element of the ArrayList or Elements whose output from the function is true.
+        ---@see ArrayList
+        ---@param o ArrayList | Elements
+        ---@param f fun(v: any): boolean
+        ---@return any
+        function first(o, f) end
 
-    --- Wraps a function by creating a new one that prepends a specified argument then calls the underlying function.
-    --- A wrapper function W(...), for a given underlying function F and object O, is equivalent to F(O, ...).
-    ---@param o any @Prepended argument
-    ---@param f function @Function to wrap
-    ---@return function @Wrapper
-    function wrap(o, f) end
-
+        --- Wraps a function by creating a new one that prepends a specified argument then calls the underlying function.
+        --- A wrapper function W(...), for a given underlying function F and object O, is equivalent to F(O, ...).
+        ---@param o any @Prepended argument
+        ---@param f function @Function to wrap
+        ---@return function @Wrapper
+        function wrap(o, f) end
+    end
 
     -- ArrayList
+    do
+        ---@return ArrayList
+        function List() return end
 
-    ---@return ArrayList
-    function List() return end
+        ---@param arr Array | table
+        ---@return ArrayList
+        function AsList(arr) return end
 
-    ---@param arr Array | table
-    ---@return ArrayList
-    function AsList(arr) return end
-
-    ---@param arr ArrayList
-    ---@return void
-    function Reverse(arr) return end
-
+        ---@param arr ArrayList
+        ---@return void
+        function Reverse(arr) return end
+    end
 
     -- OKHTTP3
-    ---@param url string
-    ---@param headers Headers
-    ---@param cacheControl CacheControl
-    ---@return Request
-    function GET(url, headers, cacheControl) return end
+    do
+        ---@param url string
+        ---@param headers Headers
+        ---@param cacheControl CacheControl
+        ---@return Request
+        function GET(url, headers, cacheControl) return end
 
-    ---@param url string
-    ---@param headers Headers
-    ---@param body FormBody
-    ---@param cacheControl CacheControl
-    ---@return Request
-    function POST(url, headers, body, cacheControl) return end
+        ---@param url string
+        ---@param headers Headers
+        ---@param body RequestBody
+        ---@param cacheControl CacheControl
+        ---@return Request
+        function POST(url, headers, body, cacheControl) return end
 
-    ---@return RequestBuilder
-    function RequestBuilder() return end
-    ---@return HeadersBuilder
-    function HeadersBuilder() return end
-    ---@return FormBodyBuilder
-    function FormBodyBuilder() return end
-    ---@return CacheControl
-    function DefaultCacheControl() return end
+        ---@return RequestBuilder
+        function RequestBuilder() return end
+        ---@return HeadersBuilder
+        function HeadersBuilder() return end
+        ---@return FormBodyBuilder
+        function FormBodyBuilder() return end
+        ---@return CacheControl
+        function DefaultCacheControl() return end
 
+        ---@return CacheControl
+        function DEFAULT_CACHE_CONTROL() return end
+        ---@return Headers
+        function DEFAULT_HEADERS() return end
+        ---@return RequestBody
+        function DEFAULT_BODY() return end
+
+        --- Executes a request.
+        ---@param req Request
+        ---@return Response
+        function Request(req) return end
+
+        --- Obtains a document from an HTML string.
+        ---@param str string
+        ---@return Document
+        function Document(str) return end
+
+        --- Obtains a document from a Request.
+        ---@param req Request
+        ---@return Document
+        function RequestDocument(req) return end
+
+        --- Obtains a document from a url, using a GET request.
+        ---@param url string
+        ---@return Document
+        function GETDocument(url) return end
+    end
 
     -- CONSTRUCTORS
+    do
+        ---@param name string
+        ---@param increments int
+        ---@param func fun(): Novel[] | fun(inc: int): Novel[]
+        ---@return Listing
+        function Listing(name, increments, func) return end
 
-    ---@return Novel
-    function Novel() return end
+        ---@return Novel
+        function Novel() return end
 
-    ---@return NovelPage
-    function NovelPage() return end
+        ---@return NovelInfo
+        function NovelPage() return end
 
-    ---@return NovelChapter
-    function NovelChapter() return end
+        ---@return NovelChapter
+        function NovelChapter() return end
 
-    ---@param type int
-    ---@return NovelStatus
-    function NovelStatus(type) return end
-
-    ---@param type int
-    ---@return Ordering
-    function Ordering(type) return end
+        ---@param type int
+        ---@return NovelStatus
+        function NovelStatus(type) return end
+    end
 end
