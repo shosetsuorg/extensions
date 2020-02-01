@@ -10,12 +10,12 @@ local defaults = {
 
 ---@param page int @increment
 function defaults:latest(page)
-    return self.parse(GETDocument(self.___baseURL.."/"..self.novelListPath.."?type=latest&category=all&state=all&page=" .. (page <= 0 and 1 or page)))
+    return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. (page <= 0 and 1 or page)))
 end
 
 function defaults:search(data)
     local query = data.query
-    return self.parse(GETDocument(self.___baseURL .. "/"..self.novelSearchPath.."/" .. query:gsub(" ", "_")))
+    return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelSearchPath .. "/" .. query:gsub(" ", "_")))
 end
 
 ---@param url string
@@ -23,13 +23,18 @@ end
 function defaults:getPassage(url)
     local doc = GETDocument(url)
     local e = doc:selectFirst("div.vung_doc"):select("p")
-    if e:size() == 0 then return "NOT YET TRANSLATED" end
-    return table.concat(map(e, function(v) return v:text() end), "\n")
+    if e:size() == 0 then
+        return "NOT YET TRANSLATED"
+    end
+    return table.concat(map(e, function(v)
+        return v:text()
+    end), "\n")
 end
 
 ---@param url string
 ---@return NovelInfo
-function defaults:parseNovel(url)
+function defaults:parseNovel(url, loadChapters)
+
     local doc = GETDocument(url)
     local info = NovelInfo()
 
@@ -42,9 +47,13 @@ function defaults:parseNovel(url)
         info:setTitle(elements:get(0):selectFirst("h1"):text())
 
         -- Authors
-        info:setAuthors(map(elements:get(1):select("a"), function(v) return v:text() end))
+        info:setAuthors(map(elements:get(1):select("a"), function(v)
+            return v:text()
+        end))
         -- Genres
-        info:setGenres(map(elements:get(2):select("a"), function(v) return v:text() end))
+        info:setGenres(map(elements:get(2):select("a"), function(v)
+            return v:text()
+        end))
         -- Status
         local s = elements:get(3):select("a"):text()
         info:setStatus(NovelStatus(
@@ -56,25 +65,29 @@ function defaults:parseNovel(url)
     -- Description
     info:setDescription(first(
             doc:selectFirst("div.entry-header"):select("div"),
-            function(v) return v:id() == "noidungm" end)
+            function(v)
+                return v:id() == "noidungm"
+            end)
             :text():gsub("<br>", "\n"))
 
     -- Chapters
-    local chapters = doc:selectFirst("div.chapter-list"):select("div.row")
-    local a = chapters:size()
-    local c = AsList(map(chapters, function(v)
-        local chap = NovelChapter()
-        local e = v:select("span")
-        local titLink = e:get(0):selectFirst("a")
-        chap:setTitle(titLink:attr("title"):gsub(info:getTitle(), ""):match("^%s*(.-)%s*$"))
-        chap:setLink(titLink:attr("href"))
-        chap:setRelease(e:get(1):text())
-        chap:setOrder(a)
-        a = a - 1
-        return chap
-    end))
-    Reverse(c)
-    info:setChapters(c)
+    if loadChapters then
+        local chapters = doc:selectFirst("div.chapter-list"):select("div.row")
+        local a = chapters:size()
+        local c = AsList(map(chapters, function(v)
+            local chap = NovelChapter()
+            local e = v:select("span")
+            local titLink = e:get(0):selectFirst("a")
+            chap:setTitle(titLink:attr("title"):gsub(info:getTitle(), ""):match("^%s*(.-)%s*$"))
+            chap:setLink(titLink:attr("href"))
+            chap:setRelease(e:get(1):text())
+            chap:setOrder(a)
+            a = a - 1
+            return chap
+        end))
+        Reverse(c)
+        info:setChapters(c)
+    end
 
     return info
 end
@@ -92,10 +105,10 @@ function defaults:parse(doc)
 end
 
 return function(baseURL, _self)
-    _self = setmetatable(_self or {}, {__index = function(_, k)
+    _self = setmetatable(_self or {}, { __index = function(_, k)
         local d = defaults[k]
         return (type(d) == "function" and wrap(_self, d) or d)
-    end})
+    end })
     _self["___baseURL"] = baseURL
     _self["listings"] = {
         Listing("Latest", true, _self.latest)

@@ -200,6 +200,7 @@ end
 do
     ---@class NovelStatus
     local NovelStatus = {}
+
     ---@class Listing
     local Listing = {}
 
