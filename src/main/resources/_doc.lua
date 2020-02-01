@@ -544,12 +544,11 @@ do
 
     -- CONSTRUCTORS
     do
-        ---@param id int
         ---@param name string
         ---@param increments int
         ---@param func fun(): Novel[] | fun(inc: int): Novel[]
         ---@return Listing
-        function Listing(id, name, increments, func)
+        function Listing(name, increments, func)
             return
         end
 
