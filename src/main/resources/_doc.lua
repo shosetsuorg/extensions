@@ -545,7 +545,7 @@ do
     -- CONSTRUCTORS
     do
         ---@param name string
-        ---@param increments int
+        ---@param increments boolean
         ---@param func fun(): Novel[] | fun(inc: int): Novel[]
         ---@return Listing
         function Listing(name, increments, func)
