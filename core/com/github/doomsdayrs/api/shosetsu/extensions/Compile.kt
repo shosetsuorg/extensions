@@ -24,14 +24,15 @@ import java.security.NoSuchAlgorithmException
  * specific language governing permissions and limitations
  * under the License.
  * ====================================================================
- */ /**
+ */
+/**
  * shosetsu-extensions
  * 20 / 01 / 2020
  *
  * @author github.com/doomsdayrs
  */
 object Compile {
-    private fun getContent(file: File): String {
+    fun getContent(file: File): String {
         val builder = StringBuilder()
         val br = BufferedReader(FileReader(file))
         var line = br.readLine()

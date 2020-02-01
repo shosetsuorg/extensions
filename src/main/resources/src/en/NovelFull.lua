@@ -140,10 +140,6 @@ return {
     imageURL = "",
     genres = {},
     hasCloudFlare = false,
-    latestOrder = Ordering(0),
-    chapterOrder = Ordering(0),
-    isIncrementingChapterList = true,
-    isIncrementingPassagePage = false,
     hasSearch = true,
     hasGenres = true,
 
