@@ -116,5 +116,7 @@ return {
     novelPageCombiner = novelPageCombiner,
     parseLatest = parseLatest,
     parseSearch = parseSearch,
-    getSearchString = getSearchString
+    getSearchString = getSearchString,
+
+
 }

@@ -2,7 +2,9 @@
 --- @author Doomsdayrs
 --- @version 1.2.0
 
-local text = function(v) return v:text() end
+local text = function(v)
+    return v:text()
+end
 
 local defaults = {
     latestNovelSel = "div.col-12.col-md-6",
@@ -85,22 +87,26 @@ function defaults:parse(doc, search)
         local data = v:selectFirst("a")
         novel:setLink(data:attr("href"))
         local tit = data:attr("title")
-        if tit == "" then tit = data:text() end
+        if tit == "" then
+            tit = data:text()
+        end
         novel:setTitle(tit)
         local e = data:selectFirst("img")
-        if e then novel:setImageURL(e:attr("src")) end
+        if e then
+            novel:setImageURL(e:attr("src"))
+        end
         return novel
     end)
 end
 
 return function(baseURL, _self)
-    _self = setmetatable(_self or {}, {__index = function(_, k)
+    _self = setmetatable(_self or {}, { __index = function(_, k)
         local d = defaults[k]
         return (type(d) == "function" and wrap(_self, d) or d)
-    end})
+    end })
     _self["___baseURL"] = baseURL
     _self["listings"] = {
-        Listing("Latest", true, _self.latest)
+        Listing(0, "Latest", true, _self.latest)
     }
     return _self
 end

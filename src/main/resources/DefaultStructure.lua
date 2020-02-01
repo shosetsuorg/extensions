@@ -46,8 +46,8 @@ return {
     hasCloudFlare = false,
     hasSearch = true,
     listings = {
-        Listing("Of something", false, someFunction),
-        Listing("Of something that increments", true, someFunctionInc)
+        Listing(0, "Of something", false, someFunction),
+        Listing(1, "Of something that increments", true, someFunctionInc)
     },
 
     -- Filters / Settings the app can use

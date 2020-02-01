@@ -111,7 +111,7 @@ return function(baseURL, _self)
     end })
     _self["___baseURL"] = baseURL
     _self["listings"] = {
-        Listing("Latest", true, _self.latest)
+        Listing(0, "Latest", true, _self.latest)
     }
     return _self
 end
