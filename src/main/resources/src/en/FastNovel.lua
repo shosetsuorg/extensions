@@ -92,6 +92,7 @@ end
 return {
     id = 258,
     name = "FastNovel",
+    baseURL = baseURL,
     imageURL = "https://fastnovel.net/skin/images/logo.png",
     hasCloudFlare = false,
     hasSearch = true,

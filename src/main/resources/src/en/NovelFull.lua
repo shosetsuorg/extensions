@@ -128,6 +128,7 @@ end
 return {
     id = 1,
     name = "NovelFull",
+    baseURL = baseURL,
     imageURL = "",
     hasCloudFlare = false,
     hasSearch = true,

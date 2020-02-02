@@ -86,6 +86,7 @@ end
 return {
     id = 234,
     name = "Tangsanshu",
+    baseURL = baseURL,
     imageURL = "http://www.tangsanshu.com/images/logo.png",
     hasCloudFlare = false,
     hasSearch = true,

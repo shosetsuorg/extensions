@@ -84,6 +84,7 @@ end
 return {
     id = 3,
     name = "Syosetsu",
+    baseURL = baseURL,
     imageURL = "https://static.syosetu.com/view/images/common/logo_yomou.png",
     hasCloudFlare = false,
     hasSearch = true,

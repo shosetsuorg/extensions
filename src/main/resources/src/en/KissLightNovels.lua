@@ -11,6 +11,7 @@ local baseURL = "https://kisslightnovels.info"
 return Require("Madara")(baseURL, {
     id = 736,
     name = "KissLightNovels",
+    baseURL = baseURL,
     imageURL = "https://kisslightnovels.info/wp-content/uploads/2017/10/kisslightnovels-logo.png",
     latestNovelSel = "div.col-6.col-md-3",
     novelPageTitleSel = "h1",
