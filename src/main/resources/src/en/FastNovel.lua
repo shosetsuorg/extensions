@@ -2,24 +2,25 @@
 
 local baseURL = "https://fastnovel.net"
 
----@param page number @value
----@return string @url of said latest page
-local function getLatestURL(page)
-    return "https://fastnovel.net/list/latest.html?page=" .. page
+local settings = {}
+
+local function setSettings(setting)
+    settings = setting
 end
 
 ---@param document Document @Jsoup document of the page with chapter text on it
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
-local function getNovelPassage(document)
-    return table.concat(map(document:select("div.box-player"):select("p"), function(v)
+local function getPassage(url)
+    return table.concat(map(GETDocument(url):select("div.box-player"):select("p"), function(v)
         return v:text()
     end), "\n")
 end
 
 ---@param document Document @Jsoup document of the novel information page
 ---@return NovelInfo
-local function parseNovel(document)
+local function parseNovel(url)
     local novelPage = NovelInfo()
+    local document = GETDocument(url)
 
     novelPage:setImageURL(document:selectFirst("div.book-cover"):attr("data-original"))
     novelPage:setTitle(document:selectFirst("h1.name"):text())
@@ -63,70 +64,43 @@ local function parseNovel(document)
     return novelPage
 end
 
----@param document Document @Jsoup document of the novel information page
----@param _ number @Page #
----@return NovelInfo
-local function parseNovelI(document, _)
-    return parseNovel(document)
-end
-
----@param url string @url of novel page
----@param _ number @which page
-local function novelPageCombiner(url, _)
-    return url
-end
-
 ---@param document Document @Jsoup document of latest listing
 ---@return Array @Novel array list
-local function parseLatest(document)
-    return AsList(map(document:selectFirst("ul.list-film"):select("li.film-item"), function(v)
+local function parseLatest(page)
+    return map(GETDocument(baseURL .. "/list/latest.html?page=" .. page):selectFirst("ul.list-film"):select("li.film-item"), function(v)
         local novel = Novel()
         local data = v:selectFirst("a")
         novel:setLink(baseURL .. data:attr("href"))
         novel:setTitle(data:attr("title"))
         novel:setImageURL(data:selectFirst("div.img"):attr("data-original"))
         return novel
-    end))
+    end)
 end
 
----@param document Document @Jsoup document of search results
 ---@return Array @Novel array list
-local function parseSearch(document)
-    return AsList(map(document:select("ul.list-film"), function(v)
+local function search(data)
+    return map(GETDocument(baseURL .. "/search/" .. data.query:gsub(" ", "%%20")):select("ul.list-film"), function(v)
         local novel = Novel()
         local data = v:selectFirst("a")
         novel:setLink(baseURL .. data:attr("href"))
         novel:setTitle(data:attr("title"))
         novel:setImageURL(data:selectFirst("div.img"):attr("data-original"))
         return novel
-    end))
-end
-
----@param query string @query to use
----@return string @url
-local function getSearchString(query)
-    return baseURL .. "/search/" .. query:gsub(" ", "%%20")
+    end)
 end
 
 return {
     id = 258,
     name = "FastNovel",
     imageURL = "https://fastnovel.net/skin/images/logo.png",
-    genres = {},
     hasCloudFlare = false,
-    latestOrder = Ordering(1),
-    chapterOrder = Ordering(0),
-    isIncrementingChapterList = false,
-    isIncrementingPassagePage = false,
     hasSearch = true,
-    hasGenres = true,
+    listings = {
+        Listing("Latest", true, parseLatest)
+    },
 
-    getLatestURL = getLatestURL,
-    getNovelPassage = getNovelPassage,
+    getPassage = getPassage,
     parseNovel = parseNovel,
-    parseNovelI = parseNovelI,
-    novelPageCombiner = novelPageCombiner,
-    parseLatest = parseLatest,
-    parseSearch = parseSearch,
-    getSearchString = getSearchString
+    search = search,
+    setSettings = setSettings
 }

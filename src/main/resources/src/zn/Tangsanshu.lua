@@ -2,22 +2,21 @@
 
 local baseURL = "http://www.tangsanshu.com"
 
----@param page number @value
----@return string @url of said latest page
-local function getLatestURL(page)
-    return baseURL
+local settings = {}
+
+local function setSettings(setting)
+    settings = setting
 end
 
----@param document Document @Jsoup document of the page with chapter text on it
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
-local function getNovelPassage(document)
-    return document:selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+", "\n"):gsub("&nbsp;", "")
+local function getPassage(url)
+    return GETDocument(url):selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+", "\n"):gsub("&nbsp;", "")
 end
 
 ---@return NovelInfo
 local function parseNovel(url, loadChapters)
     local novelPage = NovelInfo()
-
+    local document = GETDocument(url)
     -- Info
 
     local info = document:selectFirst("div.info")
@@ -35,86 +34,67 @@ local function parseNovel(url, loadChapters)
     novelPage:setDescription(info:selectFirst("div.intro"):text():gsub("<span>简介：</span>", ""):gsub("<br>", "\n"))
 
     -- NovelChapters
-    local found = false
-    local i = 0
-    novelPage:setChapters(AsList(mapNotNil(document:selectFirst("div.listmain"):selectFirst("dl"):children(), function(v)
-        if found then
-            local chapter = NovelChapter()
-            chapter:setOrder(i)
-            local data = v:selectFirst("a")
-            chapter:setTitle(data:text())
-            chapter:setLink(baseURL .. data:attr("href"))
-            i = i + 1
-            return chapter
-        else
-            if v:text():match("正文卷") then
-                found = true
+    if loadChapters then
+        local found = false
+        local i = 0
+        novelPage:setChapters(AsList(mapNotNil(document:selectFirst("div.listmain"):selectFirst("dl"):children(), function(v)
+            if found then
+                local chapter = NovelChapter()
+                chapter:setOrder(i)
+                local data = v:selectFirst("a")
+                chapter:setTitle(data:text())
+                chapter:setLink(baseURL .. data:attr("href"))
+                i = i + 1
+                return chapter
+            else
+                if v:text():match("正文卷") then
+                    found = true
+                end
+                return nil
             end
-            return nil
-        end
-    end)))
+        end)))
+    end
     return novelPage
 end
----@param url string @url of novel page
----@param increment number @which page
-local function novelPageCombiner(url, increment)
-    return url
-end
 
----@param document Document @Jsoup document of latest listing
 ---@return Array @Novel array list
-local function parseLatest(document)
-    return AsList(map(document:selectFirst("div.up"):selectFirst("div.l"):select("li"), function(v)
+local function latest()
+    local document = GETDocument(baseURL)
+    return map(document:selectFirst("div.up"):selectFirst("div.l"):select("li"), function(v)
         local novel = Novel()
         local data = v:selectFirst("span.s2"):selectFirst("a")
         novel:setTitle(data:text())
         novel:setLink(baseURL .. data:attr("href"))
         return novel
-    end))
+    end)
 end
 
----@param document Document @Jsoup document of search results
+--- @param data table @Table of values. Always has "query"
 ---@return Array @Novel array list
-local function parseSearch(document)
-    return AsList(map(document:select("div.bookbox"), function(v)
+local function search(data)
+    document = GETDocument(baseURL .. "/s.php?ie=utf-8&q=" .. data.query:gsub("+", "%2B"):gsub(" ", "+"))
+    return map(document:select("div.bookbox"), function(v)
         local novel = Novel()
         local data = document:selectFirst("h4.bookname"):selectFirst("a")
         novel:setTitle(data:text())
         novel:setLink(baseURL .. data:attr("href"))
         novel:setImageURL(baseURL .. document:selectFirst("a"):attr("href"))
-    end))
+    end)
 end
 
----@param query string @query to use
----@return string @url
-local function getSearchString(query)
-    return baseURL .. "/s.php?ie=utf-8&q=" .. query:gsub("+", "%2B"):gsub(" ", "+")
-end
-
----@param data table
-local function search(data)
-
-end
 
 return {
     id = 234,
     name = "Tangsanshu",
     imageURL = "http://www.tangsanshu.com/images/logo.png",
-    genres = {},
     hasCloudFlare = false,
-    latestOrder = Ordering(0),
-    chapterOrder = Ordering(0),
-    isIncrementingChapterList = false,
-    isIncrementingPassagePage = false,
     hasSearch = true,
-    hasGenres = false,
-
-    getLatestURL = getLatestURL,
-    getNovelPassage = getNovelPassage,
+    listings = {
+        Listing("Latest", false, latest)
+    },
+    -- Default functions that had to be set
+    getPassage = getPassage,
     parseNovel = parseNovel,
-    parseNovelI = parseNovelI,
-    novelPageCombiner = novelPageCombiner,
-    parseLatest = parseLatest,
-    parseSearch = parseSearch,
-    getSearchString = getSearchString
+    search = search,
+    setSettings = setSettings
 }
