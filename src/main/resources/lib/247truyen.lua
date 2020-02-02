@@ -10,7 +10,9 @@ local defaults = {
 
 ---@param page int @increment
 function defaults:latest(page)
-    return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. (page <= 0 and 1 or page)))
+    return self.parse(GETDocument(
+            self.___baseURL.."/"..self.novelListPath.."?type=latest&category=all&state=all&page="..page
+        ))
 end
 
 function defaults:search(data)
@@ -23,18 +25,13 @@ end
 function defaults:getPassage(url)
     local doc = GETDocument(url)
     local e = doc:selectFirst("div.vung_doc"):select("p")
-    if e:size() == 0 then
-        return "NOT YET TRANSLATED"
-    end
-    return table.concat(map(e, function(v)
-        return v:text()
-    end), "\n")
+    if e:size() == 0 then return "NOT YET TRANSLATED" end
+    return table.concat(map(e, function(v) return v:text() end), "\n")
 end
 
 ---@param url string
 ---@return NovelInfo
 function defaults:parseNovel(url, loadChapters)
-
     local doc = GETDocument(url)
     local info = NovelInfo()
 
