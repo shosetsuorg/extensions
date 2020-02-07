@@ -1,9 +1,12 @@
 -- {"id":911,"version":"1.0.0","author":"TechnoJo4","repo":""}
 
 local baseURL = "https://creativenovels.com"
+local ajaxURL = "https://creativenovels.com/wp-admin/admin-ajax.php"
 
 local settings = {}
 
+---@type fun(table, string): string
+local qs = Require("url").querystring
 ---@type dkjson
 local json = Require("dkjson")
 
@@ -37,9 +40,9 @@ local function parseNovel(url, lc, report)
 
     if lc then
         local data = getSecurity(doc, "chapter_list_summon")
-        assert(data.ajaxurl and data.security)
+        assert(data.security)
 
-        data = Request(POST(data.ajaxurl, nil,
+        data = Request(POST(ajaxURL, nil,
                 FormBodyBuilder()
                     :add("action", "crn_chapter_list")
                     :add("view_id", doc:selectFirst("#chapter_list_novel_page"):attr("class"))
@@ -89,12 +92,16 @@ return {
     baseURL = baseURL,
     imageURL = "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
     hasCloudFlare = false,
-    hasSearch = true,
+    hasSearch = false,
     listings = {
         Listing("Popular", true, function(page)
-            local doc = GETDocument("https://creativenovels.com/browse-new/?sb=rank")
+            local doc = GETDocument(baseURL.."/browse-new/?sb=rank")
             local dat = getSecurity(doc, "search_results")
-            local url = "https://creativenovels.com/wp-admin/admin-ajax.php?action=search_results&view_id="..page.."&gref=&sta=&sb=rank&security="..dat.security
+            local url = qs({
+                action = "search_results", sb = "rank",
+                view_id = page, security = dat.security,
+                gref = "", sta = "",
+            }, ajaxURL)
             local data = Request(GET(url)):body():string()
 
             if page == 1 then
