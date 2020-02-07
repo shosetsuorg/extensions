@@ -710,5 +710,34 @@ if always_try_using_lpeg then
     pcall (json.use_lpeg)
 end
 
+
+-- START -- SHOSETSU ADDITIONS --
+local json_mediatype = MediaType("application/json; charset=utf-8")
+
+function json.GET(url, ...)
+    local res = GET(url, ...)
+    if res:headers():get("Content-Type"):sub(1,16) == "application/json" then
+        return json.decode(res:body():string())
+    end
+    return res:body():string()
+end
+
+function json.POST(url, body, ...)
+    local headers, cctl = ...
+    if type(body) == "table" then
+        body = json.encode(body)
+    end
+    if type(body) ~= "string" then
+        error("Invalid json.POST()")
+    end
+    body = RequestBody(body, json_mediatype)
+    local res = Request(POST(url, headers, body, cctl))
+    if res:headers():get("Content-Type"):sub(1,16) == "application/json" then
+        return json.decode(res:body():string())
+    end
+    return res:body():string()
+end
+--  END  -- SHOSETSU ADDITIONS --
+
 return json
 
