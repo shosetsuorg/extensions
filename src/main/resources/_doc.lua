@@ -137,6 +137,8 @@ do
     local RequestBody = {}
     ---@class CacheControl
     local CacheControl = {}
+    ---@class MediaType
+    local MediaType = {}
 
     do
         ---@class RequestBuilder
@@ -257,6 +259,19 @@ do
     ---@return table
     ---@param str string @JSON string
     function dkjson.decode(str)
+        return
+    end
+
+    ---@param url string
+    ---@return string | table @Response
+    function dkjson.GET(url, ...)
+        return
+    end
+
+    ---@param url string
+    ---@param body string | table
+    ---@return string | table @Response
+    function dkjson.POST(url, body, ...)
         return
     end
 end
@@ -538,6 +553,19 @@ do
         ---@param url string
         ---@return Document
         function GETDocument(url)
+            return
+        end
+
+        ---@param str string
+        ---@return MediaType
+        function MediaType(str)
+            return
+        end
+
+        ---@param data string
+        ---@param type MediaType
+        ---@return RequestBody
+        function RequestBody(data, type)
             return
         end
     end
