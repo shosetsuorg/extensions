@@ -14,26 +14,35 @@ local defaults = {
     ajax_latest = "/ajax/latest-novels",
     ajax_chapters = "/ajax/chapter-option",
 
+    searchTitleSel = ".novel-title",
+
     hasCloudFlare = false,
     hasSearch = true
 }
 
 function defaults:search(data)
     -- search gives covers but they're in some weird aspect ratio
-    local doc = GETDocument(qs({ s = data.query }, self.baseURL.."/search"))
+    local doc = GETDocument(qs({ keyword = data.query }, self.baseURL.."/search"))
     local pager = doc:selectFirst(".pagination.pagination-sm")
     local pages = {
-        map(doc:select(".novel-title a"), function(v)
+        map(doc:select(self.searchTitleSel.." a"), function(v)
             local novel = Novel()
-            novel:setLink(v:attr("href"))
+            novel:setLink(self.baseURL..v:attr("href"))
             novel:setTitle(v:attr("title"))
             return novel
         end)
     }
 
     if pager then
-        for i=2, tostring(pager:selectFirst("li.last"):attr("data-page")) do
-            pages[i] = map(GETDocument(qs({ s = data.query }, self.baseURL.."/search")):select(".novel-title a"),
+        local last = pager:selectFirst("li.last:not(.disabled) a")
+        if not last then
+            last = pager:select("li a[data-page]")
+            last = last:get(last:size())
+        end
+        last = tonumber(last:attr("data-page")) + 1
+
+        for i=2, last do
+            pages[i] = map(GETDocument(qs({ s = data.query, page = i }, self.baseURL.."/search")):select(".novel-title a"),
                     function(v)
                         local novel = Novel()
                         novel:setLink(v:attr("href"))
@@ -43,13 +52,12 @@ function defaults:search(data)
         end
     end
 
-    return flatten(pages)
+    local v = flatten(pages)
+    return v
 end
 
 function defaults:getPassage(url)
-    return table.concat(mapNotNil(GETDocument(url):selectFirst("#chr-content, #chapter-content"):children(), function(v)
-        return v:tagName() == "p" and v:text()
-    end), "\n")
+    return table.concat(mapNotNil(GETDocument(url):selectFirst("#chr-content, #chapter-content"):select("p"), text), "\n")
 end
 
 function defaults:parseNovel(url, loadChapters)
