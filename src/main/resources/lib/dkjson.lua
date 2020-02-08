@@ -42,8 +42,8 @@ SOFTWARE.
 --]==]
 
 -- global dependencies:
-local pairs, type, tostring, tonumber, getmetatable, setmetatable, rawset =
-pairs, type, tostring, tonumber, getmetatable, setmetatable, rawset
+local pairs, type, tostring, tonumber, getmetatable, setmetatable =
+pairs, type, tostring, tonumber, getmetatable, setmetatable
 local error, require, pcall, select = error, require, pcall, select
 local floor, huge = math.floor, math.huge
 local strrep, gsub, strsub, strbyte, strchar, strfind, strlen, strformat =
@@ -58,7 +58,6 @@ if register_global_module_table then
     _G[global_module_name] = json
 end
 
-local _ENV = nil -- blocking globals in Lua 5.2
 
 pcall (function()
     -- Enable access to blocked metatables.
@@ -504,7 +503,6 @@ end
 local scanvalue -- forward declaration
 
 local function scantable (what, closechar, str, startpos, nullval, objectmeta, arraymeta)
-    local len = strlen (str)
     local tbl, n = {}, 0
     local pos = startpos + 1
     if what == 'object' then
