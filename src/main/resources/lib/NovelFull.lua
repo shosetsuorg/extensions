@@ -52,8 +52,7 @@ function defaults:search(data)
         end
     end
 
-    local v = flatten(pages)
-    return v
+    return flatten(pages)
 end
 
 function defaults:getPassage(url)
