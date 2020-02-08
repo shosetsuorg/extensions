@@ -43,7 +43,7 @@ local function querystring(tbl, url)
 end
 
 return {
-    urldecode = urldecode,
-    urlencode = urlencode,
+    decode = urldecode,
+    encode = urlencode,
     querystring = querystring,
 }
