@@ -26,6 +26,12 @@ local function getPassage(url)
             function(v) return v:text() end), "\n")
 end
 
+local statuses = {
+    ["Ongoing"] = 0,
+    ["Completed"] = 1,
+    ["Hiatus"] = 2
+}
+
 ---@param url string
 ---@param lc boolean @Load Chapters
 ---@param report fun(status: string): void
@@ -33,10 +39,14 @@ local function parseNovel(url, lc, report)
     local doc = GETDocument(url)
     local info = NovelInfo()
 
-    local infobar = doc:selectFirst(".x-bar-content:has(.x-hide-sm.x-hide-xs) .x-bar-container:has(.read_library)"):children()
-    info:setTitle(infobar:get(1):text())
-    info:setAuthors({ doc:selectFirst("div:containsOwn(Author) a"):text() })
+    info:setImageURL(doc:selectFirst("img.book_cover"):attr("src"))
 
+    local infobar = doc:selectFirst(".x-bar-content:has(.x-hide-sm.x-hide-xs) .x-bar-container:has(.read_library)")
+    info:setTitle(infobar:children():get(1):text())
+    info:setGenres({ infobar:selectFirst(".genre_novel"):text() })
+    info:setAuthors({ infobar:selectFirst(".x-text-headline + div a"):text() })
+    info:setStatus(statuses[infobar:selectFirst(".novel_status"):text()] or 3)
+    info:setTags(map(doc:select(".novel_tag_inner"), function(v) return v:text() end))
 
     if lc then
         local data = getSecurity(doc, "chapter_list_summon")
