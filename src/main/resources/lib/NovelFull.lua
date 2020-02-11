@@ -1,3 +1,5 @@
+-- {"version":"1.0.0","author":"TechnoJo4"}
+
 -- rename this if you ever figure out its real name
 ---@author TechnoJo4
 ---@version 1.0.0
@@ -5,8 +7,9 @@
 
 ---@type fun(tbl: table , url: string): string
 local qs = Require("url").querystring
-local text = function(v) return v:text() end
-
+local text = function(v)
+    return v:text()
+end
 
 local defaults = {
     meta_offset = 1,

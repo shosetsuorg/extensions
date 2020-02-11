@@ -23,15 +23,15 @@
     "imageURL": "",
     "id": 1,
     "lang": "en",
-    "version": "1.2.4",
-    "md5": "3b37ac2744e69fc593d9a33a2f32b17"
+    "version": "1.0.0",
+    "md5": "8e9af182cdd18458ff2be4966f97ce"
   },
   "Tangsanshu": {
     "imageURL": "http://www.tangsanshu.com/images/logo.png",
     "id": 234,
     "lang": "zn",
     "version": "1.0.0",
-    "md5": "d0fcc6fa8c6551159b336f1cdc5a9b90"
+    "md5": "10bbdc0fdd683bfa78c2f520f1ed4f"
   },
   "BestLightNovel": {
     "imageURL": "",
@@ -52,7 +52,7 @@
     "id": 258,
     "lang": "en",
     "version": "0.1.3",
-    "md5": "d5a8b6a514af6f18b035fb62851b95b"
+    "md5": "dccba441af96d393bc42821937e8be32"
   },
   "247Truyen": {
     "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
@@ -71,11 +71,23 @@
   "libraries": [
     {
       "name": "247truyen",
+      "version": "1.1.0"
+    },
+    {
+      "name": "dkjson",
+      "version": "1.0.0"
+    },
+    {
+      "name": "NovelFull",
+      "version": "1.0.0"
+    },
+    {
+      "name": "url",
       "version": "1.0.0"
     },
     {
       "name": "Madara",
-      "version": "1.0.0"
+      "version": "1.2.0"
     }
   ],
   "Syosetsu": {
@@ -83,7 +95,7 @@
     "id": 3,
     "lang": "jp",
     "version": "1.2.0",
-    "md5": "ba8567712a84c348fbd778b1c5010"
+    "md5": "fa76f4e2d73d33bfcc24e0dcf36d7696"
   },
   "VipNovel": {
     "imageURL": "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
