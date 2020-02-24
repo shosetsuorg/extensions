@@ -1,18 +1,19 @@
--- {"version":"1.1.0","author":"TechnoJo4"}
+-- {"version":"1.1.1","author":"TechnoJo4"}
 
 local defaults = {
     hasSearch = true,
     hasCloudFlare = false,
     imageURL = "https://247truyen.com/themes/home/images/favicon.png",
     novelListPath = "novel_list",
-    novelSearchPath = "search_novels"
+    novelSearchPath = "search_novels",
+    novelListingTitleClass = ".nowrap"
 }
 
 ---@param page int @increment
 function defaults:latest(page)
     return self.parse(GETDocument(
-            self.___baseURL.."/"..self.novelListPath.."?type=latest&category=all&state=all&page="..page
-        ))
+            self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. page
+    ))
 end
 
 function defaults:search(data)
@@ -25,8 +26,12 @@ end
 function defaults:getPassage(url)
     local doc = GETDocument(url)
     local e = doc:selectFirst("div.vung_doc"):select("p")
-    if e:size() == 0 then return "NOT YET TRANSLATED" end
-    return table.concat(map(e, function(v) return v:text() end), "\n")
+    if e:size() == 0 then
+        return "NOT YET TRANSLATED"
+    end
+    return table.concat(map(e, function(v)
+        return v:text()
+    end), "\n")
 end
 
 ---@param url string
@@ -93,7 +98,7 @@ end
 function defaults:parse(doc)
     return map(doc:select("div.update_item.list_category"), function(v)
         local novel = Novel()
-        local e = v:selectFirst("h3.nowrap"):selectFirst("a")
+        local e = v:selectFirst("h3" .. self.novelListingTitleClass):selectFirst("a")
         novel:setTitle(e:attr("title"))
         novel:setLink(e:attr("href"))
         novel:setImageURL(v:selectFirst("img"):attr("src"))

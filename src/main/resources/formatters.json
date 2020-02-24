@@ -1,11 +1,4 @@
 {
-  "ReadNovelForLife": {
-    "imageURL": "https://readnovelforlife.com/wp-content/uploads/2019/12/Logo-1-e1570608260730.png",
-    "id": 394,
-    "lang": "en",
-    "version": "1.0.0",
-    "md5": "e2e0b146b65c3b1346a01abf6387415f"
-  },
   "comments": [
     "This is a file downloaded from the repo",
     "Each entry is it's own formatter",
@@ -17,7 +10,8 @@
       "id": -1917,
       "version": "1.0.0",
       "md5": "magic numbers from md5sum"
-    }}
+    }
+    }
   ],
   "NovelFull": {
     "imageURL": "",
@@ -25,27 +19,6 @@
     "lang": "en",
     "version": "1.0.0",
     "md5": "8e9af182cdd18458ff2be4966f97ce"
-  },
-  "Tangsanshu": {
-    "imageURL": "http://www.tangsanshu.com/images/logo.png",
-    "id": 234,
-    "lang": "zn",
-    "version": "1.0.0",
-    "md5": "10bbdc0fdd683bfa78c2f520f1ed4f"
-  },
-  "BestLightNovel": {
-    "imageURL": "",
-    "id": 5,
-    "lang": "en",
-    "version": "2.0.0",
-    "md5": "1df757ec4c4279e2cbec232d7ff449"
-  },
-  "Foxaholic": {
-    "imageURL": "https://foxaholic.com/wp-content/uploads/2019/12/images-1.png",
-    "id": 173,
-    "lang": "en",
-    "version": "1.0.0",
-    "md5": "5b958888fdab1888eaa465a18ded4fa"
   },
   "FastNovel": {
     "imageURL": "https://fastnovel.net/skin/images/logo.png",
@@ -60,13 +33,6 @@
     "lang": "vi",
     "version": "1.0.0",
     "md5": "a1c5ae6cd3b3acd749d8a3addf69c"
-  },
-  "BoxNovel": {
-    "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
-    "id": 2,
-    "lang": "en",
-    "version": "2.0.0",
-    "md5": "4e8a202f39974dc0ca54ca2269173c"
   },
   "libraries": [
     {
@@ -90,6 +56,48 @@
       "version": "1.2.0"
     }
   ],
+  "VipNovel": {
+    "imageURL": "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
+    "id": 586,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "6e3d57a656c9f2f7db78209438f25b14"
+  },
+  "ReadNovelForLife": {
+    "imageURL": "https://readnovelforlife.com/wp-content/uploads/2019/12/Logo-1-e1570608260730.png",
+    "id": 394,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "e2e0b146b65c3b1346a01abf6387415f"
+  },
+  "Tangsanshu": {
+    "imageURL": "http://www.tangsanshu.com/images/logo.png",
+    "id": 234,
+    "lang": "zn",
+    "version": "1.0.0",
+    "md5": "10bbdc0fdd683bfa78c2f520f1ed4f"
+  },
+  "BestLightNovel": {
+    "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
+    "id": 5,
+    "lang": "en",
+    "version": "2.0.0",
+    "md5": "1df757ec4c4279e2cbec232d7ff449"
+  },
+  "Foxaholic": {
+    "imageURL": "https://foxaholic.com/wp-content/uploads/2019/12/images-1.png",
+    "id": 173,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "5b958888fdab1888eaa465a18ded4fa"
+  },
+  "BoxNovel": {
+    "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
+    "id": 2,
+    "lang": "en",
+    "version": "2.0.0",
+    "md5": "4e8a202f39974dc0ca54ca2269173c"
+  },
   "Syosetsu": {
     "imageURL": "https://static.syosetu.com/view/images/common/logo_yomou.png",
     "id": 3,
@@ -97,11 +105,25 @@
     "version": "1.2.0",
     "md5": "fa76f4e2d73d33bfcc24e0dcf36d7696"
   },
-  "VipNovel": {
-    "imageURL": "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
-    "id": 586,
+  "NovelOnlineFree": {
+    "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
+    "id": 814,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "6e3d57a656c9f2f7db78209438f25b14"
+    "md5": "6f2af8c61bb784865acaf1498485b5"
+  },
+  "NovelOnlineFull": {
+    "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
+    "id": 510,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "4373869215826a80b7f2c7b7621f77a"
+  },
+  "NovelTrench": {
+    "imageURL": "https://noveltrench.com/wp-content/uploads/2019/08/transparent1.png",
+    "id": 81,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "67916be020bb18e01e3abfc4249c8267"
   }
 }
