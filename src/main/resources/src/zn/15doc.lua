@@ -69,7 +69,6 @@ end
 --- @param novelURL string @URL of novel
 --- @return NovelInfo
 local function parseNovel(novelURL)
-    print(novelURL)
     local d = GETDocument(baseURL .. "/info/" .. novelURL .. ".htm"):selectFirst("div.details")
     local n = NovelInfo()
     if d ~= nil then

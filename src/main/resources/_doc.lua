@@ -341,6 +341,12 @@ do
         return
     end
 
+    ---@param titles Array | table
+    ---@return void
+    function NovelInfo:setAlternativeTitles(titles)
+        return
+    end
+
     ---@param imageURL string|any
     ---@return void
     function NovelInfo:setImageURL(imageURL)
