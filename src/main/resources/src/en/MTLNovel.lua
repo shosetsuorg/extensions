@@ -60,7 +60,7 @@ end
 ---@param element Element
 ---@return Elements
 local function getDetailE(element)
-    return element:select("td"):select(2)
+    return element:select("td"):get(2)
 end
 
 ---@param element Element
@@ -72,7 +72,6 @@ end
 --- @param novelURL string @URL of novel
 --- @return NovelInfo
 local function parseNovel(novelURL)
-    print(novelURL)
     local url = baseURL .. "/" .. novelURL
     local d = GETDocument(url):selectFirst("article.post")
     local n = NovelInfo()
@@ -84,32 +83,39 @@ local function parseNovel(novelURL)
 
     local details = d:selectFirst("table.info"):select("tr")
     local titles = {}
+
     titles[1] = getDetail(details:get(0))
     titles[2] = getDetail(details:get(1))
     n:setAlternativeTitles(titles)
+
     local sta = getDetailE(details:get(2)):selectFirst("a"):text()
     n:setStatus(NovelStatus(sta == "Completed" and 1 or sta == "Ongoing" and 0 or 3))
+
     n:setAuthors({ getDetail(details:get(3)) })
 
     n:setGenres(map(getDetailE(details:get(6)):select("a"), function(v)
         return v:text()
     end))
 
-    n:setTags(map(getDetailE(details:get(11)):select("a"), function(v)
+    n:setTags(map(getDetailE(details:get(10)):select("a"), function(v)
         return v:text()
     end))
 
-    d = GETDocument(url .. "/chapter-list")
+    d = GETDocument(url .. "/chapter-list/")
     local chapters = d:selectFirst("div.ch-list"):select("a")
-    local count = chapters:size() - 1
-    n:setChapters(AsList(map(chapters, function(v)
+    local count = chapters:size()
+
+    local chaptersList = AsList(map(chapters, function(v)
         local c = NovelChapter()
         c:setTitle(v:text():gsub("<strong>", ""):gsub("</strong>", " "))
         c:setLink(v:attr("href"):match(baseURL .. "/(.+)/"))
         c:setOrder(count)
         count = count - 1
         return c
-    end)):reverse())
+    end))
+
+    Reverse(chaptersList)
+    n:setChapters(chaptersList)
     return n
 end
 
@@ -123,7 +129,7 @@ end
 --- @return string @of chapter
 local function getPassage(chapterURL)
     local d = GETDocument(baseURL .. "/" .. chapterURL)
-    return table.concat(map(d:selectFirst("div.post-content"):select("p." + settings.lang), function(v)
+    return table.concat(map(d:selectFirst("div.post-content"):select("p." ..la[settings.lang]), function(v)
         v:text()
     end), "\n")
 end

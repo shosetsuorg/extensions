@@ -1,4 +1,11 @@
 {
+  "MTLNovel": {
+    "imageURL": "https://www.mtlnovel.com/wp-content/themes/mtlnovel/images/logo32.png",
+    "id": 573,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "c1bc5a12967c18abd10fac321303756"
+  },
   "comments": [
     "This is a file downloaded from the repo",
     "Each entry is it's own formatter",
@@ -10,8 +17,7 @@
       "id": -1917,
       "version": "1.0.0",
       "md5": "magic numbers from md5sum"
-    }
-    }
+    }}
   ],
   "NovelFull": {
     "imageURL": "",
@@ -117,13 +123,13 @@
     "id": 510,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "4373869215826a80b7f2c7b7621f77a"
+    "md5": "87d1a3e5b49916ef74fccc7a0a8f163"
   },
   "NovelTrench": {
     "imageURL": "https://noveltrench.com/wp-content/uploads/2019/08/transparent1.png",
     "id": 81,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "67916be020bb18e01e3abfc4249c8267"
+    "md5": "f25effbb2c6c3377b924a02fe5c3b05"
   }
 }
