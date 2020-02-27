@@ -3,7 +3,8 @@
 local baseURL = "https://www.mtlnovel.com"
 local settings = {
     orderr = 0,
-    sta = 0
+    sta = 0,
+    lang = 0
 }
 
 local function setSettings(setting)
@@ -11,10 +12,9 @@ local function setSettings(setting)
 end
 
 local ob = { [0] = "date", [1] = "name", [2] = "rating", [3] = "view" }
-
 local o = { [0] = "desc", [1] = "asc" }
-
 local s = { [0] = "all", [1] = "completed", [2] = "ongoing" }
+local la = { [0] = "en", [1] = "cn" }
 
 ---
 ---@param page int
@@ -26,7 +26,15 @@ local function searchList(page, orderBy, order, status)
     orderBy = ob[orderBy]
     order = o[order]
     status = s[status]
-    local d = GET(baseURL .. "/novel-list/?orderby=" .. orderBy .. "&order=" .. order .. "&status=" .. status .. "&pg=" .. page)
+    local d = GETDocument(baseURL .. "/novel-list/?orderby=" .. orderBy .. "&order=" .. order .. "&status=" .. status .. "&pg=" .. page)
+    return map(d:select("div.box.wide"), function(v)
+        local lis = Novel()
+        lis:setImageURL(v:selectFirst("amp-img.list-img"):selectFirst("amp-img.list-img"):attr("src"))
+        local title = v:selectFirst("a.list-title")
+        lis:setLink(title:attr("href"):match(baseURL .. "/(.+)/"))
+        lis:setTitle(title:attr("aria-label"))
+        return lis
+    end)
 end
 
 --- @return Novel[]
@@ -65,10 +73,11 @@ end
 --- @return NovelInfo
 local function parseNovel(novelURL)
     print(novelURL)
-    local d = GETDocument(baseURL .. "/" .. novelURL):selectFirst("article.post")
+    local url = baseURL .. "/" .. novelURL
+    local d = GETDocument(url):selectFirst("article.post")
     local n = NovelInfo()
     n:setTitle(d:selectFirst("h1.entry-title"):text())
-    n:setImageURL(d:selectFirst("img.i-amphtml-fill-content.i-amphtml-replaced-content"):attr("src"))
+    n:setImageURL(d:selectFirst("amp-img.main-tmb"):selectFirst("amp-img.main-tmb"):attr("src"))
     n:setDescription(table.concat(map(d:selectFirst("div.desc"):select("p"), function(v)
         return v:text()
     end)))
@@ -78,7 +87,6 @@ local function parseNovel(novelURL)
     titles[1] = getDetail(details:get(0))
     titles[2] = getDetail(details:get(1))
     n:setAlternativeTitles(titles)
-
     local sta = getDetailE(details:get(2)):selectFirst("a"):text()
     n:setStatus(NovelStatus(sta == "Completed" and 1 or sta == "Ongoing" and 0 or 3))
     n:setAuthors({ getDetail(details:get(3)) })
@@ -91,7 +99,17 @@ local function parseNovel(novelURL)
         return v:text()
     end))
 
-
+    d = GETDocument(url .. "/chapter-list")
+    local chapters = d:selectFirst("div.ch-list"):select("a")
+    local count = chapters:size() - 1
+    n:setChapters(AsList(map(chapters, function(v)
+        local c = NovelChapter()
+        c:setTitle(v:text():gsub("<strong>", ""):gsub("</strong>", " "))
+        c:setLink(v:attr("href"):match(baseURL .. "/(.+)/"))
+        c:setOrder(count)
+        count = count - 1
+        return c
+    end)):reverse())
     return n
 end
 
@@ -99,6 +117,15 @@ end
 --- @return Novel[]
 local function search(data)
     return {}
+end
+
+--- @param chapterURL string @url of the chapter
+--- @return string @of chapter
+local function getPassage(chapterURL)
+    local d = GETDocument(baseURL .. "/" .. chapterURL)
+    return table.concat(map(d:selectFirst("div.post-content"):select("p." + settings.lang), function(v)
+        v:text()
+    end), "\n")
 end
 
 return {
