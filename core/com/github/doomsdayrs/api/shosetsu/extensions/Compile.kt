@@ -69,8 +69,8 @@ object Compile {
         val keys = formatters.keys()
 
         keys.forEach {
-            if (it != "comments" && it != "libraries") {
-                println("\n============ $it ============\n")
+            if (it != "libraries") {
+                println("\n============ $it ============")
                 val form = formatters.getJSONObject(it)
                 println("Before:\t$form")
                 val content = getContent(File("src/${form.getString("lang")}/$it.lua"))

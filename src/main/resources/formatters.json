@@ -6,19 +6,6 @@
     "version": "1.0.0",
     "md5": "c1bc5a12967c18abd10fac321303756"
   },
-  "comments": [
-    "This is a file downloaded from the repo",
-    "Each entry is it's own formatter",
-    "Key is the name of the file, ID has to be unique, md5 is to confirm legitimacy of file",
-    "If the md5 of the file on the phone is different then what this says, the application will refuse to run the MD5",
-    "The following is an example",
-    {"example": {
-      "imageURL": "",
-      "id": -1917,
-      "version": "1.0.0",
-      "md5": "magic numbers from md5sum"
-    }}
-  ],
   "NovelFull": {
     "imageURL": "",
     "id": 1,
@@ -68,6 +55,13 @@
     "lang": "en",
     "version": "1.0.0",
     "md5": "6e3d57a656c9f2f7db78209438f25b14"
+  },
+  "CreativeNovels": {
+    "imageURL": "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
+    "id": 911,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "25eed8f1c847803de14f277ceee33bc7"
   },
   "ReadNovelForLife": {
     "imageURL": "https://readnovelforlife.com/wp-content/uploads/2019/12/Logo-1-e1570608260730.png",
