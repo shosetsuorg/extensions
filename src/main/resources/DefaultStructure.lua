@@ -1,43 +1,19 @@
--- {"id":-1,"version":"9.9.9","author":"","repo":""}
+-- {"id":-1,"version":"1.0.0","author":"","repo":""}
 
 local baseURL = "TODO"
 local settings = {}
 
-local function setSettings(setting)
-    settings = setting
-end
+--- @param chapterURL string
+--- @return string
+local function getPassage(chapterURL) return "" end
 
---- @return Novel[]
-local function someFunction()
-    return {}
-end
-
---- @param inc int @page of said
---- @return Novel[]
-local function someFunctionInc(inc)
-    return {}
-end
-
---- @param chapterURL string @url of the chapter
---- @return string @of chapter
-local function getPassage(chapterURL)
-    -- TODO
-    return ""
-end
-
---- @param novelURL string @URL of novel
+--- @param novelURL string
 --- @return NovelInfo
-local function parseNovel(novelURL)
-    -- TODO
-    return NovelInfo()
-end
+local function parseNovel(novelURL) return NovelInfo() end
 
---- @param data table @Table of values. Always has "query"
+--- @param data table @Table of search values (according to filters). Contains a "query" string if searching.
 --- @return Novel[]
-local function search(data)
-    -- TODO
-    return {}
-end
+local function search(data) return {} end
 
 return {
     id = -1,
@@ -46,22 +22,16 @@ return {
     hasCloudFlare = false,
     hasSearch = true,
     listings = {
-        Listing("Of something", false, someFunction),
-        Listing("Of something that increments", true, someFunctionInc)
+        Listing("Something", false, function() return {} end),
+        Listing("Something (with pages!)", true, function(idx) return {} end)
     },
 
-    -- Filters / Settings the app can use
-    filters = {
-        "We will define someday"
-    },
-    settings = {
-        "Settings that can be implemented / changed"
-    },
+    filters = {},
+    settings = {},
 
-
-    -- Default functions that had to be set
+    -- Default functions that have to be set
     getPassage = getPassage,
     parseNovel = parseNovel,
     search = search,
-    setSettings = setSettings
+    setSettings = function(setting) settings = setting end
 }
