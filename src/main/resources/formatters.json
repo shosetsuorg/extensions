@@ -63,6 +63,13 @@
     "version": "1.0.0",
     "md5": "c23bbc9ec044563313c46a37de9aa7f0"
   },
+  "VolareNovels": {
+    "imageURL": "",
+    "id": 1274,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "2434b23b5630f311a7cef1724771489"
+  },
   "ReadNovelForLife": {
     "imageURL": "https://readnovelforlife.com/wp-content/uploads/2019/12/Logo-1-e1570608260730.png",
     "id": 394,
@@ -110,7 +117,7 @@
     "id": 1273,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "3666271831503f9afb1bb0fafe8a34dd"
+    "md5": "611bb6351e7f32d215213774472792"
   },
   "NovelOnlineFree": {
     "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
