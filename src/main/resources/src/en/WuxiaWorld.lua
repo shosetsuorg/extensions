@@ -41,7 +41,7 @@ return {
     baseURL = base,
     imageURL = "https://www.wuxiaworld.com/apple-touch-icon.png",
     hasCloudFlare = false,
-    hasSearch = false,
+    hasSearch = true,
     listings = {
         Listing("All Novels", false, function()
             getNovels(); return novels
@@ -75,9 +75,9 @@ return {
     end,
     search = function(data)
         getNovels()
-        local q = data.query
+        local q = data.query:lower()
         return filter(AsList(novels), function(v)
-            local i = v:getTitle():find(q)
+            local i = v:getTitle():lower():find(q)
             return i ~= nil
         end)
     end,
