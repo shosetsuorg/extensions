@@ -45,7 +45,7 @@ local function parseNovel(url, lc, report)
     info:setTitle(infobar:children():get(1):text())
     info:setGenres({ infobar:selectFirst(".genre_novel"):text() })
     info:setAuthors({ infobar:selectFirst(".x-text-headline + div a"):text() })
-    info:setStatus(statuses[infobar:selectFirst(".novel_status"):text()] or 3)
+    info:setStatus(NovelStatus(statuses[infobar:selectFirst(".novel_status"):text()] or 3))
     info:setTags(map(doc:select(".novel_tag_inner"), function(v) return v:text() end))
 
     if lc then
@@ -84,15 +84,6 @@ local function parseNovel(url, lc, report)
     end
 
     return info
-end
-
----@param data table
----@param report fun(status: string): void
-local function search(data, report)
-    -- Their search doesn't give the names, only the covers.
-    -- If anyone finds a workaround, please tell me.
-    report("Search is unavailable for this source.")
-    return {}
 end
 
 return {
@@ -143,6 +134,6 @@ return {
 
     getPassage = getPassage,
     parseNovel = parseNovel,
-    search = search,
+    search = function() end,
     setSettings = setSettings
 }

@@ -7,6 +7,8 @@ local settings = {
     lang = 0
 }
 
+---@type fun(table, string): string
+local qs = Require("url").querystring
 local function setSettings(setting) settings = setting end
 local function text(v) return v:text() end
 
@@ -46,7 +48,7 @@ local function parseNovel(novelURL)
     local chaptersList = AsList(map(chapters, function(v)
         local c = NovelChapter()
         c:setTitle(v:text():gsub("<strong>", ""):gsub("</strong>", " "))
-        c:setLink(v:attr("href"):match(baseURL.."/(.+)$"))
+        c:setLink(v:attr("href"):match(baseURL.."/(.+)/?$"))
         c:setOrder(count)
         count = count - 1
         return c
@@ -86,7 +88,7 @@ return {
     id = 573,
     name = "MTLNovel",
     baseURL = baseURL,
-    imageURL = (baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png"),
+    imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
     hasSearch = false,
     listings = {
         Listing("Date", true, makeListing("date")),
