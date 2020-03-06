@@ -1,3 +1,5 @@
+-- {"version":"1.0.0","author":"TechnoJo4"}
+
 return function(id, name, base, contentSel, image)
     local settings
 
