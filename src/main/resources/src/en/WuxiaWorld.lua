@@ -39,7 +39,7 @@ return {
 
     name = "WuxiaWorld",
     baseURL = base,
-    imageURL = "",
+    imageURL = "https://www.wuxiaworld.com/apple-touch-icon.png",
     hasCloudFlare = false,
     hasSearch = false,
     listings = {

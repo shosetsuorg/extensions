@@ -3,8 +3,8 @@
     "imageURL": "https://www.mtlnovel.com/wp-content/themes/mtlnovel/images/logo32.png",
     "id": 573,
     "lang": "en",
-    "version": "1.0.0",
-    "md5": "c1bc5a12967c18abd10fac321303756"
+    "version": "1.0.1",
+    "md5": "3ac769477e3bd7ba1f9edca1d3abe"
   },
   "NovelFull": {
     "imageURL": "",
@@ -61,7 +61,7 @@
     "id": 911,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "25eed8f1c847803de14f277ceee33bc7"
+    "md5": "c23bbc9ec044563313c46a37de9aa7f0"
   },
   "ReadNovelForLife": {
     "imageURL": "https://readnovelforlife.com/wp-content/uploads/2019/12/Logo-1-e1570608260730.png",
@@ -104,6 +104,13 @@
     "lang": "jp",
     "version": "1.2.0",
     "md5": "fa76f4e2d73d33bfcc24e0dcf36d7696"
+  },
+  "WuxiaWorld": {
+    "imageURL": "https://www.wuxiaworld.com/apple-touch-icon.png",
+    "id": 1273,
+    "lang": "en",
+    "version": "1.0.0",
+    "md5": "c09499b4b64ce462b6a789d8ba52b97"
   },
   "NovelOnlineFree": {
     "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
