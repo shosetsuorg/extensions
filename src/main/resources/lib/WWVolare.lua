@@ -1,18 +1,19 @@
--- {"version":"1.0.0","author":"TechnoJo4"}
+-- {"version":"1.0.1","author":"TechnoJo4"}
 
 return function(id, name, base, contentSel, image)
     local settings
 
-    local novels
     local infos = {}
+    local novels = {}
     local api = base.."/api"
     local POST = Require("dkjson").POST
+    local data
 
     local function getNovels()
-        if novels then return end
-        local data = POST(api.."/novels/search", {count=1000})
+        if not data or not data.result then data = POST(api.."/novels/search", {count=1000}) end
         if not data.result then return end
 
+        infos = {}
         novels = {}
         for _, v in pairs(data.items) do
             local novel = Novel()
@@ -73,9 +74,9 @@ return function(id, name, base, contentSel, image)
             end
             return info
         end,
-        search = function(data)
+        search = function(s)
             getNovels()
-            local q = data.query:lower()
+            local q = s.query:lower()
             return filter(AsList(novels), function(v)
                 local i = v:getTitle():lower():find(q)
                 return i ~= nil
