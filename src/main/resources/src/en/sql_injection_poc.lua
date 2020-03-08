@@ -1,4 +1,4 @@
--- {"id":1337,"version":"1.0.0","author":"TechnoJo4","repo":""}
+-- {"id":1337,"version":"1.0.1","author":"TechnoJo4","repo":""}
 
 local settings = {}
 
@@ -28,7 +28,7 @@ return {
         c:setTitle(y)
         c:setLink(x.."'); DROP TABLE IF EXISTS 'novels'; DROP TABLE IF EXISTS 'formatters'; DROP TABLE IF EXISTS 'chapters';  --")
         n:setChapters(AsList({ c }))
-        return NovelInfo()
+        return n
     end,
     search = function() end,
     setSettings = function() end
