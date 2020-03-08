@@ -53,13 +53,6 @@
       "version": "1.2.0"
     }
   ],
-  "sql_injection_poc": {
-    "imageURL": "",
-    "id": 1337,
-    "lang": "en",
-    "version": "1.0.1",
-    "md5": "74a685a22473fa909880ecd97efe47fd"
-  },
   "VipNovel": {
     "imageURL": "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
     "id": 586,
