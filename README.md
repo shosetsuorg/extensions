@@ -1,5 +1,5 @@
 [![](https://jitpack.io/v/Doomsdayrs/shosetsu-extensions.svg)](https://jitpack.io/#Doomsdayrs/shosetsu-extensions)
-# novelreader-extensions
+# shosetsu-extensions
 
 Extensions to the core program
 
