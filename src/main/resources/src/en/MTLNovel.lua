@@ -40,19 +40,21 @@ local function parseNovel(novelURL)
 
     d = GETDocument(url .. "/chapter-list/")
 
-    local chapters = d:selectFirst("div.ch-list"):select("a")
-    local count = chapters:size()
-    local chaptersList = AsList(map(chapters, function(v)
-        local c = NovelChapter()
-        c:setTitle(v:text():gsub("<strong>", ""):gsub("</strong>", " "))
-        c:setLink(v:attr("href"):match(baseURL.."/(.+)/?$"))
-        c:setOrder(count)
-        count = count - 1
-        return c
-    end))
-
-    Reverse(chaptersList)
-    n:setChapters(chaptersList)
+    local chapterBox = d:selectFirst("div.ch-list")
+    if chapterBox ~= nil then
+        local chapters = chapterBox:select("a")
+        local count = chapters:size()
+        local chaptersList = AsList(map(chapters, function(v)
+            local c = NovelChapter()
+            c:setTitle(v:text():gsub("<strong>", ""):gsub("</strong>", " "))
+            c:setLink(v:attr("href"):match(baseURL .. "/(.+)/?$"))
+            c:setOrder(count)
+            count = count - 1
+            return c
+        end))
+        Reverse(chaptersList)
+        n:setChapters(chaptersList)
+    end
     return n
 end
 
