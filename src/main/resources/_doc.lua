@@ -601,7 +601,7 @@ do
     do
         ---@param name string
         ---@param increments boolean
-        ---@param filters
+        ---@param filters table
         ---@param func fun(): Novel[] | fun(inc: int): Novel[]
         ---@return Listing
         function Listing(name, increments, filters, func)

@@ -3,13 +3,10 @@
 local baseURL = "https://www.mtlnovel.com"
 local settings = {
     [1] = 0,
-    [2] = 0,
-    [3] = 0,
 }
 
 ---@type fun(table, string): string
 local qs = Require("url").querystring
-local function setSettings(setting) settings = setting end
 local function text(v) return v:text() end
 
 ---@param element Element
@@ -63,16 +60,16 @@ end
 --- @return string @of chapter
 local function getPassage(chapterURL)
     local d = GETDocument(baseURL .. "/" .. chapterURL)
-    return table.concat(map(d:selectFirst("div.post-content"):select(({[0]="p.en", "p.cn"})[settings.lang]), text), "\n")
+    return table.concat(map(d:selectFirst("div.post-content"):select(({ [0] = "p.en", "p.cn" })[settings[1]]), text), "\n")
 end
 
 local function makeListing(listing)
-    return function(page)
-        local d = GETDocument(baseURL.."/novel-list/"..
-                "?orderby="..listing..
-                "&order="..({[0]="desc", "asc" })[settings.order]..
-                "&status="..({[0]="all", "completed", "ongoing"})[settings.status]..
-                "&pg="..page)
+    return function(page, data)
+        local d = GETDocument(baseURL .. "/novel-list/" ..
+                "?orderby=" .. listing ..
+                "&order=" .. ({ [0] = "desc", "asc" })[data[2]] ..
+                "&status=" .. ({ [0] = "all", "completed", "ongoing" })[data[3]] ..
+                "&pg=" .. page)
         return map(d:select("div.box.wide"), function(v)
             local lis = Novel()
             lis:setImageURL(v:selectFirst("amp-img.list-img"):selectFirst("amp-img.list-img"):attr("src"))
@@ -84,6 +81,12 @@ local function makeListing(listing)
     end
 end
 
+---@class table
+local filters = {
+    DropdownFilter(2, "Order", { "Descending", "Ascending" }),
+    DropdownFilter(3, "Status", { "All", "Completed", "Ongoing" })
+}
+
 return {
     id = 573,
     name = "MTLNovel",
@@ -91,18 +94,19 @@ return {
     imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
     hasSearch = false,
     listings = {
-        Listing("Date", true, {
-            DropdownFilter(2, "Order", { "Descending", "Ascending" }),
-            DropdownFilter(3, "Status", { "All", "Completed", "Ongoing" })
-        }, makeListing("date")),
-        Listing("Name", true, {}, makeListing("name")),
-        Listing("Rating", true, {}, makeListing("rating")),
-        Listing("Views", true, {}, makeListing("view"))
+        Listing("Date", true, filters, makeListing("date")),
+        Listing("Name", true, filters, makeListing("name")),
+        Listing("Rating", true, filters, makeListing("rating")),
+        Listing("Views", true, filters, makeListing("view"))
     },
 
     getPassage = getPassage,
     parseNovel = parseNovel,
-    search = function() end,
-    settings = settings,
-    setSettings = setSettings
+    search = function()
+    end,
+    settings = {
+        DropdownFilter(1, "Language", { "English", "Chinese" })
+    }, updateSetting = function(id, value)
+        settings[id] = value
+    end
 }
