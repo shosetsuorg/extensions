@@ -2,9 +2,9 @@
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = {
-    order = 0,
-    status = 0,
-    lang = 0
+    [1] = 0,
+    [2] = 0,
+    [3] = 0,
 }
 
 ---@type fun(table, string): string
@@ -91,10 +91,13 @@ return {
     imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
     hasSearch = false,
     listings = {
-        Listing("Date", true, makeListing("date")),
-        Listing("Name", true, makeListing("name")),
-        Listing("Rating", true, makeListing("rating")),
-        Listing("Views", true, makeListing("view"))
+        Listing("Date", true, {
+            DropdownFilter(2, "Order", { "Descending", "Ascending" }),
+            DropdownFilter(3, "Status", { "All", "Completed", "Ongoing" })
+        }, makeListing("date")),
+        Listing("Name", true, {}, makeListing("name")),
+        Listing("Rating", true, {}, makeListing("rating")),
+        Listing("Views", true, {}, makeListing("view"))
     },
 
     getPassage = getPassage,

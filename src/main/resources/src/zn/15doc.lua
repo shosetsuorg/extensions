@@ -88,12 +88,6 @@ local function parseNovel(novelURL)
     return n
 end
 
---- Does not have
---- @return Novel[]
-local function search(data)
-    return {}
-end
-
 return {
     id = 163,
     name = "15doc",
@@ -101,14 +95,15 @@ return {
     imageURL = (baseURL .. "/themes/yssm/logo.png"),
     hasSearch = false,
     listings = {
-        Listing("最近更新", false, getByLastUpdate),
-        Listing("最新入库", false, getByPostDate),
-        Listing("总排行榜", false, getByAllVisit)
+        Listing("最近更新", false, {}, getByLastUpdate),
+        Listing("最新入库", false, {}, getByPostDate),
+        Listing("总排行榜", false, {}, getByAllVisit)
     },
 
     -- Default functions that had to be set
     getPassage = getPassage,
     parseNovel = parseNovel,
-    search = search,
+    search = function()
+    end,
     setSettings = setSettings
 }

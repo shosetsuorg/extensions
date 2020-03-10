@@ -72,7 +72,7 @@ end
 --- @param data table @Table of values. Always has "query"
 ---@return Array @Novel array list
 local function search(data)
-    document = GETDocument(baseURL .. "/s.php?ie=utf-8&q=" .. data.query:gsub("+", "%2B"):gsub(" ", "+"))
+    document = GETDocument(baseURL .. "/s.php?ie=utf-8&q=" .. data[QUERY]:gsub("+", "%2B"):gsub(" ", "+"))
     return map(document:select("div.bookbox"), function(v)
         local novel = Novel()
         local data = document:selectFirst("h4.bookname"):selectFirst("a")
@@ -91,7 +91,7 @@ return {
     hasCloudFlare = false,
     hasSearch = true,
     listings = {
-        Listing("Latest", false, latest)
+        Listing("Latest", false, {}, latest)
     },
     -- Default functions that had to be set
     getPassage = getPassage,

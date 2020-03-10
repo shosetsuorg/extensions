@@ -79,7 +79,7 @@ end
 
 ---@return Array @Novel array list
 local function search(data)
-    return map(GETDocument(baseURL .. "/search/" .. data.query:gsub(" ", "%%20")):select("ul.list-film"), function(v)
+    return map(GETDocument(baseURL .. "/search/" .. data[QUERY]:gsub(" ", "%%20")):select("ul.list-film"), function(v)
         local novel = Novel()
         local data = v:selectFirst("a")
         novel:setLink(baseURL .. data:attr("href"))
@@ -97,7 +97,7 @@ return {
     hasCloudFlare = false,
     hasSearch = true,
     listings = {
-        Listing("Latest", true, parseLatest)
+        Listing("Latest", true, {}, parseLatest)
     },
 
     getPassage = getPassage,

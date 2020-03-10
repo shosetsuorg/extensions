@@ -25,7 +25,7 @@ local defaults = {
 
 function defaults:search(data)
     -- search gives covers but they're in some weird aspect ratio
-    local doc = GETDocument(qs({ keyword = data.query }, self.baseURL.."/search"))
+    local doc = GETDocument(qs({ keyword = data[QUERY] }, self.baseURL .. "/search"))
     local pager = doc:selectFirst(".pagination.pagination-sm")
     local pages = {
         map(doc:select(self.searchTitleSel.." a"), function(v)
@@ -45,7 +45,7 @@ function defaults:search(data)
         last = tonumber(last:attr("data-page")) + 1
 
         for i=2, last do
-            pages[i] = map(GETDocument(qs({ s = data.query, page = i }, self.baseURL.."/search")):select(".novel-title a"),
+            pages[i] = map(GETDocument(qs({ s = data[QUERY], page = i }, self.baseURL .. "/search")):select(".novel-title a"),
                     function(v)
                         local novel = Novel()
                         novel:setLink(v:attr("href"))
@@ -105,20 +105,20 @@ return function(baseURL, _self)
     end
 
     _self["listings"] = {
-        Listing("Hot", false, function()
+        Listing("Hot", false, {}, function()
             return map(GETDocument(_self.ajax_base .. _self.ajax_hot):select("div.item a"), function(v)
                 local novel = Novel()
                 novel:setImageURL(v:selectFirst("img"):attr("src"))
                 novel:setTitle(v:attr("title"))
-                novel:setLink(baseURL..v:attr("href"))
+                novel:setLink(baseURL .. v:attr("href"))
                 return novel
             end)
         end),
         Listing("Latest", false, function()
-            return map(GETDocument(_self.ajax_base .. _self.ajax_latest):select("div.row .col-title a"), function(v)
+            return map(GETDocument(_self.ajax_base .. _self.ajax_latest):select("div.row .col-title a"), {}, function(v)
                 local novel = Novel()
                 novel:setTitle(v:text())
-                novel:setLink(baseURL..v:attr("href"))
+                novel:setLink(baseURL .. v:attr("href"))
                 return novel
             end)
         end)

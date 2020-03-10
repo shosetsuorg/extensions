@@ -276,13 +276,31 @@ do
     end
 end
 
--- everything else
+-- Filter things
+do
+    ---@class TextFilter
+    local TextFilter = {}
+
+    ---@class SwitchFilter
+    local SwitchFilter = {}
+
+    ---@class RadioGroupFilter
+    local RadioGroupFilter = {}
+
+    ---@class DropdownFilter
+    local DropdownFilter = {}
+end
+
+-- Formatter things
+do
+    ---@class Listing
+    local Listing = {}
+end
+
+-- Novel Stuff
 do
     ---@class NovelStatus
     local NovelStatus = {}
-
-    ---@class Listing
-    local Listing = {}
 
     ---@class Novel @Novel.Listing
     local Novel = {}
@@ -410,6 +428,9 @@ do
     function Require(name)
         return
     end
+
+    ---@class int @Inserted into lua formatter on run, DO NOT NAME A VARIABLE AS THIS. Used to get search query
+    local QUERY = 0
 
     -- EXTENSION METHODS
     do
@@ -580,9 +601,10 @@ do
     do
         ---@param name string
         ---@param increments boolean
+        ---@param filters
         ---@param func fun(): Novel[] | fun(inc: int): Novel[]
         ---@return Listing
-        function Listing(name, increments, func)
+        function Listing(name, increments, filters, func)
             return
         end
 
@@ -604,6 +626,36 @@ do
         ---@param type int
         ---@return NovelStatus
         function NovelStatus(type)
+            return
+        end
+
+        ---@param id int
+        ---@param name string
+        ---return TextFilter
+        function TextFilter(id, name)
+            return
+        end
+
+        ---@param id int
+        ---@param name string
+        ---return TextFilter
+        function SwitchFilter(id, name)
+            return
+        end
+
+        ---@param id int
+        ---@param name string
+        ---@param choices string[] | Array
+        ---return TextFilter
+        function RadioGroupFilter(id, name, choices)
+            return
+        end
+
+        ---@param id int
+        ---@param name string
+        ---@param choices string[] | Array
+        ---return TextFilter
+        function DropdownFilter(id, name, choices)
             return
         end
     end

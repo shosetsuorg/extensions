@@ -72,7 +72,7 @@ end
 --- @param document Document
 --- @return ArrayList
 local function search(data)
-    returnmap(GETDocument(baseURL .. "/search.php?&word=" .. data.query:gsub("%+", "%2"):gsub(" ", "\\+")):select("div.searchkekka_box"), function(v)
+    returnmap(GETDocument(baseURL .. "/search.php?&word=" .. data[QUERY]:gsub("%+", "%2"):gsub(" ", "\\+")):select("div.searchkekka_box"), function(v)
         local novel = Novel()
         local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
         novel:setLink(e:attr("href"))
@@ -89,7 +89,7 @@ return {
     hasCloudFlare = false,
     hasSearch = true,
     listings = {
-        Listing("Latest", true, parseLatest)
+        Listing("Latest", true, {}, parseLatest)
     },
 
     -- Default functions that had to be set

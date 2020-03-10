@@ -17,7 +17,7 @@ function defaults:latest(page)
 end
 
 function defaults:search(data)
-    local query = data.query
+    local query = data[QUERY]
     return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelSearchPath .. "/" .. query:gsub(" ", "_")))
 end
 
@@ -113,7 +113,7 @@ return function(baseURL, _self)
     end })
     _self["___baseURL"] = baseURL
     _self["listings"] = {
-        Listing("Latest", true, _self.latest)
+        Listing("Latest", true, {}, _self.latest)
     }
     return _self
 end

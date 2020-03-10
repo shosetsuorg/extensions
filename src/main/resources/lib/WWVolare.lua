@@ -44,8 +44,9 @@ return function(id, name, base, contentSel, image)
         hasCloudFlare = false,
         hasSearch = true,
         listings = {
-            Listing("All Novels", false, function()
-                getNovels(); return novels
+            Listing("All Novels", false, {}, function()
+                getNovels();
+                return novels
             end)
         },
 
@@ -76,7 +77,7 @@ return function(id, name, base, contentSel, image)
         end,
         search = function(s)
             getNovels()
-            local q = s.query:lower()
+            local q = s[QUERY]:lower()
             return filter(AsList(novels), function(v)
                 local i = v:getTitle():lower():find(q)
                 return i ~= nil
