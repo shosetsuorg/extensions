@@ -95,20 +95,22 @@ return {
     baseURL = baseURL,
     imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
     hasSearch = false,
+    filters = {},
+
     listings = {
         Listing("Date", true, filters, makeListing("date")),
         Listing("Name", true, filters, makeListing("name")),
         Listing("Rating", true, filters, makeListing("rating")),
         Listing("Views", true, filters, makeListing("view"))
     },
-
     getPassage = getPassage,
     parseNovel = parseNovel,
     search = function()
     end,
     settings = {
         DropdownFilter(1, "Language", { "English", "Chinese" })
-    }, updateSetting = function(id, value)
+    },
+    updateSetting = function(id, value)
         settings[id] = value
     end
 }
