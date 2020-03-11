@@ -1,4 +1,4 @@
--- {"id":573,"version":"1.0.1","author":"Doomsdayrs","repo":""}
+-- {"id":573,"version":"1.0.0","author":"Doomsdayrs","repo":""}
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = {
@@ -7,15 +7,21 @@ local settings = {
 
 ---@type fun(table, string): string
 local qs = Require("url").querystring
-local function text(v) return v:text() end
+local function text(v)
+    return v:text()
+end
 
 ---@param element Element
 ---@return Elements
-local function getDetailE(element) return element:select("td"):get(2) end
+local function getDetailE(element)
+    return element:select("td"):get(2)
+end
 
 ---@param element Element
 ---@return string
-local function getDetail(element) return text(getDetailE(element)) end
+local function getDetail(element)
+    return text(getDetailE(element))
+end
 
 --- @param novelURL string @URL of novel
 --- @return NovelInfo
@@ -69,8 +75,8 @@ local function makeListing(listing)
     return function(page, data)
         local d = GETDocument(baseURL .. "/novel-list/" ..
                 "?orderby=" .. listing ..
-                "&order=" .. ({ [0] = "desc", "asc" })[data[2]] ..
-                "&status=" .. ({ [0] = "all", "completed", "ongoing" })[data[3]] ..
+                "&order=" .. ({ [0] = "desc", [1] = "asc" })[data[2]] ..
+                "&status=" .. ({ [0] = "all", [1] = "completed", [3] = "ongoing" })[data[3]] ..
                 "&pg=" .. page)
         return map(d:select("div.box.wide"), function(v)
             local lis = Novel()
