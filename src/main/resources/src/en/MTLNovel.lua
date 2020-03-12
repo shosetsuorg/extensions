@@ -69,12 +69,12 @@ local function getPassage(chapterURL)
     return table.concat(map(d:selectFirst("div.post-content"):select(({ [0] = "p.en", "p.cn" })[settings[1]]), text), "\n")
 end
 
-local function makeListing(listing)
+local function makeListing(listing, int)
     return function(page, data)
         local d = GETDocument(baseURL .. "/novel-list/" ..
                 "?orderby=" .. listing ..
-                "&order=" .. ({ [0] = "desc", [1] = "asc" })[data[2]] ..
-                "&status=" .. ({ [0] = "all", [1] = "completed", [3] = "ongoing" })[data[3]] ..
+                "&order=" .. ({ [0] = "desc", [1] = "asc" })[data[int + 1]] ..
+                "&status=" .. ({ [0] = "all", [1] = "completed", [3] = "ongoing" })[data[int + 2]] ..
                 "&pg=" .. page)
         return map(d:select("div.box.wide"), function(v)
             local lis = Novel()
@@ -94,6 +94,11 @@ local function makeListingFilter(int)
     }
 end
 
+---@param name string
+local function listing(name, id)
+    return Listing(name, true, makeListingFilter(id), makeListing(name:lower(), id))
+end
+
 return {
     id = 573,
     name = "MTLNovel",
@@ -102,18 +107,16 @@ return {
     hasSearch = false,
     filters = {},
     listings = {
-        Listing("Date", true, makeListingFilter(2), makeListing("date")),
-        Listing("Name", true, makeListingFilter(4), makeListing("name")),
-        Listing("Rating", true, makeListingFilter(6), makeListing("rating")),
-        Listing("Views", true, makeListingFilter(8), makeListing("view"))
+        listing("Date", 2),
+        listing("Name", 4),
+        listing("Rating", 6),
+        listing("Views", 8)
     },
     getPassage = getPassage,
     parseNovel = parseNovel,
     search = function()
     end,
-    settings = {
-        DropdownFilter(101, "Language", { "English", "Chinese" })
-    },
+    settings = { DropdownFilter(101, "Language", { "English", "Chinese" }) },
     updateSetting = function(id, value)
         settings[id] = value
     end
