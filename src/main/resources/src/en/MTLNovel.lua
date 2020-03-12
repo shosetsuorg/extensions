@@ -87,11 +87,12 @@ local function makeListing(listing)
     end
 end
 
----@class table
-local filters = {
-    DropdownFilter(2, "Order", { "Descending", "Ascending" }),
-    DropdownFilter(3, "Status", { "All", "Completed", "Ongoing" })
-}
+local function makeListingFilter(int)
+    return {
+        DropdownFilter(int + 1, "Order", { "Descending", "Ascending" }),
+        DropdownFilter(int + 2, "Status", { "All", "Completed", "Ongoing" })
+    }
+end
 
 return {
     id = 573,
@@ -100,19 +101,18 @@ return {
     imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
     hasSearch = false,
     filters = {},
-
     listings = {
-        Listing("Date", true, filters, makeListing("date")),
-        Listing("Name", true, filters, makeListing("name")),
-        Listing("Rating", true, filters, makeListing("rating")),
-        Listing("Views", true, filters, makeListing("view"))
+        Listing("Date", true, makeListingFilter(2), makeListing("date")),
+        Listing("Name", true, makeListingFilter(4), makeListing("name")),
+        Listing("Rating", true, makeListingFilter(6), makeListing("rating")),
+        Listing("Views", true, makeListingFilter(8), makeListing("view"))
     },
     getPassage = getPassage,
     parseNovel = parseNovel,
     search = function()
     end,
     settings = {
-        DropdownFilter(1, "Language", { "English", "Chinese" })
+        DropdownFilter(101, "Language", { "English", "Chinese" })
     },
     updateSetting = function(id, value)
         settings[id] = value
