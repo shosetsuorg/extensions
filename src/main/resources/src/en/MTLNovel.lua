@@ -1,9 +1,7 @@
 -- {"id":573,"version":"1.0.0","author":"Doomsdayrs","repo":""}
 
 local baseURL = "https://www.mtlnovel.com"
-local settings = {
-    [1] = 0,
-}
+local settings = { 0 }
 
 ---@type fun(table, string): string
 local qs = Require("url").querystring
