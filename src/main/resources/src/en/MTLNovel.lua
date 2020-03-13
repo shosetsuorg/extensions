@@ -74,7 +74,7 @@ local function makeListing(listing, int)
         local d = GETDocument(baseURL .. "/novel-list/" ..
                 "?orderby=" .. listing ..
                 "&order=" .. ({ [0] = "desc", [1] = "asc" })[data[int + 1]] ..
-                "&status=" .. ({ [0] = "all", [1] = "completed", [3] = "ongoing" })[data[int + 2]] ..
+                "&status=" .. ({ [0] = "all", [1] = "completed", [2] = "ongoing" })[data[int + 2]] ..
                 "&pg=" .. page)
         return map(d:select("div.box.wide"), function(v)
             local lis = Novel()
