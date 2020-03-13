@@ -98,14 +98,24 @@ function defaults:parse(doc, search)
     end)
 end
 
+---@param int int
+local function makeFilters(int)
+    return {
+        TextFilter(int + 1, "Author"),
+        TextFilter(int + 2, "Artist"),
+        TextFilter(int + 3, "Year of Release")
+    }
+end
+
 return function(baseURL, _self)
     _self = setmetatable(_self or {}, { __index = function(_, k)
         local d = defaults[k]
         return (type(d) == "function" and wrap(_self, d) or d)
     end })
+    _self["filters"] = makeFilters(1)
     _self["___baseURL"] = baseURL
     _self["listings"] = {
-        Listing("Latest", true, {}, _self.latest)
+        Listing("Latest", true, filters, _self.latest)
     }
     return _self
 end
