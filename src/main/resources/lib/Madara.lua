@@ -5,6 +5,8 @@ local text = function(v)
     return v:text()
 end
 
+local settings = {}
+
 local defaults = {
     latestNovelSel = "div.col-12.col-md-6",
     searchNovelSel = "div.c-tabs-item__content",
@@ -16,7 +18,7 @@ local defaults = {
 }
 
 ---@param page int @increment
-function defaults:latest(page)
+function defaults:latest(page, data)
     return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
 end
 
@@ -98,24 +100,27 @@ function defaults:parse(doc, search)
     end)
 end
 
----@param int int
-local function makeFilters(int)
-    return {
-        TextFilter(int + 1, "Author"),
-        TextFilter(int + 2, "Artist"),
-        TextFilter(int + 3, "Year of Release")
-    }
-end
-
 return function(baseURL, _self)
     _self = setmetatable(_self or {}, { __index = function(_, k)
         local d = defaults[k]
         return (type(d) == "function" and wrap(_self, d) or d)
     end })
-    _self["filters"] = makeFilters(1)
-    _self["___baseURL"] = baseURL
-    _self["listings"] = {
-        Listing("Latest", true, filters, _self.latest)
+    _self["filters"] = {
+        TextFilter(2, "Author"),
+        TextFilter(3, "Artist"),
+        TextFilter(4, "Year of Release"),
+        FilterGroup(5, "Status", {
+            CheckBoxFilter(6, "Completed"),
+            CheckBoxFilter(7, "Ongoing"),
+            CheckBoxFilter(8, "Canceled"),
+            CheckBoxFilter(9, "On Hold")
+        }),
+        FilterGroup(10, "Genres", _self.genres)
     }
+    _self["___baseURL"] = baseURL
+    _self["listings"] = { Listing("Latest", true, {}, _self.latest) }
+    _self["updateSetting"] = function(id, value)
+        settings[id] = value
+    end
     return _self
 end

@@ -278,6 +278,9 @@ end
 
 -- Filter things
 do
+    ---@class Filter
+    local Filter = {}
+
     ---@class TextFilter
     local TextFilter = {}
 
@@ -602,7 +605,7 @@ do
         ---@param name string
         ---@param increments boolean
         ---@param filters table
-        ---@param func fun(): Novel[] | fun(inc: int): Novel[]
+        ---@param func fun(): Novel[] | fun(inc: int, data: table): Novel[]
         ---@return Listing
         function Listing(name, increments, filters, func)
             return
@@ -638,15 +641,22 @@ do
 
         ---@param id int
         ---@param name string
-        ---return TextFilter
+        ---return SwitchFilter
         function SwitchFilter(id, name)
             return
         end
 
         ---@param id int
         ---@param name string
+        ---return CheckBoxFilter
+        function CheckBoxFilter(id, name)
+            return
+        end
+
+        ---@param id int
+        ---@param name string
         ---@param choices string[] | Array
-        ---return TextFilter
+        ---return RadioGroupFilter
         function RadioGroupFilter(id, name, choices)
             return
         end
@@ -654,8 +664,16 @@ do
         ---@param id int
         ---@param name string
         ---@param choices string[] | Array
-        ---return TextFilter
+        ---return DropdownFilter
         function DropdownFilter(id, name, choices)
+            return
+        end
+
+        ---@param id int
+        ---@param name string
+        ---@param choices Filter[] | Array
+        ---return GroupFilter
+        function FilterGroup(id, name, choices)
             return
         end
     end
