@@ -105,7 +105,7 @@ return function(baseURL, _self)
     end
 
     _self["listings"] = {
-        Listing("Hot", false, {}, function()
+        Listing("Hot", false, function()
             return map(GETDocument(_self.ajax_base .. _self.ajax_hot):select("div.item a"), function(v)
                 local novel = Novel()
                 novel:setImageURL(v:selectFirst("img"):attr("src"))

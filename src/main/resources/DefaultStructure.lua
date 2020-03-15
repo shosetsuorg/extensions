@@ -5,11 +5,15 @@ local settings = {}
 
 --- @param chapterURL string
 --- @return string
-local function getPassage(chapterURL) return "" end
+local function getPassage(chapterURL)
+    return ""
+end
 
 --- @param novelURL string
 --- @return NovelInfo
-local function parseNovel(novelURL) return NovelInfo() end
+local function parseNovel(novelURL)
+    return NovelInfo()
+end
 
 --- @param filters table @of applied filter values [QUERY] is the search query, may be empty
 --- @param reporter fun(v : string | any)
@@ -31,10 +35,10 @@ return {
 
     -- Must have at least one value
     listings = {
-        Listing("Something", false, {}, function()
+        Listing("Something", false, function()
             return {}
         end),
-        Listing("Something (with pages!)", true, {}, function(idx)
+        Listing("Something (with pages!)", true, function(idx)
             return {}
         end)
     },

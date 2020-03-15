@@ -69,12 +69,12 @@ local function getPassage(chapterURL)
     return table.concat(map(d:selectFirst("div.post-content"):select(({ [0] = "p.en", "p.cn" })[settings[1]]), text), "\n")
 end
 
-local function makeListing(listing, int)
+local function makeListing(listing)
     return function(page, data)
         local d = GETDocument(baseURL .. "/novel-list/" ..
-                "?orderby=" .. listing ..
-                "&order=" .. ({ [0] = "desc", [1] = "asc" })[data[int + 1]] ..
-                "&status=" .. ({ [0] = "all", [1] = "completed", [2] = "ongoing" })[data[int + 2]] ..
+                "?orderby=" .. ({ [0] = "date", [1] = "name", [2] = "rating", [3] = "view" })[data[3]] ..
+                "&order=" .. ({ [0] = "desc", [1] = "asc" })[data[4]] ..
+                "&status=" .. ({ [0] = "all", [1] = "completed", [2] = "ongoing" })[data[5]] ..
                 "&pg=" .. page)
         return map(d:select("div.box.wide"), function(v)
             local lis = Novel()
@@ -87,16 +87,9 @@ local function makeListing(listing, int)
     end
 end
 
-local function makeListingFilter(int)
-    return {
-        DropdownFilter(int + 1, "Order", { "Descending", "Ascending" }),
-        DropdownFilter(int + 2, "Status", { "All", "Completed", "Ongoing" })
-    }
-end
-
 ---@param name string
-local function listing(name, id)
-    return Listing(name, true, makeListingFilter(id), makeListing(name:lower(), id))
+local function listing(name)
+    return Listing(name, true, makeListing(name:lower()))
 end
 
 return {
@@ -105,13 +98,14 @@ return {
     baseURL = baseURL,
     imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
     hasSearch = false,
-    filters = {},
-    listings = {
-        listing("Date", 2),
-        listing("Name", 4),
-        listing("Rating", 6),
-        listing("Views", 8)
+    filters = {
+        FilterGroup(2, "", {
+            DropdownFilter(3, "Order by", { "Date", "Name", "Rating", "Views" }),
+            DropdownFilter(4, "Order", { "Descending", "Ascending" }),
+            DropdownFilter(5, "Status", { "All", "Completed", "Ongoing" })
+        })
     },
+    listings = { listing("default") },
     getPassage = getPassage,
     parseNovel = parseNovel,
     search = function()

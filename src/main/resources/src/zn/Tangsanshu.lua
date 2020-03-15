@@ -91,7 +91,7 @@ return {
     hasCloudFlare = false,
     hasSearch = true,
     listings = {
-        Listing("Latest", false, {}, latest)
+        Listing("Latest", false, latest)
     },
     -- Default functions that had to be set
     getPassage = getPassage,

@@ -44,7 +44,7 @@ return function(id, name, base, contentSel, image)
         hasCloudFlare = false,
         hasSearch = true,
         listings = {
-            Listing("All Novels", false, {}, function()
+            Listing("All Novels", false, function()
                 getNovels();
                 return novels
             end)

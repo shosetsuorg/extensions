@@ -19,6 +19,7 @@ local defaults = {
 
 ---@param page int @increment
 function defaults:latest(page, data)
+
     return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
 end
 
@@ -106,19 +107,20 @@ return function(baseURL, _self)
         return (type(d) == "function" and wrap(_self, d) or d)
     end })
     _self["filters"] = {
-        TextFilter(2, "Author"),
-        TextFilter(3, "Artist"),
-        TextFilter(4, "Year of Release"),
-        FilterGroup(5, "Status", {
-            CheckBoxFilter(6, "Completed"),
-            CheckBoxFilter(7, "Ongoing"),
-            CheckBoxFilter(8, "Canceled"),
-            CheckBoxFilter(9, "On Hold")
+        DropdownFilter(2, "Order by", { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }),
+        TextFilter(3, "Author"),
+        TextFilter(4, "Artist"),
+        TextFilter(5, "Year of Release"),
+        FilterGroup(6, "Status", {
+            CheckBoxFilter(7, "Completed"),
+            CheckBoxFilter(8, "Ongoing"),
+            CheckBoxFilter(9, "Canceled"),
+            CheckBoxFilter(10, "On Hold")
         }),
-        FilterGroup(10, "Genres", _self.genres)
+        FilterGroup(11, "Genres", _self.genres)
     }
     _self["___baseURL"] = baseURL
-    _self["listings"] = { Listing("Latest", true, {}, _self.latest) }
+    _self["listings"] = { Listing("default", true, _self.latest) }
     _self["updateSetting"] = function(id, value)
         settings[id] = value
     end
