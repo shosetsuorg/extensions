@@ -4,28 +4,28 @@
     "id": 573,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "3ac769477e3bd7ba1f9edca1d3abe"
+    "md5": "ffd580bf2fbf43aba5e652454975f7"
   },
   "NovelFull": {
     "imageURL": "",
     "id": 1,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "8e9af182cdd18458ff2be4966f97ce"
+    "md5": "5f95559b552725914228f3b29126fd1"
   },
   "FastNovel": {
     "imageURL": "https://fastnovel.net/skin/images/logo.png",
     "id": 258,
     "lang": "en",
     "version": "0.1.3",
-    "md5": "dccba441af96d393bc42821937e8be32"
+    "md5": "555a29ef3d934a24f5d9a2921861aad3"
   },
   "247Truyen": {
     "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
     "id": 247,
     "lang": "vi",
     "version": "1.0.0",
-    "md5": "a1c5ae6cd3b3acd749d8a3addf69c"
+    "md5": "284a277273c1f4139720c53a7b53c92c"
   },
   "libraries": [
     {
@@ -58,90 +58,90 @@
     "id": 586,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "6e3d57a656c9f2f7db78209438f25b14"
+    "md5": "911fedf88cf4fad6ccc1561e625dd219"
   },
   "CreativeNovels": {
     "imageURL": "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
     "id": 911,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "c23bbc9ec044563313c46a37de9aa7f0"
+    "md5": "eb9967ebe010a7e47ae79a332669d476"
   },
   "VolareNovels": {
     "imageURL": "",
     "id": 1274,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "2434b23b5630f311a7cef1724771489"
+    "md5": "ff81cdb3303780e243e4d3e6d35ce418"
   },
   "ReadNovelForLife": {
     "imageURL": "https://readnovelforlife.com/wp-content/uploads/2019/12/Logo-1-e1570608260730.png",
     "id": 394,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "e2e0b146b65c3b1346a01abf6387415f"
+    "md5": "b33a72c5167d186ce369e9b031b9bee"
   },
   "Tangsanshu": {
     "imageURL": "http://www.tangsanshu.com/images/logo.png",
     "id": 234,
     "lang": "zn",
     "version": "1.0.0",
-    "md5": "10bbdc0fdd683bfa78c2f520f1ed4f"
+    "md5": "d8dfa1e373af2b72353a1464f715b39"
   },
   "BestLightNovel": {
     "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
     "id": 5,
     "lang": "en",
     "version": "2.0.0",
-    "md5": "1df757ec4c4279e2cbec232d7ff449"
+    "md5": "279b8a4da8428eda1b535e12c15dc1f"
   },
   "Foxaholic": {
     "imageURL": "https://foxaholic.com/wp-content/uploads/2019/12/images-1.png",
     "id": 173,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "5b958888fdab1888eaa465a18ded4fa"
+    "md5": "914c73628e988a932c76e6482690543c"
   },
   "BoxNovel": {
     "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
     "id": 2,
     "lang": "en",
     "version": "2.0.0",
-    "md5": "4e8a202f39974dc0ca54ca2269173c"
+    "md5": "c82a5cdff73aee7385e2da5cec371f89"
   },
   "Syosetsu": {
     "imageURL": "https://static.syosetu.com/view/images/common/logo_yomou.png",
     "id": 3,
     "lang": "jp",
     "version": "1.2.0",
-    "md5": "fa76f4e2d73d33bfcc24e0dcf36d7696"
+    "md5": "27ef99b5d6e94968b3e442e8c1398e"
   },
   "WuxiaWorld": {
     "imageURL": "https://www.wuxiaworld.com/apple-touch-icon.png",
     "id": 1273,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "611bb6351e7f32d215213774472792"
+    "md5": "adde12e1a74dd843afc870295831fda"
   },
   "NovelOnlineFree": {
     "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
     "id": 814,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "6f2af8c61bb784865acaf1498485b5"
+    "md5": "597dc441d9569d6de3a99929732a82a1"
   },
   "NovelOnlineFull": {
     "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
     "id": 510,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "87d1a3e5b49916ef74fccc7a0a8f163"
+    "md5": "ef2beef432c3dfbf15ef313aa0723c2e"
   },
   "NovelTrench": {
     "imageURL": "https://noveltrench.com/wp-content/uploads/2019/08/transparent1.png",
     "id": 81,
     "lang": "en",
     "version": "1.0.0",
-    "md5": "f25effbb2c6c3377b924a02fe5c3b05"
+    "md5": "1ae42bf8b4b46ffd421f1d4c9b84be9"
   }
 }
