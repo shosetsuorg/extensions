@@ -35,10 +35,13 @@ return {
 
 	-- Must have at least one value
 	listings = {
-		Listing("Something", false, function()
+		Listing("Something", false, function(data)
 			return {}
 		end),
-		Listing("Something (with pages!)", true, function(idx)
+		Listing("Something (with pages!)", true, function(data, index)
+			return {}
+		end),
+		Listing("Something without anything", false, function()
 			return {}
 		end)
 	},

@@ -69,29 +69,6 @@ local function getPassage(chapterURL)
 	return table.concat(map(d:selectFirst("div.post-content"):select(({ [0] = "p.en", "p.cn" })[settings[1]]), text), "\n")
 end
 
-local function makeListing(listing)
-	return function(page, data)
-		local d = GETDocument(baseURL .. "/novel-list/" ..
-				"?orderby=" .. ({ [0] = "date", [1] = "name", [2] = "rating", [3] = "view" })[data[3]] ..
-				"&order=" .. ({ [0] = "desc", [1] = "asc" })[data[4]] ..
-				"&status=" .. ({ [0] = "all", [1] = "completed", [2] = "ongoing" })[data[5]] ..
-				"&pg=" .. page)
-		return map(d:select("div.box.wide"), function(v)
-			local lis = Novel()
-			lis:setImageURL(v:selectFirst("amp-img.list-img"):selectFirst("amp-img.list-img"):attr("src"))
-			local title = v:selectFirst("a.list-title")
-			lis:setLink(title:attr("href"):match(baseURL .. "/(.+)/"))
-			lis:setTitle(title:attr("aria-label"))
-			return lis
-		end)
-	end
-end
-
----@param name string
-local function listing(name)
-	return Listing(name, true, makeListing(name:lower()))
-end
-
 return {
 	id = 573,
 	name = "MTLNovel",
@@ -105,7 +82,23 @@ return {
 			DropdownFilter(5, "Status", { "All", "Completed", "Ongoing" })
 		})
 	},
-	listings = { listing("default") },
+	listings = {
+		Listing("default", true, function(page, data)
+			local d = GETDocument(baseURL .. "/novel-list/" ..
+					"?orderby=" .. ({ [0] = "date", [1] = "name", [2] = "rating", [3] = "view" })[data[3]] ..
+					"&order=" .. ({ [0] = "desc", [1] = "asc" })[data[4]] ..
+					"&status=" .. ({ [0] = "all", [1] = "completed", [2] = "ongoing" })[data[5]] ..
+					"&pg=" .. page)
+			return map(d:select("div.box.wide"), function(v)
+				local lis = Novel()
+				lis:setImageURL(v:selectFirst("amp-img.list-img"):selectFirst("amp-img.list-img"):attr("src"))
+				local title = v:selectFirst("a.list-title")
+				lis:setLink(title:attr("href"):match(baseURL .. "/(.+)/"))
+				lis:setTitle(title:attr("aria-label"))
+				return lis
+			end)
+		end)
+	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = function()

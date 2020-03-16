@@ -101,7 +101,7 @@ return {
 	hasCloudFlare = false,
 	hasSearch = false,
 	listings = {
-		Listing("Popular", true, function(page)
+		Listing("Popular", true, function(data, page)
 			local doc = GETDocument(baseURL .. "/browse-new/?sb=rank")
 			local dat = getSecurity(doc, "search_results")
 			local url = qs({

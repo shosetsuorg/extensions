@@ -10,7 +10,7 @@ local defaults = {
 }
 
 ---@param page int @increment
-function defaults:latest(page)
+function defaults:latest(data, page)
     return self.parse(GETDocument(
             self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. page
     ))

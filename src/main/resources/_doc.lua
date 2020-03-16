@@ -604,7 +604,7 @@ do
 	do
 		---@param name string
 		---@param increments boolean
-		---@param func fun(): Novel[] | fun(inc: int, data: table): Novel[]
+		---@param func fun(): Novel[] | fun(data: table, inc: int): Novel[]
 		---@return Listing
 		function Listing(name, increments, func)
 			return

@@ -56,7 +56,7 @@ local function parseNovel(novelURL, loadChapters)
 end
 
 --- @return ArrayList
-local function parseLatest(page)
+local function parseLatest(data, page)
 	if page == 0 then
 		page = 1
 	end

@@ -66,7 +66,7 @@ end
 
 ---@param document Document @Jsoup document of latest listing
 ---@return Array @Novel array list
-local function parseLatest(page)
+local function parseLatest(data, page)
 	return map(GETDocument(baseURL .. "/list/latest.html?page=" .. page):selectFirst("ul.list-film"):select("li.film-item"), function(v)
 		local novel = Novel()
 		local data = v:selectFirst("a")

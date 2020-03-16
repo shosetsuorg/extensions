@@ -19,7 +19,6 @@ local defaults = {
 
 ---@param page int @increment
 function defaults:latest(page, data)
-
     return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
 end
 
