@@ -18,7 +18,8 @@ local defaults = {
 }
 
 ---@param page int @increment
-function defaults:latest(page, data)
+function defaults:latest(data, page)
+    print(data)
     return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
 end
 
@@ -116,7 +117,7 @@ return function(baseURL, _self)
             CheckBoxFilter(9, "Canceled"),
             CheckBoxFilter(10, "On Hold")
         }),
-        FilterGroup(11, "Genres", _self.genres)
+        GenreGroup(11, "Genres", _self.genres)
     }
     _self["___baseURL"] = baseURL
     _self["listings"] = { Listing("default", true, _self.latest) }

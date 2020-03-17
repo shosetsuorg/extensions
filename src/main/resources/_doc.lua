@@ -292,6 +292,16 @@ do
 
 	---@class DropdownFilter
 	local DropdownFilter = {}
+
+	---@class FilterGroup
+	local FilterGroup = {}
+
+	---@class
+	local GenreGroup = {}
+
+	---@class
+	local GenreCheckBoxFilter = {}
+
 end
 
 -- Formatter things
@@ -671,8 +681,23 @@ do
 		---@param id int
 		---@param name string
 		---@param choices Filter[] | Array
-		---return GroupFilter
+		---return FilterGroup
 		function FilterGroup(id, name, choices)
+			return
+		end
+
+		---@param id int
+		---@param name string
+		---@param genres Filter[] | Array
+		---return GenreGroup
+		function GenreGroup(id, name, genres)
+			return
+		end
+
+		---@param id int
+		---@param name string
+		---return GenreCheckBoxFilter
+		function GenreCheckBoxFilter(id, name)
 			return
 		end
 	end
