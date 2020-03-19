@@ -6,3 +6,4 @@ target/*
 personal
 .gradle
 gradle/wrapper/gradle-wrapper.jar
+out/*
