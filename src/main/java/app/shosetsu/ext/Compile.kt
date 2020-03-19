@@ -1,4 +1,4 @@
-package com.github.doomsdayrs.api.shosetsu.extensions
+package app.shosetsu.ext
 
 import org.json.JSONObject
 import java.io.*

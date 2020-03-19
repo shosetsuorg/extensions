@@ -1,15 +1,12 @@
-package com.github.doomsdayrs.api.shosetsu.extensions;
+package app.shosetsu.ext;
 
-import kotlin.collections.AbstractList;
 import org.json.JSONObject;
-import org.luaj.vm2.ast.Str;
 
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Iterator;
 
