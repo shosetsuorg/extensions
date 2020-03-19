@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.github.doomsdayrs.api.shosetsu.extensions.FormatterController">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="app.shosetsu.ext.FormatterController">
   <splitpane id="96460" binding="FORM">
     <constraints>
       <xy x="20" y="20" width="854" height="432"/>

@@ -1,4 +1,4 @@
-package com.github.doomsdayrs.api.shosetsu.extensions
+package app.shosetsu.ext
 
 import com.github.doomsdayrs.api.shosetsu.services.core.dep.LuaFormatter
 import okhttp3.OkHttpClient
