@@ -9,13 +9,11 @@ description = "Extensions for Shosetsu"
 sourceCompatibility = 8
 targetCompatibility = 8
 
-
-
 repositories {
-        
      maven { url "https://jitpack.io" }
      maven { url "https://repo.maven.apache.org/maven2" }
 }
+
 dependencies {
     compile group: 'com.github.doomsdayrs', name: 'shosetsu-services', version:'v0.4.2'
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version:'3.14.1'

@@ -45,7 +45,7 @@ internal class Test {
             println(url)
             val u = URL(url)
             val request = builder.url(u).build()
-            return client.newCall(request).execute().body()
+            return client.newCall(request).execute().body
         }
 
         @Throws(IOException::class)
