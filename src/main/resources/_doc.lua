@@ -658,7 +658,7 @@ do
 		---@param id int
 		---@param name string
 		---return CheckBoxFilter
-		function CheckBoxFilter(id, name)
+		function CheckboxFilter(id, name)
 			return
 		end
 

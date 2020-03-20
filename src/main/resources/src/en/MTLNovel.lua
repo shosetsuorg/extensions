@@ -69,21 +69,21 @@ local function getPassage(chapterURL)
 	return table.concat(map(d:selectFirst("div.post-content"):select(({ [0] = "p.en", "p.cn" })[settings[1]]), text), "\n")
 end
 
+local filters = {
+	DropdownFilter("Order by", { "Date", "Name", "Rating", "Views" }),
+	DropdownFilter("Order", { "Descending", "Ascending" }),
+	DropdownFilter("Status", { "All", "Completed", "Ongoing" })
+}
+
 return {
 	id = 573,
 	name = "MTLNovel",
 	baseURL = baseURL,
 	imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
 	hasSearch = false,
-	filters = {
-		FilterGroup(2, "", {
-			DropdownFilter(3, "Order by", { "Date", "Name", "Rating", "Views" }),
-			DropdownFilter(4, "Order", { "Descending", "Ascending" }),
-			DropdownFilter(5, "Status", { "All", "Completed", "Ongoing" })
-		})
-	},
+	filters = filters,
 	listings = {
-		Listing("default", true, function(page, data)
+		Listing("Novel List", true, function(data, page)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
 					"?orderby=" .. ({ [0] = "date", [1] = "name", [2] = "rating", [3] = "view" })[data[3]] ..
 					"&order=" .. ({ [0] = "desc", [1] = "asc" })[data[4]] ..
@@ -97,13 +97,13 @@ return {
 				lis:setTitle(title:attr("aria-label"))
 				return lis
 			end)
-		end)
+		end, filters)
 	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = function()
 	end,
-	settings = { DropdownFilter(101, "Language", { "English", "Chinese" }) },
+	settings = { DropdownFilter("Language", { "English", "Chinese" }) },
 	updateSetting = function(id, value)
 		settings[id] = value
 	end

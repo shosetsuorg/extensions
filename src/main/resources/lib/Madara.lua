@@ -107,17 +107,17 @@ return function(baseURL, _self)
         return (type(d) == "function" and wrap(_self, d) or d)
     end })
     _self["filters"] = {
-        DropdownFilter(2, "Order by", { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }),
-        TextFilter(3, "Author"),
-        TextFilter(4, "Artist"),
-        TextFilter(5, "Year of Release"),
-        FilterGroup(6, "Status", {
-            CheckBoxFilter(7, "Completed"),
-            CheckBoxFilter(8, "Ongoing"),
-            CheckBoxFilter(9, "Canceled"),
-            CheckBoxFilter(10, "On Hold")
+        DropdownFilter("Order by", { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }),
+        TextFilter("Author"),
+        TextFilter("Artist"),
+        TextFilter("Year of Release"),
+        FilterGroup("Status", {
+            CheckboxFilter("Completed"),
+            CheckboxFilter("Ongoing"),
+            CheckboxFilter("Canceled"),
+            CheckboxFilter("On Hold")
         }),
-        GenreGroup(11, "Genres", _self.genres)
+        FilterGroup("Genres", map(_self.genres, function(v) return CheckboxFilter(v) end))
     }
     _self["___baseURL"] = baseURL
     _self["listings"] = { Listing("default", true, _self.latest) }
