@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 group = 'app.shosetsu.ext'
-version = '0.4.0'
+version = '0.0.0'
 
 description = "Extensions for Shosetsu"
 
