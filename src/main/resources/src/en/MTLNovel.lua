@@ -81,9 +81,8 @@ return {
 	baseURL = baseURL,
 	imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
 	hasSearch = false,
-	filters = filters,
 	listings = {
-		Listing("Novel List", true, function(data, page)
+		Listing("Novel List", filters,true, function(data, page)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
 					"?orderby=" .. ({ [0] = "date", [1] = "name", [2] = "rating", [3] = "view" })[data[3]] ..
 					"&order=" .. ({ [0] = "desc", [1] = "asc" })[data[4]] ..
@@ -97,7 +96,7 @@ return {
 				lis:setTitle(title:attr("aria-label"))
 				return lis
 			end)
-		end, filters)
+		end)
 	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,

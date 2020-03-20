@@ -98,14 +98,12 @@ return function(baseURL, _self)
         local d = defaults[k]
         return (type(d) == "function" and wrap(_self, d) or d)
     end })
-
     _self["baseURL"] = baseURL
     if not _self["ajax_base"] then
         _self["ajax_base"] = baseURL
     end
-
     _self["listings"] = {
-        Listing("Hot", false, function()
+        Listing("Hot", {},false, function()
             return map(GETDocument(_self.ajax_base .. _self.ajax_hot):select("div.item a"), function(v)
                 local novel = Novel()
                 novel:setImageURL(v:selectFirst("img"):attr("src"))
@@ -114,7 +112,7 @@ return function(baseURL, _self)
                 return novel
             end)
         end),
-        Listing("Latest", false, function()
+        Listing("Latest", {},false, function()
             return map(GETDocument(_self.ajax_base .. _self.ajax_latest):select("div.row .col-title a"), {}, function(v)
                 local novel = Novel()
                 novel:setTitle(v:text())

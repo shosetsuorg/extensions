@@ -106,7 +106,7 @@ return function(baseURL, _self)
         local d = defaults[k]
         return (type(d) == "function" and wrap(_self, d) or d)
     end })
-    _self["filters"] = {
+    _self["searchFilters"] = {
         DropdownFilter("Order by", { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }),
         TextFilter("Author"),
         TextFilter("Artist"),
@@ -120,7 +120,7 @@ return function(baseURL, _self)
         FilterGroup("Genres", map(_self.genres, function(v) return CheckboxFilter(v) end))
     }
     _self["___baseURL"] = baseURL
-    _self["listings"] = { Listing("default", true, _self.latest) }
+    _self["listings"] = { Listing("default",{}, true, _self.latest) }
     _self["updateSetting"] = function(id, value)
         settings[id] = value
     end

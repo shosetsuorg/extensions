@@ -94,10 +94,8 @@ return {
 	name = "FastNovel",
 	baseURL = baseURL,
 	imageURL = "https://fastnovel.net/skin/images/logo.png",
-	hasCloudFlare = false,
-	hasSearch = true,
 	listings = {
-		Listing("Latest", true, parseLatest)
+		Listing("Latest", {},true, parseLatest)
 	},
 
 	getPassage = getPassage,

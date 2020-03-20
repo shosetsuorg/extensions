@@ -613,10 +613,11 @@ do
 	-- CONSTRUCTORS
 	do
 		---@param name string
+		---@param filters Filter[]
 		---@param increments boolean
 		---@param func fun(): Novel[] | fun(data: table, inc: int): Novel[]
 		---@return Listing
-		function Listing(name, increments, func)
+		function Listing(name, filters, increments, func)
 			return
 		end
 
@@ -641,63 +642,48 @@ do
 			return
 		end
 
-		---@param id int
 		---@param name string
 		---return TextFilter
-		function TextFilter(id, name)
+		function TextFilter(name)
 			return
 		end
 
-		---@param id int
 		---@param name string
 		---return SwitchFilter
-		function SwitchFilter(id, name)
+		function SwitchFilter(name)
 			return
 		end
 
-		---@param id int
 		---@param name string
 		---return CheckBoxFilter
-		function CheckboxFilter(id, name)
+		function CheckboxFilter(name)
 			return
 		end
 
-		---@param id int
 		---@param name string
 		---@param choices string[] | Array
 		---return RadioGroupFilter
-		function RadioGroupFilter(id, name, choices)
+		function RadioGroupFilter(name, choices)
 			return
 		end
 
-		---@param id int
 		---@param name string
 		---@param choices string[] | Array
 		---return DropdownFilter
-		function DropdownFilter(id, name, choices)
+		function DropdownFilter(name, choices)
 			return
 		end
 
-		---@param id int
 		---@param name string
 		---@param choices Filter[] | Array
 		---return FilterGroup
-		function FilterGroup(id, name, choices)
+		function FilterGroup(name, choices)
 			return
 		end
 
-		---@param id int
 		---@param name string
-		---@param genres Filter[] | Array
-		---return GenreGroup
-		function GenreGroup(id, name, genres)
-			return
-		end
-
-		---@param id int
-		---@param name string
-		---return GenreCheckBoxFilter
-		function GenreCheckBoxFilter(id, name)
+		---@param filters Filter[] | Array
+		function FilterList(name, filters)
 			return
 		end
 	end

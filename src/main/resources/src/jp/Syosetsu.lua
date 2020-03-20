@@ -86,10 +86,8 @@ return {
 	name = "Syosetsu",
 	baseURL = baseURL,
 	imageURL = "https://static.syosetu.com/view/images/common/logo_yomou.png",
-	hasCloudFlare = false,
-	hasSearch = true,
 	listings = {
-		Listing("Latest", true, parseLatest)
+		Listing("Latest", {},true, parseLatest)
 	},
 
 	-- Default functions that had to be set

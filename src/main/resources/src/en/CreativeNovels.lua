@@ -94,14 +94,12 @@ end
 
 return {
 	id = 911,
-
 	name = "Creative Novels",
 	baseURL = baseURL,
 	imageURL = "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
-	hasCloudFlare = false,
 	hasSearch = false,
 	listings = {
-		Listing("Popular", true, function(data, page)
+		Listing("Popular", {},true, function(data, page)
 			local doc = GETDocument(baseURL .. "/browse-new/?sb=rank")
 			local dat = getSecurity(doc, "search_results")
 			local url = qs({
@@ -138,10 +136,8 @@ return {
 			end
 		end)
 	},
-
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-	search = function()
-	end,
+	search = function() end,
 	setSettings = setSettings
 }

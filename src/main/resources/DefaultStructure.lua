@@ -26,28 +26,28 @@ return {
 	id = -1,
 	name = "DEFAULT",
 	baseURL = baseURL,
+
+	-- Optional values to change
 	imageURL = "",
 	hasCloudFlare = false,
 	hasSearch = true,
-	updateSetting = function(id, value)
-		settings[id] = value
-	end,
+
 
 	-- Must have at least one value
 	listings = {
-		Listing("Something", false, function(data)
+		Listing("Something", {},false, function(data)
 			return {}
 		end),
-		Listing("Something (with pages!)", true, function(data, index)
+		Listing("Something (with pages!)",{}, true, function(data, index)
 			return {}
 		end),
-		Listing("Something without anything", false, function()
+		Listing("Something without anything",{}, false, function()
 			return {}
 		end)
 	},
 
 	-- Optional if usable
-	filters = {
+	searchFilters = {
 		TextFilter(1, "RANDOM STRING INPUT"),
 		SwitchFilter(2, "RANDOM SWITCH INPUT"),
 		RadioGroupFilter(3, "RANDOM RGROUP INPUT", { "A", "B", "C" }),
@@ -64,4 +64,7 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = search,
+	updateSetting = function(id, value)
+		settings[id] = value
+	end
 }

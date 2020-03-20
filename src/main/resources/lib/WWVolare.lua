@@ -37,19 +37,15 @@ return function(id, name, base, contentSel, image)
 
     return {
         id = id,
-
         name = name,
         baseURL = base,
         imageURL = image,
-        hasCloudFlare = false,
-        hasSearch = true,
         listings = {
-            Listing("All Novels", false, function()
+            Listing("All Novels", {},false, function()
                 getNovels();
                 return novels
             end)
         },
-
         getPassage = function(url)
             return table.concat(map(GETDocument(base..url):selectFirst(contentSel):children(),
                     function(v)
