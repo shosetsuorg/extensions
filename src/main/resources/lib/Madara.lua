@@ -1,5 +1,4 @@
--- {"version":"1.2.0","author":"TechnoJo4"}
---- @author Doomsdayrs
+-- {"version":"1.2.0","author":"TechnoJo4","dep":["url"]}
 
 local text = function(v)
 	return v:text()

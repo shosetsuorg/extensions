@@ -1,4 +1,4 @@
--- {"id":-1,"version":"1.0.0","author":"","repo":""}
+-- {"id":-1,"version":"1.0.0","author":"","repo":"","dep":["foo","bar"]}
 
 local baseURL = "TODO"
 local settings = {}

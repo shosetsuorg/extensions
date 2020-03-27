@@ -1,4 +1,4 @@
--- {"version":"1.0.0","author":"TechnoJo4"}
+-- {"version":"1.0.0","author":"TechnoJo4","dep":["url"]}
 
 -- rename this if you ever figure out its real name
 ---@author TechnoJo4
