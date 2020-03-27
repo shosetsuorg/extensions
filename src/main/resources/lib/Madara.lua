@@ -24,9 +24,60 @@ function defaults:latest(data, page)
 	return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
 end
 
-function defaults:search(data)
+---@param string string
+---@return string
+function defaults:parseString(string)
+	return string:gsub("%+", "%2"):gsub(" ", "+")
+end
+
+--- @param table table
+------@return string
+function defaults:createSearchString(table)
 	local query = data[QUERY]
-	return self.parse(GETDocument(self.___baseURL .. "/?s=" .. query:gsub("%+", "%2"):gsub(" ", "+") .. "&post_type=wp-manga"), true)
+	local orderBy = data[1]
+	local author = data[2]
+	local artist = data[3]
+	local release = data[4]
+	local stati = data[5]
+
+	local url = self.___baseURL .. "/?s=" .. parseString(query) .. "&post_type=wp-manga" .. "&author=" .. parseString(author) .. "&artist=" .. parseString(artist) .. "&release=" .. parseString(release)
+
+	if stati[0] then
+		url = url .. "&status[]=end"
+	end
+	if stati[1] then
+		url = url .. "&status[]=on-going"
+	end
+	if stati[2] then
+		url = url .. "&status[]=canceled"
+	end
+	if stati[3] then
+		url = url .. "&status[]=on-hold"
+	end
+	local genres = data[6]
+	for i = 0, rawlen(genres_map) do
+		if genres[i] then
+			url = url .. "&genre[]=" .. genres_map[i]
+		end
+	end
+	return self.appendToSearchURL(string,table)
+end
+
+---@param string string
+---@param table table
+---@return string
+function defaults:appendToSearchURL(string,table)
+	return string
+end
+
+---@param table table
+---@return table
+function defaults:appendToSearchFilters(table)
+	return table
+end
+
+function defaults:search(data)
+	return self.parse(GETDocument(self.createSearchString(data)), true)
 end
 
 ---@param url string
@@ -108,23 +159,24 @@ return function(baseURL, _self)
 		return (type(d) == "function" and wrap(_self, d) or d)
 	end })
 	local keyID = 0;
-	_self["searchFilters"] = {
-		DropdownFilter("Order by", { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }),
-		TextFilter("Author"),
-		TextFilter("Artist"),
-		TextFilter("Year of Release"),
-		FilterGroup("Status", {
-			CheckboxFilter("Completed"),
-			CheckboxFilter("Ongoing"),
-			CheckboxFilter("Canceled"),
-			CheckboxFilter("On Hold")
+	_self["searchFilters"] = _self:appendToSearchFilters({
+		DropdownFilter("Order by", { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }), -- 1`
+		TextFilter("Author"), -- 2
+		TextFilter("Artist"), -- 3
+		TextFilter("Year of Release"), -- 4
+		FilterGroup("Status", { -- 5
+			CheckboxFilter("Completed"), -- 1
+			CheckboxFilter("Ongoing"), -- 2
+			CheckboxFilter("Canceled"), -- 3
+			CheckboxFilter("On Hold") -- 4
 		}),
 		FilterGroup("Genres", map(_self.genres, function(v, k)
-			self.genres_map[keyID] = v:getName():lower():match("(%a+)")
+			genres_map[keyID] = v:getName():lower():match("(%a+)")
 			k = k + 1
 			return CheckboxFilter(v)
-		end))
-	}
+		end)) -- 6
+	})
+
 	_self["___baseURL"] = baseURL
 	_self["listings"] = { Listing("default", {}, true, _self.latest) }
 	_self["updateSetting"] = function(id, value)
