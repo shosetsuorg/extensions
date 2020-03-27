@@ -59,10 +59,11 @@ return Require("Madara")("https://noveltrench.com", {
 		CheckboxFilter("Xuanhuan"),
 		CheckboxFilter("Yaoi")
 	},
-	---@param table table
-	appendToSearchFilters = function(table)
-		table.insert(7, DropdownFilter("Genres Condition", { "OR (having one of selected genres)", "AND (having all selected genres" }))
-		return table
+	---@param _table table
+	appendToSearchFilters = function(_table)
+		table.insert(_table,7,
+				DropdownFilter("Genres Condition", { "OR (having one of selected genres)", "AND (having all selected genres" }))
+		return _table
 	end,
 	appendToSearchURL = function(url, table)
 		return url .. "&op=" .. table[7]

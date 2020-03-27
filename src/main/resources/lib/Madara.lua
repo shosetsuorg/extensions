@@ -21,52 +21,63 @@ local defaults = {
 ---@param page int @increment
 function defaults:latest(data, page)
 	print(data)
-	return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
+	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
 end
 
 ---@param string string
 ---@return string
 function defaults:parseString(string)
+	if string == nil then
+		return ""
+	end
 	return string:gsub("%+", "%2"):gsub(" ", "+")
 end
 
 --- @param table table
 ------@return string
 function defaults:createSearchString(table)
-	local query = data[QUERY]
-	local orderBy = data[1]
-	local author = data[2]
-	local artist = data[3]
-	local release = data[4]
-	local stati = data[5]
+	local query = table[QUERY]
+	local orderBy = table[1]
+	local author = table[2]
+	local artist = table[3]
+	local release = table[4]
+	local stati = table[5]
 
-	local url = self.___baseURL .. "/?s=" .. parseString(query) .. "&post_type=wp-manga" .. "&author=" .. parseString(author) .. "&artist=" .. parseString(artist) .. "&release=" .. parseString(release)
-
-	if stati[0] then
-		url = url .. "&status[]=end"
-	end
-	if stati[1] then
-		url = url .. "&status[]=on-going"
-	end
-	if stati[2] then
-		url = url .. "&status[]=canceled"
-	end
-	if stati[3] then
-		url = url .. "&status[]=on-hold"
-	end
-	local genres = data[6]
-	for i = 0, rawlen(genres_map) do
-		if genres[i] then
-			url = url .. "&genre[]=" .. genres_map[i]
+	local url = self.baseURL .. "/?s=" .. self.parseString(query) .. "&post_type=wp-manga" ..
+			"&author=" .. self. parseString(author) ..
+			"&artist=" .. self.parseString(artist) ..
+			"&release=" .. self.parseString(release)
+	if stati ~= nil then
+		if stati[0] then
+			url = url .. "&status[]=end"
+		end
+		if stati[1] then
+			url = url .. "&status[]=on-going"
+		end
+		if stati[2] then
+			url = url .. "&status[]=canceled"
+		end
+		if stati[3] then
+			url = url .. "&status[]=on-hold"
 		end
 	end
-	return self.appendToSearchURL(string,table)
+
+	local genres = table[6]
+	if genres ~= nil then
+		for i = 0, rawlen(genres_map) do
+			if genres[i] then
+				url = url .. "&genre[]=" .. genres_map[i]
+			end
+		end
+	end
+	url = self.appendToSearchURL(url, table)
+	return url
 end
 
 ---@param string string
 ---@param table table
 ---@return string
-function defaults:appendToSearchURL(string,table)
+function defaults:appendToSearchURL(string, table)
 	return string
 end
 
@@ -77,7 +88,8 @@ function defaults:appendToSearchFilters(table)
 end
 
 function defaults:search(data)
-	return self.parse(GETDocument(self.createSearchString(data)), true)
+	local url = self.createSearchString(data)
+	return self.parse(GETDocument(url), true)
 end
 
 ---@param url string
@@ -159,7 +171,7 @@ return function(baseURL, _self)
 		return (type(d) == "function" and wrap(_self, d) or d)
 	end })
 	local keyID = 0;
-	_self["searchFilters"] = _self:appendToSearchFilters({
+	local filters = {
 		DropdownFilter("Order by", { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }), -- 1`
 		TextFilter("Author"), -- 2
 		TextFilter("Artist"), -- 3
@@ -175,10 +187,13 @@ return function(baseURL, _self)
 			k = k + 1
 			return CheckboxFilter(v)
 		end)) -- 6
-	})
-
-	_self["___baseURL"] = baseURL
-	_self["listings"] = { Listing("default", {}, true, _self.latest) }
+	}
+	filters = _self.appendToSearchFilters(filters)
+	_self["searchFilters"] = filters
+	_self["baseURL"] = baseURL
+	_self["listings"] = {
+		Listing("default", {}, true, _self.latest)
+	}
 	_self["updateSetting"] = function(id, value)
 		settings[id] = value
 	end
