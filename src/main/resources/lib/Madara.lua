@@ -1,6 +1,6 @@
 -- {"version":"1.2.0","author":"TechnoJo4","dep":["url"]}
 
-local url = Require("url")
+local urlLibrary = Require("url")
 local text = function(v)
 	return v:text()
 end
@@ -20,7 +20,6 @@ local defaults = {
 
 ---@param page int @increment
 function defaults:latest(data, page)
-	print(data)
 	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
 end
 
@@ -34,10 +33,10 @@ function defaults:createSearchString(table)
 	local release = table[4]
 	local stati = table[5]
 
-	local url = self.baseURL .. "/?s=" .. url.encode(query) .. "&post_type=wp-manga" ..
-			"&author=" .. url.encode(author) ..
-			"&artist=" .. url.encode(artist) ..
-			"&release=" .. url.encode(release)
+	local url = self.baseURL .. "/?s=" .. urlLibrary.encode(query) .. "&post_type=wp-manga" ..
+			"&author=" .. urlLibrary.encode(author) ..
+			"&artist=" .. urlLibrary.encode(artist) ..
+			"&release=" .. urlLibrary.encode(release)
 
 	url = url .. "&m_orderby=" .. ({
 		[0] = "relevance",
