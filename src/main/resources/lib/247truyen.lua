@@ -18,7 +18,10 @@ end
 
 function defaults:search(data)
     local query = data[QUERY]
-    return self.parse(GETDocument(self.___baseURL .. "/" .. self.novelSearchPath .. "/" .. query:gsub(" ", "_")))
+    local p=GETDocument(self.___baseURL .. 
+"/" .. self.novelSearchPath .. 
+"/" .. query:gsub(" ", "_"))
+    return self.parse()
 end
 
 ---@param url string
