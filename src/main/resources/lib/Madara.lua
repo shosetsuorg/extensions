@@ -1,5 +1,6 @@
 -- {"version":"1.2.0","author":"TechnoJo4","dep":["url"]}
 
+local url = Require("url")
 local text = function(v)
 	return v:text()
 end
@@ -23,15 +24,6 @@ function defaults:latest(data, page)
 	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
 end
 
----@param string string
----@return string
-function defaults:parseString(string)
-	if string == nil then
-		return ""
-	end
-	return string:gsub("%+", "%2"):gsub(" ", "+")
-end
-
 --- @param table table
 ------@return string
 function defaults:createSearchString(table)
@@ -42,10 +34,21 @@ function defaults:createSearchString(table)
 	local release = table[4]
 	local stati = table[5]
 
-	local url = self.baseURL .. "/?s=" .. self.parseString(query) .. "&post_type=wp-manga" ..
-			"&author=" .. self. parseString(author) ..
-			"&artist=" .. self.parseString(artist) ..
-			"&release=" .. self.parseString(release)
+	local url = self.baseURL .. "/?s=" .. url.encode(query) .. "&post_type=wp-manga" ..
+			"&author=" .. url.encode(author) ..
+			"&artist=" .. url.encode(artist) ..
+			"&release=" .. url.encode(release)
+
+	url = url .. "&m_orderby=" .. ({
+		[0] = "relevance",
+		[1] = "latest",
+		[2] = "alphabet",
+		[3] = "rating",
+		[4] = "trending",
+		[5] = "views",
+		[6] = "new-manga"
+	})[orderBy]
+
 	if stati ~= nil then
 		if stati[0] then
 			url = url .. "&status[]=end"

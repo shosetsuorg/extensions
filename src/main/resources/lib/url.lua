@@ -4,7 +4,7 @@ local gsub, format, byte, char = string.gsub, string.format, string.byte, string
 
 ---@return string
 ---@param str string
-local function urldecode(str)
+local function urlDecode(str)
     str = gsub(str, '+', ' ')
     str = gsub(str, '%%(%x%x)', function(h)
         return char(tonumber(h, 16))
@@ -15,7 +15,7 @@ end
 
 ---@return string
 ---@param str string
-local function urlencode(str)
+local function urlEncode(str)
     if str then
         str = gsub(str, '\n', '\r\n')
         str = gsub(str, '([^%w-_.~])', function(c)
@@ -32,20 +32,20 @@ end
 local function querystring(tbl, url)
     local fields = {}
     for key, value in pairs(tbl) do
-        local keyString = urlencode(tostring(key)) .. "="
+        local keyString = urlEncode(tostring(key)) .. "="
         if type(value) == "table" then
             for _, v in ipairs(value) do
-                table.insert(fields, keyString .. urlencode(tostring(v)))
+                table.insert(fields, keyString .. urlEncode(tostring(v)))
             end
         else
-            table.insert(fields, keyString .. urlencode(tostring(value)))
+            table.insert(fields, keyString .. urlEncode(tostring(value)))
         end
     end
     return (url and url.."?" or "")..table.concat(fields, "&")
 end
 
 return {
-    decode = urldecode,
-    encode = urlencode,
+    decode = urlDecode,
+    encode = urlEncode,
     querystring = querystring,
 }
