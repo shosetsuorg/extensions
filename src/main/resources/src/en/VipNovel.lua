@@ -4,6 +4,7 @@ return Require("Madara")("https://vipnovel.com", {
 	id = 586,
 	name = "VipNovel",
 	imageURL = "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
+	novelListingURLPath = "vipnovel",
 	genres = {
 		CheckboxFilter("Action"),
 		CheckboxFilter("Adult"),
@@ -41,6 +42,5 @@ return Require("Madara")("https://vipnovel.com", {
 		CheckboxFilter("Xuanhuan"),
 		CheckboxFilter("Yaoi"),
 		CheckboxFilter("Yuri")
-	},
-	novelListingURLPath = "vipnovel"
+	}
 })
