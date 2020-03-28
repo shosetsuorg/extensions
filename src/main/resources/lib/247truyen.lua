@@ -17,10 +17,11 @@ function defaults:latest(data, page)
 end
 
 function defaults:search(data)
-    local query = data[QUERY]
+    local query = data[0]
     local p=GETDocument(self.___baseURL .. 
 "/" .. self.novelSearchPath .. 
 "/" .. query:gsub(" ", "_"))
+
     return self.parse()
 end
 
