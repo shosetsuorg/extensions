@@ -115,5 +115,6 @@ return function(baseURL, _self)
     _self["listings"] = {
         Listing("Latest", {},true, _self.latest)
     }
+    _self["updateSetting"] = function() end
     return _self
 end

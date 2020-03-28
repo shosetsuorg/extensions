@@ -5,12 +5,6 @@
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
 
-local settings = {}
-
-local function setSettings(setting)
-	settings = setting
-end
-
 --- @param document Document
 --- @return string
 local function getPassage(chapterURL)
@@ -94,5 +88,5 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = search,
-	setSettings = setSettings
+	updateSetting = function() end
 }

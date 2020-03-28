@@ -2,12 +2,6 @@
 
 local baseURL = "http://www.tangsanshu.com"
 
-local settings = {}
-
-local function setSettings(setting)
-	settings = setting
-end
-
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 local function getPassage(url)
 	return GETDocument(url):selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+", "\n"):gsub("&nbsp;", "")
@@ -95,5 +89,5 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = search,
-	setSettings = setSettings
+	updateSetting = function() end
 }

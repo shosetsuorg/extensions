@@ -139,5 +139,5 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = function() end,
-	setSettings = setSettings
+	updateSetting = function() end
 }

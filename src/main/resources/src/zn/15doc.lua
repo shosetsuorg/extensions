@@ -3,11 +3,6 @@
 -- Outputed chapterURLs are novelID/chapterID
 
 local baseURL = "http://www.15doc.com"
-local settings = {}
-
-local function setSettings(setting)
-	settings = setting
-end
 
 local function parse(url)
 	local doc = GETDocument(url)
@@ -105,5 +100,5 @@ return {
 	parseNovel = parseNovel,
 	search = function()
 	end,
-	setSettings = setSettings
+	updateSetting = function() end
 }

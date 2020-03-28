@@ -79,6 +79,7 @@ return function(id, name, base, contentSel, image)
                 return i ~= nil
             end)
         end,
-        setSettings = function(s) settings = s end
+        setSettings = function(s) settings = s end,
+        updateSetting = function() end
     }
 end
