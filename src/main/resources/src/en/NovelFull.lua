@@ -10,6 +10,6 @@ return Require("NovelFull")("http://novelfull.com", {
 	ajax_hot = "/ajax-search?type=hot",
 	ajax_latest = "/ajax-search?type=latest",
 	ajax_chapters = "/ajax-chapter-option",
-
+	searchListSel = "list.list-truyen.col-xs-12",
 	searchTitleSel = ".truyen-title"
 })

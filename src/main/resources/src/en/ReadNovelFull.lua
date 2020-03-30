@@ -4,5 +4,7 @@ return Require("NovelFull")("https://readnovelfull.com", {
 	id = 278,
 	name = "ReadNovelFull",
 	imageURL = "",
-	genres = {}
+	genres = {},
+	searchListSel = "list.list-novel.col-xs-12",
+	appendURLToInfoImage = false
 })

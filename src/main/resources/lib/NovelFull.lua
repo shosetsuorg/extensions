@@ -8,7 +8,6 @@
 ---@type fun(tbl: table , url: string): string
 local qs = Require("url").querystring
 
-
 local text = function(v)
 	return v:text()
 end
@@ -18,7 +17,7 @@ local defaults = {
 	ajax_hot = "/ajax/hot-novels",
 	ajax_latest = "/ajax/latest-novels",
 	ajax_chapters = "/ajax/chapter-option",
-
+	appendURLToInfoImage = true,
 	searchTitleSel = ".novel-title",
 
 	hasCloudFlare = false,
@@ -27,17 +26,18 @@ local defaults = {
 
 function defaults:search(data)
 	-- search gives covers but they're in some weird aspect ratio
-	local doc = GETDocument(qs({ keyword = data[QUERY] }, self.baseURL .. "/search"))
+	local doc = GETDocument(qs({ keyword = data[0] }, self.baseURL .. "/search"))
 	local pager = doc:selectFirst(".pagination.pagination-sm")
 	local pages = {
-		map(doc:select(self.searchTitleSel .. " a"), function(v)
+		map(doc:selectFirst("div." .. self.searchListSel):select("div.row"), function(v)
 			local novel = Novel()
-			novel:setLink(self.baseURL .. v:attr("href"))
-			novel:setTitle(v:attr("title"))
+			novel:setImageURL(v:selectFirst("img.cover"):attr("src"))
+			local d = v:selectFirst(self.searchTitleSel .. " a")
+			novel:setLink(d:attr("href"))
+			novel:setTitle(d:attr("title"))
 			return novel
 		end)
 	}
-
 	if pager then
 		local last = pager:selectFirst("li.last:not(.disabled) a")
 		if not last then
@@ -47,7 +47,7 @@ function defaults:search(data)
 		last = tonumber(last:attr("data-page")) + 1
 
 		for i = 2, last do
-			pages[i] = map(GETDocument(qs({ s = data[QUERY], page = i }, self.baseURL .. "/search")):select(".novel-title a"),
+			pages[i] = map(GETDocument(qs({ s = data[0], page = i }, self.baseURL .. "/search")):select(".novel-title a"),
 					function(v)
 						local novel = Novel()
 						novel:setLink(v:attr("href"))
@@ -65,7 +65,7 @@ function defaults:getPassage(url)
 end
 
 function defaults:parseNovel(url, loadChapters)
-	local doc = GETDocument(url)
+	local doc = GETDocument(self.baseURL .. url)
 	local info = NovelInfo()
 
 	local elem = doc:selectFirst(".info"):children()
@@ -74,7 +74,7 @@ function defaults:parseNovel(url, loadChapters)
 	info:setGenres(map(elem:get(self.meta_offset + 1):select("a"), text))
 	info:setStatus(NovelStatus(elem:get(self.meta_offset + 3):select("a"):text() == "Completed" and 1 or 0))
 
-	info:setImageURL(doc:selectFirst("div.book img"):attr("src"))
+	info:setImageURL((self.appendURLToInfoImage and self.baseURL or "") .. doc:selectFirst("div.book img"):attr("src"))
 	info:setDescription(table.concat(map(doc:select("div.desc-text p"), text), "\n"))
 
 	if loadChapters then
@@ -108,21 +108,22 @@ return function(baseURL, _self)
 		Listing("Hot", {}, false, function()
 			return map(GETDocument(_self.ajax_base .. _self.ajax_hot):select("div.item a"), function(v)
 				local novel = Novel()
-				novel:setImageURL(v:selectFirst("img"):attr("src"))
+				novel:setImageURL(baseURL .. v:selectFirst("img"):attr("src"))
 				novel:setTitle(v:attr("title"))
-				novel:setLink(baseURL .. v:attr("href"))
+				novel:setLink(v:attr("href"))
 				return novel
 			end)
 		end),
 		Listing("Latest", {}, false, function()
-			return map(GETDocument(_self.ajax_base .. _self.ajax_latest):select("div.row .col-title a"), {}, function(v)
+			return map(GETDocument(_self.ajax_base .. _self.ajax_latest):select("div.row .col-title a"), function(v)
 				local novel = Novel()
 				novel:setTitle(v:text())
-				novel:setLink(baseURL .. v:attr("href"))
+				novel:setLink(v:attr("href"))
 				return novel
 			end)
 		end)
 	}
-	_self["updateSetting"] = function() end
+	_self["updateSetting"] = function()
+	end
 	return _self
 end
