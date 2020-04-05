@@ -1,6 +1,7 @@
 -- {"version":"1.2.0","author":"TechnoJo4","dep":["url"]}
 
-local urlLibrary = Require("url")
+local encode = Require("url").encode
+
 local text = function(v)
 	return v:text()
 end
@@ -18,6 +19,10 @@ local defaults = {
 	hasSearch = true
 }
 
+function defaults:encode(string)
+	return encode(string)
+end
+
 ---@param page int @increment
 function defaults:latest(data, page)
 	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
@@ -33,21 +38,22 @@ function defaults:createSearchString(table)
 	local release = table[4]
 	local stati = table[5]
 
-	local url = self.baseURL .. "/?s=" .. urlLibrary.encode(query) .. "&post_type=wp-manga" ..
-			"&author=" .. urlLibrary.encode(author) ..
-			"&artist=" .. urlLibrary.encode(artist) ..
-			"&release=" .. urlLibrary.encode(release)
+	local url = self.baseURL .. "/?s=" .. encode(query) .. "&post_type=wp-manga" ..
+			"&author=" .. encode(author) ..
+			"&artist=" .. encode(artist) ..
+			"&release=" .. encode(release)
 
-	url = url .. "&m_orderby=" .. ({
-		[0] = "relevance",
-		[1] = "latest",
-		[2] = "alphabet",
-		[3] = "rating",
-		[4] = "trending",
-		[5] = "views",
-		[6] = "new-manga"
-	})[orderBy]
-
+	if orderBy ~= nil then
+		url = url .. "&m_orderby=" .. ({
+			[0] = "relevance",
+			[1] = "latest",
+			[2] = "alphabet",
+			[3] = "rating",
+			[4] = "trending",
+			[5] = "views",
+			[6] = "new-manga"
+		})[orderBy]
+	end
 	if stati ~= nil then
 		if stati[0] then
 			url = url .. "&status[]=end"
