@@ -1,6 +1,7 @@
--- {"id":234,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":234,"version":"1.0.0","author":"Doomsdayrs","repo":"","dep":["url"]}
 
 local baseURL = "http://www.tangsanshu.com"
+local encode = Require("url").encode
 
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 local function getPassage(url)
@@ -66,7 +67,9 @@ end
 --- @param data table @Table of values. Always has "query"
 ---@return Array @Novel array list
 local function search(data)
-	document = GETDocument(baseURL .. "/s.php?ie=utf-8&q=" .. data[QUERY]:gsub("+", "%2B"):gsub(" ", "+"))
+	local url = baseURL .. "/s.php?ie=utf-8&q=" .. encode(data[0])
+	print(url)
+	local document = GETDocument(url)
 	return map(document:select("div.bookbox"), function(v)
 		local novel = Novel()
 		local data = document:selectFirst("h4.bookname"):selectFirst("a")
