@@ -84,9 +84,9 @@ return {
 	listings = {
 		Listing("Novel List", filters,true, function(data, page)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
-					"?orderby=" .. ({ [0] = "date", [1] = "name", [2] = "rating", [3] = "view" })[data[3]] ..
-					"&order=" .. ({ [0] = "desc", [1] = "asc" })[data[4]] ..
-					"&status=" .. ({ [0] = "all", [1] = "completed", [2] = "ongoing" })[data[5]] ..
+					"?orderby=" .. ({ [0] = "date", [1] = "name", [2] = "rating", [3] = "view" })[data[1]] ..
+					"&order=" .. ({ [0] = "desc", [1] = "asc" })[data[2]] ..
+					"&status=" .. ({ [0] = "all", [1] = "completed", [2] = "ongoing" })[data[3]] ..
 					"&pg=" .. page)
 			return map(d:select("div.box.wide"), function(v)
 				local lis = Novel()
