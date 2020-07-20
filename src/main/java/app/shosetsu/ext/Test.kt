@@ -1,6 +1,7 @@
 package app.shosetsu.ext
 
-import com.github.doomsdayrs.api.shosetsu.services.core.dep.LuaFormatter
+import app.shosetsu.lib.Filter
+import app.shosetsu.lib.LuaFormatter
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.ResponseBody
@@ -35,62 +36,61 @@ import java.util.concurrent.TimeUnit
  */
 internal class Test {
 
-    companion object {
-        // The below is methods robbed from ScrapeFormat class
-        private val builder: Request.Builder = Request.Builder()
-        private val client: OkHttpClient = OkHttpClient()
+	companion object {
+		// The below is methods robbed from ScrapeFormat class
+		private val builder: Request.Builder = Request.Builder()
+		private val client: OkHttpClient = OkHttpClient()
 
-        @Throws(IOException::class)
-        private fun request(url: String?): ResponseBody? {
-            println(url)
-            val u = URL(url)
-            val request = builder.url(u).build()
-            return client.newCall(request).execute().body
-        }
+		@Throws(IOException::class)
+		private fun request(url: String?): ResponseBody? {
+			println(url)
+			val u = URL(url)
+			val request = builder.url(u).build()
+			return client.newCall(request).execute().body
+		}
 
-        @Throws(IOException::class)
-        private fun docFromURL(URL: String): Document {
-            return Jsoup.parse(request(URL)!!.string())
-        }
+		@Throws(IOException::class)
+		private fun docFromURL(URL: String): Document {
+			return Jsoup.parse(request(URL)!!.string())
+		}
 
-        @Throws(IOException::class, InterruptedException::class)
-        @JvmStatic
-        fun main(args: Array<String>) {
-            val formFile = File("formatters.json")
-            val formatters = JSONObject(Compile.getContent(formFile))
-            val keys = formatters.keys()
-            keys.forEach {
-                if (it != "comments") {
-                    println("\n=============================")
-                    println(it)
-                    val form = formatters.getJSONObject(it)
-                    val luaFormatter = LuaFormatter(File("./src/${form.getString("lang")}/$it.lua"))
-                    // Data
-                    println(luaFormatter.genres)
-                    println(luaFormatter.name)
-                    println(luaFormatter.formatterID)
-                    println(luaFormatter.imageURL)
-                    // Latest
-                    TimeUnit.SECONDS.sleep(1)
-                    val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
-                    for (novel in list)
-                        println(novel)
-                    // Search
-                    TimeUnit.SECONDS.sleep(1)
-                    println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
-                    println()
+		@Throws(IOException::class, InterruptedException::class)
+		@JvmStatic
+		fun main(args: Array<String>) {
+			val formFile = File("formatters.json")
+			val formatters = JSONObject(Compile.getContent(formFile))
+			val keys = formatters.keys()
+			keys.forEach {
+				if (it != "comments") {
+					println("\n=============================")
+					println(it)
+					val form = formatters.getJSONObject(it)
+					val luaFormatter = LuaFormatter(File("./src/${form.getString("lang")}/$it.lua"))
+					// Data
+					println(luaFormatter.name)
+					println(luaFormatter.formatterID)
+					println(luaFormatter.imageURL)
+					// Latest
+					TimeUnit.SECONDS.sleep(1)
+					//      val list = luaFormatter.parseLatest(docFromURL(luaFormatter.getLatestURL(1)))
+					//   for (novel in list)
+					//         println(novel)
+					// Search
+					TimeUnit.SECONDS.sleep(1)
+					//  println(luaFormatter.parseSearch(docFromURL(luaFormatter.getSearchString("reinca"))))
+					//   println()
 
-                    // Novel
-                    TimeUnit.SECONDS.sleep(1)
-                    val novel = luaFormatter.parseNovel(docFromURL(luaFormatter.novelPageCombiner(list[0].link, 2)), 2)
-                    println(novel)
+					// Novel
+					TimeUnit.SECONDS.sleep(1)
+					// val novel = luaFormatter.parseNovel(docFromURL(luaFormatter.novelPageCombiner(list[0].link, 2)), 2)
+					// println(novel)
 
-                    // Parse novel passage
-                    TimeUnit.SECONDS.sleep(1)
-                    println(luaFormatter.getNovelPassage(docFromURL(novel.novelChapters[0].link)))
-                    println()
-                }
-            }
-        }
-    }
+					// Parse novel passage
+					TimeUnit.SECONDS.sleep(1)
+					//println(luaFormatter.getNovelPassage(docFromURL(novel.novelChapters[0].link)))
+					println()
+				}
+			}
+		}
+	}
 }
