@@ -613,11 +613,10 @@ do
     -- CONSTRUCTORS
     do
         ---@param name string
-        ---@param filters Filter[]
         ---@param increments boolean
         ---@param func fun(): Novel[] | fun(data: table, inc: int): Novel[]
         ---@return Listing
-        function Listing(name, filters, increments, func)
+        function Listing(name, increments, func)
             return
         end
 
