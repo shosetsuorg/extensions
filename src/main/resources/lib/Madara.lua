@@ -141,7 +141,7 @@ function defaults:parseNovel(url, loadChapters)
         local a = e:size()
         local l = AsList(map(e, function(v)
             local c = NovelChapter()
-            c:setLink(v:selectFirst("a"):attr("href"))
+            c:setLink(self.shrinkURL(v:selectFirst("a"):attr("href")))
             c:setTitle(v:selectFirst("a"):text())
 
             local i = v:selectFirst("i")
@@ -163,7 +163,7 @@ function defaults:parse(doc, search)
     return map(doc:select(search and self.searchNovelSel or self.latestNovelSel), function(v)
         local novel = Novel()
         local data = v:selectFirst("a")
-        novel:setLink(data:attr("href"))
+        novel:setLink(self.shrinkURL( data:attr("href")))
         local tit = data:attr("title")
         if tit == "" then
             tit = data:text()
@@ -175,6 +175,14 @@ function defaults:parse(doc, search)
         end
         return novel
     end)
+end
+
+function defaults:expandURL(url)
+    return self.baseURL .. "/novel/" .. url
+end
+
+function defaults:shrinkURL(url)
+    return url:gsub(self.baseURL .. "/novel/", "")
 end
 
 return function(baseURL, _self)

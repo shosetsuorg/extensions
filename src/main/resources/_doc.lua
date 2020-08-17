@@ -442,8 +442,14 @@ do
         return
     end
 
-    ---@class int @Inserted into lua formatter on run, DO NOT NAME A VARIABLE AS THIS. Used to get search query
-    local QUERY = 0
+    ---@return int @Inserted into lua formatter on run, DO NOT NAME A VARIABLE AS THIS. Used to get search query
+    local QUERY
+
+    ---@return int @Used in shrinkURL and expandURL
+    local KEY_CHAPTER_URL
+
+    ---@return int @Used in shrinkURL and expandURL
+    local KEY_NOVEL_URL
 
     -- EXTENSION METHODS
     do
