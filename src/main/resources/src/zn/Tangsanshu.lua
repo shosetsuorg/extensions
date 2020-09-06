@@ -86,7 +86,7 @@ return {
 	baseURL = baseURL,
 	imageURL = "http://www.tangsanshu.com/images/logo.png",
 	listings = {
-		Listing("Latest", {},false, latest)
+		Listing("Latest", false, latest)
 	},
 	-- Default functions that had to be set
 	getPassage = getPassage,

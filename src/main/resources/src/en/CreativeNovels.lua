@@ -99,7 +99,7 @@ return {
 	imageURL = "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
 	hasSearch = false,
 	listings = {
-		Listing("Popular", {},true, function(data, page)
+		Listing("Popular", true, function(data, page)
 			local doc = GETDocument(baseURL .. "/browse-new/?sb=rank")
 			local dat = getSecurity(doc, "search_results")
 			local url = qs({

@@ -41,7 +41,7 @@ return function(id, name, base, contentSel, image)
         baseURL = base,
         imageURL = image,
         listings = {
-            Listing("All Novels", {},false, function()
+            Listing("All Novels", false, function()
                 getNovels();
                 return novels
             end)

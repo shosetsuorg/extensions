@@ -61,8 +61,8 @@ return Require("Madara")("https://noveltrench.com", {
 	},
 	---@param _table table
 	appendToSearchFilters = function(_table)
-		table.insert(_table,7,
-				DropdownFilter("Genres Condition", { "OR (having one of selected genres)", "AND (having all selected genres" }))
+		table.insert(_table, 7,
+				DropdownFilter(2226, "Genres Condition", { "OR (having one of selected genres)", "AND (having all selected genres" }))
 		return _table
 	end,
 	appendToSearchURL = function(url, table)

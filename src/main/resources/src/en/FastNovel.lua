@@ -95,7 +95,7 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://fastnovel.net/skin/images/logo.png",
 	listings = {
-		Listing("Latest", {},true, parseLatest)
+		Listing("Latest", true, parseLatest)
 	},
 
 	getPassage = getPassage,
