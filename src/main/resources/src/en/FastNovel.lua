@@ -97,9 +97,19 @@ return {
 	listings = {
 		Listing("Latest", true, parseLatest)
 	},
-
+	---@param url string
+	---@param key int
+	shrinkURL = function(url, key)
+		return url:gsub(baseURL .. "/", "")
+	end,
+	---@param url string
+	---@param key int
+	expandURL = function(url, key)
+		return baseURL .. "/" .. url
+	end,
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = search,
-	updateSetting = function() end
+	updateSetting = function()
+	end
 }

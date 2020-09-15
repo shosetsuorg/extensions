@@ -18,7 +18,9 @@ local function getSecurity(doc, type)
 	return json.decode(data)
 end
 
-local function setSettings(setting) settings = setting end
+local function setSettings(setting)
+	settings = setting
+end
 
 local function getPassage(url)
 	return table.concat(map(
@@ -98,6 +100,24 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
 	hasSearch = false,
+	---@param url string
+	---@param key int
+	shrinkURL = function(url, key)
+		if (key == 1) then -- N
+			return url:gsub(baseURL.."/novel/","")
+		elseif (key == 2) then -- C
+			return url:gsub(baseURL.."/","")
+		end
+	end,
+	---@param url string
+	---@param key int
+	expandURL = function(url, key)
+		if (key == 1) then -- N
+			return baseURL .. "/novel/" .. url
+		elseif (key == 2) then -- C
+			return baseURL .. "/" .. url
+		end
+	end,
 	listings = {
 		Listing("Popular", true, function(data, page)
 			local doc = GETDocument(baseURL .. "/browse-new/?sb=rank")
@@ -138,6 +158,8 @@ return {
 	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-	search = function() end,
-	updateSetting = function() end
+	search = function()
+	end,
+	updateSetting = function()
+	end
 }
