@@ -185,6 +185,7 @@ function defaults:shrinkURL(url)
 	return url:gsub(self.baseURL .. "/" .. self.shrinkURLNovel .. "/", "")
 end
 
+
 return function(baseURL, _self)
 	_self = setmetatable(_self or {}, { __index = function(_, k)
 		local d = defaults[k]
@@ -203,7 +204,7 @@ return function(baseURL, _self)
 			CheckboxFilter(STATUS_FILTER_KEY_ON_HOLD, "On Hold")
 		}),
 		FilterGroup("Genres", map(_self.genres, function(v, _)
-			genres_map[keyID] = v:getName():lower():match("(%a+)")
+			genres_map[keyID] = k or v:lower():gsub(" ","-")
 			keyID = keyID + 1
 			return CheckboxFilter(keyID, v)
 		end)) -- 6
