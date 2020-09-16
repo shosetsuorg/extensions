@@ -5,6 +5,7 @@ return Require("Madara")("https://vipnovel.com", {
 	name = "VipNovel",
 	imageURL = "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
 	novelListingURLPath = "vipnovel",
+	shrinkURLNovel = "vipnovel",
 	genres = {
 		CheckboxFilter(3,"Action"),
 		CheckboxFilter(3,"Adult"),

@@ -5,9 +5,9 @@ local gsub, format, byte, char = string.gsub, string.format, string.byte, string
 ---@return string
 ---@param str string
 local function urlDecode(str)
-    if str == nil or str == "" then
-        return ""
-    end
+	if str == nil or str == "" then
+		return ""
+	end
 	str = gsub(str, '+', ' ')
 	str = gsub(str, '%%(%x%x)', function(h)
 		return char(tonumber(h, 16))
@@ -20,7 +20,7 @@ end
 ---@param str string
 local function urlEncode(str)
 	if str == nil or str == "" then
-        return ""
+		return ""
 	end
 	if str then
 		str = gsub(str, '\n', '\r\n')

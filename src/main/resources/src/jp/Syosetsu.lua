@@ -11,7 +11,7 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://static.syosetu.com/view/images/common/logo_yomou.png",
 	listings = {
-		Listing("Latest",  true, function(data, page)
+		Listing("Latest", true, function(data, page)
 			if page == 0 then
 				page = 1
 			end
@@ -64,6 +64,12 @@ return {
 			end)))
 		end
 		return novelPage
+	end,
+	shrinkURL = function(url)
+		return url:gsub((passageURL .. "/n"), "")
+	end,
+	expandURL = function(url)
+		return passageURL .. "/n" .. url
 	end,
 	search = function(data)
 		return map(GETDocument(baseURL .. "/search.php?&word=" .. data[0]:gsub("%+", "%2"):gsub(" ", "\\+")):select("div.searchkekka_box"), function(v)

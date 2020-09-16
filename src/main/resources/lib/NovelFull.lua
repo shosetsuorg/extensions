@@ -6,50 +6,50 @@
 
 
 ---@type fun(tbl: table , url: string): string
-local qs=Require("url").querystring
+local qs = Require("url").querystring
 
-local text=function(v)
+local text = function(v)
 	return v:text()
 end
 
-local defaults={
-	meta_offset=1,
-	ajax_hot="/ajax/hot-novels",
-	ajax_latest="/ajax/latest-novels",
-	ajax_chapters="/ajax/chapter-option",
-	appendURLToInfoImage=true,
-	searchTitleSel=".novel-title",
+local defaults = {
+	meta_offset = 1,
+	ajax_hot = "/ajax/hot-novels",
+	ajax_latest = "/ajax/latest-novels",
+	ajax_chapters = "/ajax/chapter-option",
+	appendURLToInfoImage = true,
+	searchTitleSel = ".novel-title",
 
-	hasCloudFlare=false,
-	hasSearch=true
+	hasCloudFlare = false,
+	hasSearch = true
 }
 
 function defaults:search(data)
 	-- search gives covers but they're in some weird aspect ratio
-	local doc=GETDocument(qs({ keyword=data[0] },self.baseURL .. "/search"))
-	local pager=doc:selectFirst(".pagination.pagination-sm")
-	local pages={
-		map(doc:selectFirst("div." .. self.searchListSel):select("div.row"),function(v)
-			local novel=Novel()
+	local doc = GETDocument(qs({ keyword = data[0] }, self.baseURL .. "/search"))
+	local pager = doc:selectFirst(".pagination.pagination-sm")
+	local pages = {
+		map(doc:selectFirst("div." .. self.searchListSel):select("div.row"), function(v)
+			local novel = Novel()
 			novel:setImageURL(v:selectFirst("img.cover"):attr("src"))
-			local d=v:selectFirst(self.searchTitleSel .. " a")
+			local d = v:selectFirst(self.searchTitleSel .. " a")
 			novel:setLink(d:attr("href"))
 			novel:setTitle(d:attr("title"))
 			return novel
 		end)
 	}
 	if pager then
-		local last=pager:selectFirst("li.last:not(.disabled) a")
+		local last = pager:selectFirst("li.last:not(.disabled) a")
 		if not last then
-			last=pager:select("li a[data-page]")
-			last=last:get(last:size())
+			last = pager:select("li a[data-page]")
+			last = last:get(last:size())
 		end
-		last=tonumber(last:attr("data-page")) + 1
+		last = tonumber(last:attr("data-page")) + 1
 
-		for i=2,last do
-			pages[i]=map(GETDocument(qs({ s=data[0],page=i },self.baseURL .. "/search")):select(".novel-title a"),
+		for i = 2, last do
+			pages[i] = map(GETDocument(qs({ s = data[0],page = i }, self.baseURL .. "/search")):select(".novel-title a"),
 					function(v)
-						local novel=Novel()
+						local novel = Novel()
 						novel:setLink(self.shrinkURL(v:attr("href")))
 						novel:setTitle(v:attr("title"))
 						return novel
@@ -61,33 +61,33 @@ function defaults:search(data)
 end
 
 function defaults:getPassage(url)
-	return table.concat(mapNotNil(GETDocument(url):selectFirst("#chr-content, #chapter-content"):select("p"),text),"\n")
+	return table.concat(mapNotNil(GETDocument(url):selectFirst("#chr-content, #chapter-content"):select("p"), text), "\n")
 end
 
-function defaults:parseNovel(url,loadChapters)
-	local doc=GETDocument(url)
-	local info=NovelInfo()
+function defaults:parseNovel(url, loadChapters)
+	local doc = GETDocument(url)
+	local info = NovelInfo()
 
-	local elem=doc:selectFirst(".info"):children()
+	local elem = doc:selectFirst(".info"):children()
 	info:setTitle(doc:selectFirst("h3.title"):text())
-	info:setArtists(map(elem:get(self.meta_offset):select("a"),text))
-	info:setGenres(map(elem:get(self.meta_offset + 1):select("a"),text))
+	info:setArtists(map(elem:get(self.meta_offset):select("a"), text))
+	info:setGenres(map(elem:get(self.meta_offset + 1):select("a"), text))
 	info:setStatus(NovelStatus(elem:get(self.meta_offset + 3):select("a"):text() == "Completed" and 1 or 0))
 
 	info:setImageURL((self.appendURLToInfoImage and self.baseURL or "") .. doc:selectFirst("div.book img"):attr("src"))
-	info:setDescription(table.concat(map(doc:select("div.desc-text p"),text),"\n"))
+	info:setDescription(table.concat(map(doc:select("div.desc-text p"), text), "\n"))
 
 	if loadChapters then
-		local id=doc:selectFirst("div[data-novel-id]"):attr("data-novel-id")
-		local i=0
+		local id = doc:selectFirst("div[data-novel-id]"):attr("data-novel-id")
+		local i = 0
 		info:setChapters(AsList(map(
-				GETDocument(qs({ novelId=id,currentChapterId="" },self.ajax_base .. self.ajax_chapters)):selectFirst("select"):children(),
+				GETDocument(qs({ novelId = id,currentChapterId = "" }, self.ajax_base .. self.ajax_chapters)):selectFirst("select"):children(),
 				function(v)
-					local chap=NovelChapter()
+					local chap = NovelChapter()
 					chap:setLink(self.shrinkURL(v:attr("value")))
 					chap:setTitle(v:text())
 					chap:setOrder(i)
-					i=i + 1
+					i = i + 1
 					return chap
 				end)))
 	end
@@ -97,7 +97,7 @@ end
 
 ---@param url string
 function defaults:shrinkURL(url)
-	return url:gsub(self.baseURL,"")
+	return url:gsub(self.baseURL, "")
 end
 
 ---@param url string
@@ -105,35 +105,35 @@ function defaults:expandURL(url)
 	return self.baseURL .. url
 end
 
-return function(baseURL,_self)
-	_self=setmetatable(_self or {},{ __index=function(_,k)
-		local d=defaults[k]
-		return (type(d) == "function" and wrap(_self,d) or d)
+return function(baseURL, _self)
+	_self = setmetatable(_self or {}, { __index = function(_, k)
+		local d = defaults[k]
+		return (type(d) == "function" and wrap(_self, d) or d)
 	end })
-	_self["baseURL"]=baseURL
+	_self["baseURL"] = baseURL
 	if not _self["ajax_base"] then
-		_self["ajax_base"]=baseURL
+		_self["ajax_base"] = baseURL
 	end
-	_self["listings"]={
-		Listing("Hot",false,function()
-			return map(GETDocument(_self.ajax_base .. _self.ajax_hot):select("div.item a"),function(v)
-				local novel=Novel()
+	_self["listings"] = {
+		Listing("Hot", false, function()
+			return map(GETDocument(_self.ajax_base .. _self.ajax_hot):select("div.item a"), function(v)
+				local novel = Novel()
 				novel:setImageURL(baseURL .. v:selectFirst("img"):attr("src"))
 				novel:setTitle(v:attr("title"))
 				novel:setLink(v:attr("href"))
 				return novel
 			end)
 		end),
-		Listing("Latest",false,function()
-			return map(GETDocument(_self.ajax_base .. _self.ajax_latest):select("div.row .col-title a"),function(v)
-				local novel=Novel()
+		Listing("Latest", false, function()
+			return map(GETDocument(_self.ajax_base .. _self.ajax_latest):select("div.row .col-title a"), function(v)
+				local novel = Novel()
 				novel:setTitle(v:text())
 				novel:setLink(v:attr("href"))
 				return novel
 			end)
 		end)
 	}
-	_self["updateSetting"]=function()
+	_self["updateSetting"] = function()
 	end
 	return _self
 end
