@@ -9,7 +9,6 @@ return Require("Madara")("https://foxaholic.com", {
 		"Adventure",
 		"BG",
 		"BL",
-		"Chinese Novel",
 		"Comedy",
 		"Drama",
 		"Ecchi",
@@ -20,14 +19,12 @@ return Require("Madara")("https://foxaholic.com", {
 		"Historical",
 		"Horror",
 		"Isekai",
-		"Japanese Novels",
 		"Josei",
 		"Martial Arts",
 		"Mature",
 		"Mecha",
 		"Modern",
 		"Mystery",
-		"Original Novel",
 		"Psychological",
 		"Rebirth",
 		"Romance",
@@ -43,5 +40,8 @@ return Require("Madara")("https://foxaholic.com", {
 		"Wuxia",
 		"Xianxia",
 		"Xuanhuan"
+		chinese = "Chinese Novel",
+		japanese = "Japanese Novels",
+		original = "Original Novel",
 	}
 })

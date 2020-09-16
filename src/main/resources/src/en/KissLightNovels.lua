@@ -16,7 +16,6 @@ return Require("Madara")(baseURL, {
 	latestNovelSel = "div.col-6.col-md-3",
 	novelPageTitleSel = "h1",
 	genres = {
-		"17+",
 		"Action",
 		"Adventure",
 		"Comedy",
@@ -30,7 +29,6 @@ return Require("Madara")(baseURL, {
 		"Harem",
 		"Historical",
 		"Horror",
-		"Hot Light Novel",
 		"Josei",
 		"Manhua",
 		"Martial Arts",
@@ -57,6 +55,8 @@ return Require("Madara")(baseURL, {
 		"Xianxia",
 		"Xuanhuan",
 		"Yaoi",
-		"Yuri"
+		"Yuri",
+		["a-novel"] = "17+",
+		["hot-light-novels"] = "Hot Light Novel"
 	},
 })
