@@ -5,6 +5,14 @@
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
 
+local function shrinkURL(url)
+	return url:gsub(passageURL, "")
+end
+
+local function expandURL(url)
+	return passageURL .. url
+end
+
 return {
 	id = 3,
 	name = "Syosetsu",
@@ -18,7 +26,7 @@ return {
 			return map(GETDocument(baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. page):select("div.searchkekka_box"), function(v)
 				local novel = Novel()
 				local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
-				novel:setLink(e:attr("href"))
+				novel:setLink(shrinkURL(e:attr("href")))
 				novel:setTitle(e:text())
 				return novel
 			end)
@@ -57,7 +65,7 @@ return {
 			novelPage:setChapters(AsList(map(document:select("dl.novel_sublist2"), function(v, i)
 				local chap = NovelChapter()
 				chap:setTitle(v:selectFirst("a"):text())
-				chap:setLink(passageURL .. v:selectFirst("a"):attr("href"))
+				chap:setLink(v:selectFirst("a"):attr("href"))
 				chap:setRelease(v:selectFirst("dt.long_update"):text())
 				chap:setOrder(i)
 				return chap
@@ -65,17 +73,13 @@ return {
 		end
 		return novelPage
 	end,
-	shrinkURL = function(url)
-		return url:gsub((passageURL .. "/n"), "")
-	end,
-	expandURL = function(url)
-		return passageURL .. "/n" .. url
-	end,
+	shrinkURL = shrinkURL,
+	expandURL = expandURL,
 	search = function(data)
 		return map(GETDocument(baseURL .. "/search.php?&word=" .. data[0]:gsub("%+", "%2"):gsub(" ", "\\+")):select("div.searchkekka_box"), function(v)
 			local novel = Novel()
 			local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
-			novel:setLink(e:attr("href"))
+			novel:setLink(shrinkURL(e:attr("href")))
 			novel:setTitle(e:text())
 			return novel
 		end)

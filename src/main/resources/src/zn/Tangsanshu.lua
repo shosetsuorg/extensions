@@ -3,6 +3,16 @@
 local baseURL = "http://www.tangsanshu.com"
 local encode = Require("url").encode
 
+---@param url string
+local function shrinkURL(url)
+	return url:gsub(baseURL, "")
+end
+
+---@param url string
+local function expandURL(url)
+	return baseURL .. url
+end
+
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 local function getPassage(url)
 	return GETDocument(url):selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+", "\n"):gsub("&nbsp;", "")
@@ -38,7 +48,7 @@ local function parseNovel(url, loadChapters)
 				chapter:setOrder(i)
 				local data = v:selectFirst("a")
 				chapter:setTitle(data:text())
-				chapter:setLink(baseURL .. data:attr("href"))
+				chapter:setLink(data:attr("href"))
 				i = i + 1
 				return chapter
 			else
@@ -52,33 +62,33 @@ local function parseNovel(url, loadChapters)
 	return novelPage
 end
 
----@return Array @Novel array list
 local function latest()
 	local document = GETDocument(baseURL)
 	return map(document:selectFirst("div.up"):selectFirst("div.l"):select("li"), function(v)
 		local novel = Novel()
 		local data = v:selectFirst("span.s2"):selectFirst("a")
 		novel:setTitle(data:text())
-		novel:setLink(baseURL .. data:attr("href"))
+		novel:setLink(data:attr("href"))
 		return novel
 	end)
 end
 
 --- @param data table @Table of values. Always has "query"
----@return Array @Novel array list
 local function search(data)
-	local url = baseURL .. "/s.php?ie=utf-8&q=" .. encode(data[0])
+	print(data[QUERY])
+	print(data[QUERY]:gsub(".", function(c) return string.format("%02X", string.byte(c)) end))
+	print(encode(data[QUERY]))
+	local url = baseURL .. "/s.php?ie=utf-8&q=" .. encode(data[QUERY])
 	print(url)
 	local document = GETDocument(url)
 	return map(document:select("div.bookbox"), function(v)
 		local novel = Novel()
 		local data = document:selectFirst("h4.bookname"):selectFirst("a")
 		novel:setTitle(data:text())
-		novel:setLink(baseURL .. data:attr("href"))
+		novel:setLink(data:attr("href"))
 		novel:setImageURL(baseURL .. document:selectFirst("a"):attr("href"))
 	end)
 end
-
 
 return {
 	id = 234,
@@ -92,5 +102,7 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = search,
+	shrinkURL = shrinkURL,
+	expandURL = expandURL,
 	updateSetting = function() end
 }
