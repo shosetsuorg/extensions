@@ -22,8 +22,8 @@ end
 local function parseNovel(url, loadChapters)
 	local novelPage = NovelInfo()
 	local document = GETDocument(url)
-	-- Info
 
+	-- Info
 	local info = document:selectFirst("div.info")
 	novelPage:setTitle(info:selectFirst("h2"):text())
 	novelPage:setImageURL(baseURL .. info:selectFirst("img"):attr("src"))
@@ -38,7 +38,7 @@ local function parseNovel(url, loadChapters)
 	novelPage:setStatus(NovelStatus(status == "完本" and 1 or status == "连载中" and 0 or 3))
 	novelPage:setDescription(info:selectFirst("div.intro"):text():gsub("<span>简介：</span>", ""):gsub("<br>", "\n"))
 
-	-- NovelChapters
+	-- Chapters
 	if loadChapters then
 		local found = false
 		local i = 0
@@ -75,11 +75,7 @@ end
 
 --- @param data table @Table of values. Always has "query"
 local function search(data)
-	print(data[QUERY])
-	print(data[QUERY]:gsub(".", function(c) return string.format("%02X", string.byte(c)) end))
-	print(encode(data[QUERY]))
 	local url = baseURL .. "/s.php?ie=utf-8&q=" .. encode(data[QUERY])
-	print(url)
 	local document = GETDocument(url)
 	return map(document:select("div.bookbox"), function(v)
 		local novel = Novel()
