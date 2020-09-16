@@ -16,6 +16,11 @@ local function urlDecode(str)
 	return str
 end
 
+local encode_tbl = {"_" = true, "-" = true, "~" = true, "." = true}
+for b=byte('a'),byte('z') do encode_tbl[char(b)] = true end
+for b=byte('A'),byte('Z') do encode_tbl[char(b)] = true end
+for b=byte('0'),byte('9') do encode_tbl[char(b)] = true end
+
 ---@return string
 ---@param str string
 local function urlEncode(str)
@@ -24,8 +29,12 @@ local function urlEncode(str)
 	end
 	if str then
 		str = gsub(str, '\n', '\r\n')
-		str = gsub(str, '([^%w-_.~])', function(c)
-			return format('%%%02X', byte(c))
+		str = gsub(str, '(.)', function(c)
+			if encode_tbl[c] then
+				return c
+			else
+				return format('%%%02X', byte(c))
+			end
 		end)
 	end
 	return str
