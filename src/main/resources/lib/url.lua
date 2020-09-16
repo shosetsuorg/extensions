@@ -16,7 +16,7 @@ local function urlDecode(str)
 	return str
 end
 
-local encode_tbl = {"_" = true, "-" = true, "~" = true, "." = true}
+local encode_tbl = {["_"] = true, ["-"] = true, ["~"] = true, ["."] = true}
 for b=byte('a'),byte('z') do encode_tbl[char(b)] = true end
 for b=byte('A'),byte('Z') do encode_tbl[char(b)] = true end
 for b=byte('0'),byte('9') do encode_tbl[char(b)] = true end

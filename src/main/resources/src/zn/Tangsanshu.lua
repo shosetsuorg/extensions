@@ -83,6 +83,7 @@ local function search(data)
 		novel:setTitle(data:text())
 		novel:setLink(data:attr("href"))
 		novel:setImageURL(baseURL .. document:selectFirst("a"):attr("href"))
+		return novel
 	end)
 end
 
