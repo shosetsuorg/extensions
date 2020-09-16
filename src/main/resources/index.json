@@ -54,15 +54,6 @@
       "md5": "161b6193d54c876cc658bd353f6623"
     },
     {
-      "name": "247Truyen",
-      "fileName": "247Truyen",
-      "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
-      "id": 247,
-      "lang": "vi",
-      "version": "1.0.0",
-      "md5": "284a277273c1f4139720c53a7b53c92c"
-    },
-    {
       "name": "VipNovel",
       "fileName": "VipNovel",
       "imageURL": "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
@@ -151,24 +142,6 @@
       "lang": "en",
       "version": "1.0.0",
       "md5": "adde12e1a74dd843afc870295831fda"
-    },
-    {
-      "name": "NovelOnlineFree",
-      "fileName": "NovelOnlineFree",
-      "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
-      "id": 814,
-      "lang": "en",
-      "version": "1.0.0",
-      "md5": "597dc441d9569d6de3a99929732a82a1"
-    },
-    {
-      "name": "NovelOnlineFull",
-      "fileName": "NovelOnlineFull",
-      "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
-      "id": 510,
-      "lang": "en",
-      "version": "1.0.0",
-      "md5": "ef2beef432c3dfbf15ef313aa0723c2e"
     },
     {
       "name": "NovelTrench",
