@@ -35,13 +35,13 @@ return {
 
 	-- Must have at least one value
 	listings = {
-		Listing("Something", {},false, function(data)
+		Listing("Something", false, function(data)
 			return {}
 		end),
-		Listing("Something (with pages!)",{}, true, function(data, index)
+		Listing("Something (with pages!)", true, function(data, index)
 			return {}
 		end),
-		Listing("Something without anything",{}, false, function()
+		Listing("Something without anything", false, function()
 			return {}
 		end)
 	},
@@ -50,14 +50,14 @@ return {
 	searchFilters = {
 		TextFilter(1, "RANDOM STRING INPUT"),
 		SwitchFilter(2, "RANDOM SWITCH INPUT"),
-		RadioGroupFilter(3, "RANDOM RGROUP INPUT", { "A", "B", "C" }),
-		DropdownFilter(4, "RANDOM DDOWN INPUT", { "A", "B", "C" })
+		RadioGroupFilter(3, "RANDOM RGROUP INPUT", { "A","B","C" }),
+		DropdownFilter(4, "RANDOM DDOWN INPUT", { "A","B","C" })
 	},
 	settings = {
 		TextFilter(1, "RANDOM STRING INPUT"),
 		SwitchFilter(2, "RANDOM SWITCH INPUT"),
-		RadioGroupFilter(3, "RANDOM RGROUP INPUT", { "A", "B", "C" }),
-		DropdownFilter(4, "RANDOM DDOWN INPUT", { "A", "B", "C" })
+		RadioGroupFilter(3, "RANDOM RGROUP INPUT", { "A","B","C" }),
+		DropdownFilter(4, "RANDOM DDOWN INPUT", { "A","B","C" })
 	},
 
 	-- Default functions that have to be set

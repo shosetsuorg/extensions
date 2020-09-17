@@ -5,10 +5,12 @@
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
 
+---@param url string
 local function shrinkURL(url)
 	return url:gsub(passageURL, "")
 end
 
+---@param url string
 local function expandURL(url)
 	return passageURL .. url
 end
@@ -23,7 +25,9 @@ return {
 			if page == 0 then
 				page = 1
 			end
-			return map(GETDocument(baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. page):select("div.searchkekka_box"), function(v)
+			return map(GETDocument(
+					baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. page)
+					:select("div.searchkekka_box"), function(v)
 				local novel = Novel()
 				local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
 				novel:setLink(shrinkURL(e:attr("href")))
@@ -76,13 +80,15 @@ return {
 	shrinkURL = shrinkURL,
 	expandURL = expandURL,
 	search = function(data)
-		return map(GETDocument(baseURL .. "/search.php?&word=" .. data[0]:gsub("%+", "%2"):gsub(" ", "\\+")):select("div.searchkekka_box"), function(v)
-			local novel = Novel()
-			local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
-			novel:setLink(shrinkURL(e:attr("href")))
-			novel:setTitle(e:text())
-			return novel
-		end)
+		return map(GETDocument(baseURL .. "/search.php?&word=" .. data[0]:gsub("%+", "%2"):gsub(" ", "\\+"))
+				:select("div.searchkekka_box"),
+				function(v)
+					local novel = Novel()
+					local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
+					novel:setLink(shrinkURL(e:attr("href")))
+					novel:setTitle(e:text())
+					return novel
+				end)
 	end,
 	updateSetting = function()
 	end

@@ -11,12 +11,14 @@ local defaults = {
 }
 
 ---@param page int @increment
+---@return table
 function defaults:latest(data, page)
 	return self.parse(GETDocument(
 			self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. page
 	))
 end
 
+---@return table
 function defaults:search(data)
 	return self.parse(GETDocument(self.___baseURL ..
 			"/" .. self.novelSearchPath ..
@@ -97,6 +99,7 @@ function defaults:parseNovel(url, loadChapters)
 end
 
 ---@param doc Document
+---@return table
 function defaults:parse(doc)
 	return map(doc:select("div.update_item.list_category"), function(v)
 		local novel = Novel()

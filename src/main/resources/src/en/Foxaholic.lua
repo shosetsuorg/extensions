@@ -39,7 +39,7 @@ return Require("Madara")("https://foxaholic.com", {
 		"Transmigration",
 		"Wuxia",
 		"Xianxia",
-		"Xuanhuan"
+		"Xuanhuan",
 		chinese = "Chinese Novel",
 		japanese = "Japanese Novels",
 		original = "Original Novel",

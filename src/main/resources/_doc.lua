@@ -668,14 +668,14 @@ do
         end
 
         ---@param name string
-        ---@param choices string[] | Array
+        ---@param choices string[] | Array | table
         ---return RadioGroupFilter
         function RadioGroupFilter(id, name, choices)
             return
         end
 
         ---@param name string
-        ---@param choices string[] | Array
+        ---@param choices string[] | Array | table
         ---return DropdownFilter
         function DropdownFilter(id, name, choices)
             return

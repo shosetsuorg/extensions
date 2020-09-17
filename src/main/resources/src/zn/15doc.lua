@@ -4,6 +4,8 @@
 
 local baseURL = "http://www.15doc.com"
 
+---@param url string
+---@return table
 local function parse(url)
 	local doc = GETDocument(url)
 	return map(doc:selectFirst("ul.item-con"):select("li"), function(v)
@@ -21,19 +23,19 @@ local t = baseURL .. "/top/"
 local tF = "/1.htm"
 
 --- 最近更新
---- @return Novel[]
+--- @return Novel[] | table
 local function getByLastUpdate()
 	return parse(t .. "lastupdate" .. tF)
 end
 
 --- 最新入库
---- @return Novel[]
+--- @return Novel[] | table
 local function getByPostDate()
 	return parse(t .. "postdate" .. tF)
 end
 
 --- 总排行榜
---- @return Novel[]
+--- @return Novel[] | table
 local function getByAllVisit()
 	return parse(t .. "allvisit" .. tF)
 end
@@ -90,9 +92,9 @@ return {
 	imageURL = (baseURL .. "/themes/yssm/logo.png"),
 	hasSearch = false,
 	listings = {
-		Listing("最近更新",  false, getByLastUpdate),
-		Listing("最新入库",  false, getByPostDate),
-		Listing("总排行榜",  false, getByAllVisit)
+		Listing("最近更新", false, getByLastUpdate),
+		Listing("最新入库", false, getByPostDate),
+		Listing("总排行榜", false, getByAllVisit)
 	},
 
 	-- Default functions that had to be set

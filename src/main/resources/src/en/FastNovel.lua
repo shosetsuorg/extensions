@@ -8,7 +8,6 @@ local function setSettings(setting)
 	settings = setting
 end
 
----@param document Document @Jsoup document of the page with chapter text on it
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 local function getPassage(url)
 	return table.concat(map(GETDocument(url):select("div.box-player"):select("p"), function(v)
@@ -16,7 +15,7 @@ local function getPassage(url)
 	end), "\n")
 end
 
----@param document Document @Jsoup document of the novel information page
+---@param url string
 ---@return NovelInfo
 local function parseNovel(url)
 	local novelPage = NovelInfo()
@@ -64,8 +63,7 @@ local function parseNovel(url)
 	return novelPage
 end
 
----@param document Document @Jsoup document of latest listing
----@return Array @Novel array list
+---@return table @Novel array list
 local function parseLatest(data, page)
 	return map(GETDocument(baseURL .. "/list/latest.html?page=" .. page):selectFirst("ul.list-film"):select("li.film-item"), function(v)
 		local novel = Novel()
@@ -77,14 +75,14 @@ local function parseLatest(data, page)
 	end)
 end
 
----@return Array @Novel array list
+---@return table @Novel array list
 local function search(data)
 	return map(GETDocument(baseURL .. "/search/" .. data[QUERY]:gsub(" ", "%%20")):select("ul.list-film"), function(v)
 		local novel = Novel()
-		local data = v:selectFirst("a")
-		novel:setLink(baseURL .. data:attr("href"))
-		novel:setTitle(data:attr("title"))
-		novel:setImageURL(data:selectFirst("div.img"):attr("data-original"))
+		local novelData = v:selectFirst("a")
+		novel:setLink(baseURL .. novelData:attr("href"))
+		novel:setTitle(novelData:attr("title"))
+		novel:setImageURL(novelData:selectFirst("div.img"):attr("data-original"))
 		return novel
 	end)
 end

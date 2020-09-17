@@ -13,6 +13,7 @@ local function expandURL(url)
 	return baseURL .. url
 end
 
+---@param url string
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 local function getPassage(url)
 	return GETDocument(url):selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+", "\n"):gsub("&nbsp;", "")
@@ -79,9 +80,9 @@ local function search(data)
 	local document = GETDocument(url)
 	return map(document:select("div.bookbox"), function(v)
 		local novel = Novel()
-		local data = document:selectFirst("h4.bookname"):selectFirst("a")
-		novel:setTitle(data:text())
-		novel:setLink(data:attr("href"))
+		local novelData = document:selectFirst("h4.bookname"):selectFirst("a")
+		novel:setTitle(novelData:text())
+		novel:setLink(novelData:attr("href"))
 		novel:setImageURL(baseURL .. document:selectFirst("a"):attr("href"))
 		return novel
 	end)

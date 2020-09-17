@@ -10,6 +10,7 @@ local qs = Require("url").querystring
 ---@type dkjson
 local json = Require("dkjson")
 
+---@param doc Document
 local function getSecurity(doc, type)
 	local data = first(doc:select("script"), function(v)
 		local t = v:html()
@@ -22,6 +23,7 @@ local function setSettings(setting)
 	settings = setting
 end
 
+---@param url string
 local function getPassage(url)
 	return table.concat(map(
 			GETDocument(url):selectFirst("div.entry-content.content"):select("p"),
@@ -103,18 +105,22 @@ return {
 	---@param url string
 	---@param key int
 	shrinkURL = function(url, key)
-		if (key == 1) then -- N
-			return url:gsub(baseURL.."/novel/","")
-		elseif (key == 2) then -- C
-			return url:gsub(baseURL.."/","")
+		if (key == 1) then
+			-- N
+			return url:gsub(baseURL .. "/novel/", "")
+		elseif (key == 2) then
+			-- C
+			return url:gsub(baseURL .. "/", "")
 		end
 	end,
 	---@param url string
 	---@param key int
 	expandURL = function(url, key)
-		if (key == 1) then -- N
+		if (key == 1) then
+			-- N
 			return baseURL .. "/novel/" .. url
-		elseif (key == 2) then -- C
+		elseif (key == 2) then
+			-- C
 			return baseURL .. "/" .. url
 		end
 	end,
@@ -123,9 +129,9 @@ return {
 			local doc = GETDocument(baseURL .. "/browse-new/?sb=rank")
 			local dat = getSecurity(doc, "search_results")
 			local url = qs({
-				action = "search_results", sb = "rank",
-				view_id = page, security = dat.security,
-				gref = "", sta = "",
+				action = "search_results",sb = "rank",
+				view_id = page,security = dat.security,
+				gref = "",sta = "",
 			}, ajaxURL)
 			local data = Request(GET(url)):body():string()
 
