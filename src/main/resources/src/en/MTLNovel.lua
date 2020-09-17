@@ -4,13 +4,13 @@ local baseURL = "https://www.mtlnovel.com"
 local settings = { [1] = 0 }
 
 local ORDER_BYS_INT = { [0] = "date",[1] = "name",[2] = "rating",[3] = "view" }
-local ORDER_BYS_KEY = 2
+local ORDER_BYS_KEY = 102
 
 local ORDERS_INT = { [0] = "desc",[1] = "asc" }
-local ORDERS_KEY = 2
+local ORDERS_KEY = 103
 
 local STATUES_INT = { [0] = "all",[1] = "completed",[2] = "ongoing" }
-local STATUSES_KEY = 2
+local STATUSES_KEY = 104
 
 ---@type fun(table, string): string
 local qs = Require("url").querystring
