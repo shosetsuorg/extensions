@@ -6,3 +6,6 @@ target/*
 personal
 .gradle
 out/*
+gradlew
+gradlew.bat
+gradle
