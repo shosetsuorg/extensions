@@ -2,6 +2,7 @@
 
 local baseURL = "https://saikaiscan.com.br"
 local settings = {}
+local encode = Require("url").encode
 
 local FILTER_TIPO_KEY = 91
 local TIPO_V = { [0] = "novels",[1] = "manhuas",[2] = "curiosities" }
@@ -11,7 +12,7 @@ local TIPO_V = { [0] = "novels",[1] = "manhuas",[2] = "curiosities" }
 local function getPassage(chapterURL)
 	local lines = GETDocument(chapterURL):selectFirst("div.full-text"):select("p")
 	local passage = "\n"
-	map(lines,function (e)
+	map(lines, function(e)
 		passage = passage .. e:text() .. "\n"
 	end)
 	return passage
@@ -45,7 +46,7 @@ local function parseNovel(novelURL)
 	local chaptersDocs = document:selectFirst("div.project-chapters"):select("div.chapters")
 
 	local chapterCount = 0
-	---@type ArrayList
+
 	local chapters = map2flat(chaptersDocs, function(e)
 		return e:select("a")
 	end, function(e)
@@ -56,14 +57,28 @@ local function parseNovel(novelURL)
 		chapterCount = chapterCount + 1
 		return chapter
 	end)
-	novelInfo:setChapters(chapters)
+	novelInfo:setChapters(AsList(chapters))
 	return novelInfo
 end
 
 --- @param filters table @of applied filter values [QUERY] is the search query, may be empty
---- @param reporter fun(v : string | any)
---- @return Novel[]
-local function search(filters, reporter)
+local function search(filters)
+	local query = encode(filters[QUERY])
+	local document = GETDocument(baseURL .. "/busca?q=" .. query)
+	local divs = document:select("div")
+	for i = 0, divs:size() - 1 do
+		if divs:get(i):id() == "news-content" then
+			local listing = divs:get(i)
+			return map(listing:select("li"), function(e)
+				local n = Novel()
+				n:setTitle(e:selectFirst("h3"):text())
+				local image = e:selectFirst("div.image")
+				n:setImageURL(image:attr("data-src"))
+				n:setLink(image:selectFirst("a"):attr("href"))
+				return n
+			end)
+		end
+	end
 	return {}
 end
 
