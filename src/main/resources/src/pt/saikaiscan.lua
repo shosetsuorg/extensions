@@ -47,7 +47,7 @@ local function parseNovel(novelURL)
 	local chapterCount = 0
 	---@type ArrayList
 	local chapters = map2flat(chaptersDocs, function(e)
-		return chaptersDocs:select("a")
+		return e:select("a")
 	end, function(e)
 		local chapter = NovelChapter()
 		chapter:setTitle(e:text())
