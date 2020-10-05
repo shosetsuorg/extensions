@@ -101,7 +101,7 @@
     {
       "name": "BestLightNovel",
       "fileName": "BestLightNovel",
-      "imageURL": "https://247truyen.com/themes/home/images/favicon.png",
+      "imageURL": "https://bestlightnovel.com/themes/home/images/favicon.png",
       "id": 5,
       "lang": "en",
       "version": "2.0.0",
@@ -151,6 +151,15 @@
       "lang": "en",
       "version": "1.0.0",
       "md5": "1ae42bf8b4b46ffd421f1d4c9b84be9"
+    },
+    {
+      "name": "Saikai Scan",
+      "fileName": "SaikaiScan",
+      "imageURL": "https://saikaiscan.com.br/media/cache/16/89/1689ed75fe55808825d33185a28788ed.png",
+      "id": 2443,
+      "lang": "pt",
+      "version": "1.0.0",
+      "md5": "c47e56dfa754a3f0e95fc6a57d9e15b6"
     }
   ]
 }
