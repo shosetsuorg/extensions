@@ -73,7 +73,7 @@ return function(id, name, base, contentSel, image)
 		end,
 		search = function(s)
 			getNovels()
-			local q = s[0]:lower()
+			local q = s[QUERY]:lower()
 			return filter(AsList(novels), function(v)
 				local i = v:getTitle():lower():find(q)
 				return i ~= nil

@@ -443,7 +443,10 @@ do
     end
 
     ---@return int @Inserted into lua formatter on run, DO NOT NAME A VARIABLE AS THIS. Used to get search query
-    local QUERY
+    local QUERY = 0
+
+    ---@return int @Inserted into lua formatter on run, DO NOT NAME A VARIABLE AS THIS. Used to get page #
+    local PAGE = 1
 
     ---@return int @Used in shrinkURL and expandURL
     local KEY_CHAPTER_URL
@@ -620,7 +623,7 @@ do
     do
         ---@param name string
         ---@param increments boolean
-        ---@param func fun(): Novel[] | fun(data: table, inc: int): Novel[]
+        ---@param func fun(): Novel[] | fun(data: table): Novel[]
         ---@return Listing
         function Listing(name, increments, func)
             return

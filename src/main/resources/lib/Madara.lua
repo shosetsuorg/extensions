@@ -20,24 +20,24 @@ local defaults = {
 	hasSearch = true
 }
 
-local ORDER_BY_FILTER_KEY = 1
+local ORDER_BY_FILTER_KEY = 2
 local ORDER_BY_FILTER_EXT = { "Relevance","Latest","A-Z","Rating","Trending","Most Views","New" }
 
-local AUTHOR_FILTER_KEY = 2
-local ARTIST_FILTER_KEY = 3
-local RELEASE_FILTER_KEY = 4
-local STATUS_FILTER_KEY_COMPLETED = 5
-local STATUS_FILTER_KEY_ONGOING = 6
-local STATUS_FILTER_KEY_CANCELED = 7
-local STATUS_FILTER_KEY_ON_HOLD = 8
+local AUTHOR_FILTER_KEY = 3
+local ARTIST_FILTER_KEY = 4
+local RELEASE_FILTER_KEY = 5
+local STATUS_FILTER_KEY_COMPLETED = 6
+local STATUS_FILTER_KEY_ONGOING = 7
+local STATUS_FILTER_KEY_CANCELED = 8
+local STATUS_FILTER_KEY_ON_HOLD = 9
 
 function defaults:encode(string)
 	return encode(string)
 end
 
 ---@param page int @increment
-function defaults:latest(data, page)
-	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
+function defaults:latest(data)
+	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. data[PAGE] .. "/?m_orderby=latest"))
 end
 
 --- @param table table

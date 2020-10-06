@@ -12,9 +12,9 @@ local defaults = {
 
 ---@param page int @increment
 ---@return table
-function defaults:latest(data, page)
+function defaults:latest(data)
 	return self.parse(GETDocument(
-			self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. page
+			self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. data[PAGE]
 	))
 end
 
@@ -22,7 +22,8 @@ end
 function defaults:search(data)
 	return self.parse(GETDocument(self.___baseURL ..
 			"/" .. self.novelSearchPath ..
-			"/" .. data[0]:gsub(" ", "_")))
+			"/" .. data[QUERY]:gsub(" ", "_") ..
+			"/" .. "?page=" .. data[PAGE]))
 end
 
 ---@param url string
@@ -130,7 +131,5 @@ return function(baseURL, _self)
 	_self["listings"] = {
 		Listing("Latest", true, _self.latest)
 	}
-	_self["updateSetting"] = function()
-	end
 	return _self
 end

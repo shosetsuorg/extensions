@@ -1,7 +1,7 @@
 -- {"id":258,"version":"0.1.3","author":"Doomsdayrs","repo":""}
 
 local baseURL = "https://fastnovel.net"
-
+local encode = Require("url").encode
 local settings = {}
 
 local function setSettings(setting)
@@ -52,6 +52,7 @@ local function parseNovel(url)
 			function(element)
 				local chapter = NovelChapter()
 				local data = element:selectFirst("a.chapter")
+				print(data)
 				chapter:setTitle(volumeName .. " " .. data:text())
 				chapter:setLink(baseURL .. data:attr("href"))
 				chapter:setOrder(chapterIndex)
@@ -64,8 +65,8 @@ local function parseNovel(url)
 end
 
 ---@return table @Novel array list
-local function parseLatest(data, page)
-	return map(GETDocument(baseURL .. "/list/latest.html?page=" .. page):selectFirst("ul.list-film"):select("li.film-item"), function(v)
+local function parseLatest(data)
+	return map(GETDocument(baseURL .. "/list/latest.html?page=" .. data[PAGE]):selectFirst("ul.list-film"):select("li.film-item"), function(v)
 		local novel = Novel()
 		local data = v:selectFirst("a")
 		novel:setLink(baseURL .. data:attr("href"))
@@ -77,7 +78,7 @@ end
 
 ---@return table @Novel array list
 local function search(data)
-	return map(GETDocument(baseURL .. "/search/" .. data[QUERY]:gsub(" ", "%%20")):select("ul.list-film"), function(v)
+	return map(GETDocument(baseURL .. "/search/" .. encode(data[QUERY])):select("ul.list-film"), function(v)
 		local novel = Novel()
 		local novelData = v:selectFirst("a")
 		novel:setLink(baseURL .. novelData:attr("href"))
@@ -108,6 +109,5 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = search,
-	updateSetting = function()
-	end
+	isSearchIncrementing = false,
 }

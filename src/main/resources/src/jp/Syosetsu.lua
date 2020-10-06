@@ -4,6 +4,7 @@
 
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
+local encode = Require("url").encode
 
 ---@param url string
 local function shrinkURL(url)
@@ -21,12 +22,12 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://static.syosetu.com/view/images/common/logo_yomou.png",
 	listings = {
-		Listing("Latest", true, function(data, page)
-			if page == 0 then
-				page = 1
+		Listing("Latest", true, function(data)
+			if data[PAGE] == 0 then
+				data[PAGE] = 1
 			end
 			return map(GETDocument(
-					baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. page)
+					baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. data[PAGE])
 					:select("div.searchkekka_box"), function(v)
 				local novel = Novel()
 				local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
@@ -80,7 +81,7 @@ return {
 	shrinkURL = shrinkURL,
 	expandURL = expandURL,
 	search = function(data)
-		return map(GETDocument(baseURL .. "/search.php?&word=" .. data[0]:gsub("%+", "%2"):gsub(" ", "\\+"))
+		return map(GETDocument(baseURL .. "/search.php?&word=" .. encode(data[0]) .. "&p=" .. data[PAGE])
 				:select("div.searchkekka_box"),
 				function(v)
 					local novel = Novel()
@@ -90,6 +91,4 @@ return {
 					return novel
 				end)
 	end,
-	updateSetting = function()
-	end
 }

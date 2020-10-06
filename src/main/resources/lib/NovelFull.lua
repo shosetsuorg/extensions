@@ -26,7 +26,7 @@ local defaults = {
 
 function defaults:search(data)
 	-- search gives covers but they're in some weird aspect ratio
-	local doc = GETDocument(qs({ keyword = data[0] }, self.baseURL .. "/search"))
+	local doc = GETDocument(qs({ keyword = data[QUERY] }, self.baseURL .. "/search"))
 	local pager = doc:selectFirst(".pagination.pagination-sm")
 	local pages = {
 		map(doc:selectFirst("div." .. self.searchListSel):select("div.row"), function(v)
@@ -47,7 +47,7 @@ function defaults:search(data)
 		last = tonumber(last:attr("data-page")) + 1
 
 		for i = 2, last do
-			pages[i] = map(GETDocument(qs({ s = data[0],page = i }, self.baseURL .. "/search")):select(".novel-title a"),
+			pages[i] = map(GETDocument(qs({ s = data[QUERY],page = data[PAGE] }, self.baseURL .. "/search")):select(".novel-title a"),
 					function(v)
 						local novel = Novel()
 						novel:setLink(self.shrinkURL(v:attr("href")))
@@ -133,7 +133,5 @@ return function(baseURL, _self)
 			end)
 		end)
 	}
-	_self["updateSetting"] = function()
-	end
 	return _self
 end

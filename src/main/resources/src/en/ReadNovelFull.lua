@@ -6,5 +6,6 @@ return Require("NovelFull")("https://readnovelfull.com", {
 	imageURL = "",
 	genres = {},
 	searchListSel = "list.list-novel.col-xs-12",
-	appendURLToInfoImage = false
+	appendURLToInfoImage = false,
+	meta_offset = -1
 })

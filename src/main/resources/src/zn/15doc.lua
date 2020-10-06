@@ -100,8 +100,4 @@ return {
 	-- Default functions that had to be set
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-	search = function()
-	end,
-	updateSetting = function()
-	end
 }

@@ -5,7 +5,7 @@ local settings = {}
 local encode = Require("url").encode
 
 local FILTER_TIPO_KEY = 91
-local TIPO_V = { [0] = "novels",[1] = "manhuas",[2] = "curiosities" }
+local TIPO_V = { [0] = "novels", [1] = "manhuas", [2] = "curiosities" }
 
 --- @param chapterURL string
 --- @return string
@@ -27,14 +27,16 @@ local function parseNovel(novelURL)
 
 	novelInfo:setTitle(document:selectFirst("h2"):text())
 	novelInfo:setImageURL(document:selectFirst("div.cover"):select("img"):attr("data-src"))
-	novelInfo:setAlternativeTitles({ infos:get(0):text() })
-	novelInfo:setGenres({ infos:get(1):text() })
-	novelInfo:setAuthors({ infos:get(2):text() })
-	local st = infos:get(3):text()
-	if st == "Em Tradução" then
-		novelInfo:setStatus(NovelStatus(0))
-	else
-		novelInfo:setStatus(NovelStatus(3))
+	if infos:size() > 0 then
+		novelInfo:setAlternativeTitles({ infos:get(0):text() })
+		novelInfo:setGenres({ infos:get(1):text() })
+		novelInfo:setAuthors({ infos:get(2):text() })
+		local st = infos:get(3):text()
+		if st == "Em Tradução" then
+			novelInfo:setStatus(NovelStatus(0))
+		else
+			novelInfo:setStatus(NovelStatus(3))
+		end
 	end
 
 	local description = ""
@@ -63,8 +65,11 @@ end
 
 --- @param filters table @of applied filter values [QUERY] is the search query, may be empty
 local function search(filters)
+	if filters[PAGE] == 0 then
+		filters[PAGE] = 1
+	end
 	local query = encode(filters[QUERY])
-	local document = GETDocument(baseURL .. "/busca?q=" .. query)
+	local document = GETDocument(baseURL .. "/busca?q=" .. query .. "&page=" .. filters[PAGE])
 	local divs = document:select("div")
 	for i = 0, divs:size() - 1 do
 		if divs:get(i):id() == "news-content" then
@@ -89,7 +94,7 @@ return {
 
 	-- Optional values to change
 	imageURL = baseURL .. "/media/cache/16/89/1689ed75fe55808825d33185a28788ed.png",
-	hasSearch = true,
+	hasSearch = false,
 
 	-- Must have at least one value
 	listings = {
@@ -118,10 +123,12 @@ return {
 
 	-- Optional if usable
 	searchFilters = {
-		DropdownFilter(FILTER_TIPO_KEY, "Tipo", { "Novels","Comics","Curiosidades" })
+		DropdownFilter(FILTER_TIPO_KEY, "Tipo", { "Novels", "Comics", "Curiosidades" })
 	},
 
-	shrinkURL = function(url) end,
+	shrinkURL = function(url)
+		return url:gsub(baseURL, "")
+	end,
 
 	expandURL = function(url)
 		return baseURL .. url
@@ -130,5 +137,4 @@ return {
 	-- Default functions that have to be set
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-	search = search,
 }

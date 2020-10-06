@@ -130,13 +130,13 @@ return {
 			local dat = getSecurity(doc, "search_results")
 			local url = qs({
 				action = "search_results",sb = "rank",
-				view_id = page,security = dat.security,
+				view_id = data[PAGE],security = dat.security,
 				gref = "",sta = "",
 			}, ajaxURL)
-			local data = Request(GET(url)):body():string()
+			local document = Request(GET(url)):body():string()
 
-			if page == 1 then
-				return map(Document(data):select(".main_library_holder"), function(v)
+			if data[PAGE] == 1 then
+				return map(Document(document):select(".main_library_holder"), function(v)
 					local novel = Novel()
 					novel:setLink(v:selectFirst("a"):attr("href"))
 					novel:setTitle(v:selectFirst(".library_title a"):text())
@@ -145,9 +145,9 @@ return {
 				end)
 			else
 				local novels = {}
-				assert(data:sub(1, 15) == "success.define.", data:sub(1, 15))
+				assert(document:sub(1, 15) == "success.define.", document:sub(1, 15))
 
-				for novelData in data:sub(16):gmatch("(.-)%.data%.") do
+				for novelData in document:sub(16):gmatch("(.-)%.data%.") do
 					local novel = Novel()
 					local iter = novelData:gmatch("(.-)%.in%.")
 					novel:setTitle(iter())
@@ -164,8 +164,4 @@ return {
 	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-	search = function()
-	end,
-	updateSetting = function()
-	end
 }
