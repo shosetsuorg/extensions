@@ -52,7 +52,6 @@ local function parseNovel(url)
 			function(element)
 				local chapter = NovelChapter()
 				local data = element:selectFirst("a.chapter")
-				print(data)
 				chapter:setTitle(volumeName .. " " .. data:text())
 				chapter:setLink(baseURL .. data:attr("href"))
 				chapter:setOrder(chapterIndex)
@@ -97,8 +96,7 @@ return {
 		Listing("Latest", true, parseLatest)
 	},
 	---@param url string
-	---@param key int
-	shrinkURL = function(url, key)
+	shrinkURL = function(url)
 		return url:gsub(baseURL .. "/", "")
 	end,
 	---@param url string

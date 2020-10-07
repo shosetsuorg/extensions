@@ -40,8 +40,7 @@ local statuses = {
 
 ---@param url string
 ---@param lc boolean @Load Chapters
----@param report fun(status: string): void
-local function parseNovel(url, lc, report)
+local function parseNovel(url, lc)
 	local doc = GETDocument(url)
 	local info = NovelInfo()
 
