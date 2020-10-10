@@ -70,9 +70,12 @@ function defaults:parseNovel(url, loadChapters)
 
 	local elem = doc:selectFirst(".info"):children()
 	info:setTitle(doc:selectFirst("h3.title"):text())
-	info:setArtists(map(elem:get(self.meta_offset):select("a"), text))
-	info:setGenres(map(elem:get(self.meta_offset + 1):select("a"), text))
-	info:setStatus(NovelStatus(elem:get(self.meta_offset + 3):select("a"):text() == "Completed" and 1 or 0))
+
+	local meta_offset = elem:size() < 3 and self.meta_offset or 0
+
+	info:setArtists(map(elem:get(meta_offset):select("a"), text))
+	info:setGenres(map(elem:get(meta_offset + 1):select("a"), text))
+	info:setStatus(NovelStatus(elem:get(meta_offset + 3):select("a"):text() == "Completed" and 1 or 0))
 
 	info:setImageURL((self.appendURLToInfoImage and self.baseURL or "") .. doc:selectFirst("div.book img"):attr("src"))
 	info:setDescription(table.concat(map(doc:select("div.desc-text p"), text), "\n"))
