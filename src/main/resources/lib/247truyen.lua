@@ -82,13 +82,14 @@ function defaults:parseNovel(url, loadChapters)
 		local chapters = doc:selectFirst("div.chapter-list"):select("div.row")
 		local a = chapters:size()
 		local c = AsList(map(chapters, function(v)
-			local chap = NovelChapter()
 			local e = v:select("span")
 			local titLink = e:get(0):selectFirst("a")
-			chap:setTitle(titLink:attr("title"):gsub(info:getTitle(), ""):match("^%s*(.-)%s*$"))
-			chap:setLink(self.shrinkURL(titLink:attr("href")))
-			chap:setRelease(e:get(1):text())
-			chap:setOrder(a)
+			local chap = NovelChapter {
+				title = titLink:attr("title"):gsub(info:getTitle(), ""):match("^%s*(.-)%s*$"),
+				release = e:get(1):text(),
+				link = self.shrinkURL(titLink:attr("href")),
+				order = a
+			}
 			a = a - 1
 			return chap
 		end))
@@ -103,12 +104,12 @@ end
 ---@return table
 function defaults:parse(doc)
 	return map(doc:select("div.update_item.list_category"), function(v)
-		local novel = Novel()
 		local e = v:selectFirst("h3" .. self.novelListingTitleClass):selectFirst("a")
-		novel:setTitle(e:attr("title"))
-		novel:setLink(self.shrinkURL(e:attr("href")))
-		novel:setImageURL(v:selectFirst("img"):attr("src"))
-		return novel
+		return Novel {
+			title = e:attr("title"),
+			link = self.shrinkURL(e:attr("href")),
+			imageURL = v:selectFirst("img"):attr("src")
+		}
 	end)
 end
 
