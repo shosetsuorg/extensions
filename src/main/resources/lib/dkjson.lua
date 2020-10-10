@@ -1,4 +1,4 @@
--- {"version":"1.0.0","author":"David Kolf's"}
+-- {"ver":"1.0.0","author":"David Kolf's"}
 
 -- Module options:
 local always_try_using_lpeg = false

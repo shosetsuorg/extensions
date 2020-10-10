@@ -1,4 +1,4 @@
--- {"id":163,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":163,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
 -- Outputed novelURLs are it's novel IDs
 -- Outputed chapterURLs are novelID/chapterID
 
@@ -10,12 +10,10 @@ local function parse(url)
 	local doc = GETDocument(url)
 	return map(doc:selectFirst("ul.item-con"):select("li"), function(v)
 		v = v:selectFirst("a")
-		local novelListing = Novel()
-		novelListing:setTitle(v:text())
-		local l = v:attr("href"):gsub(baseURL .. "/info/", ""):gsub(".htm", "")
-		novelListing:setLink(l)
-		print(novelListing)
-		return novelListing
+		return Novel {
+			title = v:text(),
+			link = v:attr("href"):gsub(baseURL .. "/info/", ""):gsub(".htm", "")
+		}
 	end)
 end
 
@@ -49,16 +47,16 @@ local function getPassage(chapterURL)
 end
 
 local function parseChapters(novelURL)
-	local count = 0;
+	local count = -1;
 	return map(GETDocument(fileD .. novelURL .. "/index.html"):selectFirst("dl.chapterlist"):select("dd"), function(v)
 		v = v:selectFirst("a")
 		if v ~= nil then
-			local c = NovelChapter()
-			c:setLink(novelURL .. "/" .. v:attr("href"))
-			c:setTitle(v:text())
-			c:setOrder(count)
 			count = count + 1
-			return c
+			return NovelChapter {
+				link = novelURL .. "/" .. v:attr("href"),
+				title = v:text(),
+				order = count
+			}
 		end
 	end)
 end

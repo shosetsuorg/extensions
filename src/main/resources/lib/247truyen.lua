@@ -1,4 +1,4 @@
--- {"version":"1.1.1","author":"TechnoJo4"}
+-- {"ver":"1.1.1","author":"TechnoJo4"}
 
 local defaults = {
 	hasSearch = true,

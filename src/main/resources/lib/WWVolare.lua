@@ -1,4 +1,4 @@
--- {"version":"1.0.1","author":"TechnoJo4","dep":["dkjson"]}
+-- {"ver":"1.0.1","author":"TechnoJo4","dep":["dkjson"]}
 
 return function(id, name, base, contentSel, image)
 	local settings

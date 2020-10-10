@@ -1,4 +1,4 @@
--- {"id":258,"version":"0.1.3","author":"Doomsdayrs","repo":""}
+-- {"id":258,"ver":"0.1.3","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://fastnovel.net"
 local encode = Require("url").encode

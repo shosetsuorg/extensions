@@ -1,4 +1,4 @@
--- {"id":234,"version":"1.0.0","author":"Doomsdayrs","repo":"","dep":["url"]}
+-- {"id":234,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "http://www.tangsanshu.com"
 local encode = Require("url").encode

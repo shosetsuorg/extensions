@@ -1,4 +1,4 @@
--- {"version":"1.0.0","author":"TechnoJo4"}
+-- {"ver":"1.0.0","author":"TechnoJo4"}
 
 local gsub, format, byte, char = string.gsub, string.format, string.byte, string.char
 

@@ -1,4 +1,4 @@
--- {"id":573,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":573,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = { [1] = 0 }

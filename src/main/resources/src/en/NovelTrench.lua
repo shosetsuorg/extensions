@@ -1,4 +1,4 @@
--- {"id":81,"version":"1.0.0","author":"Doomsdayrs"}
+-- {"id":81,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.1.0"]}
 return Require("Madara")("https://noveltrench.com",{
 	id=81,
 	name="NovelTrench",

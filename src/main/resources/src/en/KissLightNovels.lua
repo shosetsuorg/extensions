@@ -1,4 +1,4 @@
--- {"id":736,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":736,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.1.0"]}
 
 local baseURL = "https://kisslightnovels.info"
 
