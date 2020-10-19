@@ -3,12 +3,18 @@
 local baseURL = "https://creativenovels.com"
 local ajaxURL = "https://creativenovels.com/wp-admin/admin-ajax.php"
 
-local settings = {}
-
 ---@type fun(table, string): string
 local qs = Require("url").querystring
 ---@type dkjson
 local json = Require("dkjson")
+
+local function shrinkURL(url, key)
+	if key == KEY_NOVEL_URL then
+		return url:gsub(baseURL .. "/novel/", "")
+	elseif key == KEY_CHAPTER_URL then
+		return url:gsub(baseURL .. "/", "")
+	end
+end
 
 ---@param doc Document
 local function getSecurity(doc, type)
@@ -19,14 +25,10 @@ local function getSecurity(doc, type)
 	return json.decode(data)
 end
 
-local function setSettings(setting)
-	settings = setting
-end
-
 ---@param url string
 local function getPassage(url)
 	return table.concat(map(
-			GETDocument(url):selectFirst("div.entry-content.content"):select("p"),
+			GETDocument(baseURL.."/"..url):selectFirst("div.entry-content.content"):select("p"),
 			function(v)
 				return v:text()
 			end), "\n")
@@ -41,7 +43,7 @@ local statuses = {
 ---@param url string
 ---@param lc boolean @Load Chapters
 local function parseNovel(url, lc)
-	local doc = GETDocument(url)
+	local doc = GETDocument(baseURL.."/novel/"..url)
 	local info = NovelInfo()
 
 	info:setImageURL(doc:selectFirst("img.book_cover"):attr("src"))
@@ -80,7 +82,7 @@ local function parseNovel(url, lc)
 			local release = iter()
 			if iter() == "available" then
 				local chap = NovelChapter()
-				chap:setLink(chap_url)
+				chap:setLink(shrinkURL(chap_url, KEY_CHAPTER_URL))
 				chap:setTitle(title)
 				chap:setRelease(release)
 				chap:setOrder(i)
@@ -101,59 +103,47 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
 	hasSearch = false,
-	---@param url string
-	---@param key int
-	shrinkURL = function(url, key)
-		if (key == 1) then
-			-- N
-			return url:gsub(baseURL .. "/novel/", "")
-		elseif (key == 2) then
-			-- C
-			return url:gsub(baseURL .. "/", "")
-		end
-	end,
-	---@param url string
-	---@param key int
+	shrinkURL = shrinkURL,
 	expandURL = function(url, key)
-		if (key == 1) then
-			-- N
+		if key == KEY_NOVEL_URL then
 			return baseURL .. "/novel/" .. url
-		elseif (key == 2) then
-			-- C
+		elseif key == KEY_CHAPTER_URL then
 			return baseURL .. "/" .. url
 		end
 	end,
 	listings = {
-		Listing("Popular", true, function(data, page)
+		Listing("Popular", true, function(data)
+			local page = data[PAGE]
 			local doc = GETDocument(baseURL .. "/browse-new/?sb=rank")
 			local dat = getSecurity(doc, "search_results")
 			local url = qs({
-				action = "search_results",sb = "rank",
-				view_id = data[PAGE],security = dat.security,
-				gref = "",sta = "",
+				action = "search_results", sb = "rank",
+				view_id = page,
+				security = dat.security,
+				gref = "", sta = ""
 			}, ajaxURL)
-			local document = Request(GET(url)):body():string()
+			local res = Request(GET(url)):body():string()
 
-			if data[PAGE] == 1 then
-				return map(Document(document):select(".main_library_holder"), function(v)
+			if page == 1 then
+				return map(Document(res):select(".main_library_holder"), function(v)
 					local novel = Novel()
-					novel:setLink(v:selectFirst("a"):attr("href"))
+					novel:setLink(shrinkURL(v:selectFirst("a"):attr("href"), KEY_NOVEL_URL))
 					novel:setTitle(v:selectFirst(".library_title a"):text())
 					novel:setImageURL(v:selectFirst("img"):attr("src"))
 					return novel
 				end)
 			else
 				local novels = {}
-				assert(document:sub(1, 15) == "success.define.", document:sub(1, 15))
+				assert(res:sub(1, 15) == "success.define.", res:sub(1, 15))
 
-				for novelData in document:sub(16):gmatch("(.-)%.data%.") do
+				for novelData in res:sub(16):gmatch("(.-)%.data%.") do
 					local novel = Novel()
 					local iter = novelData:gmatch("(.-)%.in%.")
 					novel:setTitle(iter())
 					iter()
 					iter() -- views, reads
 					novel:setImageURL(iter())
-					novel:setLink(iter())
+					novel:setLink(shrinkURL(iter(), KEY_NOVEL_URL))
 					novels[#novels + 1] = novel
 				end
 

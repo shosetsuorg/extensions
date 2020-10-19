@@ -49,8 +49,8 @@ return {
 		return table.concat(map(e:select("p"), function(v)
 			return v:text()
 		end), "\n") :gsub("<br>", "\n\n")
-	end
-,
+	end,
+
 	parseNovel = function(novelURL, loadChapters)
 		local novelPage = NovelInfo()
 		local document = GETDocument(novelURL)

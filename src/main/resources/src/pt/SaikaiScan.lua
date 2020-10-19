@@ -10,7 +10,7 @@ local TIPO_V = { [0] = "novels", [1] = "manhuas", [2] = "curiosities" }
 --- @param chapterURL string
 --- @return string
 local function getPassage(chapterURL)
-	local lines = GETDocument(chapterURL):selectFirst("div.full-text"):select("p")
+	local lines = GETDocument(baseURL..chapterURL):selectFirst("div.full-text"):select("p")
 	local passage = "\n"
 	map(lines, function(e)
 		passage = passage .. e:text() .. "\n"
@@ -22,7 +22,7 @@ end
 --- @return NovelInfo
 local function parseNovel(novelURL)
 	local novelInfo = NovelInfo()
-	local document = GETDocument(novelURL)
+	local document = GETDocument(baseURL..novelURL)
 	local infos = document:select("div.info")
 
 	novelInfo:setTitle(document:selectFirst("h2"):text())

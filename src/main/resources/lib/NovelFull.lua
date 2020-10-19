@@ -61,11 +61,11 @@ function defaults:search(data)
 end
 
 function defaults:getPassage(url)
-	return table.concat(mapNotNil(GETDocument(url):selectFirst("#chr-content, #chapter-content"):select("p"), text), "\n")
+	return table.concat(mapNotNil(GETDocument(self.baseURL..url):selectFirst("#chr-content, #chapter-content"):select("p"), text), "\n")
 end
 
 function defaults:parseNovel(url, loadChapters)
-	local doc = GETDocument(url)
+	local doc = GETDocument(self.baseURL..url)
 	local info = NovelInfo()
 
 	local elem = doc:selectFirst(".info"):children()

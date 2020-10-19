@@ -10,10 +10,12 @@ local function parse(url)
 	local doc = GETDocument(url)
 	return map(doc:selectFirst("ul.item-con"):select("li"), function(v)
 		v = v:selectFirst("a")
-		return Novel {
-			title = v:text(),
-			link = v:attr("href"):gsub(baseURL .. "/info/", ""):gsub(".htm", "")
-		}
+		local novelListing = Novel()
+		novelListing:setTitle(v:text())
+		local l = v:attr("href"):gsub(baseURL .. "/info/", ""):gsub(".htm", "")
+		novelListing:setLink(l)
+		print(novelListing)
+		return novelListing
 	end)
 end
 
@@ -95,7 +97,6 @@ return {
 		Listing("总排行榜", false, getByAllVisit)
 	},
 
-	-- Default functions that had to be set
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 }
