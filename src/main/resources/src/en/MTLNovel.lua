@@ -89,12 +89,12 @@ return {
 	imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
 	hasSearch = false,
 	listings = {
-		Listing("Novel List", true, function(data, page)
+		Listing("Novel List", true, function(data)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
 					"?orderby=" .. ORDER_BYS_INT[data[ORDER_BYS_KEY]] ..
 					"&order=" .. ORDERS_INT[data[ORDERS_KEY]] ..
 					"&status=" .. STATUES_INT[data[STATUSES_KEY]] ..
-					"&pg=" .. page)
+					"&pg=" .. data[PAGE])
 			return map(d:select("div.box.wide"), function(v)
 				local lis = Novel()
 				lis:setImageURL(v:selectFirst("amp-img.list-img"):selectFirst("amp-img.list-img"):attr("src"))

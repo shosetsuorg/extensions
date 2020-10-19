@@ -97,11 +97,8 @@ return {
 		Listing("总排行榜", false, getByAllVisit)
 	},
 
-	-- Default functions that had to be set
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-	search = function()
-	end,
-	updateSetting = function()
-	end
+	search = function() end,
+	updateSetting = function() end
 }

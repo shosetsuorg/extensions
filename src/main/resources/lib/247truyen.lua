@@ -10,11 +10,10 @@ local defaults = {
 	shrinkURLNovel = "novel_"
 }
 
----@param page int @increment
 ---@return table
-function defaults:latest(data, page)
+function defaults:latest(data)
 	return self.parse(GETDocument(
-			self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. page
+			self.___baseURL .. "/" .. self.novelListPath .. "?type=latest&category=all&state=all&page=" .. data[PAGE]
 	))
 end
 
@@ -22,14 +21,15 @@ end
 function defaults:search(data)
 	return self.parse(GETDocument(self.___baseURL ..
 			"/" .. self.novelSearchPath ..
-			"/" .. data[0]:gsub(" ", "_")))
+			"/" .. data[QUERY]:gsub(" ", "_")))
 end
 
 ---@param url string
 ---@return string
 function defaults:getPassage(url)
-	local doc = GETDocument(url)
-	local e = doc:selectFirst("div.vung_doc"):select("p")
+	local doc = GETDocument(self.___baseURL.."/"..self.shrinkURLNovel..url)
+	local e = doc:selectFirst("div.vung_doc")
+			:select("p")
 	if e:size() == 0 then
 		return "NOT YET TRANSLATED"
 	end
@@ -41,7 +41,7 @@ end
 ---@param url string
 ---@return NovelInfo
 function defaults:parseNovel(url, loadChapters)
-	local doc = GETDocument(url)
+	local doc = GETDocument(self.expandURL(url))
 	local info = NovelInfo()
 
 	-- Image

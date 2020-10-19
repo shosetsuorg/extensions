@@ -2,11 +2,8 @@
 
 local encode = Require("url").encode
 
-local text = function(v)
-	return v:text()
-end
+local text = function(v) return v:text() end
 
-local genres_map = {}
 local settings = {}
 
 --- Default values for a madara script
@@ -20,28 +17,27 @@ local defaults = {
 	hasSearch = true
 }
 
-local ORDER_BY_FILTER_KEY = 1
-local ORDER_BY_FILTER_EXT = { "Relevance","Latest","A-Z","Rating","Trending","Most Views","New" }
-
-local AUTHOR_FILTER_KEY = 2
-local ARTIST_FILTER_KEY = 3
-local RELEASE_FILTER_KEY = 4
-local STATUS_FILTER_KEY_COMPLETED = 5
-local STATUS_FILTER_KEY_ONGOING = 6
-local STATUS_FILTER_KEY_CANCELED = 7
-local STATUS_FILTER_KEY_ON_HOLD = 8
+local ORDER_BY_FILTER_EXT = { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }
+local ORDER_BY_FILTER_KEY = 2
+local AUTHOR_FILTER_KEY = 3
+local ARTIST_FILTER_KEY = 4
+local RELEASE_FILTER_KEY = 5
+local STATUS_FILTER_KEY_COMPLETED = 6
+local STATUS_FILTER_KEY_ONGOING = 7
+local STATUS_FILTER_KEY_CANCELED = 8
+local STATUS_FILTER_KEY_ON_HOLD = 9
 
 function defaults:encode(string)
 	return encode(string)
 end
 
 ---@param page int @increment
-function defaults:latest(data, page)
-	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. page .. "/?m_orderby=latest"))
+function defaults:latest(data)
+	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. data[PAGE] .. "/?m_orderby=latest"))
 end
 
---- @param table table
-------@return string
+---@param table table
+---@return string
 function defaults:createSearchString(table)
 	local query = table[QUERY]
 	local orderBy = table[ORDER_BY_FILTER_KEY]
@@ -77,13 +73,13 @@ function defaults:createSearchString(table)
 	if table[STATUS_FILTER_KEY_ON_HOLD] then
 		url = url .. "&status[]=on-hold"
 	end
-	for key, value in pairs(genres_map) do
+	for key, value in pairs(self.genres_map) do
 		if table[key] then
 			url = url .. "&genre[]=" .. value
 		end
 	end
-	url = self.appendToSearchURL(url, table)
-	return url
+
+	return self.appendToSearchURL(url, table)
 end
 
 ---@param string string
@@ -107,33 +103,27 @@ end
 ---@param url string
 ---@return string
 function defaults:getPassage(url)
-	return table.concat(map(GETDocument(url):select("div.text-left p"), text), "\n")
+	return table.concat(map(GETDocument(self.expandURL(url)):select("div.text-left p"), text), "\n")
 end
 
 ---@param url string
 ---@param loadChapters boolean
 ---@return NovelInfo
 function defaults:parseNovel(url, loadChapters)
-	local doc = GETDocument(url)
-	local info = NovelInfo()
-	info:setImageURL(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"))
-	info:setTitle(doc:selectFirst(self.novelPageTitleSel):text())
-	info:setDescription(doc:selectFirst("p"):text())
+	local doc = GETDocument(self.expandURL(url))
 
-	-- Info
 	local elements = doc:selectFirst("div.post-content"):select("div.post-content_item")
-
-	-- authors
-	info:setAuthors(map(elements:get(3):select("a"), text))
-	-- artists
-	info:setArtists(map(elements:get(4):select("a"), text))
-	-- genres
-	info:setGenres(map(elements:get(5):select("a"), text))
-
-	-- sorry for this extremely long line
-	info:setStatus(NovelStatus((
-			doc:selectFirst("div.post-status"):select("div.post-content_item"):get(1)
-			   :select("div.summary-content"):text() == "OnGoing") and 0 or 1))
+	local info = NovelInfo {
+		description = doc:selectFirst("p"):text(),
+		authors = map(elements:get(3):select("a"), text),
+		artists = map(elements:get(4):select("a"), text),
+		genres = map(elements:get(5):select("a"), text),
+		title = doc:selectFirst(self.novelPageTitleSel):text(),
+		imageURL = doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"),
+		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(1)
+		            :select("div.summary-content"):text() == "OnGoing"
+		            and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
+	}
 
 	-- Chapters
 	if loadChapters then
@@ -178,11 +168,11 @@ function defaults:parse(doc, search)
 end
 
 function defaults:expandURL(url)
-	return self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url
+	return self.baseURL.."/"..self.shrinkURLNovel.."/"..url
 end
 
 function defaults:shrinkURL(url)
-	return url:gsub(self.baseURL .. "/" .. self.shrinkURLNovel .. "/", "")
+	return url:gsub("https?://.-/"..self.shrinkURLNovel.."/", "")
 end
 
 
@@ -191,7 +181,9 @@ return function(baseURL, _self)
 		local d = defaults[k]
 		return (type(d) == "function" and wrap(_self, d) or d)
 	end })
-	local keyID = 100;
+
+	_self.genres_map = {}
+	local keyID = 100
 	local filters = {
 		DropdownFilter(ORDER_BY_FILTER_KEY, "Order by", ORDER_BY_FILTER_EXT),
 		TextFilter(AUTHOR_FILTER_KEY, "Author"),
@@ -203,20 +195,18 @@ return function(baseURL, _self)
 			CheckboxFilter(STATUS_FILTER_KEY_CANCELED, "Canceled"),
 			CheckboxFilter(STATUS_FILTER_KEY_ON_HOLD, "On Hold")
 		}),
-		FilterGroup("Genres", map(_self.genres, function(v, _)
-			genres_map[keyID] = k or v:lower():gsub(" ","-")
+		FilterGroup("Genres", map(_self.genres, function(v, k)
 			keyID = keyID + 1
+			_self.genres_map[keyID] = k or v:lower():gsub(" ","-")
 			return CheckboxFilter(keyID, v)
 		end)) -- 6
 	}
+
 	filters = _self.appendToSearchFilters(filters)
 	_self["searchFilters"] = filters
 	_self["baseURL"] = baseURL
-	_self["listings"] = {
-		Listing("default", true, _self.latest)
-	}
-	_self["updateSetting"] = function(id, value)
-		settings[id] = value
-	end
+	_self["listings"] = { Listing("Default", true, _self.latest) }
+	_self["updateSetting"] = function(id, value) settings[id] = value end
+
 	return _self
 end
