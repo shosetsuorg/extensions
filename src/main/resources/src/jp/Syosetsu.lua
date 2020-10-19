@@ -40,7 +40,7 @@ return {
 
 	-- Default functions that had to be set
 	getPassage = function(chapterURL)
-		local e = first(GETDocument(chapterURL):select("div"), function(v)
+		local e = first(GETDocument(passageURL .. chapterURL):select("div"), function(v)
 			return v:id() == "novel_contents"
 		end)
 		if not e then
@@ -53,7 +53,7 @@ return {
 
 	parseNovel = function(novelURL, loadChapters)
 		local novelPage = NovelInfo()
-		local document = GETDocument(novelURL)
+		local document = GETDocument(passageURL .. novelURL)
 
 		novelPage:setAuthors({ document:selectFirst("div.novel_writername"):text():gsub("作者：", "") })
 		novelPage:setTitle(document:selectFirst("p.novel_title"):text())
