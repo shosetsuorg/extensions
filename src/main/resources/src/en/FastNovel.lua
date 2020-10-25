@@ -1,4 +1,4 @@
--- {"id":258,"version":"0.1.3","author":"Doomsdayrs","repo":""}
+-- {"id":258,"version":"1.0.0","author":"Doomsdayrs","repo":""}
 
 local baseURL = "https://fastnovel.net"
 
