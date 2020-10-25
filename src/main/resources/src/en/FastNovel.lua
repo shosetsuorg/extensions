@@ -1,7 +1,8 @@
--- {"id":258,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":258,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+
 
 local baseURL = "https://fastnovel.net"
-
+local encode = Require("url").encode
 local settings = {}
 
 local function setSettings(setting)
@@ -10,7 +11,7 @@ end
 
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 local function getPassage(url)
-	return table.concat(map(GETDocument(url):select("div.box-player"):select("p"), function(v)
+	return table.concat(map(GETDocument(baseURL .. url):select("div.box-player"):select("p"), function(v)
 		return v:text()
 	end), "\n")
 end
@@ -19,7 +20,7 @@ end
 ---@return NovelInfo
 local function parseNovel(url)
 	local novelPage = NovelInfo()
-	local document = GETDocument(url)
+	local document = GETDocument(baseURL .. url)
 
 	novelPage:setImageURL(document:selectFirst("div.book-cover"):attr("data-original"))
 	novelPage:setTitle(document:selectFirst("h1.name"):text())
@@ -53,7 +54,7 @@ local function parseNovel(url)
 				local chapter = NovelChapter()
 				local data = element:selectFirst("a.chapter")
 				chapter:setTitle(volumeName .. " " .. data:text())
-				chapter:setLink(baseURL .. data:attr("href"))
+				chapter:setLink(data:attr("href"))
 				chapter:setOrder(chapterIndex)
 				chapterIndex = chapterIndex + 1
 				return chapter
@@ -64,23 +65,23 @@ local function parseNovel(url)
 end
 
 ---@return table @Novel array list
-local function parseLatest(data, page)
-	return map(GETDocument(baseURL .. "/list/latest.html?page=" .. page):selectFirst("ul.list-film"):select("li.film-item"), function(v)
+local function parseLatest(data)
+	return map(GETDocument(baseURL .. "/list/latest.html?page=" .. data[PAGE]):selectFirst("ul.list-film"):select("li.film-item"), function(v)
 		local novel = Novel()
-		local data = v:selectFirst("a")
-		novel:setLink(baseURL .. data:attr("href"))
-		novel:setTitle(data:attr("title"))
-		novel:setImageURL(data:selectFirst("div.img"):attr("data-original"))
+		local elem = v:selectFirst("a")
+		novel:setLink(elem:attr("href"))
+		novel:setTitle(elem:attr("title"))
+		novel:setImageURL(elem:selectFirst("div.img"):attr("data-original"))
 		return novel
 	end)
 end
 
 ---@return table @Novel array list
 local function search(data)
-	return map(GETDocument(baseURL .. "/search/" .. data[QUERY]:gsub(" ", "%%20")):select("ul.list-film"), function(v)
+	return map(GETDocument(baseURL .. "/search/" .. encode(data[QUERY])):select("ul.list-film"), function(v)
 		local novel = Novel()
 		local novelData = v:selectFirst("a")
-		novel:setLink(baseURL .. novelData:attr("href"))
+		novel:setLink(novelData:attr("href"))
 		novel:setTitle(novelData:attr("title"))
 		novel:setImageURL(novelData:selectFirst("div.img"):attr("data-original"))
 		return novel
@@ -96,8 +97,7 @@ return {
 		Listing("Latest", true, parseLatest)
 	},
 	---@param url string
-	---@param key int
-	shrinkURL = function(url, key)
+	shrinkURL = function(url)
 		return url:gsub(baseURL .. "/", "")
 	end,
 	---@param url string
@@ -108,6 +108,5 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	search = search,
-	updateSetting = function()
-	end
+	isSearchIncrementing = false,
 }

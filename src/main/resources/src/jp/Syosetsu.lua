@@ -1,9 +1,10 @@
--- {"id":3,"version":"1.2.0","author":"Doomsdayrs","repo":""}
+-- {"id":3,"ver":"1.2.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 --- @author Doomsdayrs
 --- @version 1.2.0
 
 local baseURL = "https://yomou.syosetu.com"
 local passageURL = "https://ncode.syosetu.com"
+local encode = Require("url").encode
 
 ---@param url string
 local function shrinkURL(url)
@@ -21,12 +22,12 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://static.syosetu.com/view/images/common/logo_yomou.png",
 	listings = {
-		Listing("Latest", true, function(data, page)
-			if page == 0 then
-				page = 1
+		Listing("Latest", true, function(data)
+			if data[PAGE] == 0 then
+				data[PAGE] = 1
 			end
 			return map(GETDocument(
-					baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. page)
+					baseURL .. "/search.php?&search_type=novel&order_former=search&order=new&notnizi=1&p=" .. data[PAGE])
 					:select("div.searchkekka_box"), function(v)
 				local novel = Novel()
 				local e = v:selectFirst("div.novel_h"):selectFirst("a.tl")
@@ -39,7 +40,7 @@ return {
 
 	-- Default functions that had to be set
 	getPassage = function(chapterURL)
-		local e = first(GETDocument(chapterURL):select("div"), function(v)
+		local e = first(GETDocument(passageURL .. chapterURL):select("div"), function(v)
 			return v:id() == "novel_contents"
 		end)
 		if not e then
@@ -48,11 +49,11 @@ return {
 		return table.concat(map(e:select("p"), function(v)
 			return v:text()
 		end), "\n") :gsub("<br>", "\n\n")
-	end
-,
+	end,
+
 	parseNovel = function(novelURL, loadChapters)
 		local novelPage = NovelInfo()
-		local document = GETDocument(novelURL)
+		local document = GETDocument(passageURL .. novelURL)
 
 		novelPage:setAuthors({ document:selectFirst("div.novel_writername"):text():gsub("作者：", "") })
 		novelPage:setTitle(document:selectFirst("p.novel_title"):text())
@@ -80,7 +81,7 @@ return {
 	shrinkURL = shrinkURL,
 	expandURL = expandURL,
 	search = function(data)
-		return map(GETDocument(baseURL .. "/search.php?&word=" .. data[0]:gsub("%+", "%2"):gsub(" ", "\\+"))
+		return map(GETDocument(baseURL .. "/search.php?&word=" .. encode(data[0]) .. "&p=" .. data[PAGE])
 				:select("div.searchkekka_box"),
 				function(v)
 					local novel = Novel()
@@ -90,6 +91,4 @@ return {
 					return novel
 				end)
 	end,
-	updateSetting = function()
-	end
 }

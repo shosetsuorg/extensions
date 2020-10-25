@@ -1,4 +1,4 @@
--- {"version":"1.0.1","author":"TechnoJo4","dep":["dkjson"]}
+-- {"ver":"1.0.1","author":"TechnoJo4","dep":["dkjson"]}
 
 return function(id, name, base, contentSel, image)
 	local settings
@@ -16,22 +16,23 @@ return function(id, name, base, contentSel, image)
 		infos = {}
 		novels = {}
 		for _, v in pairs(data.items) do
-			local novel = Novel()
-			novel:setLink(v.slug)
-			novel:setTitle(v.name)
-			novel:setImageURL(v.coverUrl)
-			novels[#novels + 1] = novel
+			novels[#novels + 1] = {
+				link = v.slug,
+				title = v.name,
+				imageURL = v.coverUrl
+			}
 
-			local info = NovelInfo()
-			info:setTitle(v.name)
-			info:setImageURL(v.coverUrl)
-			info:setDescription("Description:\n" .. (v.description or "None") .. "\n\nSynopsis:" .. (v.synopsis or "None") .. "\n") -- TODO: CLEAN HTML
-			info:setAuthors({ v.authorName })
-			info:setTags(v.tags)
-			info:setGenres(v.genres)
-			info:setLanguage(v.language)
-			info:setStatus(NovelStatus(({ 0,3 })[v.status]))
-			infos[v.slug] = info
+			-- TODO: Clean description html
+			infos[v.slug] = {
+				title = v.name,
+				imageURL = v.coverUrl,
+				description = ("Description:\n%s\n\nSynopsis:\n%s\n"):format(v.description or "None", v.synopsis or "None"),
+				authors = { v.authorName },
+				tags = v.tags,
+				genres = v.genres,
+				language = v.language,
+				status = v.status == 1 and NovelStatus.PUBLISHING or NovelStatus.UNKNOWN
+			}
 		end
 	end
 
@@ -42,8 +43,8 @@ return function(id, name, base, contentSel, image)
 		imageURL = image,
 		listings = {
 			Listing("All Novels", false, function()
-				getNovels();
-				return novels
+				getNovels()
+				return map(novels, Novel)
 			end)
 		},
 		getPassage = function(url)
@@ -57,7 +58,8 @@ return function(id, name, base, contentSel, image)
 			local info = infos[slug]
 			if loadChapters then
 				local i = 1
-				info:setChapters(AsList(map2flat(GETDocument(base .. "/novel/" .. slug):select("#accordion .panel"),
+				info.chapters = AsList(map2flat(
+						GETDocument(base .. "/novel/" .. slug):select("#accordion .panel"),
 						function(v)
 							return v:select("li.chapter-item a")
 						end, function(v)
@@ -67,19 +69,21 @@ return function(id, name, base, contentSel, image)
 							c:setOrder(i)
 							i = i + 1
 							return c
-						end)))
+						end))
 			end
-			return info
+			return NovelInfo(info)
 		end,
 		search = function(s)
 			getNovels()
-			local q = s[0]:lower()
-			return filter(AsList(novels), function(v)
-				local i = v:getTitle():lower():find(q)
-				return i ~= nil
-			end)
+			local q = s[QUERY]:lower()
+			return map(filter(novels, function(v)
+				return v.title:lower():find(q, 1, true) ~= nil
+			end), Novel)
 		end,
 		setSettings = function(s) settings = s end,
-		updateSetting = function() end
+		updateSetting = function() end,
+		expandURL = function(url, type)
+			return type == KEY_NOVEL_URL and base.."/novel/"..url or base..url
+		end
 	}
 end

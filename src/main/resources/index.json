@@ -2,27 +2,27 @@
   "libraries": [
     {
       "name": "247truyen",
-      "version": "1.2.0"
+      "ver": "1.2.0"
     },
     {
       "name": "dkjson",
-      "version": "1.2.0"
+      "ver": "1.2.0"
     },
     {
       "name": "NovelFull",
-      "version": "1.2.0"
+      "ver": "1.2.0"
     },
     {
       "name": "url",
-      "version": "1.2.0"
+      "ver": "1.2.0"
     },
     {
       "name": "WWVolare",
-      "version": "1.2.0"
+      "ver": "1.2.0"
     },
     {
       "name": "Madara",
-      "version": "1.2.0"
+      "ver": "1.2.0"
     }
   ],
   "scripts": [
@@ -32,7 +32,8 @@
       "imageURL": "https://www.mtlnovel.com/wp-content/themes/mtlnovel/images/logo32.png",
       "id": 573,
       "lang": "en",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "c4a2b8bfb6e6103ad0c8615fb6602bbe"
     },
     {
@@ -41,7 +42,8 @@
       "imageURL": "",
       "id": 1,
       "lang": "en",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "5f95559b552725914228f3b29126fd1"
     },
     {
@@ -50,7 +52,8 @@
       "imageURL": "https://fastnovel.net/skin/images/logo.png",
       "id": 258,
       "lang": "en",
-      "version": "0.1.3",
+      "ver": "0.1.3",
+      "libVer": "1.0.0",
       "md5": "161b6193d54c876cc658bd353f6623"
     },
     {
@@ -59,7 +62,8 @@
       "imageURL": "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
       "id": 586,
       "lang": "en",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "911fedf88cf4fad6ccc1561e625dd219"
     },
     {
@@ -68,7 +72,8 @@
       "imageURL": "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
       "id": 911,
       "lang": "en",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "2ac8b2379560dac51930790615c7095"
     },
     {
@@ -77,17 +82,9 @@
       "imageURL": "",
       "id": 1274,
       "lang": "en",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "ff81cdb3303780e243e4d3e6d35ce418"
-    },
-    {
-      "name": "ReadNovelForLife",
-      "fileName": "ReadNovelForLife",
-      "imageURL": "https://readnovelforlife.com/wp-content/uploads/2019/12/Logo-1-e1570608260730.png",
-      "id": 394,
-      "lang": "en",
-      "version": "1.0.0",
-      "md5": "b33a72c5167d186ce369e9b031b9bee"
     },
     {
       "name": "Tangsanshu",
@@ -95,7 +92,8 @@
       "imageURL": "http://www.tangsanshu.com/images/logo.png",
       "id": 234,
       "lang": "zn",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "d8dfa1e373af2b72353a1464f715b39"
     },
     {
@@ -104,7 +102,8 @@
       "imageURL": "https://bestlightnovel.com/themes/home/images/favicon.png",
       "id": 5,
       "lang": "en",
-      "version": "2.0.0",
+      "ver": "2.0.0",
+      "libVer": "1.0.0",
       "md5": "279b8a4da8428eda1b535e12c15dc1f"
     },
     {
@@ -113,7 +112,8 @@
       "imageURL": "https://foxaholic.com/wp-content/uploads/2019/12/images-1.png",
       "id": 173,
       "lang": "en",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "914c73628e988a932c76e6482690543c"
     },
     {
@@ -122,7 +122,8 @@
       "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
       "id": 2,
       "lang": "en",
-      "version": "2.0.0",
+      "ver": "2.0.0",
+      "libVer": "1.0.0",
       "md5": "c82a5cdff73aee7385e2da5cec371f89"
     },
     {
@@ -131,7 +132,8 @@
       "imageURL": "https://static.syosetu.com/view/images/common/logo_yomou.png",
       "id": 3,
       "lang": "jp",
-      "version": "1.2.0",
+      "ver": "1.2.0",
+      "libVer": "1.0.0",
       "md5": "d2edddc58222392b59ed34b73e25d6b2"
     },
     {
@@ -140,7 +142,8 @@
       "imageURL": "https://www.wuxiaworld.com/apple-touch-icon.png",
       "id": 1273,
       "lang": "en",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "adde12e1a74dd843afc870295831fda"
     },
     {
@@ -149,7 +152,8 @@
       "imageURL": "https://noveltrench.com/wp-content/uploads/2019/08/transparent1.png",
       "id": 81,
       "lang": "en",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "1ae42bf8b4b46ffd421f1d4c9b84be9"
     },
     {
@@ -158,7 +162,8 @@
       "imageURL": "https://saikaiscan.com.br/media/cache/16/89/1689ed75fe55808825d33185a28788ed.png",
       "id": 2443,
       "lang": "pt",
-      "version": "1.0.0",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
       "md5": "c47e56dfa754a3f0e95fc6a57d9e15b6"
     }
   ]

@@ -1,4 +1,5 @@
 -- {"id":394,"version":"1.0.0","author":"TechnoJo4","repo":""}
+-- Site down
 
 return Require("Madara")("https://readnovelforlife.com", {
 	id = 394,

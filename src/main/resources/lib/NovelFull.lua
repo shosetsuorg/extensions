@@ -1,4 +1,4 @@
--- {"version":"1.0.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.0.0","author":"TechnoJo4","dep":["url"]}
 
 -- rename this if you ever figure out its real name
 ---@author TechnoJo4
@@ -26,7 +26,7 @@ local defaults = {
 
 function defaults:search(data)
 	-- search gives covers but they're in some weird aspect ratio
-	local doc = GETDocument(qs({ keyword = data[0] }, self.baseURL .. "/search"))
+	local doc = GETDocument(qs({ keyword = data[QUERY] }, self.baseURL .. "/search"))
 	local pager = doc:selectFirst(".pagination.pagination-sm")
 	local pages = {
 		map(doc:selectFirst("div." .. self.searchListSel):select("div.row"), function(v)
@@ -47,7 +47,7 @@ function defaults:search(data)
 		last = tonumber(last:attr("data-page")) + 1
 
 		for i = 2, last do
-			pages[i] = map(GETDocument(qs({ s = data[0],page = i }, self.baseURL .. "/search")):select(".novel-title a"),
+			pages[i] = map(GETDocument(qs({ s = data[QUERY],page = data[PAGE] }, self.baseURL .. "/search")):select(".novel-title a"),
 					function(v)
 						local novel = Novel()
 						novel:setLink(self.shrinkURL(v:attr("href")))
@@ -61,18 +61,21 @@ function defaults:search(data)
 end
 
 function defaults:getPassage(url)
-	return table.concat(mapNotNil(GETDocument(url):selectFirst("#chr-content, #chapter-content"):select("p"), text), "\n")
+	return table.concat(mapNotNil(GETDocument(self.baseURL..url):selectFirst("#chr-content, #chapter-content"):select("p"), text), "\n")
 end
 
 function defaults:parseNovel(url, loadChapters)
-	local doc = GETDocument(url)
+	local doc = GETDocument(self.baseURL..url)
 	local info = NovelInfo()
 
 	local elem = doc:selectFirst(".info"):children()
 	info:setTitle(doc:selectFirst("h3.title"):text())
-	info:setArtists(map(elem:get(self.meta_offset):select("a"), text))
-	info:setGenres(map(elem:get(self.meta_offset + 1):select("a"), text))
-	info:setStatus(NovelStatus(elem:get(self.meta_offset + 3):select("a"):text() == "Completed" and 1 or 0))
+
+	local meta_offset = elem:size() < 3 and self.meta_offset or 0
+
+	info:setArtists(map(elem:get(meta_offset):select("a"), text))
+	info:setGenres(map(elem:get(meta_offset + 1):select("a"), text))
+	info:setStatus(NovelStatus(elem:get(meta_offset + 3):select("a"):text() == "Completed" and 1 or 0))
 
 	info:setImageURL((self.appendURLToInfoImage and self.baseURL or "") .. doc:selectFirst("div.book img"):attr("src"))
 	info:setDescription(table.concat(map(doc:select("div.desc-text p"), text), "\n"))
@@ -133,7 +136,5 @@ return function(baseURL, _self)
 			end)
 		end)
 	}
-	_self["updateSetting"] = function()
-	end
 	return _self
 end

@@ -1,4 +1,4 @@
--- {"id":573,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":573,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = { [1] = 0 }
@@ -89,12 +89,12 @@ return {
 	imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
 	hasSearch = false,
 	listings = {
-		Listing("Novel List", true, function(data, page)
+		Listing("Novel List", true, function(data)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
 					"?orderby=" .. ORDER_BYS_INT[data[ORDER_BYS_KEY]] ..
 					"&order=" .. ORDERS_INT[data[ORDERS_KEY]] ..
 					"&status=" .. STATUES_INT[data[STATUSES_KEY]] ..
-					"&pg=" .. page)
+					"&pg=" .. data[PAGE])
 			return map(d:select("div.box.wide"), function(v)
 				local lis = Novel()
 				lis:setImageURL(v:selectFirst("amp-img.list-img"):selectFirst("amp-img.list-img"):attr("src"))
@@ -107,17 +107,15 @@ return {
 	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-	search = function()
-	end,
-	settings = {
+	--settings = {
 		--  DropdownFilter(1, "Language", { "English", "Chinese" })
-	},
+	--},
 	searchFilters = {
 		DropdownFilter(ORDER_BYS_KEY, "Order by", { "Date","Name","Rating","Views" }),
 		DropdownFilter(ORDERS_KEY, "Order", { "Descending","Ascending" }),
 		DropdownFilter(STATUSES_KEY, "Status", { "All","Completed","Ongoing" })
 	},
-	updateSetting = function(id, value)
-		settings[id] = value
-	end
+	--updateSetting = function(id, value)
+	--	settings[id] = value
+	--end
 }

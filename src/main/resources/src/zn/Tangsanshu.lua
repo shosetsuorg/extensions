@@ -1,4 +1,4 @@
--- {"id":234,"version":"1.0.0","author":"Doomsdayrs","repo":"","dep":["url"]}
+-- {"id":234,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "http://www.tangsanshu.com"
 local encode = Require("url").encode
@@ -16,13 +16,13 @@ end
 ---@param url string
 ---@return string @passage of chapter, If nothing can be parsed, then the text should describe why there isn't a chapter
 local function getPassage(url)
-	return GETDocument(url):selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+", "\n"):gsub("&nbsp;", "")
+	return GETDocument(baseURL..url):selectFirst("div.showtxt"):html():gsub("<br ?/?>", "\n"):gsub("\n+", "\n"):gsub("&nbsp;", "")
 end
 
 ---@return NovelInfo
 local function parseNovel(url, loadChapters)
 	local novelPage = NovelInfo()
-	local document = GETDocument(url)
+	local document = GETDocument(baseURL..url)
 
 	-- Info
 	local info = document:selectFirst("div.info")

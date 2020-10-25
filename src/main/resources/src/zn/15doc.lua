@@ -1,4 +1,4 @@
--- {"id":163,"version":"1.0.0","author":"Doomsdayrs","repo":""}
+-- {"id":163,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
 -- Outputed novelURLs are it's novel IDs
 -- Outputed chapterURLs are novelID/chapterID
 
@@ -49,16 +49,16 @@ local function getPassage(chapterURL)
 end
 
 local function parseChapters(novelURL)
-	local count = 0;
+	local count = -1;
 	return map(GETDocument(fileD .. novelURL .. "/index.html"):selectFirst("dl.chapterlist"):select("dd"), function(v)
 		v = v:selectFirst("a")
 		if v ~= nil then
-			local c = NovelChapter()
-			c:setLink(novelURL .. "/" .. v:attr("href"))
-			c:setTitle(v:text())
-			c:setOrder(count)
 			count = count + 1
-			return c
+			return NovelChapter {
+				link = novelURL .. "/" .. v:attr("href"),
+				title = v:text(),
+				order = count
+			}
 		end
 	end)
 end
@@ -97,11 +97,6 @@ return {
 		Listing("总排行榜", false, getByAllVisit)
 	},
 
-	-- Default functions that had to be set
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-	search = function()
-	end,
-	updateSetting = function()
-	end
 }
