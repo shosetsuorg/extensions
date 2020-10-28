@@ -1,4 +1,4 @@
--- {"ver":"1.1.1","author":"TechnoJo4"}
+-- {"ver":"1.1.2","author":"TechnoJo4"}
 
 local defaults = {
 	hasSearch = true,
@@ -22,7 +22,7 @@ function defaults:search(data)
 	return self.parse(GETDocument(self.___baseURL ..
 			"/" .. self.novelSearchPath ..
 			"/" .. data[QUERY]:gsub(" ", "_") ..
-			"/" .. "?page=" .. data[PAGE]))
+			"?page=" .. data[PAGE] or "1"))
 end
 
 ---@param url string
