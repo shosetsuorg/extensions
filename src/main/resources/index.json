@@ -2,23 +2,23 @@
   "libraries": [
     {
       "name": "247truyen",
-      "ver": "1.2.0"
+      "ver": "1.1.2"
     },
     {
       "name": "dkjson",
-      "ver": "1.2.0"
+      "ver": "1.0.0"
     },
     {
       "name": "NovelFull",
-      "ver": "1.2.0"
+      "ver": "1.0.0"
     },
     {
       "name": "url",
-      "ver": "1.2.0"
+      "ver": "1.0.0"
     },
     {
       "name": "WWVolare",
-      "ver": "1.2.0"
+      "ver": "1.0.1"
     },
     {
       "name": "Madara",
