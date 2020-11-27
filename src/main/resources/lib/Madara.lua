@@ -1,4 +1,4 @@
--- {"ver":"1.2.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.2.1","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 
@@ -33,7 +33,6 @@ function defaults:encode(string)
 	return encode(string)
 end
 
----@param page int @increment
 function defaults:latest(data)
 	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. data[PAGE] .. "/?m_orderby=latest"))
 end
@@ -152,6 +151,23 @@ end
 ---@param doc Document
 ---@param search boolean
 function defaults:parse(doc, search)
+	local function img_src(e)
+		local srcset = e:attr("data-srcset")
+		if srcset then -- get largest image
+			local max, max_url = 0, ""
+
+			for url, size in srcset:gmatch("(.-) (%d+)w") do
+				if tonumber(size) > max then
+					max = tonumber(size)
+					max_url = url
+				end
+			end
+
+			return max_url
+		end
+		return e:attr("src")
+	end
+
 	return map(doc:select(search and self.searchNovelSel or self.latestNovelSel), function(v)
 		local novel = Novel()
 		local data = v:selectFirst("a")
@@ -162,9 +178,7 @@ function defaults:parse(doc, search)
 		end
 		novel:setTitle(tit)
 		local e = data:selectFirst("img")
-		if e then
-			novel:setImageURL(e:attr("src"))
-		end
+		if e then novel:setImageURL(img_src(e)) end
 		return novel
 	end)
 end
