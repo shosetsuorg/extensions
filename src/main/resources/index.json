@@ -157,6 +157,16 @@
       "md5": "1ae42bf8b4b46ffd421f1d4c9b84be9"
     },
     {
+      "name": "ReadLightNovel",
+      "fileName": "ReadLightNovel",
+      "imageURL": "https://readlightnovel.org/favicon.ico",
+      "id": 6118,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Saikai Scan",
       "fileName": "SaikaiScan",
       "imageURL": "https://saikaiscan.com.br/media/cache/16/89/1689ed75fe55808825d33185a28788ed.png",
