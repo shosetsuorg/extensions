@@ -1,4 +1,4 @@
--- {"ver":"1.0.1","author":"TechnoJo4","dep":["dkjson"]}
+-- {"ver":"1.1.0","author":"TechnoJo4","dep":["dkjson"]}
 
 return function(id, name, base, contentSel, image)
 	local settings
@@ -10,7 +10,9 @@ return function(id, name, base, contentSel, image)
 	local data
 
 	local function getNovels()
-		if not data or not data.result then data = POST(api .. "/novels/search", { count = 1000 }) end
+		if not data or not data.result or (not data.items) then
+			data = POST(api .. "/novels/search", { count = 1000 })
+		end
 		if not data.result then return end
 
 		infos = {}
