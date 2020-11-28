@@ -1,4 +1,4 @@
--- {"id":911,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
+-- {"id":911,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
 
 local baseURL = "https://creativenovels.com"
 local ajaxURL = "https://creativenovels.com/wp-admin/admin-ajax.php"
@@ -124,7 +124,7 @@ return {
 			}, ajaxURL)
 			local res = Request(GET(url)):body():string()
 
-			if page == 1 then
+			if page < 2 then
 				return map(Document(res):select(".main_library_holder"), function(v)
 					local novel = Novel()
 					novel:setLink(shrinkURL(v:selectFirst("a"):attr("href"), KEY_NOVEL_URL))
