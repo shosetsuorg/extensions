@@ -1,20 +1,17 @@
--- {"ver":"1.2.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.2.2","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
-
-local text = function(v)
-	return v:text()
-end
+local text = function(v) return v:text() end
 
 local settings = {}
 
---- Default values for a madara script
 local defaults = {
 	latestNovelSel = "div.col-12.col-md-6",
 	searchNovelSel = "div.c-tabs-item__content",
 	novelListingURLPath = "novel",
 	novelPageTitleSel = "h3",
 	shrinkURLNovel = "novel",
+	searchHasOper = false, -- is AND/OR operation selector present?
 	hasCloudFlare = false,
 	hasSearch = true
 }
@@ -29,22 +26,18 @@ local STATUS_FILTER_KEY_ONGOING = 7
 local STATUS_FILTER_KEY_CANCELED = 8
 local STATUS_FILTER_KEY_ON_HOLD = 9
 
-function defaults:encode(string)
-	return encode(string)
-end
-
 function defaults:latest(data)
 	return self.parse(GETDocument(self.baseURL .. "/" .. self.novelListingURLPath .. "/page/" .. data[PAGE] .. "/?m_orderby=latest"))
 end
 
----@param table table
+---@param tbl table
 ---@return string
-function defaults:createSearchString(table)
-	local query = table[QUERY]
-	local orderBy = table[ORDER_BY_FILTER_KEY]
-	local author = table[AUTHOR_FILTER_KEY]
-	local artist = table[ARTIST_FILTER_KEY]
-	local release = table[RELEASE_FILTER_KEY]
+function defaults:createSearchString(tbl)
+	local query = tbl[QUERY]
+	local orderBy = tbl[ORDER_BY_FILTER_KEY]
+	local author = tbl[AUTHOR_FILTER_KEY]
+	local artist = tbl[ARTIST_FILTER_KEY]
+	local release = tbl[RELEASE_FILTER_KEY]
 
 	local url = self.baseURL .. "/?s=" .. encode(query) .. "&post_type=wp-manga" ..
 			"&author=" .. encode(author) ..
@@ -62,38 +55,42 @@ function defaults:createSearchString(table)
 			[6] = "new-manga"
 		})[orderBy]
 	end
-	if table[STATUS_FILTER_KEY_COMPLETED] then
+	if tbl[STATUS_FILTER_KEY_COMPLETED] then
 		url = url .. "&status[]=end"
 	end
-	if table[STATUS_FILTER_KEY_ONGOING] then
+	if tbl[STATUS_FILTER_KEY_ONGOING] then
 		url = url .. "&status[]=on-going"
 	end
-	if table[STATUS_FILTER_KEY_CANCELED] then
+	if tbl[STATUS_FILTER_KEY_CANCELED] then
 		url = url .. "&status[]=canceled"
 	end
-	if table[STATUS_FILTER_KEY_ON_HOLD] then
+	if tbl[STATUS_FILTER_KEY_ON_HOLD] then
 		url = url .. "&status[]=on-hold"
 	end
 	for key, value in pairs(self.genres_map) do
-		if table[key] then
+		if tbl[key] then
 			url = url .. "&genre[]=" .. value
 		end
 	end
 
-	return self.appendToSearchURL(url, table)
+	if self.searchHasOper then
+		url = url .. "&op=" .. (tbl[self.searchOperId] and "0" or "1")
+	end
+
+	return self.appendToSearchURL(url, tbl)
 end
 
----@param string string
----@param table table
+---@param str string
+---@param tbl table
 ---@return string
-function defaults:appendToSearchURL(string, table)
-	return string
+function defaults:appendToSearchURL(str, tbl)
+	return str
 end
 
----@param table table
+---@param tbl table
 ---@return table
-function defaults:appendToSearchFilters(table)
-	return table
+function defaults:appendToSearchFilters(tbl)
+	return tbl
 end
 
 function defaults:search(data)
@@ -217,6 +214,12 @@ return function(baseURL, _self)
 			return CheckboxFilter(keyID, v)
 		end)) -- 6
 	}
+
+	if _self.searchHasOper then
+		keyID = keyID + 1
+		_self.searchOperId = keyID
+		filters[#filters+1] = DropdownFilter(keyID, "Genres Condition", {"OR (any of selected)", "AND (all selected)"})
+	end
 
 	filters = _self.appendToSearchFilters(filters)
 	_self["searchFilters"] = filters
