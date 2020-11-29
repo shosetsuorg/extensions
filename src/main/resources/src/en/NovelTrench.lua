@@ -1,9 +1,11 @@
--- {"id":81,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.1.0"]}
+-- {"id":81,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.2.2"]}
+
 return Require("Madara")("https://noveltrench.com",{
 	id = 81,
 	name = "NovelTrench",
 	imageURL = "https://noveltrench.com/wp-content/uploads/2019/08/transparent1.png",
 	shrinkURLNovel = "manga",
+	searchHasOper = true,
 	genres = {
 		"Action",
 		"Adult",
@@ -60,15 +62,6 @@ return Require("Madara")("https://noveltrench.com",{
 		"Xuanhuan",
 		"Yaoi"
 	},
-	---@param _table table
-	appendToSearchFilters = function(tbl)
-		table.insert(tbl, 7,
-				DropdownFilter(2226, "Genres Condition", { "OR (having one of selected genres)", "AND (having all selected genres" }))
-		return tbl
-	end,
-	appendToSearchURL = function(url,table)
-		return url .. "&op=" .. (table[7] and "0" or "1")
-	end,
 	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
 	novelPageTitleSel = "h1",
 	novelListingURLPath = "manga"
