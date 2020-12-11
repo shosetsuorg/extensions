@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.org"
 local qs = Require("url").querystring
@@ -17,8 +17,8 @@ local function parseTop(doc)
 	return map(doc:select("div.top-novel-block"), function(v)
 		local e = v:selectFirst("a")
 		return Novel {
+			title = text(e),
 			link = shrinkURL(e:attr("href")),
-			title = e:text(),
 			imageURL = v:selectFirst("img"):attr("src")
 		}
 	end)
@@ -47,24 +47,36 @@ return {
 	parseNovel = function(novelURL, loadChapters)
 		local doc = GETDocument(expandURL(novelURL))
 
+		local novel = doc:selectFirst("div.novel")
+		local left = novel:selectFirst(".novel-left")
+		local details = novel:selectFirst(".novel-right .novel-details")
 		local info = NovelInfo {
 			title = doc:selectFirst(".block-title h1"):text(),
-			description = table.concat(map(doc:selectFirst(".novel-detail-body"):select("p"), text), "\n")
+			imageURL = left:selectFirst(".novel-cover img"):attr("src"),
+			description = table.concat(map(details:selectFirst(".novel-detail-body"):select("p"), text), "\n"),
+			alternativeTitles = details:selectFirst(".novel-detail-item.color-gray")
 		}
 
 		if loadChapters then
 			local i = 0
-			info:setChapters(AsList(map2flat(
-				doc:selectFirst(".tab-content"):select(".tab-pane"),
-				function(v) return v:select("li a") end,
-				function(v)
-					i = i + 1
-					return NovelChapter {
-						order = i,
-						title = v:text(),
-						link = shrinkURL(v:attr("href")),
-					}
-				end)))
+			local dedup = {} -- table for deduplication, dedup[url] will be true if chapter already exists
+
+			info:setChapters(AsList(filter(map2flat(
+						doc:selectFirst("#accordion .tab-content"):select(".tab-pane ul"),
+						function(v) return v:select("li a") end,
+						function(v)
+							i = i + 1
+							return NovelChapter {
+								order = i,
+								title = v:text(),
+								link = shrinkURL(v:attr("href")),
+							}
+						end),
+					function(chap)
+						local duplicate = dedup[chap.link]
+						dedup[chap.link] = true
+						return duplicate
+					end)))
 		end
 
 		return info
