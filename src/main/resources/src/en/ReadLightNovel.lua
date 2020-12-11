@@ -75,7 +75,7 @@ return {
 					function(chap)
 						local duplicate = dedup[chap:getLink()]
 						dedup[chap:getLink()] = true
-						return duplicate
+						return not duplicate
 					end)))
 		end
 
