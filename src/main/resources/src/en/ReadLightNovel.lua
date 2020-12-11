@@ -50,11 +50,18 @@ return {
 		local novel = doc:selectFirst("div.novel")
 		local left = novel:selectFirst(".novel-left")
 		local details = novel:selectFirst(".novel-right .novel-details")
+		local leftdetails = left:selectFirst(".novel-details")
+
 		local info = NovelInfo {
 			title = doc:selectFirst(".block-title h1"):text(),
 			imageURL = left:selectFirst(".novel-cover img"):attr("src"),
 			description = table.concat(map(details:selectFirst(".novel-detail-body"):select("p"), text), "\n"),
-			alternativeTitles = map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text)
+			alternativeTitles = map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text),
+			status = ({
+				Ongoing = NovelStatus("PUBLISHING"),
+				Completed = NovelStatus("COMPLETED")
+			})[leftdetails:get(leftdetails:size()-1):selectFirst("li"):text()],
+			language = leftdetails:get(3):selectFirst("li"):text()
 		}
 
 		if loadChapters then
