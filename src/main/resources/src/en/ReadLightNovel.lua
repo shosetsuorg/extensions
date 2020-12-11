@@ -50,7 +50,7 @@ return {
 		local novel = doc:selectFirst("div.novel")
 		local left = novel:selectFirst(".novel-left")
 		local details = novel:selectFirst(".novel-right .novel-details")
-		local leftdetails = left:selectFirst(".novel-details")
+		local leftdetails = left:selectFirst(".novel-details"):children()
 
 		local info = NovelInfo {
 			title = doc:selectFirst(".block-title h1"):text(),
