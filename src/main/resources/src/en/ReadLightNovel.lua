@@ -54,7 +54,7 @@ return {
 			title = doc:selectFirst(".block-title h1"):text(),
 			imageURL = left:selectFirst(".novel-cover img"):attr("src"),
 			description = table.concat(map(details:selectFirst(".novel-detail-body"):select("p"), text), "\n"),
-			alternativeTitles = details:selectFirst(".novel-detail-item.color-gray")
+			alternativeTitles = map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text)
 		}
 
 		if loadChapters then
