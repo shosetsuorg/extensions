@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.org"
 local qs = Require("url").querystring
@@ -22,21 +22,6 @@ local function parseTop(doc)
 			imageURL = v:selectFirst("img"):attr("src")
 		}
 	end)
-end
-
--- utils to make the code more linearly
--- TODO: move these to kotlin-lib luaFuncs
-local function identity(...)
-	return ...
-end
-local function pipeline(obj)
-    return function(f, ...)
-        if not f then
-            return obj
-        else
-            return pipeline(f(obj, ...))
-        end
-    end
 end
 
 return {
@@ -91,15 +76,13 @@ return {
 			local i = 0
 			local dedup = {} -- table for deduplication, dedup[url] will be true if chapter already exists
 
-			-- mapping with identity function is a workaround,
-			-- TODO: flatten should support java arrays to avoid this
 			info:setChapters(
 					pipeline(doc:select("#accordion .panel-body .tab-content"))
 						(map, function(v)
-							return map(v:select(".tab-pane ul"), identity)
+							return v:select(".tab-pane ul")
 						end)(flatten)
 						(map, function(v)
-							return map(v:select("li a"), identity)
+							return v:select("li a")
 						end)(flatten)
 						(map, function(v)
 							i = i + 1
