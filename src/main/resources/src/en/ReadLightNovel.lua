@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.org"
 local qs = Require("url").querystring
@@ -24,6 +24,21 @@ local function parseTop(doc)
 	end)
 end
 
+-- utils to make the code more linearly
+-- TODO: move these to kotlin-lib luaFuncs
+local function identity(...)
+	return ...
+end
+local function pipeline(obj)
+    return function(f, ...)
+        if not f then
+            return obj
+        else
+            return pipeline(f(obj, ...))
+        end
+    end
+end
+
 return {
 	id = 6118,
 	name = "ReadLightNovel",
@@ -40,8 +55,16 @@ return {
 	},
 
 	getPassage = function(chapterURL)
-		local e = GETDocument(expandURL(chapterURL)):selectFirst(".container--content .row .desc")
-		return table.concat(map(e:select("p"), text), "\n")
+		return pipeline
+				(GETDocument(expandURL(chapterURL)):selectFirst(".container--content .row .desc"):children())
+				(filter, function(v)
+					return v:tagName() ~= "script"
+				end)
+				(map, text)
+				(filter, function(v)
+					return not v:match("support RLN")
+				end)
+				(table.concat, "\n")()
 	end,
 
 	parseNovel = function(novelURL, loadChapters)
@@ -68,22 +91,29 @@ return {
 			local i = 0
 			local dedup = {} -- table for deduplication, dedup[url] will be true if chapter already exists
 
-			info:setChapters(AsList(filter(map2flat(
-						doc:selectFirst("#accordion .tab-content"):select(".tab-pane ul"),
-						function(v) return v:select("li a") end,
-						function(v)
+			-- mapping with identity function is a workaround,
+			-- TODO: flatten should support java arrays to avoid this
+			info:setChapters(
+					pipeline(doc:select("#accordion .panel-body .tab-content"))
+						(map, function(v)
+							return map(v:select(".tab-pane ul"), identity)
+						end)(flatten)
+						(map, function(v)
+							return map(v:select("li a"), identity)
+						end)(flatten)
+						(map, function(v)
 							i = i + 1
 							return NovelChapter {
 								order = i,
 								title = v:text(),
 								link = shrinkURL(v:attr("href")),
 							}
-						end),
-					function(chap)
-						local duplicate = dedup[chap:getLink()]
-						dedup[chap:getLink()] = true
-						return not duplicate
-					end)))
+						end)
+						(filter, function(chap)
+							local duplicate = dedup[chap:getLink()]
+							dedup[chap:getLink()] = true
+							return not duplicate
+						end)(AsList)())
 		end
 
 		return info
