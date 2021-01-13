@@ -175,6 +175,16 @@
       "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": "c47e56dfa754a3f0e95fc6a57d9e15b6"
+    },
+    {
+      "name": "wuxia.blog",
+      "fileName": "WuxiaDotBlog",
+      "imageURL": "https://www.wuxia.blog/android-icon-192x192.png",
+      "id": 1376,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": "c4a2b8bfb6e6103ad0c8615fb6602bbe"
     }
   ]
 }

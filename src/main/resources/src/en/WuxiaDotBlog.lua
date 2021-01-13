@@ -8,7 +8,7 @@ return {
 	id = 1376,
 	name = "wuxia.blog",
 	baseURL = baseURL,
-	imageURL = baseURL .. "/apple-icon-180x180.png",
+	imageURL = baseURL .. "/android-icon-192x192.png",
 	listings = {
 		Listing("Latest Updated", true, function(data)
 			return map(GETDocument(
