@@ -3,6 +3,35 @@
 --- @version 1.0.0
 
 local baseURL = "https://www.wuxia.blog"
+local _links = {}
+
+local function shrinkURL(url)
+	return url:gsub(baseURL, "")
+end
+
+local function isLinkDuplicate(link)
+	for key, value in pairs(_links) do
+		if value == link then
+			return true
+		end
+	end
+	_links[#_links+1] = link
+	return false
+end
+
+-- from ReadLightNovel
+local function identity(...)
+	return ...
+end
+local function pipeline(obj)
+    return function(f, ...)
+        if not f then
+            return obj
+        else
+            return pipeline(f(obj, ...))
+        end
+    end
+end
 
 return {
 	id = 1376,
@@ -11,15 +40,17 @@ return {
 	imageURL = baseURL .. "/android-icon-192x192.png",
 	listings = {
 		Listing("Latest Updated", true, function(data)
-			return map(GETDocument(
-					baseURL .. "/?page=" .. data[PAGE])
-					:select(".media"), function(it)
-				local novel = Novel()
-				novel:setLink(it:selectFirst(".media-body a"):attr("href"))
-				novel:setTitle(it:selectFirst(".media-heading"):text())
-				novel:setImageURL(it:selectFirst("img"):attr("src"))
-				return novel
-			end)
+			return pipeline(GETDocument(baseURL .. "/?page=" .. data[PAGE]):select(".media"))
+				(map, function(it)
+					local novel = Novel()
+					novel:setLink(it:selectFirst(".media-body a"):attr("href"))
+					novel:setTitle(it:selectFirst(".media-heading"):text())
+					novel:setImageURL(it:selectFirst("img"):attr("src"))
+					return novel
+				end, identity)
+				(filter, function (v)
+					return not isLinkDuplicate(v:getLink())
+				end)()
 		end),
 		Listing("Novel list", false, function(data)
 			return map(GETDocument(
@@ -106,7 +137,7 @@ return {
 				local novel = Novel()
 				novel:setImageURL(row:selectFirst("td:nth-child(2) img"):attr("src"))
 				novel:setTitle(row:selectFirst("td:nth-child(3) a"):text())
-				novel:setLink(string.gsub(row:selectFirst("td:nth-child(3) a"):attr("href"),baseURL,""))
+				novel:setLink(shrinkURL(row:selectFirst("td:nth-child(3) a"):attr("href")))
 
 				result[#result+1] = novel
 			end
