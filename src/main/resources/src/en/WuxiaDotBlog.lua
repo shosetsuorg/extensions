@@ -1,6 +1,6 @@
--- {"id":1376,"ver":"1.0.0","libVer":"1.0.0","author":"AriaMoradi"}
+-- {"id":1376,"ver":"1.0.1","libVer":"1.0.0","author":"AriaMoradi"}
 --- @author AriaMoradi
---- @version 1.0.0
+--- @version 1.0.1
 
 local baseURL = "https://www.wuxia.blog"
 local _links = {}
@@ -73,6 +73,30 @@ return {
 		novel:setAuthors(
 			map(
 				document:select(".panel-body .row .row .row > div:nth-child(2) > a"),
+				function (it)
+					it:text()
+				end
+			)
+		)
+		novel:setGenres(
+			map(
+				document:select(".panel-body .row .row .label"),
+				function (it)
+					it:text()
+				end
+			)
+		)
+		novel:setAlternativeTitles(
+			map(
+				document:select(".panel-body .row .row .coll:nth-child(1) a"),
+				function (it)
+					it:text()
+				end
+			)
+		)
+		novel:setTags(
+			map(
+				document:select(".panel .panel .label"),
 				function (it)
 					it:text()
 				end
