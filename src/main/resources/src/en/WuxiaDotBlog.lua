@@ -1,6 +1,6 @@
--- {"id":1376,"ver":"1.0.1","libVer":"1.0.0","author":"AriaMoradi"}
+-- {"id":1376,"ver":"1.0.2","libVer":"1.0.0","author":"AriaMoradi"}
 --- @author AriaMoradi
---- @version 1.0.1
+--- @version 1.0.2
 
 local baseURL = "https://www.wuxia.blog"
 local _links = {}
@@ -45,7 +45,7 @@ return {
 					local novel = Novel()
 					novel:setLink(it:selectFirst(".media-body a"):attr("href"))
 					novel:setTitle(it:selectFirst(".media-heading"):text())
-					novel:setImageURL(it:selectFirst("img"):attr("src"))
+					novel:setImageURL(baseURL .. "/" .. it:selectFirst("img"):attr("src"))
 					return novel
 				end, identity)
 				(filter, function (v)
@@ -69,12 +69,13 @@ return {
 		local document = GETDocument(baseURL .. novelURL)
 
 		novel:setTitle(document:selectFirst("h4.panel-title"):text())
+		novel:setImageURL(document:selectFirst(".imageCover img"):attr("src"))
 
 		novel:setAuthors(
 			map(
 				document:select(".panel-body .row .row .row > div:nth-child(2) > a"),
 				function (it)
-					it:text()
+					return it:text()
 				end
 			)
 		)
@@ -82,15 +83,22 @@ return {
 			map(
 				document:select(".panel-body .row .row .label"),
 				function (it)
-					it:text()
+					return it:text()
 				end
 			)
 		)
+		local k = map(
+			document:select(".panel-body .row .row .row > div:nth-child(2) > a"),
+			function (it)
+				return it:text()
+			end
+		)
+
 		novel:setAlternativeTitles(
 			map(
 				document:select(".panel-body .row .row .coll:nth-child(1) a"),
 				function (it)
-					it:text()
+					return it:text()
 				end
 			)
 		)
@@ -98,7 +106,7 @@ return {
 			map(
 				document:select(".panel .panel .label"),
 				function (it)
-					it:text()
+					return it:text()
 				end
 			)
 		)
@@ -115,7 +123,6 @@ return {
 				chap:setTitle(it:selectFirst("a"):text())
 				chap:setLink(it:selectFirst("a"):attr("href"))
 				chap:setRelease(it:selectFirst("td:nth-child(2)"):text())
-				chap:setOrder(i)
 				return chap
 			end)
 
@@ -129,7 +136,6 @@ return {
 					chap:setTitle(it:text())
 					chap:setLink(it:attr("href"))
 					chap:setRelease(it:nextSibling():text())
-					chap:setOrder(i)
 					return chap
 				end)
 				for key,value in pairs(rest) do
@@ -138,6 +144,7 @@ return {
 			end)
 			local chapters = AsList(first100)
 			Reverse(chapters)
+
 			novel:setChapters(chapters)
 		end
 		return novel
@@ -151,6 +158,7 @@ return {
 				return v:text()
 			end)
 			(table.concat, "\n")
+			(string.gsub, "\n\n", "\n")
 			(string.gsub, "This chapter is updated by Wuxia.Blog\n", "")
 			(string.gsub, "Liked it?? Take a second to support Wuxia.Blog on Patreon!", "")()
 	end,
