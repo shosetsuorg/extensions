@@ -112,8 +112,9 @@ return {
 					first100[#first100+1] = value
 				end
 			end)
-
-			novel:setChapters(AsList(first100))
+			local chapters = AsList(first100)
+			Reverse(chapters)
+			novel:setChapters(chapters)
 		end
 		return novel
 	end,
