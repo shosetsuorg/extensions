@@ -119,11 +119,15 @@ return {
 	end,
 
 	getPassage = function(chapterURL)
-		local document = GETDocument(chapterURL):select("panel-body.article")
+		local document = GETDocument(chapterURL):select(".panel-body.article")
 
-		return table.concat(map(document:select("p"), function(v)
-			return v:text()
-		end), "\n") :gsub("<br>", "\n\n")
+		return pipeline(document:select("p"))
+			(map, function(v)
+				return v:text()
+			end)
+			(table.concat, "\n")
+			(string.gsub, "This chapter is updated by Wuxia.Blog\n", "")
+			(string.gsub, "Liked it?? Take a second to support Wuxia.Blog on Patreon!", "")()
 	end,
 
 	search = function(data)
