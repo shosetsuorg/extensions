@@ -1,9 +1,11 @@
--- {"id":1376,"ver":"1.0.2","libVer":"1.0.0","author":"AriaMoradi"}
+-- {"id":1376,"ver":"1.0.2","libVer":"1.0.0","author":"AriaMoradi","dep":["fun>=0.1.3"]}
 --- @author AriaMoradi
 --- @version 1.0.2
 
 local baseURL = "https://www.wuxia.blog"
 local _links = {}
+
+local fun = Require("fun")
 
 local function shrinkURL(url)
 	return url:gsub(baseURL, "")
@@ -19,10 +21,6 @@ local function isLinkDuplicate(link)
 	return false
 end
 
--- from ReadLightNovel
-local function identity(...)
-	return ...
-end
 local function pipeline(obj)
     return function(f, ...)
         if not f then
@@ -40,17 +38,18 @@ return {
 	imageURL = baseURL .. "/android-icon-192x192.png",
 	listings = {
 		Listing("Latest Updated", true, function(data)
-			return pipeline(GETDocument(baseURL .. "/?page=" .. data[PAGE]):select(".media"))
-				(map, function(it)
+			return fun.iter(asTable(GETDocument(baseURL .. "/?page=" .. data[PAGE] + 1):select(".media")))
+				:map(function(it)
 					local novel = Novel()
 					novel:setLink(it:selectFirst(".media-body a"):attr("href"))
 					novel:setTitle(it:selectFirst(".media-heading"):text())
 					novel:setImageURL(baseURL .. "/" .. it:selectFirst("img"):attr("src"))
 					return novel
-				end, identity)
-				(filter, function (v)
+				end)
+				:filter(function (v)
 					return not isLinkDuplicate(v:getLink())
-				end)()
+				end)
+				:totable()
 		end),
 		Listing("Novel list", false, function(data)
 			return map(GETDocument(
@@ -118,31 +117,31 @@ return {
 		))
 
 		if loadChapters then
-			local first100 = map(document:select("table tbody tr"), function(it, i)
-				local chap = NovelChapter()
-				chap:setTitle(it:selectFirst("a"):text())
-				chap:setLink(it:selectFirst("a"):attr("href"))
-				chap:setRelease(it:selectFirst("td:nth-child(2)"):text())
-				return chap
-			end)
+			local first100 = fun.iter(asTable(document:select("table tbody tr")))
+				:map(function(it)
+					local chap = NovelChapter()
+					chap:setTitle(it:selectFirst("a"):text())
+					chap:setLink(it:selectFirst("a"):attr("href"))
+					chap:setRelease(it:selectFirst("td:nth-child(2)"):text())
+					return chap
+				end)
 
 			-- might run into 404 if 100< chapters on the site
 			pcall(function ()
 				local moreEl = document:selectFirst("#more")
 				local nid = moreEl:attr("data-nid")
 				local document2 = GETDocument(baseURL .. '/temphtml/_tempChapterList_all_' .. tostring(nid) .. '.html')
-				local rest = map(document2:select("a"), function(it, i)
-					local chap = NovelChapter()
-					chap:setTitle(it:text())
-					chap:setLink(it:attr("href"))
-					chap:setRelease(it:nextSibling():text())
-					return chap
-				end)
-				for key,value in pairs(rest) do
-					first100[#first100+1] = value
-				end
+				local rest = fun.iter(asTable(document2:select("a")))
+					:map(function(it)
+						local chap = NovelChapter()
+						chap:setTitle(it:text())
+						chap:setLink(it:attr("href"))
+						chap:setRelease(it:nextSibling():text())
+						return chap
+					end)
+				first100 = first100:chain(rest)
 			end)
-			local chapters = AsList(first100)
+			local chapters = AsList(first100:totable())
 			Reverse(chapters)
 
 			novel:setChapters(chapters)
@@ -153,14 +152,18 @@ return {
 	getPassage = function(chapterURL)
 		local document = GETDocument(chapterURL):select(".panel-body.article")
 
-		return pipeline(document:select("p"))
-			(map, function(v)
+		local pragraphs = fun.iter(asTable(document:select("p")))
+			:map(function(v)
 				return v:text()
 			end)
+			:totable()
+
+		return pipeline(pragraphs)
 			(table.concat, "\n")
 			(string.gsub, "\n\n", "\n")
 			(string.gsub, "This chapter is updated by Wuxia.Blog\n", "")
 			(string.gsub, "Liked it?? Take a second to support Wuxia.Blog on Patreon!", "")()
+		
 	end,
 
 	search = function(data)
@@ -168,17 +171,20 @@ return {
 
 		-- fails if query retuns nothing
 		pcall(function ()
-			local rows = GETDocument(baseURL .. "/?search=" .. string.gsub(data[QUERY]," ","+")):select("tr")
-			for i=1, rows:size()-1 do -- ignore the first
-				local row = rows:get(i)
-				local novel = Novel()
-				novel:setImageURL(row:selectFirst("td:nth-child(2) img"):attr("src"))
-				novel:setTitle(row:selectFirst("td:nth-child(3) a"):text())
-				novel:setLink(shrinkURL(row:selectFirst("td:nth-child(3) a"):attr("href")))
+			fun.iter(asTable(GETDocument(baseURL .. "/?search=" .. string.gsub(data[QUERY]," ","+")):select("tr")))
+				:tail()
+				:map(function (row)
+					local novel = Novel()
+					novel:setImageURL(row:selectFirst("td:nth-child(2) img"):attr("src"))
+					novel:setTitle(row:selectFirst("td:nth-child(3) a"):text())
+					novel:setLink(shrinkURL(row:selectFirst("td:nth-child(3) a"):attr("href")))
+					return novel
+				end)
+				:each(function (it)
+					result[#result+1] = it
+				end)
+		 end)
 
-				result[#result+1] = novel
-			end
-		end)
 		return result
 	end,
 	isSearchIncrementing = false,
