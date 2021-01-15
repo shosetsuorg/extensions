@@ -1,6 +1,6 @@
--- {"id":1376,"ver":"1.0.2","libVer":"1.0.0","author":"AriaMoradi","dep":["fun>=0.1.3"]}
+-- {"id":1376,"ver":"2.0.0","libVer":"1.0.0","author":"AriaMoradi","dep":["fun>=0.1.3"]}
 --- @author AriaMoradi
---- @version 1.0.2
+--- @version 2.0.0
 
 local baseURL = "https://www.wuxia.blog"
 local _links = {}
