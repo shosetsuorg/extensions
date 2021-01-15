@@ -397,6 +397,12 @@ do
         ---@param f function @Function to wrap
         ---@return function @Wrapper
         function wrap(o, f) return end
+
+        --- converts a ArrayList or Elements to a table
+        ---@see ArrayList
+        ---@param o ArrayList | Elements @Target
+        ---@return table
+        function asTable(o) return end
     end
 
     -- ArrayList
