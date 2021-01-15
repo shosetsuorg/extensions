@@ -1,6 +1,6 @@
--- {"id":1376,"ver":"2.0.0","libVer":"1.0.0","author":"AriaMoradi","dep":["fun>=0.1.3"]}
+-- {"id":1376,"ver":"2.0.1","libVer":"1.0.0","author":"AriaMoradi","dep":["fun>=0.1.3"]}
 --- @author AriaMoradi
---- @version 2.0.0
+--- @version 2.0.1
 
 local baseURL = "https://www.wuxia.blog"
 local _links = {}
@@ -9,6 +9,10 @@ local fun = Require("fun")
 
 local function shrinkURL(url)
 	return url:gsub(baseURL, "")
+end
+
+local function expandURL(url)
+	return baseURL .. url
 end
 
 local function isLinkDuplicate(link)
@@ -36,6 +40,7 @@ return {
 	name = "wuxia.blog",
 	baseURL = baseURL,
 	imageURL = baseURL .. "/android-icon-192x192.png",
+	expandURL = expandURL,
 	listings = {
 		Listing("Latest Updated", true, function(data)
 			return fun.iter(asTable(GETDocument(baseURL .. "/?page=" .. data[PAGE] + 1):select(".media")))
