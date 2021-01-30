@@ -29,7 +29,7 @@
     {
       "name": "MTLNovel",
       "fileName": "MTLNovel",
-      "imageURL": "https://www.mtlnovel.com/wp-content/themes/mtlnovel/images/logo32.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/MTLNovel.png",
       "id": 573,
       "lang": "en",
       "ver": "1.0.0",
@@ -39,7 +39,7 @@
     {
       "name": "NovelFull",
       "fileName": "NovelFull",
-      "imageURL": "",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelFull.png",
       "id": 1,
       "lang": "en",
       "ver": "1.0.0",
@@ -49,7 +49,7 @@
     {
       "name": "FastNovel",
       "fileName": "FastNovel",
-      "imageURL": "https://fastnovel.net/skin/images/logo.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/FastNovel.png",
       "id": 258,
       "lang": "en",
       "ver": "0.1.3",
@@ -59,7 +59,7 @@
     {
       "name": "VipNovel",
       "fileName": "VipNovel",
-      "imageURL": "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/VipNovel.png",
       "id": 586,
       "lang": "en",
       "ver": "1.0.0",
@@ -69,7 +69,7 @@
     {
       "name": "CreativeNovels",
       "fileName": "CreativeNovels",
-      "imageURL": "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/CreativeNovels.png",
       "id": 911,
       "lang": "en",
       "ver": "1.0.1",
@@ -79,7 +79,7 @@
     {
       "name": "VolareNovels",
       "fileName": "VolareNovels",
-      "imageURL": "",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/VolareNovels.png",
       "id": 1274,
       "lang": "en",
       "ver": "1.0.0",
@@ -89,7 +89,7 @@
     {
       "name": "Tangsanshu",
       "fileName": "Tangsanshu",
-      "imageURL": "http://www.tangsanshu.com/images/logo.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Tangsanshu.png",
       "id": 234,
       "lang": "zn",
       "ver": "1.0.0",
@@ -99,7 +99,7 @@
     {
       "name": "BestLightNovel",
       "fileName": "BestLightNovel",
-      "imageURL": "https://bestlightnovel.com/themes/home/images/favicon.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BestLightNovel.png",
       "id": 5,
       "lang": "en",
       "ver": "2.0.0",
@@ -109,7 +109,7 @@
     {
       "name": "BoxNovel",
       "fileName": "BoxNovel",
-      "imageURL": "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BoxNovel.png",
       "id": 2,
       "lang": "en",
       "ver": "2.0.0",
@@ -119,7 +119,7 @@
     {
       "name": "Syosetsu",
       "fileName": "Syosetsu",
-      "imageURL": "https://static.syosetu.com/view/images/common/logo_yomou.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Syosetsu.png",
       "id": 3,
       "lang": "jp",
       "ver": "1.2.0",
@@ -129,7 +129,7 @@
     {
       "name": "WuxiaWorld",
       "fileName": "WuxiaWorld",
-      "imageURL": "https://www.wuxiaworld.com/apple-touch-icon.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WuxiaWorld.png",
       "id": 1273,
       "lang": "en",
       "ver": "1.0.0",
@@ -139,7 +139,7 @@
     {
       "name": "NovelTrench",
       "fileName": "NovelTrench",
-      "imageURL": "https://noveltrench.com/wp-content/uploads/2019/08/transparent1.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelTrench.png",
       "id": 81,
       "lang": "en",
       "ver": "1.0.1",
@@ -149,7 +149,7 @@
     {
       "name": "Woopread",
       "fileName": "Woopread",
-      "imageURL": "https://woopread.com/wp-content/uploads/2020/07/cropped-W-192x192.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WoopRead.png",
       "id": 4217,
       "lang": "en",
       "ver": "1.0.0",
@@ -159,7 +159,7 @@
     {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
-      "imageURL": "https://readlightnovel.org/favicon.ico",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/ReadLightNovel.png",
       "id": 6118,
       "lang": "en",
       "ver": "1.0.2",
@@ -169,7 +169,7 @@
     {
       "name": "Saikai Scan",
       "fileName": "SaikaiScan",
-      "imageURL": "https://saikaiscan.com.br/media/cache/16/89/1689ed75fe55808825d33185a28788ed.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/SaikaiScan.png",
       "id": 2443,
       "lang": "pt",
       "ver": "1.0.0",
@@ -179,7 +179,7 @@
     {
       "name": "wuxia.blog",
       "fileName": "WuxiaDotBlog",
-      "imageURL": "https://www.wuxia.blog/android-icon-192x192.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WuxiaDotBlog.png",
       "id": 1376,
       "lang": "en",
       "ver": "1.0.2",
