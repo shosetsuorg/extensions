@@ -92,7 +92,7 @@ return {
 	id = 234,
 	name = "Tangsanshu",
 	baseURL = baseURL,
-	imageURL = "http://www.tangsanshu.com/images/logo.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Tangsanshu.png",
 	listings = {
 		Listing("Latest", false, latest)
 	},

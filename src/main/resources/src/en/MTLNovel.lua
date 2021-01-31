@@ -86,7 +86,7 @@ return {
 	id = 573,
 	name = "MTLNovel",
 	baseURL = baseURL,
-	imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/MTLNovel.png",
 	hasSearch = false,
 	listings = {
 		Listing("Novel List", true, function(data)

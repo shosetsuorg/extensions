@@ -43,7 +43,7 @@ return {
 	id = 6118,
 	name = "ReadLightNovel",
 	baseURL = baseURL,
-	imageURL = "https://readlightnovel.org/favicon.ico",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/ReadLightNovel.png",
 
 	shrinkURL = shrinkURL,
 	expandURL = expandURL,

@@ -3,7 +3,7 @@
 return Require("NovelFull")("http://novelfull.com", {
 	id = 1,
 	name = "NovelFull",
-	imageURL = "",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelFull.png",
 	genres = {},
 
 	meta_offset = 0,

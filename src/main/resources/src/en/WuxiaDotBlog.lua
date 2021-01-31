@@ -37,7 +37,7 @@ return {
 	id = 1376,
 	name = "wuxia.blog",
 	baseURL = baseURL,
-	imageURL = baseURL .. "/android-icon-192x192.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WuxiaDotBlog.png",
 	listings = {
 		Listing("Latest Updated", true, function(data)
 			return pipeline(GETDocument(baseURL .. "/?page=" .. data[PAGE]):select(".media"))

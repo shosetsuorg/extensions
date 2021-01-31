@@ -92,7 +92,7 @@ return {
 	id = 258,
 	name = "FastNovel",
 	baseURL = baseURL,
-	imageURL = "https://fastnovel.net/skin/images/logo.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/FastNovel.png",
 	listings = {
 		Listing("Latest", true, parseLatest)
 	},

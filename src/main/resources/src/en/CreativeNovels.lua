@@ -101,7 +101,7 @@ return {
 	id = 911,
 	name = "Creative Novels",
 	baseURL = baseURL,
-	imageURL = "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/CreativeNovels.png",
 	hasSearch = false,
 	shrinkURL = shrinkURL,
 	expandURL = function(url, key)

@@ -93,7 +93,7 @@ return {
 	baseURL = baseURL,
 
 	-- Optional values to change
-	imageURL = baseURL .. "/media/cache/16/89/1689ed75fe55808825d33185a28788ed.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/SaikaiScan.png"
 	hasSearch = false,
 
 	-- Must have at least one value
