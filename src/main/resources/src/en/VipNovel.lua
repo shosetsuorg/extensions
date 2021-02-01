@@ -1,4 +1,4 @@
--- {"id":586,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.1.0"]}
+-- {"id":586,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.1.0"]}
 
 return Require("Madara")("https://vipnovel.com", {
 	id = 586,

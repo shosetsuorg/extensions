@@ -1,4 +1,4 @@
--- {"id":1376,"ver":"1.0.2","libVer":"1.0.0","author":"AriaMoradi"}
+-- {"id":1376,"ver":"1.0.3","libVer":"1.0.0","author":"AriaMoradi"}
 --- @author AriaMoradi
 --- @version 1.0.2
 

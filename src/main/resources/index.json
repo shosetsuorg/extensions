@@ -42,7 +42,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelFull.png",
       "id": 1,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": "5f95559b552725914228f3b29126fd1"
     },
@@ -52,7 +52,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/FastNovel.png",
       "id": 258,
       "lang": "en",
-      "ver": "0.1.3",
+      "ver": "0.1.4",
       "libVer": "1.0.0",
       "md5": "161b6193d54c876cc658bd353f6623"
     },
@@ -62,7 +62,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/VipNovel.png",
       "id": 586,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": "911fedf88cf4fad6ccc1561e625dd219"
     },
@@ -72,7 +72,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/CreativeNovels.png",
       "id": 911,
       "lang": "en",
-      "ver": "1.0.1",
+      "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": "2ac8b2379560dac51930790615c7095"
     },
@@ -82,7 +82,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/VolareNovels.png",
       "id": 1274,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": "ff81cdb3303780e243e4d3e6d35ce418"
     },
@@ -92,7 +92,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Tangsanshu.png",
       "id": 234,
       "lang": "zn",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": "d8dfa1e373af2b72353a1464f715b39"
     },
@@ -102,7 +102,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BestLightNovel.png",
       "id": 5,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": "279b8a4da8428eda1b535e12c15dc1f"
     },
@@ -112,7 +112,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BoxNovel.png",
       "id": 2,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": "c82a5cdff73aee7385e2da5cec371f89"
     },
@@ -122,7 +122,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Syosetsu.png",
       "id": 3,
       "lang": "jp",
-      "ver": "1.2.0",
+      "ver": "1.2.1",
       "libVer": "1.0.0",
       "md5": "d2edddc58222392b59ed34b73e25d6b2"
     },
@@ -132,7 +132,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WuxiaWorld.png",
       "id": 1273,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": "adde12e1a74dd843afc870295831fda"
     },
@@ -142,7 +142,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelTrench.png",
       "id": 81,
       "lang": "en",
-      "ver": "1.0.1",
+      "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -152,7 +152,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WoopRead.png",
       "id": 4217,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -162,7 +162,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/ReadLightNovel.png",
       "id": 6118,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -172,7 +172,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/SaikaiScan.png",
       "id": 2443,
       "lang": "pt",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": "c47e56dfa754a3f0e95fc6a57d9e15b6"
     },
@@ -182,7 +182,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WuxiaDotBlog.png",
       "id": 1376,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": "c4a2b8bfb6e6103ad0c8615fb6602bbe"
     }

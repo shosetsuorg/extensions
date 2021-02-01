@@ -1,4 +1,4 @@
--- {"id":911,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
+-- {"id":911,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
 
 local baseURL = "https://creativenovels.com"
 local ajaxURL = "https://creativenovels.com/wp-admin/admin-ajax.php"

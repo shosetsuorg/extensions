@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.org"
 local qs = Require("url").querystring
