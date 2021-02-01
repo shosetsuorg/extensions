@@ -1,9 +1,9 @@
--- {"id":1,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["NovelFull>=1.0.0"]}
+-- {"id":1,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["NovelFull>=1.0.0"]}
 
 return Require("NovelFull")("http://novelfull.com", {
 	id = 1,
 	name = "NovelFull",
-	imageURL = "",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelFull.png",
 	genres = {},
 
 	meta_offset = 0,

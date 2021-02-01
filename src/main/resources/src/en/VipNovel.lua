@@ -1,9 +1,9 @@
--- {"id":586,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.1.0"]}
+-- {"id":586,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.1.0"]}
 
 return Require("Madara")("https://vipnovel.com", {
 	id = 586,
 	name = "VipNovel",
-	imageURL = "http://vipnovel.com/wp-content/uploads/2017/10/coollogo_com-1630861.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/VipNovel.png",
 	novelListingURLPath = "vipnovel",
 	shrinkURLNovel = "vipnovel",
 	genres = {

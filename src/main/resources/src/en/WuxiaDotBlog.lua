@@ -1,4 +1,4 @@
--- {"id":1376,"ver":"1.0.2","libVer":"1.0.0","author":"AriaMoradi"}
+-- {"id":1376,"ver":"1.0.3","libVer":"1.0.0","author":"AriaMoradi"}
 --- @author AriaMoradi
 --- @version 1.0.2
 
@@ -37,7 +37,7 @@ return {
 	id = 1376,
 	name = "wuxia.blog",
 	baseURL = baseURL,
-	imageURL = baseURL .. "/android-icon-192x192.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WuxiaDotBlog.png",
 	listings = {
 		Listing("Latest Updated", true, function(data)
 			return pipeline(GETDocument(baseURL .. "/?page=" .. data[PAGE]):select(".media"))

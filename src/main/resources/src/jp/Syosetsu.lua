@@ -1,4 +1,4 @@
--- {"id":3,"ver":"1.2.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":3,"ver":"1.2.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 --- @author Doomsdayrs
 --- @version 1.2.0
 
@@ -20,7 +20,7 @@ return {
 	id = 3,
 	name = "Syosetsu",
 	baseURL = baseURL,
-	imageURL = "https://static.syosetu.com/view/images/common/logo_yomou.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Syosetsu.png",
 	listings = {
 		Listing("Latest", true, function(data)
 			if data[PAGE] == 0 then

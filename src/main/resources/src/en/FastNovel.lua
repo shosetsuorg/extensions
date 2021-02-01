@@ -1,4 +1,4 @@
--- {"id":258,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":258,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 
 local baseURL = "https://fastnovel.net"
@@ -92,7 +92,7 @@ return {
 	id = 258,
 	name = "FastNovel",
 	baseURL = baseURL,
-	imageURL = "https://fastnovel.net/skin/images/logo.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/FastNovel.png",
 	listings = {
 		Listing("Latest", true, parseLatest)
 	},
