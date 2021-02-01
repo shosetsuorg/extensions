@@ -1,4 +1,4 @@
--- {"id":911,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
+-- {"id":911,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
 
 local baseURL = "https://creativenovels.com"
 local ajaxURL = "https://creativenovels.com/wp-admin/admin-ajax.php"
@@ -101,7 +101,7 @@ return {
 	id = 911,
 	name = "Creative Novels",
 	baseURL = baseURL,
-	imageURL = "https://img.creativenovels.com/images/uploads/2019/04/Creative-Novels-Fantasy1.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/CreativeNovels.png",
 	hasSearch = false,
 	shrinkURL = shrinkURL,
 	expandURL = function(url, key)

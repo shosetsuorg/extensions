@@ -1,4 +1,4 @@
--- {"id":736,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.1.0"]}
+-- {"id":736,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.1.0"]}
 
 local baseURL = "https://kisslightnovels.info"
 
@@ -6,7 +6,7 @@ return Require("Madara")(baseURL, {
 	id = 736,
 	name = "KissLightNovels",
 	baseURL = baseURL,
-	imageURL = "https://kisslightnovels.info/wp-content/uploads/2017/10/kisslightnovels-logo.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/KissLightNovels.png",
 	latestNovelSel = "div.col-6.col-md-3",
 	novelPageTitleSel = "h1",
 	genres = {

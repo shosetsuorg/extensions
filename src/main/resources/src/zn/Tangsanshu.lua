@@ -1,4 +1,4 @@
--- {"id":234,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":234,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "http://www.tangsanshu.com"
 local encode = Require("url").encode
@@ -92,7 +92,7 @@ return {
 	id = 234,
 	name = "Tangsanshu",
 	baseURL = baseURL,
-	imageURL = "http://www.tangsanshu.com/images/logo.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Tangsanshu.png",
 	listings = {
 		Listing("Latest", false, latest)
 	},

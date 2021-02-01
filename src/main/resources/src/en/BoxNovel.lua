@@ -1,9 +1,9 @@
--- {"id":2,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.1.0"]}
+-- {"id":2,"ver":"2.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.1.0"]}
 
 return Require("Madara")("https://boxnovel.com", {
     id = 2,
     name = "BoxNovel",
-    imageURL = "https://boxnovel.com/wp-content/uploads/2018/04/BoxNovel-1.png",
+    imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BoxNovel.png",
     genres = {
         "Action",
         "Adventure",
