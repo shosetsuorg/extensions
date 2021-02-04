@@ -125,6 +125,9 @@ function defaults:parseNovel(url, loadChapters)
 
 	-- Chapters
 	if loadChapters then
+		-- New manga get
+		-- action=manga_get_chapters&manga=######
+
 		local e = doc:select("li.wp-manga-chapter")
 		local a = e:size()
 		local l = AsList(map(e, function(v)
