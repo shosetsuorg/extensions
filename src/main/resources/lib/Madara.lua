@@ -16,27 +16,8 @@ local defaults = {
 	searchHasOper = false, -- is AND/OR operation selector present?
 	hasCloudFlare = false,
 	hasSearch = true,
-	chapterLoader = function(
-	---@type Document
-			document,
-	---@type NovelInfo
-			novelInfo)
-		local e = document:select("li.wp-manga-chapter")
-		local a = e:size()
-		local l = AsList(map(e, function(v)
-			local c = NovelChapter()
-			c:setLink(self.shrinkURL(v:selectFirst("a"):attr("href")))
-			c:setTitle(v:selectFirst("a"):text())
-
-			local i = v:selectFirst("i")
-			c:setRelease(i and i:text() or v:selectFirst("img[alt]"):attr("alt"))
-			c:setOrder(a)
-			a = a - 1
-			return c
-		end))
-		Reverse(l)
-		novelInfo:setChapters(l)
-	end
+	--- To load chapters for a novel, another request must be made
+	doubleLoadChapters = false
 }
 
 local ORDER_BY_FILTER_EXT = { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }
@@ -147,8 +128,35 @@ function defaults:parseNovel(url, loadChapters)
 	}
 
 	-- Chapters
+	-- Overrides `doc` if self.doubleLoadChapters is true
 	if loadChapters then
-		self:chapterLoader(doc, info)
+		if self.doubleLoadChapters then
+			local button = doc:selectFirst("a.wp-manga-action-button")
+			local id = button:attr("data-post")
+
+			doc = RequestDocument(
+					POST(self.baseURL .. "/wp-admin/admin-ajax.php", nil,
+							FormBodyBuilder()
+									:add("action", "manga_get_chapters")
+									:add("manga", id):build())
+			)
+		end
+
+		local e = doc:select("li.wp-manga-chapter")
+		local a = e:size()
+		local l = AsList(map(e, function(v)
+			local c = NovelChapter()
+			c:setLink(self.shrinkURL(v:selectFirst("a"):attr("href")))
+			c:setTitle(v:selectFirst("a"):text())
+
+			local i = v:selectFirst("i")
+			c:setRelease(i and i:text() or v:selectFirst("img[alt]"):attr("alt"))
+			c:setOrder(a)
+			a = a - 1
+			return c
+		end))
+		Reverse(l)
+		info:setChapters(l)
 	end
 
 	return info
