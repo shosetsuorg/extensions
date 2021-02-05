@@ -43,5 +43,7 @@ return Require("Madara")("https://foxaholic.com", {
 		chinese = "Chinese Novel",
 		japanese = "Japanese Novels",
 		original = "Original Novel",
-	}
+	},
+	doubleLoadChapters = true,
+	latestNovelSel = "div.col-6"
 })
