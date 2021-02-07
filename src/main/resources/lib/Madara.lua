@@ -16,6 +16,7 @@ local defaults = {
 	searchHasOper = false, -- is AND/OR operation selector present?
 	hasCloudFlare = false,
 	hasSearch = true,
+	ajaxUrl = "/wp-admin/admin-ajax.php",
 	--- To load chapters for a novel, another request must be made
 	doubleLoadChapters = false
 }
@@ -135,7 +136,7 @@ function defaults:parseNovel(url, loadChapters)
 			local id = button:attr("data-post")
 
 			doc = RequestDocument(
-					POST(self.baseURL .. "/wp-admin/admin-ajax.php", nil,
+					POST(self.baseURL .. self.ajaxUrl, nil,
 							FormBodyBuilder()
 									:add("action", "manga_get_chapters")
 									:add("manga", id):build())
