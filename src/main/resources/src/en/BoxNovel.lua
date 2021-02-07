@@ -37,7 +37,5 @@ return Require("Madara")("https://boxnovel.com", {
 		"Xuanhuan",
 		"Yaoi"
 	},
-	latestNovelSel = "div.col-12.col-md-6",
-	novelPageTitleSel = "h1",
-	doubleLoadChapters = true
+	latestNovelSel = "div.col-xs-12.col-md-6"
 })
