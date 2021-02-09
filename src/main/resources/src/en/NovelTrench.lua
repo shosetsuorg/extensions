@@ -1,9 +1,9 @@
--- {"id":81,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.2.2"]}
+-- {"id":81,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.2.2"]}
 
 return Require("Madara")("https://noveltrench.com",{
 	id = 81,
 	name = "NovelTrench",
-	imageURL = "https://noveltrench.com/wp-content/uploads/2019/08/transparent1.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelTrench.png",
 	shrinkURLNovel = "manga",
 	searchHasOper = true,
 	genres = {

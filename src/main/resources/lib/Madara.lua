@@ -1,7 +1,9 @@
--- {"ver":"1.2.2","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.3.0","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
-local text = function(v) return v:text() end
+local text = function(v)
+	return v:text()
+end
 
 local settings = {}
 
@@ -13,7 +15,10 @@ local defaults = {
 	shrinkURLNovel = "novel",
 	searchHasOper = false, -- is AND/OR operation selector present?
 	hasCloudFlare = false,
-	hasSearch = true
+	hasSearch = true,
+	ajaxUrl = "/wp-admin/admin-ajax.php",
+	--- To load chapters for a novel, another request must be made
+	doubleLoadChapters = false
 }
 
 local ORDER_BY_FILTER_EXT = { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }
@@ -120,11 +125,24 @@ function defaults:parseNovel(url, loadChapters)
 		imageURL = doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"),
 		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(1)
 		            :select("div.summary-content"):text() == "OnGoing"
-		            and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
+				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
 	}
 
 	-- Chapters
+	-- Overrides `doc` if self.doubleLoadChapters is true
 	if loadChapters then
+		if self.doubleLoadChapters then
+			local button = doc:selectFirst("a.wp-manga-action-button")
+			local id = button:attr("data-post")
+
+			doc = RequestDocument(
+					POST(self.baseURL .. self.ajaxUrl, nil,
+							FormBodyBuilder()
+									:add("action", "manga_get_chapters")
+									:add("manga", id):build())
+			)
+		end
+
 		local e = doc:select("li.wp-manga-chapter")
 		local a = e:size()
 		local l = AsList(map(e, function(v)
@@ -150,7 +168,8 @@ end
 function defaults:parse(doc, search)
 	local function img_src(e)
 		local srcset = e:attr("data-srcset")
-		if srcset then -- get largest image
+		if srcset then
+			-- get largest image
 			local max, max_url = 0, ""
 
 			for url, size in srcset:gmatch("(.-) (%d+)w") do
@@ -175,19 +194,20 @@ function defaults:parse(doc, search)
 		end
 		novel:setTitle(tit)
 		local e = data:selectFirst("img")
-		if e then novel:setImageURL(img_src(e)) end
+		if e then
+			novel:setImageURL(img_src(e))
+		end
 		return novel
 	end)
 end
 
 function defaults:expandURL(url)
-	return self.baseURL.."/"..self.shrinkURLNovel.."/"..url
+	return self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url
 end
 
 function defaults:shrinkURL(url)
-	return url:gsub("https?://.-/"..self.shrinkURLNovel.."/", "")
+	return url:gsub("https?://.-/" .. self.shrinkURLNovel .. "/", "")
 end
-
 
 return function(baseURL, _self)
 	_self = setmetatable(_self or {}, { __index = function(_, k)
@@ -210,7 +230,7 @@ return function(baseURL, _self)
 		}),
 		FilterGroup("Genres", map(_self.genres, function(v, k)
 			keyID = keyID + 1
-			_self.genres_map[keyID] = k or v:lower():gsub(" ","-")
+			_self.genres_map[keyID] = k or v:lower():gsub(" ", "-")
 			return CheckboxFilter(keyID, v)
 		end)) -- 6
 	}
@@ -218,14 +238,16 @@ return function(baseURL, _self)
 	if _self.searchHasOper then
 		keyID = keyID + 1
 		_self.searchOperId = keyID
-		filters[#filters+1] = DropdownFilter(keyID, "Genres Condition", {"OR (any of selected)", "AND (all selected)"})
+		filters[#filters + 1] = DropdownFilter(keyID, "Genres Condition", { "OR (any of selected)", "AND (all selected)" })
 	end
 
 	filters = _self.appendToSearchFilters(filters)
 	_self["searchFilters"] = filters
 	_self["baseURL"] = baseURL
 	_self["listings"] = { Listing("Default", true, _self.latest) }
-	_self["updateSetting"] = function(id, value) settings[id] = value end
+	_self["updateSetting"] = function(id, value)
+		settings[id] = value
+	end
 
 	return _self
 end

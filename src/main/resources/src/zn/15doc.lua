@@ -1,4 +1,4 @@
--- {"id":163,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":163,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs"}
 -- Outputed novelURLs are it's novel IDs
 -- Outputed chapterURLs are novelID/chapterID
 
@@ -89,7 +89,7 @@ return {
 	id = 163,
 	name = "15doc",
 	baseURL = baseURL,
-	imageURL = (baseURL .. "/themes/yssm/logo.png"),
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/15doc.png",
 	hasSearch = false,
 	listings = {
 		Listing("最近更新", false, getByLastUpdate),

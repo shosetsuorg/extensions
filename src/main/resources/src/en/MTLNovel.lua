@@ -1,4 +1,4 @@
--- {"id":573,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":573,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = { [1] = 0 }
@@ -86,7 +86,7 @@ return {
 	id = 573,
 	name = "MTLNovel",
 	baseURL = baseURL,
-	imageURL = baseURL .. "/wp-content/themes/mtlnovel/images/logo32.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/MTLNovel.png",
 	hasSearch = false,
 	listings = {
 		Listing("Novel List", true, function(data)
