@@ -37,6 +37,16 @@
       "md5": "c4a2b8bfb6e6103ad0c8615fb6602bbe"
     },
     {
+      "name": "Foxaholic",
+      "fileName": "foxaholic",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Foxaholic.png",
+      "id": 173,
+      "lang": "en",
+      "ver": "1.0.2",
+      "libVer": "1.0.0",
+      "md5": "c5977c9ba48c5115426fb3010cc65894"
+    },
+    {
       "name": "NovelFull",
       "fileName": "NovelFull",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelFull.png",
