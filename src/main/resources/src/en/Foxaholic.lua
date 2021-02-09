@@ -1,4 +1,4 @@
--- {"id":173,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.1.0"]}
+-- {"id":173,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.1.0"]}
 
 return Require("Madara")("https://foxaholic.com", {
 	id = 173,
@@ -43,5 +43,7 @@ return Require("Madara")("https://foxaholic.com", {
 		chinese = "Chinese Novel",
 		japanese = "Japanese Novels",
 		original = "Original Novel",
-	}
+	},
+	doubleLoadChapters = true,
+	latestNovelSel = "div.col-6"
 })
