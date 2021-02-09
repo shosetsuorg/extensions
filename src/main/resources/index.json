@@ -177,6 +177,16 @@
       "md5": ""
     },
     {
+      "name": "Light Novel Heaven",
+      "fileName": "LightNovelHeaven",
+      "imageURL": "https://lightnovelheaven.com/wp-content/uploads/2017/10/lnhlast.png",
+      "id": 2925,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": "480c6c32b3cd81cde7faf19cc3496b0d"
+    },
+    {
       "name": "Saikai Scan",
       "fileName": "SaikaiScan",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/SaikaiScan.png",
