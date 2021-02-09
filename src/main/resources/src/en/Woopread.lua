@@ -44,4 +44,5 @@ return Require("Madara")("https://woopread.com", {
         ["complete"] = "Completed",
         ["slice-of-life"] = "Slice of Life",
     },
+    doubleLoadChapters = true
 })
