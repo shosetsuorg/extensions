@@ -20,7 +20,7 @@ local function page(url, r)
 		local p2 = page_block:children()
 		local last = p2:get(p2:size()-1)
 		if last:hasClass("post-page-numbers") then
-			local next_page = page(last:attr("href"))
+			local next_page = page(last:attr("href"), true)
 			local i = #p
 			for j=1,#next_page do
 				p[i+j] = next_page[j]
