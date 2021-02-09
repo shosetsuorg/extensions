@@ -45,5 +45,6 @@ return Require("Madara")("https://foxaholic.com", {
 		original = "Original Novel",
 	},
 	doubleLoadChapters = true,
-	latestNovelSel = "div.col-6"
+	latestNovelSel = "div.col-6",
+	novelPageTitleSel = "h1"
 })
