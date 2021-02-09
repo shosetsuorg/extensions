@@ -195,6 +195,16 @@
       "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": "c4a2b8bfb6e6103ad0c8615fb6602bbe"
+    },
+    {
+      "name": "Asian Hobbyist",
+      "fileName": "AsianHobbyist",
+      "imageURL": "",
+      "id": 951,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": "16348946cb5981a279d80b5f34ffe505"
     }
   ]
 }
