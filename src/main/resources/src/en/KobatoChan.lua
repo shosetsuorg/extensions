@@ -1,7 +1,6 @@
--- {"id":74485,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
+-- {"id":74485,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://kobatochan.com"
-local encode = Require("url").encode
 
 local function shrinkURL(url)
 	return url:gsub("^.-kobatochan%.com", "")
@@ -36,13 +35,15 @@ return {
 	id = 74485,
 	name = "KobatoChanDaiSuki",
 	baseURL = baseURL,
+	hasSearch = false,
 
 	listings = {
 		Listing("Novels", false, function(data)
-			local doc = GETDocument(passageURL .. novelURL)
-			return map(flatten(mapNotNil(doc:selectFirst("nav#access ul.nav-menu"):children(), function(v)
+			local doc = GETDocument(baseURL)
+			return map(flatten(mapNotNil(doc:selectFirst("nav#access ul"):children(), function(v)
 				local text = v:selectFirst("a"):text()
-				return (text:find("Novels", 0, true) or text == "Original Works") and v:selectFirst("ul.sub-menu"):select("a")
+				return (text:find("Novels", 0, true) or text == "Original Works") and
+						map(v:selectFirst("ul.sub-menu"):select("a"), function(v) return v end)
 			end)), function(v)
 				return Novel {
 					title = v:text(),
@@ -77,6 +78,7 @@ return {
 
 		return info
 	end,
+
 	shrinkURL = shrinkURL,
-	expandURL = expandURL,
+	expandURL = expandURL
 }
