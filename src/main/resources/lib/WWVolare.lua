@@ -1,4 +1,17 @@
--- {"ver":"1.1.0","author":"TechnoJo4","dep":["dkjson"]}
+-- {"ver":"1.2.0","author":"TechnoJo4","dep":["dkjson"]}
+
+-- good table style for USAW
+-- PR a good style if any other elements are used for layout in any other novels
+local css = [[
+table {
+    background: #004b7a;
+    margin: 10px auto;
+    width: 90%;
+    border: none;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .75);
+    border-collapse: separate;
+    border-spacing: 2px;
+}]]
 
 return function(id, name, base, contentSel, image)
 	local settings
@@ -43,6 +56,8 @@ return function(id, name, base, contentSel, image)
 		name = name,
 		baseURL = base,
 		imageURL = image,
+		chapterType = ChapterType.HTML,
+
 		listings = {
 			Listing("All Novels", false, function()
 				getNovels()
@@ -50,10 +65,11 @@ return function(id, name, base, contentSel, image)
 			end)
 		},
 		getPassage = function(url)
-			return table.concat(map(GETDocument(base .. url):selectFirst(contentSel):children(),
-					function(v)
-						return v:is(".chapter-nav") and "" or v:text()
-					end), "\n")
+			local content = GETDocument(base .. url):selectFirst(contentSel)
+			map(content:select(".chapter-nav"), function(v)
+				v:remove()
+			end)
+			return pageOfElem(content, true, css)
 		end,
 		parseNovel = function(slug, loadChapters)
 			getNovels()

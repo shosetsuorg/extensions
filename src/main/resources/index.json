@@ -18,7 +18,7 @@
     },
     {
       "name": "WWVolare",
-      "ver": "1.1.0"
+      "ver": "1.2.0"
     },
     {
       "name": "Madara",
@@ -222,7 +222,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/KobatoChan.png",
       "id": 74485,
       "lang": "en",
-      "ver": "1.0.1",
+      "ver": "1.1.0",
       "libVer": "1.0.0",
       "md5": ""
     },
