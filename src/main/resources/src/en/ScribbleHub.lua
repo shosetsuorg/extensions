@@ -128,8 +128,7 @@ return {
         -- remove empty <p> tags
         local toRemove = {}
         chap:traverse(NodeVisitor(function(v)
-            print(v)
-            if v:tagName() == "p" and v:text() == " " then
+            if v:tagName() == "p" and v:text() == "" then
                 toRemove[#toRemove+1] = v
             end
         end, nil, true))
