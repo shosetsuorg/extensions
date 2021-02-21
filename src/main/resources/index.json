@@ -227,6 +227,16 @@
       "md5": ""
     },
     {
+      "name": "ScribbleHub",
+      "fileName": "ScribbleHub",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/ScribbleHub.png",
+      "id": 86802,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Asian Hobbyist",
       "fileName": "AsianHobbyist",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/AsianHobbyist.png",
