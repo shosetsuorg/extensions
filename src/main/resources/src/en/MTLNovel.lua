@@ -1,4 +1,4 @@
--- {"id":573,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":573,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = { [1] = 0 }
@@ -82,28 +82,12 @@ local function getPassage(chapterURL)
 	return table.concat(map(d:selectFirst("div.par"):select("p"), text), "\n")
 end
 
-local function search(data)
-	local contentType = "multipart/form-data; boundary=----ihatekotlin"
-	local m = MediaType(contentType)
-	local body = RequestBody("------ihatekotlin\r\nContent-Disposition: form-data; name=\"s\"\r\n\r\n" .. data[QUERY] .. "\r\n------ihatekotlin--\r\n", m)
-	local req = POST(baseURL, nil, body)
-	local doc = RequestDocument(req)
-	return map(doc:select("div.search-results > div.box"),
-			function(v)
-				return Novel {
-					link = v:selectFirst("a"):attr("href"):gsub("^.-mtlnovel%.com", ""),
-					title = v:selectFirst(".list-title"):text(),
-					imageURL = v:selectFirst(".list-img"):attr("src")
-				}
-			end)
-end
-
 return {
 	id = 573,
 	name = "MTLNovel",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/MTLNovel.png",
-	hasSearch = true,
+	hasSearch = false,
 	listings = {
 		Listing("Novel List", true, function(data)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
@@ -134,5 +118,4 @@ return {
 	--updateSetting = function(id, value)
 	--	settings[id] = value
 	--end
-	search = search,
 }
