@@ -82,12 +82,32 @@ local function getPassage(chapterURL)
 	return table.concat(map(d:selectFirst("div.par"):select("p"), text), "\n")
 end
 
+local function search(data)
+	local contentType = "multipart/form-data; boundary=----ihatekotlin"
+	local m = MediaType(contentType)
+	local body = RequestBody("------ihatekotlin\r\nContent-Disposition: form-data; name=\"s\"\r\n\r\n" .. data[QUERY] .. "\r\n------ihatekotlin--\r\n", m)
+	local req = POST(baseURL, nil, body)
+	local doc = RequestDocument(req)
+	return map(doc:select("div.search-results > div.box"),
+			function(v)
+				local novel = Novel()
+				local link = v:selectFirst("a")
+				novel:setLink(link:attr("href"):gsub(baseURL, ""))
+				local caption = v:selectFirst(".list-title")
+				novel:setTitle(caption:text())
+				local img = v:selectFirst(".list-img")
+				--print(img:attr("src"))
+				novel:setImageURL(img:attr("src"))
+				return novel
+			end)
+end
+
 return {
 	id = 573,
 	name = "MTLNovel",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/MTLNovel.png",
-	hasSearch = false,
+	hasSearch = true,
 	listings = {
 		Listing("Novel List", true, function(data)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
@@ -118,4 +138,5 @@ return {
 	--updateSetting = function(id, value)
 	--	settings[id] = value
 	--end
+	search = search,
 }
