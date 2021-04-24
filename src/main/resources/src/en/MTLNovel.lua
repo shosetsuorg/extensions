@@ -90,14 +90,11 @@ local function search(data)
 	local doc = RequestDocument(req)
 	return map(doc:select("div.search-results > div.box"),
 			function(v)
-				local novel = Novel()
-				local link = v:selectFirst("a")
-				novel:setLink(link:attr("href"):gsub(baseURL, ""))
-				local caption = v:selectFirst(".list-title")
-				novel:setTitle(caption:text())
-				local img = v:selectFirst(".list-img")
-				novel:setImageURL(img:attr("src"))
-				return novel
+				return Novel {
+					link = v:selectFirst("a"):attr("href"):gsub("^.-mtlnovel%.com", ""),
+					title = v:selectFirst(".list-title"):text(),
+					imageURL = v:selectFirst(".list-img"):attr("src")
+				}
 			end)
 end
 
