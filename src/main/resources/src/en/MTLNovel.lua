@@ -96,7 +96,6 @@ local function search(data)
 				local caption = v:selectFirst(".list-title")
 				novel:setTitle(caption:text())
 				local img = v:selectFirst(".list-img")
-				--print(img:attr("src"))
 				novel:setImageURL(img:attr("src"))
 				return novel
 			end)
