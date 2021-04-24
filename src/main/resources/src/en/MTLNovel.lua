@@ -83,9 +83,9 @@ local function getPassage(chapterURL)
 end
 
 local function search(data)
-	local contentType = "multipart/form-data; boundary=----ihatekotlin"
+	local contentType = "multipart/form-data; boundary=----aWhhdGVrb3RsaW4K"
 	local m = MediaType(contentType)
-	local body = RequestBody("------ihatekotlin\r\nContent-Disposition: form-data; name=\"s\"\r\n\r\n" .. data[QUERY] .. "\r\n------ihatekotlin--\r\n", m)
+	local body = RequestBody("------aWhhdGVrb3RsaW4K\r\nContent-Disposition: form-data; name=\"s\"\r\n\r\n" .. data[QUERY] .. "\r\n------aWhhdGVrb3RsaW4K--\r\n", m)
 	local req = POST(baseURL, nil, body)
 	local doc = RequestDocument(req)
 	return map(doc:select("div.search-results > div.box"),
