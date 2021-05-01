@@ -83,15 +83,17 @@ local function getPassage(chapterURL)
 end
 
 local function search(data)
-	local contentType = "multipart/form-data; boundary=----aWhhdGVrb3RsaW4K"
-	local m = MediaType(contentType)
+	local query = data[QUERY]
+	if query ~= nil then
+		query = ""
+	end
+	local m = MediaType("multipart/form-data; boundary=----aWhhdGVrb3RsaW4K")
 	local body = RequestBody("------aWhhdGVrb3RsaW4K\r\nContent-Disposition: form-data; name=\"s\"\r\n\r\n" .. data[QUERY] .. "\r\n------aWhhdGVrb3RsaW4K--\r\n", m)
-	local req = POST(baseURL, nil, body)
-	local doc = RequestDocument(req)
+	local doc = RequestDocument(POST(baseURL, nil, body))
 	return map(doc:select("div.search-results > div.box"),
 			function(v)
 				return Novel {
-					link = v:selectFirst("a"):attr("href"):gsub("^.-mtlnovel%.com", ""),
+					link = v:selectFirst("a"):attr("href"):match(baseURL .. "/(.+)/"),
 					title = v:selectFirst(".list-title"):text(),
 					imageURL = v:selectFirst(".list-img"):attr("src")
 				}
