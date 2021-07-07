@@ -18,7 +18,7 @@ table {
 }]]
 
 local function shrinkURL(url)
-    return url:gsub("^.-scribblehub%.com", "")
+    return url:gsub("^.-scribblehub%.com/?", "")
 end
 
 local function expandURL(url)
@@ -74,7 +74,7 @@ return {
         end)
     },
 
-    filters = {
+    searchFilters = {
         DropdownFilter(FILTER_SORT, "Sort by", { "Popularity", "Favorites", "Activity", "Readers", "Rising" }),
         DropdownFilter(FILTER_ORDER, "Order", { "Daily", "Weekly", "Monthly", "All Time" })
     },
@@ -111,14 +111,14 @@ return {
         }
 
         if loadChapters then
-            local body = RequestBody("action=wi_gettocchp&strSID="..url.."&strmypostid=0&strFic=yes", MTYPE)
+            local body = RequestBody("action=wi_getreleases_pagination&pagenum=-1&mypostid="..url, MTYPE)
             local cdoc = RequestDocument(POST("https://www.scribblehub.com/wp-admin/admin-ajax.php", HEADERS, body))
-            local count = tonumber(cdoc:selectFirst("ol"):attr("count"))
-            local chapters = AsList(map(cdoc:select("a"), function(v, i)
+            local chapters = AsList(map(cdoc:selectFirst("ol"):select("li"), function(v, i)
+                local a = v:selectFirst("a")
                 return NovelChapter {
-                    order = count-i,
-                    title = v:text(),
-                    link = shrinkURL(v:attr("href"))
+                    order = v:attr("order"),
+                    title = a:text(),
+                    link = shrinkURL(a:attr("href"))
                 }
             end))
             Reverse(chapters)
