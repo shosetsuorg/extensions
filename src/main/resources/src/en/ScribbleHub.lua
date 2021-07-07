@@ -83,14 +83,23 @@ return {
     expandURL = expandURL,
 
     parseNovel = function(url, loadChapters)
+        Log("ScribbleHub", ("url %s"):format(url))
         local doc = GETDoc(baseURL.."/series/"..url.."/a/")
+        Log("ScribbleHub", ("doc %s"):format(doc))
         local wrap = doc:selectFirst(".wi_fic_wrap")
+        Log("ScribbleHub", ("wrap %s"):format(wrap))
         local novel = wrap:selectFirst(".novel-container")
+        Log("ScribbleHub", ("novel %s"):format(novel))
         local r = wrap:selectFirst(".wi-fic_r-content")
+        Log("ScribbleHub", ("r %s"):format(r))
         local s = r:selectFirst(".copyright ul"):children()
+        Log("ScribbleHub", ("s %s"):format(s))
         s = s:get(s:size() - 1):children()
+        Log("ScribbleHub", ("s %s"):format(s))
         s = s:get(s:size() - 1)
+        Log("ScribbleHub", ("s %s"):format(s))
         s = s:ownText()
+        Log("ScribbleHub", ("s %s"):format(s))
         if s:match("Ongoing") then
             s = NovelStatus.ONGOING
         elseif s:match("Complete") then
@@ -98,8 +107,8 @@ return {
         else
             s = NovelStatus.UNKNOWN
         end
+        Log("ScribbleHub", ("s %s"):format(s))
 
-        Log("ScribbleHub", ("doc %s wrap %s novel %s r %s s %s"):format(doc ~= nil, wrap, novel, r, s))
         local text = function(v) return v:text() end
         local info = NovelInfo {
             title = novel:selectFirst(".fic_title"):text(),
@@ -111,9 +120,12 @@ return {
             status = s
         }
 
+        Log("ScribbleHub", ("info %s"):format(info))
         if loadChapters then
             local body = RequestBody("action=wi_getreleases_pagination&pagenum=-1&mypostid="..url, MTYPE)
+            Log("ScribbleHub", ("body %s"):format(body))
             local cdoc = RequestDocument(POST("https://www.scribblehub.com/wp-admin/admin-ajax.php", HEADERS, body))
+            Log("ScribbleHub", ("cdoc %s"):format(cdoc))
             local chapters = AsList(map(cdoc:selectFirst("ol"):select("li"), function(v, i)
                 local a = v:selectFirst("a")
                 return NovelChapter {
@@ -122,7 +134,7 @@ return {
                     link = shrinkURL(a:attr("href"))
                 }
             end))
-            Log("ScribbleHub", ("body %s cdoc %s chapters %s"):format(body, cdoc, chapters))
+            Log("ScribbleHub", ("chapters %s"):format(chapters))
             Reverse(chapters)
             info:setChapters(chapters)
         end
