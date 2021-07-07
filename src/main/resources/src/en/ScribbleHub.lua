@@ -101,7 +101,7 @@ return {
         s = s:ownText()
         Log("ScribbleHub", ("s %s"):format(tostring(s)))
         if s:match("Ongoing") then
-            s = NovelStatus.ONGOING
+            s = NovelStatus.PUBLISHING
         elseif s:match("Complete") then
             s = NovelStatus.COMPLETED
         else
