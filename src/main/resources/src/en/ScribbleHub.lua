@@ -143,7 +143,7 @@ return {
     end,
 
     getPassage = function(url)
-        local chap = GETDoc(baseURL..url):getElementById("chp_raw")
+        local chap = GETDoc(expandURL(url)):getElementById("chp_raw")
 
         -- remove empty <p> tags
         local toRemove = {}
