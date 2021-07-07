@@ -99,7 +99,7 @@ return {
             s = NovelStatus.UNKNOWN
         end
 
-        log("ScribbleHub", ("doc %s wrap %s novel %s r %s s %s"):format(doc ~= nil, wrap, novel, r, s))
+        Log("ScribbleHub", ("doc %s wrap %s novel %s r %s s %s"):format(doc ~= nil, wrap, novel, r, s))
         local text = function(v) return v:text() end
         local info = NovelInfo {
             title = novel:selectFirst(".fic_title"):text(),
@@ -122,7 +122,7 @@ return {
                     link = shrinkURL(a:attr("href"))
                 }
             end))
-            log("ScribbleHub", ("body %s cdoc %s chapters %s"):format(body, cdoc, chapters))
+            Log("ScribbleHub", ("body %s cdoc %s chapters %s"):format(body, cdoc, chapters))
             Reverse(chapters)
             info:setChapters(chapters)
         end
