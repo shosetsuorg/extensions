@@ -36,7 +36,7 @@ local default_order = {
 local FILTER_SORT = 2
 local FILTER_ORDER = 3
 
-local MTYPE = MediaType("application/x-www-form-urlencoded")
+local MTYPE = MediaType("application/x-www-form-urlencoded; charset=UTF-8")
 local USERAGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:90.0) Gecko/20100101 Firefox/90.0"
 local HEADERS = HeadersBuilder():add("User-Agent", USERAGENT):build()
 
@@ -99,6 +99,7 @@ return {
             s = NovelStatus.UNKNOWN
         end
 
+        log("ScribbleHub", ("doc %s wrap %s novel %s r %s s %s"):format(doc ~= nil, wrap, novel, r, s))
         local text = function(v) return v:text() end
         local info = NovelInfo {
             title = novel:selectFirst(".fic_title"):text(),
@@ -121,6 +122,7 @@ return {
                     link = shrinkURL(a:attr("href"))
                 }
             end))
+            log("ScribbleHub", ("body %s cdoc %s chapters %s"):format(body, cdoc, chapters))
             Reverse(chapters)
             info:setChapters(chapters)
         end
