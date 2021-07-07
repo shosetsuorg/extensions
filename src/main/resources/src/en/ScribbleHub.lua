@@ -60,6 +60,7 @@ return {
     name = "ScribbleHub",
     baseURL = baseURL,
     imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/ScribbleHub.png",
+    chapterType = ChapterType.HTML,
 
     listings = {
         Listing("Novels", true, function(data)
