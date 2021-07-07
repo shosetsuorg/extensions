@@ -22,7 +22,7 @@ local function shrinkURL(url)
 end
 
 local function expandURL(url)
-    return baseURL .. url
+    return baseURL .. "/" .. url
 end
 
 local default_order = {
@@ -37,6 +37,8 @@ local FILTER_SORT = 2
 local FILTER_ORDER = 3
 
 local MTYPE = MediaType("application/x-www-form-urlencoded")
+local USERAGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:90.0) Gecko/20100101 Firefox/90.0"
+local HEADERS = HeadersBuilder():add("User-Agent", USERAGENT):build()
 
 local function parse(doc)
     return map(doc:selectFirst("#page"):select(".wi_fic_wrap .search_main_box"), function(v)
@@ -47,6 +49,10 @@ local function parse(doc)
             imageURL = v:selectFirst(".search_img img"):attr("src")
         }
     end)
+end
+
+local function GETDoc(url)
+    return RequestDocument(GET(url, HEADERS))
 end
 
 return {
@@ -62,7 +68,7 @@ return {
                             and data[FILTER_ORDER] + 1
                             or default_order[sort]
 
-            return parse(GETDocument(qs({
+            return parse(GETDoc(qs({
                 sort = sort, order = order
             }, baseURL .. "/series-ranking/")))
         end)
@@ -77,7 +83,7 @@ return {
     expandURL = expandURL,
 
     parseNovel = function(url, loadChapters)
-        local doc = GETDocument(baseURL.."/series/"..url.."/a/")
+        local doc = GETDoc(baseURL.."/series/"..url.."/a/")
         local wrap = doc:selectFirst(".wi_fic_wrap")
         local novel = wrap:selectFirst(".novel-container")
         local r = wrap:selectFirst(".wi-fic_r-content")
@@ -106,7 +112,7 @@ return {
 
         if loadChapters then
             local body = RequestBody("action=wi_gettocchp&strSID="..url.."&strmypostid=0&strFic=yes", MTYPE)
-            local cdoc = RequestDocument(POST("https://www.scribblehub.com/wp-admin/admin-ajax.php", nil, body))
+            local cdoc = RequestDocument(POST("https://www.scribblehub.com/wp-admin/admin-ajax.php", HEADERS, body))
             local count = tonumber(cdoc:selectFirst("ol"):attr("count"))
             local chapters = AsList(map(cdoc:select("a"), function(v, i)
                 return NovelChapter {
@@ -123,7 +129,7 @@ return {
     end,
 
     getPassage = function(url)
-        local chap = GETDocument(baseURL..url):getElementById("chp_raw")
+        local chap = GETDoc(baseURL..url):getElementById("chp_raw")
 
         -- remove empty <p> tags
         local toRemove = {}
@@ -140,7 +146,7 @@ return {
     end,
 
     search = function(data)
-        return parse(GETDocument(qs({
+        return parse(GETDoc(qs({
             s = data[QUERY], post_type = "fictionposts"
         }, baseURL .. "/")))
     end,
