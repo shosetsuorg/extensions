@@ -1,4 +1,4 @@
--- {"id":3,"ver":"1.2.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":3,"ver":"1.2.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 --- @author Doomsdayrs
 --- @version 1.2.0
 

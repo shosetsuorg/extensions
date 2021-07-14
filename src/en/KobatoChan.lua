@@ -1,4 +1,4 @@
--- {"id":74485,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":74485,"ver":"1.0.5","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://kobatochan.com"
 

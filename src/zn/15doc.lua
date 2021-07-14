@@ -1,4 +1,4 @@
--- {"id":163,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":163,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs"}
 -- Outputed novelURLs are it's novel IDs
 -- Outputed chapterURLs are novelID/chapterID
 

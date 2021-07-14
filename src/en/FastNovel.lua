@@ -1,4 +1,4 @@
--- {"id":258,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":258,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 
 local baseURL = "https://fastnovel.net"
