@@ -29,7 +29,7 @@
     {
       "name": "MTLNovel",
       "fileName": "MTLNovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/MTLNovel.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/MTLNovel.png",
       "id": 573,
       "lang": "en",
       "ver": "1.0.1",
@@ -39,7 +39,7 @@
     {
       "name": "Foxaholic",
       "fileName": "Foxaholic",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Foxaholic.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Foxaholic.png",
       "id": 173,
       "lang": "en",
       "ver": "1.0.3",
@@ -49,7 +49,7 @@
     {
       "name": "NovelFull",
       "fileName": "NovelFull",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelFull.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelFull.png",
       "id": 1,
       "lang": "en",
       "ver": "1.0.1",
@@ -59,7 +59,7 @@
     {
       "name": "FastNovel",
       "fileName": "FastNovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/FastNovel.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/FastNovel.png",
       "id": 258,
       "lang": "en",
       "ver": "0.1.4",
@@ -69,7 +69,7 @@
     {
       "name": "VipNovel",
       "fileName": "VipNovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/VipNovel.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/VipNovel.png",
       "id": 586,
       "lang": "en",
       "ver": "1.0.1",
@@ -79,7 +79,7 @@
     {
       "name": "CreativeNovels",
       "fileName": "CreativeNovels",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/CreativeNovels.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/CreativeNovels.png",
       "id": 911,
       "lang": "en",
       "ver": "1.0.2",
@@ -89,7 +89,7 @@
     {
       "name": "VolareNovels",
       "fileName": "VolareNovels",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/VolareNovels.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/VolareNovels.png",
       "id": 1274,
       "lang": "en",
       "ver": "1.0.1",
@@ -99,7 +99,7 @@
     {
       "name": "Tangsanshu",
       "fileName": "Tangsanshu",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Tangsanshu.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Tangsanshu.png",
       "id": 234,
       "lang": "zn",
       "ver": "1.0.1",
@@ -109,7 +109,7 @@
     {
       "name": "BestLightNovel",
       "fileName": "BestLightNovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BestLightNovel.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/BestLightNovel.png",
       "id": 5,
       "lang": "en",
       "ver": "2.0.1",
@@ -119,7 +119,7 @@
     {
       "name": "BoxNovel",
       "fileName": "BoxNovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BoxNovel.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/BoxNovel.png",
       "id": 2,
       "lang": "en",
       "ver": "2.0.1",
@@ -129,7 +129,7 @@
     {
       "name": "Syosetsu",
       "fileName": "Syosetsu",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Syosetsu.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Syosetsu.png",
       "id": 3,
       "lang": "jp",
       "ver": "1.2.1",
@@ -139,7 +139,7 @@
     {
       "name": "WuxiaWorld",
       "fileName": "WuxiaWorld",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WuxiaWorld.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WuxiaWorld.png",
       "id": 1273,
       "lang": "en",
       "ver": "1.0.1",
@@ -149,7 +149,7 @@
     {
       "name": "NovelTrench",
       "fileName": "NovelTrench",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelTrench.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
       "id": 81,
       "lang": "en",
       "ver": "1.0.2",
@@ -159,7 +159,7 @@
     {
       "name": "Woopread",
       "fileName": "Woopread",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WoopRead.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
       "id": 4217,
       "lang": "en",
       "ver": "1.0.2",
@@ -169,7 +169,7 @@
     {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/ReadLightNovel.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
       "id": 6118,
       "lang": "en",
       "ver": "1.0.3",
@@ -179,7 +179,7 @@
     {
       "name": "Light Novel Heaven",
       "fileName": "LightNovelHeaven",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/LightNovelHeaven.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/LightNovelHeaven.png",
       "id": 2925,
       "lang": "en",
       "ver": "1.0.1",
@@ -189,7 +189,7 @@
     {
       "name": "Light Novel Bastion",
       "fileName": "LightNovelBastion",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/LightNovelBastion.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/LightNovelBastion.png",
       "id": 762,
       "lang": "en",
       "ver": "1.0.1",
@@ -199,7 +199,7 @@
     {
       "name": "Saikai Scan",
       "fileName": "SaikaiScan",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/SaikaiScan.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SaikaiScan.png",
       "id": 2443,
       "lang": "pt",
       "ver": "1.0.2",
@@ -209,7 +209,7 @@
     {
       "name": "wuxia.blog",
       "fileName": "WuxiaDotBlog",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WuxiaDotBlog.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WuxiaDotBlog.png",
       "id": 1376,
       "lang": "en",
       "ver": "1.0.3",
@@ -219,7 +219,7 @@
     {
       "name": "KobatoChanDaiSuki",
       "fileName": "KobatoChan",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/KobatoChan.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/KobatoChan.png",
       "id": 74485,
       "lang": "en",
       "ver": "1.0.1",
@@ -229,7 +229,7 @@
     {
       "name": "Asian Hobbyist",
       "fileName": "AsianHobbyist",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/AsianHobbyist.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/AsianHobbyist.png",
       "id": 951,
       "lang": "en",
       "ver": "1.0.1",
