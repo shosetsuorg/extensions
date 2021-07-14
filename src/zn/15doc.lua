@@ -89,7 +89,7 @@ return {
 	id = 163,
 	name = "15doc",
 	baseURL = baseURL,
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/15doc.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/15doc.png",
 	hasSearch = false,
 	listings = {
 		Listing("最近更新", false, getByLastUpdate),

@@ -3,7 +3,7 @@
 return Require("NovelFull")("https://readnovelfull.com", {
 	id = 278,
 	name = "ReadNovelFull",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/ReadNovelFull.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadNovelFull.png",
 	genres = {},
 	searchListSel = "list.list-novel.col-xs-12",
 	appendURLToInfoImage = false,

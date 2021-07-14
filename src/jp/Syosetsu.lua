@@ -20,7 +20,7 @@ return {
 	id = 3,
 	name = "Syosetsu",
 	baseURL = baseURL,
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Syosetsu.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/Syosetsu.png",
 	listings = {
 		Listing("Latest", true, function(data)
 			if data[PAGE] == 0 then

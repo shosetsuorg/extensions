@@ -3,7 +3,7 @@
 return Require("Madara")("https://noveltrench.com",{
 	id = 81,
 	name = "NovelTrench",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/NovelTrench.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
 	shrinkURLNovel = "manga",
 	searchHasOper = true,
 	genres = {

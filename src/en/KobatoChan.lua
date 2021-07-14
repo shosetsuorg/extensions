@@ -35,7 +35,7 @@ return {
 	id = 74485,
 	name = "KobatoChanDaiSuki",
 	baseURL = baseURL,
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/KobatoChan.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/KobatoChan.png",
 	hasSearch = false,
 
 	listings = {

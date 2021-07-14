@@ -3,7 +3,7 @@
 return Require("Madara")("https://boxnovel.com", {
 	id = 2,
 	name = "BoxNovel",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BoxNovel.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/BoxNovel.png",
 	genres = {
 		"Action",
 		"Adventure",

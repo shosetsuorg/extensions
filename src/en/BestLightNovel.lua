@@ -3,5 +3,5 @@
 return Require("247truyen")("https://bestlightnovel.com", {
 	id = 5,
 	name = "BestLightNovel",
-    imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/BestLightNovel.png",
+    imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/BestLightNovel.png",
 })

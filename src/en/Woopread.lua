@@ -3,7 +3,7 @@
 return Require("Madara")("https://woopread.com", {
     id = 4217,
     name = "Woopread",
-    imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/WoopRead.png",
+    imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
     searchHasOper = true,
     shrinkURLNovel = "series",
     novelListingURLPath = "novel-list",

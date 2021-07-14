@@ -3,7 +3,7 @@
 return Require("Madara")("https://lightnovelbastion.com", {
 	id = 762,
 	name = "Light Novel Bastion",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/LightNovelBastion.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/LightNovelBastion.png",
 	genres = {},
 	latestNovelSel = "div.col-6.col-md-3"
 })

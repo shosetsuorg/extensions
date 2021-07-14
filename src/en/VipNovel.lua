@@ -3,7 +3,7 @@
 return Require("Madara")("https://vipnovel.com", {
 	id = 586,
 	name = "VipNovel",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/VipNovel.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/VipNovel.png",
 	novelListingURLPath = "vipnovel",
 	shrinkURLNovel = "vipnovel",
 	genres = {

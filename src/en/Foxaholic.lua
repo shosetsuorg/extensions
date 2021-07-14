@@ -3,7 +3,7 @@
 return Require("Madara")("https://foxaholic.com", {
 	id = 173,
 	name = "Foxaholic",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/Foxaholic.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/Foxaholic.png",
 	genres = {
 		"Action",
 		"Adventure",

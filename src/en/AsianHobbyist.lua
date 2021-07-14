@@ -84,7 +84,7 @@ return {
 	id = 951,
 	name = "Asian Hobbyist",
 	baseURL = baseURL,
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/src/main/resources/icons/AsianHobbyist.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/AsianHobbyist.png",
 	hasSearch = true,
 	listings = {
 		Listing("Latest", false, function()
