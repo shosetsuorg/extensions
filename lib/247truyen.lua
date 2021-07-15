@@ -1,4 +1,4 @@
--- {"ver":"2.0.0","author":"TechnoJo4"}
+-- {"ver":"1.1.2","author":"TechnoJo4"}
 
 local defaults = {
 	hasSearch = true,
@@ -7,8 +7,7 @@ local defaults = {
 	novelListPath = "novel_list",
 	novelSearchPath = "search_novels",
 	novelListingTitleClass = ".nowrap",
-	shrinkURLNovel = "novel_",
-	urlSalt = "247truyen_salt"
+	shrinkURLNovel = "novel_"
 }
 
 ---@return table
@@ -116,12 +115,12 @@ end
 
 ---@param url string
 function defaults:shrinkURL(url)
-	return self.urlSalt .. url:gsub(self.___baseURL .. "/" .. self.shrinkURLNovel .. "", "")
+	return url:gsub(self.___baseURL .. "/" .. self.shrinkURLNovel .. "", "")
 end
 
 ---@param url string
 function defaults:expandURL(url)
-	return self.___baseURL .. "/" .. self.shrinkURLNovel .. "" .. url:gsub(self.urlSalt,"")
+	return self.___baseURL .. "/" .. self.shrinkURLNovel .. "" .. url
 end
 
 return function(baseURL, _self)
