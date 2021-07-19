@@ -64,6 +64,7 @@ return function(id, name, base, contentSel, image)
 				return map(novels, Novel)
 			end)
 		},
+
 		getPassage = function(url)
 			local content = GETDocument(base .. url):selectFirst(contentSel)
 			map(content:select(".chapter-nav"), function(v)
@@ -71,6 +72,7 @@ return function(id, name, base, contentSel, image)
 			end)
 			return pageOfElem(content, true, css)
 		end,
+
 		parseNovel = function(slug, loadChapters)
 			getNovels()
 			local info = infos[slug]
@@ -91,6 +93,7 @@ return function(id, name, base, contentSel, image)
 			end
 			return NovelInfo(info)
 		end,
+
 		search = function(s)
 			getNovels()
 			local q = s[QUERY]:lower()
@@ -98,6 +101,7 @@ return function(id, name, base, contentSel, image)
 				return v.title:lower():find(q, 1, true) ~= nil
 			end), Novel)
 		end,
+
 		setSettings = function(s) settings = s end,
 		updateSetting = function() end,
 		expandURL = function(url, type)

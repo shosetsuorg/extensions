@@ -18,7 +18,7 @@
     },
     {
       "name": "WWVolare",
-      "ver": "1.1.0"
+      "ver": "1.2.0"
     },
     {
       "name": "Madara",
@@ -93,7 +93,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/VolareNovels.png",
       "id": 1274,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": "ff81cdb3303780e243e4d3e6d35ce418"
     },
@@ -143,7 +143,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WuxiaWorld.png",
       "id": 1273,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": "adde12e1a74dd843afc870295831fda"
     },
@@ -223,7 +223,17 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/KobatoChan.png",
       "id": 74485,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "1.1.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "ScribbleHub",
+      "fileName": "ScribbleHub",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ScribbleHub.png",
+      "id": 86802,
+      "lang": "en",
+      "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
     },
