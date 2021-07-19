@@ -86,7 +86,7 @@ return {
 			language = leftdetails:get(3):selectFirst("li"):text()
 		}
 		if details:selectFirst(".novel-detail-item.color-gray") ~= nil then
-			info.setAlternativeTitles(info, map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text))
+			info:setAlternativeTitles(map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text))
 		end
 
 		if loadChapters then
