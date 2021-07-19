@@ -1,0 +1,6 @@
+<!-- This corresponds to NMTranslations.png-->
+<svg xmlns="http://www.w3.org/2000/svg" width="189" height="200">
+    <rect x="0" y="0" width="189" height="200" fill-opacity=".5" rx="10" ry="10"/>
+    <path fill="#34BAFF"
+          d="M11 99.5V188h69V11H11v88.5zM107 99.5V188h71v-59.4c0-34.6-.4-63.7-1.1-69.7-1.8-17.8-6.8-28.8-16.2-35.8-9.6-7.1-17.8-9.7-34.3-11.1-6.6-.5-13.6-1-15.6-1H107v88.5z"/>
+</svg>
