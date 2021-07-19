@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"1.0.4","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"1.0.5","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.org"
 local qs = Require("url").querystring
@@ -79,13 +79,15 @@ return {
 			title = doc:selectFirst(".block-title h1"):text(),
 			imageURL = left:selectFirst(".novel-cover img"):attr("src"),
 			description = table.concat(map(details:selectFirst(".novel-detail-body"):select("p"), text), "\n"),
-			alternativeTitles = map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text),
 			status = ({
 				Ongoing = NovelStatus("PUBLISHING"),
 				Completed = NovelStatus("COMPLETED")
 			})[leftdetails:get(leftdetails:size()-1):selectFirst("li"):text()],
 			language = leftdetails:get(3):selectFirst("li"):text()
 		}
+		if details:selectFirst(".novel-detail-item.color-gray") ~= nil then
+			info:setAlternativeTitles(map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text))
+		end
 
 		if loadChapters then
 			local i = 0
