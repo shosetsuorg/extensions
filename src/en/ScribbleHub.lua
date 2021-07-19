@@ -63,7 +63,7 @@ return {
 	chapterType = ChapterType.HTML,
 
 	listings = {
-		Listing("Novels", true, function(data)
+		Listing("Novels", false, function(data)
 			local sort = data[FILTER_SORT] and data[FILTER_SORT] + 1 or 1
 			local order = data[FILTER_ORDER]
 							and data[FILTER_ORDER] + 1
@@ -103,7 +103,7 @@ return {
 		local text = function(v) return v:text() end
 		local info = NovelInfo {
 			title = novel:selectFirst(".fic_title"):text(),
-			imageUrl = novel:selectFirst(".novel-cover img"):attr("src"),
+			imageURL = novel:selectFirst(".novel-cover img"):attr("src"),
 			description = wrap:selectFirst(".wi_fic_desc"):text(),
 			genres = map(wrap:selectFirst(".wi_fic_genre"):select("a"), text),
 			tags = map(wrap:selectFirst(".wi_fic_showtags"):select("a"), text),
