@@ -12,9 +12,6 @@ local function parseNovel(novelURL, loadChapters)
 	novelInfo:setDescription(document:selectFirst("div.pt-6.pb-8"):selectFirst("div.pt-6.pb-8"):text())
 
 	if loadChapters then
-		local navBox = document:selectFirst("nav.flex")
-		local chapters = {}
-
 		--- @param chaptersDocument Document
 		local function parseChapters(chaptersDocument)
 			return map(chaptersDocument:select("article.space-y-2"), function(article)
@@ -26,6 +23,9 @@ local function parseNovel(novelURL, loadChapters)
 				return c
 			end)
 		end
+
+		local chapters = {}
+		local navBox = document:selectFirst("nav.flex")
 
 		chapters = chapters + parseChapters(document)
 		-- There is more chapters via pages
@@ -56,7 +56,6 @@ local function getPassage(chapterURL)
 	return table.concat(map(d:selectFirst("div.pt-10"):select("p"), text), "\n")
 end
 
-
 return {
 	id = 93082,
 	name = "NM Translations",
@@ -69,10 +68,9 @@ return {
 
 			return map(d:select("div.p-4"), function(v)
 				local lis = Novel()
-				local title = v:selectFirst("h2.mb-3")
-
+				local title = v:selectFirst("h2.mb-3"):selectFirst("a")
 				lis:setTitle(title:text())
-				lis:setLink(title:selectFirst("href"))
+				lis:setLink(title:attr("href"))
 
 				local imageURL = v:selectFirst("img.object-cover")
 				lis:setImageURL(baseURL .. imageURL:attr("src"))
