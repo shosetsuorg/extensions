@@ -1,4 +1,4 @@
--- {"id":74485,"ver":"1.0.5","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":74485,"ver":"1.1.0","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://kobatochan.com"
 
@@ -13,22 +13,31 @@ end
 local function page(url, r)
 	local doc = GETDocument(r and url or baseURL..url)
 	local content = doc:selectFirst("#content article")
-	local p = map(content:select("p"), function(v) return v:text() end)
+	local p = content:selectFirst(".entry-content")
 
 	local page_block = content:selectFirst(".pgntn-page-pagination-block")
 	if page_block then
 		local p2 = page_block:children()
 		local last = p2:get(p2:size()-1)
 		if last:hasClass("post-page-numbers") then
-			local next_page = page(last:attr("href"), true)
-			local i = #p
-			for j=1,#next_page do
-				p[i+j] = next_page[j]
-			end
+			page(last:attr("href"), p)
 		end
+		page_block:remove()
 	end
+	local page_link = content:selectFirst("div.page-link")
+	if page_link then page_link:remove() end
 
-	return r and p or table.concat(p, "\n")
+	-- remove previous/next chapter links
+	map(p:select("h3"), function(v)
+		if v:selectFirst("a") then
+			v:remove()
+		end
+	end)
+
+	if r then
+		p:appendTo(r):unwrap()
+	end
+	return r or p
 end
 
 return {
@@ -37,6 +46,7 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/KobatoChan.png",
 	hasSearch = false,
+	chapterType = ChapterType.HTML,
 
 	listings = {
 		Listing("Novels", false, function(data)
@@ -55,7 +65,7 @@ return {
 	},
 
 	getPassage = function(chapterURL)
-		return page(chapterURL, false)
+		return pageOfElem(page(chapterURL))
 	end,
 
 	parseNovel = function(novelURL, loadChapters)
