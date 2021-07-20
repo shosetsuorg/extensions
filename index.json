@@ -235,6 +235,16 @@
       "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": "16348946cb5981a279d80b5f34ffe505"
+    },
+    {
+      "name": "NM Translations",
+      "fileName": "NMTranslations",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NMTranslations.png",
+      "id": 93082,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
