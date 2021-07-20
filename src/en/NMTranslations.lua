@@ -62,7 +62,15 @@ return {
 				end
 			end
 
-			local chaptersList = AsList(flatten(chapters))
+			chapters = flatten(chapters)
+
+			local o = 1
+			for i = #chapters, 1, -1 do
+				chapters[i]:setOrder(o)
+				o = o + 1
+			end
+
+			local chaptersList = AsList(chapters)
 			Reverse(chaptersList)
 			info:setChapters(chaptersList)
 		end
