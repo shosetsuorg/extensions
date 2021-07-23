@@ -1,4 +1,4 @@
--- {"ver":"1.3.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.3.2","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -168,7 +168,8 @@ end
 function defaults:parse(doc, search)
 	local function img_src(e)
 		local srcset = e:attr("data-srcset")
-		if srcset then
+
+		if srcset ~= "" then
 			-- get largest image
 			local max, max_url = 0, ""
 
