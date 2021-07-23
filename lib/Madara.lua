@@ -1,4 +1,4 @@
--- {"ver":"1.3.2","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.3.3","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -109,6 +109,25 @@ function defaults:getPassage(url)
 	return table.concat(map(GETDocument(self.expandURL(url)):select("div.text-left p"), text), "\n")
 end
 
+local function img_src(e)
+	local srcset = e:attr("data-srcset")
+
+	if srcset ~= "" then
+		-- get largest image
+		local max, max_url = 0, ""
+
+		for url, size in srcset:gmatch("(.-) (%d+)w") do
+			if tonumber(size) > max then
+				max = tonumber(size)
+				max_url = url
+			end
+		end
+
+		return max_url
+	end
+	return e:attr("src")
+end
+
 ---@param url string
 ---@param loadChapters boolean
 ---@return NovelInfo
@@ -166,25 +185,6 @@ end
 ---@param doc Document
 ---@param search boolean
 function defaults:parse(doc, search)
-	local function img_src(e)
-		local srcset = e:attr("data-srcset")
-
-		if srcset ~= "" then
-			-- get largest image
-			local max, max_url = 0, ""
-
-			for url, size in srcset:gmatch("(.-) (%d+)w") do
-				if tonumber(size) > max then
-					max = tonumber(size)
-					max_url = url
-				end
-			end
-
-			return max_url
-		end
-		return e:attr("src")
-	end
-
 	return map(doc:select(search and self.searchNovelSel or self.latestNovelSel), function(v)
 		local novel = Novel()
 		local data = v:selectFirst("a")
