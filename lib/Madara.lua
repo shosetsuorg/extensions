@@ -1,4 +1,4 @@
--- {"ver":"1.3.3","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.3.4","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -119,7 +119,7 @@ local function img_src(e)
 		for url, size in srcset:gmatch("(.-) (%d+)w") do
 			if tonumber(size) > max then
 				max = tonumber(size)
-				max_url = url
+				max_url = url:sub(tonumber(url:find("http"))) -- url might be ", http ..." at the second loop
 			end
 		end
 
