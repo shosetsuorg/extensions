@@ -123,7 +123,7 @@ function defaults:parseNovel(url, loadChapters)
 		genres = map(elements:get(5):select("a"), text),
 		title = doc:selectFirst(self.novelPageTitleSel):text(),
 		imageURL = doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"),
-		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(1)
+		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
 		            :select("div.summary-content"):text() == "OnGoing"
 				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
 	}
