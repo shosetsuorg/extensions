@@ -1,4 +1,4 @@
--- {"ver":"1.3.4","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.3.5","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -141,7 +141,7 @@ function defaults:parseNovel(url, loadChapters)
 		artists = map(elements:get(4):select("a"), text),
 		genres = map(elements:get(5):select("a"), text),
 		title = doc:selectFirst(self.novelPageTitleSel):text(),
-		imageURL = doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"),
+		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
 		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
 		            :select("div.summary-content"):text() == "OnGoing"
 				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
