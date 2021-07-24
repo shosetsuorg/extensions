@@ -1,4 +1,4 @@
--- {"id":2443,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":2443,"ver":"1.0.4","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://saikaiscan.com.br"
 local settings = {}
@@ -10,7 +10,7 @@ local TIPO_V = { [0] = "novels", [1] = "manhuas", [2] = "curiosities" }
 --- @param chapterURL string
 --- @return string
 local function getPassage(chapterURL)
-	local lines = GETDocument(baseURL..chapterURL):selectFirst("div.full-text"):select("p")
+	local lines = GETDocument(baseURL .. chapterURL):selectFirst("div.full-text"):select("p")
 	local passage = "\n"
 	map(lines, function(e)
 		passage = passage .. e:text() .. "\n"
@@ -22,7 +22,7 @@ end
 --- @return NovelInfo
 local function parseNovel(novelURL)
 	local novelInfo = NovelInfo()
-	local document = GETDocument(baseURL..novelURL)
+	local document = GETDocument(baseURL .. novelURL)
 	local infos = document:select("div.info")
 
 	novelInfo:setTitle(document:selectFirst("h2"):text())
@@ -102,22 +102,27 @@ return {
 			local doc = GETDocument(baseURL)
 			local type = data[FILTER_TIPO_KEY]
 			local itemList = doc:selectFirst("ul." .. TIPO_V[type])
-			---@type Elements
-			local items
-			if type == 0 then
-				items = itemList:select("li.novel-item")
-			elseif type == 1 then
-				items = itemList:select("li.manhua-item")
+
+			if itemList ~= nil then
+				---@type Elements
+				local items
+				if type == 0 then
+					items = itemList:select("li.novel-item")
+				elseif type == 1 then
+					items = itemList:select("li.manhua-item")
+				else
+					items = itemList:select("li")
+				end
+				return map(items, function(e)
+					local novel = Novel()
+					novel:setTitle(e:selectFirst("h3"):text())
+					novel:setImageURL(baseURL .. e:selectFirst("div.image"):attr("data-src"))
+					novel:setLink(e:selectFirst("a"):attr("href"))
+					return novel
+				end)
 			else
-				items = itemList:select("li")
+				return {}
 			end
-			return map(items, function(e)
-				local novel = Novel()
-				novel:setTitle(e:selectFirst("h3"):text())
-				novel:setImageURL(baseURL .. e:selectFirst("div.image"):attr("data-src"))
-				novel:setLink(e:selectFirst("a"):attr("href"))
-				return novel
-			end)
 		end)
 	},
 
