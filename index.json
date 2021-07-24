@@ -245,6 +245,16 @@
       "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
+    },
+    {
+      "name": "KOL Novel",
+      "fileName": "KOLNovel",
+      "imageURL": "https://kolnovel.com/wp-content/uploads/2021/01/%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF-3.png",
+      "id": 12483,
+      "lang": "ar",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
