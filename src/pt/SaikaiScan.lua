@@ -1,4 +1,4 @@
--- {"id":2443,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":2443,"ver":"1.0.4","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://saikaiscan.com.br"
 local settings = {}
