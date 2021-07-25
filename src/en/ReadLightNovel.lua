@@ -56,7 +56,7 @@ return {
 
 	getPassage = function(chapterURL)
 		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
-		--htmlElement:select("br"):remove()
+		htmlElement:select("br"):remove()
 
 		-- Get the actual chapter content and remove the html. Due to the HTML format no need to add line breaks.
 		local content = htmlElement:html()
@@ -65,15 +65,7 @@ return {
 		content = content:gsub("</p>", "")
 		content = content:gsub("<br>", "")
 		content = content:gsub("<hr>", "-----")
-		--print(content)
-
-		htmlElement:select("br"):remove()
-		local contenttwo = htmlElement:html()
-		content = content:gsub("&nbsp;", " ") -- Do not break line here whitespace, not sure if it appears on this website
-		content = content:gsub("<p>", "")
-		content = content:gsub("</p>", "")
-		content = content:gsub("<hr>", "-----")
-		return content .. "\n\n\n" .. "BR removed before version:\n" .. contenttwo
+		return content
 	end,
 
 	parseNovel = function(novelURL, loadChapters)
