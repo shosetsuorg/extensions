@@ -1,8 +1,22 @@
--- {"id":6118,"ver":"1.0.6","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"1.0.7","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.org"
 local qs = Require("url").querystring
- 
+
+-- Same CSS as WuxiaWorld for good measure,
+-- because first novel and chapter I opened also used tables for layout
+-- PR a good style if any other elements are used for layout in any other novels
+local css = [[
+table {
+	background: #004b7a;
+	margin: 10px auto;
+	width: 90%;
+	border: none;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, .75);
+	border-collapse: separate;
+	border-spacing: 2px;
+}]]
+
 local function shrinkURL(url)
 	return url:gsub(".-readlightnovel%.org", "")
 end
@@ -58,14 +72,7 @@ return {
 		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
 		htmlElement:select("br"):remove()
 
-		-- Get the actual chapter content and remove the html. Due to the HTML format no need to add line breaks.
-		local content = htmlElement:html()
-		content = content:gsub("&nbsp;", " ") -- Do not break line here whitespace, not sure if it appears on this website
-		content = content:gsub("<p>", "")
-		content = content:gsub("</p>", "")
-		--content = content:gsub("<br>", "") -- Can be skipped as br gets removed.
-		content = content:gsub("<hr>", "-----")
-		return content
+		return pageOfElem(htmlElement:html(), false, css)
 	end,
 
 	parseNovel = function(novelURL, loadChapters)
