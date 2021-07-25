@@ -63,7 +63,7 @@ return {
 		content = content:gsub("&nbsp;", " ") -- Do not break line here whitespace, not sure if it appears on this website
 		content = content:gsub("<p>", "")
 		content = content:gsub("</p>", "")
-		content = content:gsub("<br>", "")
+		--content = content:gsub("<br>", "") -- Can be skipped as br gets removed.
 		content = content:gsub("<hr>", "-----")
 		return content
 	end,
