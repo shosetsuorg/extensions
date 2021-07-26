@@ -1,21 +1,9 @@
--- {"id":86802,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":86802,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.scribblehub.com"
 local qs = Require("url").querystring
 
--- Same CSS as WuxiaWorld for good measure,
--- because first novel and chapter I opened also used tables for layout
--- PR a good style if any other elements are used for layout in any other novels
-local css = [[
-table {
-	background: #004b7a;
-	margin: 10px auto;
-	width: 90%;
-	border: none;
-	box-shadow: 1px 1px 1px rgba(0, 0, 0, .75);
-	border-collapse: separate;
-	border-spacing: 2px;
-}]]
+local css = Require("CommonCSS").table
 
 local function shrinkURL(url)
 	return url:gsub("^.-scribblehub%.com/?", "")

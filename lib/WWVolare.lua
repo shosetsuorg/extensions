@@ -1,17 +1,6 @@
--- {"ver":"1.2.0","author":"TechnoJo4","dep":["dkjson"]}
+-- {"ver":"1.2.0","author":"TechnoJo4","dep":["dkjson","CommonCSS"]}
 
--- good table style for USAW
--- PR a good style if any other elements are used for layout in any other novels
-local css = [[
-table {
-    background: #004b7a;
-    margin: 10px auto;
-    width: 90%;
-    border: none;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, .75);
-    border-collapse: separate;
-    border-spacing: 2px;
-}]]
+local css = Require("CommonCSS").table
 
 return function(id, name, base, contentSel, image)
 	local settings
