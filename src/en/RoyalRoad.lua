@@ -5,15 +5,6 @@ local qs = Require("url").querystring
 
 local css = Require("CommonCSS").table
 
-local function log(...)
-	local t = { ... }
-	for k,v in ipairs(t) do
-		t[k] = tostring(v)
-	end
-	Request(GET("http://192.168.0.98:8080/L/"..table.concat(t, "/")))
-	return ...
-end
-
 local function shrinkURL(url)
 	return url:gsub("^.-royalroad%.com/?", "")
 end
@@ -74,7 +65,6 @@ return {
 
 		local s = mapNotNil(tags:children(), function(v)
 			local text = v:ownText()
-			log("text", text)
 			if text == "" or text ~= text:upper() then
 				return
 			end
