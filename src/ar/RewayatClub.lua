@@ -1,127 +1,99 @@
 -- {"id":3302,"ver":"1.0.0","libVer":"1.0.0","author":"Ali Mohamed"}
+
 local baseURL = "https://rewayat.club"
 local baseUrlApi = "https://api.rewayat.club"
 
 ---@type dkjson
 local json = Require("dkjson")
-
-local function flatten(arr)
-    local results = {}
-    -- define recursive local function for flattening
-    local function arrFlatten(arr)
-        for i, v in ipairs(arr) do
-            if type(v) == "table" then
-                arrFlatten(v)
-            else
-                results[#results + 1] = v
-            end
-        end
-    end
-    -- call this functions
-    arrFlatten(arr)
-    return results
-end
+local qs = Require("url").querystring
 
 return {
     id = 3302,
     name = "RewayatClub - نادي الروايات",
     baseURL = baseURL,
     hasSearch = true,
+    chapterType = ChapterType.HTML,
+
     listings = {
         Listing("Novel List", true, function(data)
-            -- local res = Request(GET(baseURL .. "/api/novels/?page=" .. data[PAGE] + 1)):body():string()
-            -- local d = json.decode(res)
             local d = json.GET(baseURL .. "/api/novels/?page=" .. data[PAGE] + 1)
+
             return map(d.results, function(v)
                 return Novel {
+                    link = v.slug,
                     title = v.english,
                     imageURL = baseUrlApi .. "/" .. v.poster_url,
-                    link = baseURL .. "/novel/" .. v.slug
                 }
             end)
         end),
+
         Listing("Latest", true, function(data)
-            -- local res = Request(GET(baseURL .. "/api/chapters/weekly/list/?page=" .. data[PAGE] + 1)):body():string()
-            -- local d = json.decode(res)
             local d = json.GET(baseURL .. "/api/chapters/weekly/list/?page=" .. data[PAGE] + 1)
 
             return map(d.results, function(v)
                 return Novel {
+                    link = v.novel.slug,
                     title = v.novel.english,
                     imageURL = baseUrlApi .. "/" .. v.novel.poster_url,
-                    link = baseURL .. "/novel/" .. v.novel.slug
                 }
             end)
         end)
     },
-    parseNovel = function(novelURL)
-        local urlOfNovel = novelURL:gsub("/novel/", "/api/novels/")
-        -- local res = Request(GET(url1)):body():string()
-        -- local d = json.decode(res)
-        local d = json.GET(urlOfNovel)
 
-        local novelInfo = NovelInfo()
-        novelInfo:setTitle(d.english)
-        novelInfo:setImageURL(baseUrlApi .. d.poster_url)
-        novelInfo:setDescription(d.english)
+    parseNovel = function(novelURL, loadChapters)
+        local d = json.GET(baseURL.."/api/novels/"..novelURL)
 
         local status = d.get_novel_status
-        novelInfo:setStatus(NovelStatus(status == "مكتملة" and 1 or status == "متوقفة" and 2 or status ==
-                                            "مستمرة" and 0 or 3))
-        novelInfo:setGenres(map(d.genre, function(v)
-            return v.english
-        end))
 
-        local urlOfChapters = novelURL:gsub("/novel/", "/api/chapters/") .. "/all"
-        -- local res2 = Request(GET(url2)):body():string()
-        -- local chaptersJson = json.decode(res2)
-        local chaptersJson = json.GET(urlOfChapters)
+        local novelInfo = NovelInfo {
+            title = d.english,
+            description = d.english,
+            imageURL = baseUrlApi .. d.poster_url,
+            genres = map(d.genre, function(v) return v.english end),
+            status = NovelStatus(
+                    status == "مكتملة" and 1 or
+                    status == "متوقفة" and 2 or
+                    status == "مستمرة" and 0 or 3)
+        }
 
-        local chapterList = AsList(map(chaptersJson, function(v)
-            local c = NovelChapter()
-            c:setLink(novelURL .. "/" .. v.number)
-            c:setTitle(v.title)
-            c:setOrder(v.number)
-
-            return c
-        end))
-        novelInfo:setChapters(chapterList)
+        if loadChapters then
+            local chaptersJson = json.GET(baseURL.."/api/chapters/"..novelURL.."/all")
+            novelInfo:setChapters(AsList(map(chaptersJson, function(v)
+                return NovelChapter {
+                    link = novelURL .. "/" .. v.number,
+                    title = v.title,
+                    order = v.number
+                }
+            end)))
+        end
 
         return novelInfo
+    end,
 
-    end,
     getPassage = function(chapterURL)
-        local url = chapterURL:gsub("/novel/", "/api/chapters/")
-        -- local res = Request(GET(url)):body():string()
-        -- local resJson = json.decode(res)
-        local resJson = json.GET(url)
-        return table.concat(map(resJson.content, function(v)
-            return table.concat(map(v, function(c)
-                -- local temp = c:gsub("<br/>","<b/r/>")
-                return Document(c):text()
-            end), "\n")
-        end), "\n"):gsub("\n\n", "\n")
+        local resJson = json.GET(baseURL.."/api/chapters/"..chapterURL)
+        return pageOfElem(Document(table.concat(flatten(resJson.content))))
     end,
+
     search = function(data)
-        -- local res2 = Request(GET(baseURL .. "/api/novels/search/all/?search=" .. data[QUERY] .. "&page=" .. data[PAGE] +
-        --                              1)):body():string()
-        -- local d = json.decode(res2)
-        local url = baseURL .. "/api/novels/search/all/?search=" .. data[QUERY] .. "&page=" .. data[PAGE] + 1
-        local d = json.GET(url)
+        local d = json.GET(qs({
+            search = data[QUERY],
+            page = data[PAGE] + 1
+        }, baseURL .. "/api/novels/search/all/"))
+
         return map(d.results, function(v)
             return Novel {
                 title = v.english,
                 imageURL = baseUrlApi .. v.poster_url,
-                link = baseURL .. "/novel/" .. v.slug
+                link = v.slug
             }
         end)
     end,
+
     shrinkURL = function(url)
-        return url:gsub(baseURL, "")
+        return url:gsub("^.-rewayat%.club/?", "")
     end,
-
     expandURL = function(url)
-        return baseURL .. url
+        return baseURL .. "/novel/" .. url
     end
-
 }
