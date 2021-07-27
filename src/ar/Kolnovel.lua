@@ -96,6 +96,13 @@ return {
             }
         end)
     end,
-    
+
+    shrinkURL = function(url)
+		return url:gsub(baseURL, "")
+	end,
+
+	expandURL = function(url)
+		return baseURL .. url
+	end,
 
 }
