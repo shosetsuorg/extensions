@@ -26,6 +26,7 @@
     }
   ],
   "scripts": [
+
     {
       "name": "MTLNovel",
       "fileName": "MTLNovel",
@@ -242,6 +243,16 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NMTranslations.png",
       "id": 93082,
       "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Rewayat Club - نادي الروايات",
+      "fileName": "RewayatClub",
+      "imageURL": "https://github.com/alimohamed1996/extensions/raw/dev/icons/RewayatClub.png",
+      "id": 3302,
+      "lang": "ar",
       "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
