@@ -1,4 +1,4 @@
--- {"id":4217,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.2.2"]}
+-- {"id":4217,"ver":"1.0.4","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.2.2"]}
 
 return Require("Madara")("https://woopread.com", {
     id = 4217,
@@ -6,7 +6,7 @@ return Require("Madara")("https://woopread.com", {
     imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
     searchHasOper = true,
     shrinkURLNovel = "series",
-    novelListingURLPath = "novel-list",
+    novelListingURLPath = "novellist",
     novelPageTitleSel = "h1",
     genres = {
         "Action",
