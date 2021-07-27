@@ -1,4 +1,4 @@
--- {"ver":"1.0.0","author":"David Kolf's"}
+-- {"ver":"1.0.1","author":"David Kolf"}
 
 -- Module options:
 local always_try_using_lpeg = false
@@ -747,7 +747,7 @@ end
 local json_mediatype = MediaType("application/json; charset=utf-8")
 
 function json.GET(url, ...)
-	local res = GET(url, ...)
+	local res = Request(GET(url, ...))
 	if res:headers():get("Content-Type"):sub(1, 16) == "application/json" then
 		return json.decode(res:body():string())
 	end
@@ -772,4 +772,3 @@ end
 --  END  -- SHOSETSU ADDITIONS --
 
 return json
-
