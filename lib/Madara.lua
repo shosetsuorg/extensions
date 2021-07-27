@@ -1,4 +1,4 @@
--- {"ver":"1.3.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.3.6","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -109,6 +109,26 @@ function defaults:getPassage(url)
 	return table.concat(map(GETDocument(self.expandURL(url)):select("div.text-left p"), text), "\n")
 end
 
+local function img_src(e)
+	local srcset = e:attr("data-srcset")
+
+	if srcset ~= "" then
+		-- get largest image
+		local max, max_url = 0, ""
+
+		for url, size in srcset:gmatch("(http.-) (%d+)w") do
+			print("URL: " .. url)
+			if tonumber(size) > max then
+				max = tonumber(size)
+				max_url = url
+			end
+		end
+
+		return max_url
+	end
+	return e:attr("src")
+end
+
 ---@param url string
 ---@param loadChapters boolean
 ---@return NovelInfo
@@ -122,8 +142,8 @@ function defaults:parseNovel(url, loadChapters)
 		artists = map(elements:get(4):select("a"), text),
 		genres = map(elements:get(5):select("a"), text),
 		title = doc:selectFirst(self.novelPageTitleSel):text(),
-		imageURL = doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive"):attr("src"),
-		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(1)
+		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
+		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
 		            :select("div.summary-content"):text() == "OnGoing"
 				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
 	}
@@ -166,24 +186,6 @@ end
 ---@param doc Document
 ---@param search boolean
 function defaults:parse(doc, search)
-	local function img_src(e)
-		local srcset = e:attr("data-srcset")
-		if srcset then
-			-- get largest image
-			local max, max_url = 0, ""
-
-			for url, size in srcset:gmatch("(.-) (%d+)w") do
-				if tonumber(size) > max then
-					max = tonumber(size)
-					max_url = url
-				end
-			end
-
-			return max_url
-		end
-		return e:attr("src")
-	end
-
 	return map(doc:select(search and self.searchNovelSel or self.latestNovelSel), function(v)
 		local novel = Novel()
 		local data = v:selectFirst("a")
