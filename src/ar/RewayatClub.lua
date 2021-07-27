@@ -99,8 +99,8 @@ return {
 
         return table.concat(map(resJson.content,function (v) 
                 return table.concat(map(v,function (c) 
-                    local temp = c:gsub("<br/>","<b/r/>")
-                        return Document(temp):text()
+                    -- local temp = c:gsub("<br/>","<b/r/>")
+                        return Document(c):text()
                     end),"\n")
             end),"\n"):gsub("\n\n","\n")
       
@@ -117,5 +117,12 @@ return {
             }
         end)
     end,
+    shrinkURL = function(url)
+		return url:gsub(baseURL, "")
+	end,
+
+	expandURL = function(url)
+		return baseURL .. url
+	end,
 
 }
