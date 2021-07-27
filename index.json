@@ -5,6 +5,10 @@
       "ver": "1.1.2"
     },
     {
+      "name": "CommonCSS",
+      "ver": "1.0.0"
+    },
+    {
       "name": "dkjson",
       "ver": "1.0.1"
     },
@@ -26,7 +30,6 @@
     }
   ],
   "scripts": [
-
     {
       "name": "MTLNovel",
       "fileName": "MTLNovel",
@@ -232,6 +235,16 @@
       "fileName": "ScribbleHub",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ScribbleHub.png",
       "id": 86802,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "RoyalRoad",
+      "fileName": "RoyalRoad",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RoyalRoad.png",
+      "id": 36833,
       "lang": "en",
       "ver": "1.0.0",
       "libVer": "1.0.0",

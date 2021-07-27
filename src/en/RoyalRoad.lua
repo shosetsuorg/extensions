@@ -5,6 +5,15 @@ local qs = Require("url").querystring
 
 local css = Require("CommonCSS").table
 
+local function log(...)
+	local t = { ... }
+	for k,v in ipairs(t) do
+		t[k] = tostring(v)
+	end
+	Request(GET("http://192.168.0.98:8080/L/"..table.concat(t, "/")))
+	return ...
+end
+
 local function shrinkURL(url)
 	return url:gsub("^.-royalroad%.com/?", "")
 end
@@ -55,7 +64,7 @@ return {
 	expandURL = expandURL,
 
 	parseNovel = function(url, loadChapters)
-		local doc = GETDocument(baseURL.."/series/"..url.."/a")
+		local doc = GETDocument(baseURL.."/fiction/"..url.."/a")
 
 		local page = doc:selectFirst(".page-content-inner")
 		local header = page:selectFirst(".fic-header")
@@ -63,13 +72,16 @@ return {
 		local info = page:selectFirst(".fiction-info")
 		local tags = info:selectFirst(".margin-bottom-10")
 
-		local s = first(map(tags:children(), function(v)
-			return v:ownText()
-		end), function(v)
-			return text ~= "" and text == text:upper()
-		end)
+		local s = mapNotNil(tags:children(), function(v)
+			local text = v:ownText()
+			log("text", text)
+			if text == "" or text ~= text:upper() then
+				return
+			end
+			return text
+		end)[1]
 
-		s = ({
+		s = s and ({
 			ONGOING = NovelStatus.PUBLISHING,
 			COMPLETED = NovelStatus.COMPLETED,
 		})[s] or NovelStatus.UNKNOWN

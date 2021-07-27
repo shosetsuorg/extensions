@@ -4,6 +4,7 @@
 
 local tbl = {}
 
+-- abuse of lua's syntax but it looks nice
 local function def(key)
     return function(value)
         tbl[key] = value:gsub("[ \n]+", " ")
@@ -13,25 +14,27 @@ end
 
 def
 
--- originally meant for tables in WuxiaWorld's USAW, but it turns out many
--- websites use these, so it is relevant to move this snippet here
+"" [[]]
+
 "table" [[
 table {
-    background: #004b7a;
+    background: none;
     margin: 10px auto;
     width: 90%;
-    border: none;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, .75);
+    outline: #004b7a solid 3px;
+    border-spacing: 3px;
     border-collapse: separate;
-    border-spacing: 2px;
+}
+td {
+    padding: 3px;
+    background: #004b7a;
 }
 ]]
 
-"" [[
-
-]]
+local all = ""
+for _,v in pairs(tbl) do
+    all = all .. v
+end
+tbl.all = all
 
 return tbl
-
-
-

@@ -126,6 +126,9 @@ return {
 			if v:tagName() == "p" and v:text() == "" then
 				toRemove[#toRemove+1] = v
 			end
+			if v:hasAttr("border") then
+				v:removeAttr("border")
+			end
 		end, nil, true))
 		for _,v in pairs(toRemove) do
 			v:remove()

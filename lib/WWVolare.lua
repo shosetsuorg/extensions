@@ -59,6 +59,9 @@ return function(id, name, base, contentSel, image)
 			map(content:select(".chapter-nav"), function(v)
 				v:remove()
 			end)
+			map(content:select("[border]"), function(elem)
+				elem:removeAttr("border")
+			end)
 			return pageOfElem(content, true, css)
 		end,
 
