@@ -1,4 +1,4 @@
--- {"ver":"1.3.6","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"1.3.7","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -106,7 +106,16 @@ end
 ---@param url string
 ---@return string
 function defaults:getPassage(url)
-	return table.concat(map(GETDocument(self.expandURL(url)):select("div.text-left p"), text), "\n")
+	local htmlElement = GETDocument(self.expandURL(url)):selectFirst("div.text-left")
+
+	-- Remove/modify unwanted HTML elements to get a clean webpage.
+	htmlElement:select("div.lnbad-tag"):remove()
+	htmlElement:removeAttr("style")
+
+	-- Temporary Test to see if the HTML version works
+	htmlElement:selectFirst("p"):text("HTML Version")
+
+	return pageOfElem(htmlElement)
 end
 
 local function img_src(e)
