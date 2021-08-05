@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"1.0.6","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"1.0.7","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.org"
 local qs = Require("url").querystring
@@ -44,6 +44,7 @@ return {
 	name = "ReadLightNovel",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
+	chapterType = ChapterType.HTML,
 
 	shrinkURL = shrinkURL,
 	expandURL = expandURL,
@@ -58,14 +59,10 @@ return {
 		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
 		htmlElement:select("br"):remove()
 
-		-- Get the actual chapter content and remove the html. Due to the HTML format no need to add line breaks.
-		local content = htmlElement:html()
-		content = content:gsub("&nbsp;", " ") -- Do not break line here whitespace, not sure if it appears on this website
-		content = content:gsub("<p>", "")
-		content = content:gsub("</p>", "")
-		--content = content:gsub("<br>", "") -- Can be skipped as br gets removed.
-		content = content:gsub("<hr>", "-----")
-		return content
+		-- Temporary Test to see if the HTML version works
+		htmlElement:selectFirst("p"):text("HTML Version")
+
+		return pageOfElem(htmlElement)
 	end,
 
 	parseNovel = function(novelURL, loadChapters)
