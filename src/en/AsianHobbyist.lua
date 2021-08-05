@@ -33,7 +33,7 @@ local function getPassage(chapterURL)
 	local htmlElement = GETDocument(expandURL(chapterURL, KEY_CHAPTER_URL)):selectFirst("div.entry-content")
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
-	htmlElement:select("div.code-block"):remove()
+	htmlElement:select("div.code-block"):remove() -- Install mobile app and donation block
 
 	return pageOfElem(htmlElement)
 end
