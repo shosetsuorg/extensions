@@ -96,6 +96,7 @@ return {
 			return map(document:select("li.item"), function(v)
 				local a = v:selectFirst("a")
 				local image = a:selectFirst("img")
+				Log("AHNImage", image:attr("src"))
 				return Novel {
 					title = image:attr("alt"),
 					imageURL = image:attr("src"),
