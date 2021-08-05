@@ -66,7 +66,10 @@ function defaults:getPassage(url)
 	htmlElement:select("script"):remove()
 	htmlElement:select("ins"):remove()
 	htmlElement:select("div.ads"):remove()
-	htmlElement:lastChild():remove()
+	Log("W.LastChild", htmlElement:lastChild():toString())
+	Log("W:Remove", htmlElement:lastChild():remove():toString())
+	Log("W.Remove", htmlElement.lastChild():remove():toString())
+	--htmlElement.lastChild():remove()
 
 	return pageOfElem(htmlElement)
 end
