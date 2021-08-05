@@ -35,9 +35,6 @@ local function getPassage(chapterURL)
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
 	htmlElement:select("div.code-block"):remove()
 
-	-- Temporary Test to see if the HTML version works
-	htmlElement:selectFirst("p"):text("HTML Version")
-
 	return pageOfElem(htmlElement)
 end
 
@@ -96,8 +93,6 @@ return {
 			return map(document:select("li.item"), function(v)
 				local a = v:selectFirst("a")
 				local image = a:selectFirst("img")
-				Log("AHNImage", image:toString())
-				Log("AHNImageDataSrc", image:attr("data-lazy-src"))
 				return Novel {
 					title = image:attr("alt"),
 					imageURL = image:attr("data-lazy-src"),

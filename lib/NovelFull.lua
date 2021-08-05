@@ -65,9 +65,6 @@ function defaults:getPassage(url)
 	htmlElement:select("div.ads"):remove()
 	htmlElement:removeAttr("style")
 
-	-- Temporary Test to see if the HTML version works
-	htmlElement:selectFirst("p"):text("HTML Version")
-
 	return pageOfElem(htmlElement)
 end
 

@@ -59,9 +59,6 @@ return {
 		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
 		htmlElement:select("br"):remove()
 
-		-- Temporary Test to see if the HTML version works
-		htmlElement:selectFirst("p"):text("HTML Version")
-
 		return pageOfElem(htmlElement)
 	end,
 

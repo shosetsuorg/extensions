@@ -113,9 +113,6 @@ function defaults:getPassage(url)
 	htmlElement:select("div.lnbad-tag"):remove()
 	htmlElement:removeAttr("style")
 
-	-- Temporary Test to see if the HTML version works
-	htmlElement:selectFirst("p"):text("HTML Version")
-
 	return pageOfElem(htmlElement)
 end
 
