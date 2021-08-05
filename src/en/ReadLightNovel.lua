@@ -61,7 +61,7 @@ return {
 		-- Remove/modify unwanted HTML elements to get a clean webpage.
 		htmlElement:removeAttr("class") -- Remove hidden
 		--htmlElement:select("br"):remove()
-
+		Log("Webpage", pageOfElem(htmlElement))
 		return pageOfElem(htmlElement)
 	end,
 
