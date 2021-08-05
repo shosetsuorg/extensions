@@ -57,7 +57,10 @@ return {
 
 	getPassage = function(chapterURL)
 		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
-		htmlElement:select("br"):remove()
+
+		-- Remove/modify unwanted HTML elements to get a clean webpage.
+		htmlElement:removeAttr("class") -- Remove hidden
+		--htmlElement:select("br"):remove()
 
 		return pageOfElem(htmlElement)
 	end,
