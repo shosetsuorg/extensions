@@ -45,10 +45,9 @@ local function search(data)
 			POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
 					FormBodyBuilder()
 							:add("action", "gsr")
-							:add("enc", "25e9bf9508")
+							:add("enc", "082cf9edb4")
 							:add("src", queryContent):build())
 	)
-
 	Log("AHSearch", doc:toString())
 	return map(doc:select("li.flex"), function(v)
 		local htmlTitle = v:selectFirst("div.title"):selectFirst("a")
