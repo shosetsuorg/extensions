@@ -97,9 +97,10 @@ return {
 				local a = v:selectFirst("a")
 				local image = a:selectFirst("img")
 				Log("AHNImage", image:toString())
+				Log("AHNImageDataSrc", image:attr("data-lazy-src"))
 				return Novel {
 					title = image:attr("alt"),
-					imageURL = image:attr("src"),
+					imageURL = image:attr("data-lazy-src"),
 					link = shrinkURL(a:attr("href"), KEY_NOVEL_URL)
 				}
 			end)
