@@ -49,6 +49,7 @@ local function search(data)
 							:add("src", queryContent):build())
 	)
 
+	Log("AHSearch", doc:toString())
 	return map(doc:select("li.flex"), function(v)
 		local htmlTitle = v:selectFirst("div.title"):selectFirst("a")
 		return Novel {
