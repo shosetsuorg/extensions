@@ -16,6 +16,7 @@ local defaults = {
 	searchHasOper = false, -- is AND/OR operation selector present?
 	hasCloudFlare = false,
 	hasSearch = true,
+	chapterType = ChapterType.HTML,
 	ajaxUrl = "/wp-admin/admin-ajax.php",
 	--- To load chapters for a novel, another request must be made
 	doubleLoadChapters = false
