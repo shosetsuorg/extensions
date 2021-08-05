@@ -1,4 +1,4 @@
--- {"id":951,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":951,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs"}
 
 local baseURL = "https://www.asianhobbyist.com"
 
@@ -30,11 +30,15 @@ end
 --- @param chapterURL string @url of the chapter
 --- @return string @of chapter
 local function getPassage(chapterURL)
-	local d = GETDocument(expandURL(chapterURL, KEY_CHAPTER_URL))
-	local htmlBody = d:selectFirst("div.entry-content")
-	local htmlLines = htmlBody:select("p")
-	local lines = map(htmlLines, textOf)
-	return table.concat(lines, "\n")
+	local htmlElement = GETDocument(expandURL(chapterURL, KEY_CHAPTER_URL)):selectFirst("div.entry-content")
+
+	-- Remove/modify unwanted HTML elements to get a clean webpage.
+	htmlElement:select("div.code-block"):remove()
+
+	-- Temporary Test to see if the HTML version works
+	htmlElement:selectFirst("p"):text("HTML Version")
+
+	return pageOfElem(htmlElement)
 end
 
 --- @param data table
@@ -94,7 +98,7 @@ return {
 				local image = a:selectFirst("img")
 				return Novel {
 					title = image:attr("alt"),
-					imageURL = image:attr("href"),
+					imageURL = image:attr("src"),
 					link = shrinkURL(a:attr("href"), KEY_NOVEL_URL)
 				}
 			end)
@@ -102,6 +106,7 @@ return {
 	},
 	parseNovel = parseNovel,
 	getPassage = getPassage,
+	chapterType = ChapterType.HTML,
 	search = search,
 	shrinkURL = shrinkURL,
 	expandURL = expandURL
