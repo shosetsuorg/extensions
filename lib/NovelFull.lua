@@ -66,7 +66,7 @@ function defaults:getPassage(url)
 	htmlElement:select("script"):remove()
 	htmlElement:select("ins"):remove()
 	htmlElement:select("div.ads"):remove()
-	htmlElement:select("div[align=\"left\"]:last-child"):remove()
+	htmlElement:select("div[align=\"left\"]:last-child"):remove() -- Report error text
 
 	return pageOfElem(htmlElement)
 end
