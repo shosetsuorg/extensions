@@ -110,7 +110,6 @@ function defaults:getPassage(url)
 	local htmlElement = GETDocument(self.expandURL(url)):selectFirst("div.text-left")
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
-	htmlElement:removeAttr("style") -- Remove text style
 	htmlElement:select("div.lnbad-tag"):remove() -- LightNovelBastion text size
 
 	return pageOfElem(htmlElement)

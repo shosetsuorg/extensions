@@ -62,7 +62,6 @@ function defaults:getPassage(url)
 	local htmlElement = GETDocument(self.baseURL..url):selectFirst("div#chapter-content")
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
-	htmlElement:removeAttr("style") -- Remove text style
 	htmlElement:select("script"):remove()
 	htmlElement:select("ins"):remove()
 	htmlElement:select("div.ads"):remove()
