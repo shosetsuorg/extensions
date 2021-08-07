@@ -1,4 +1,4 @@
--- {"id":1,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["NovelFull>=1.0.0"]}
+-- {"id":1,"ver":"2.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["NovelFull>=2.0.0"]}
 
 return Require("NovelFull")("http://novelfull.com", {
 	id = 1,

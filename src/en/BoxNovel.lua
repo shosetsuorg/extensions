@@ -1,4 +1,4 @@
--- {"id":2,"ver":"2.0.3","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=1.1.0"]}
+-- {"id":2,"ver":"3.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.0.0"]}
 
 return Require("Madara")("https://boxnovel.com", {
 	id = 2,

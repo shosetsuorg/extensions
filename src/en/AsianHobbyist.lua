@@ -1,4 +1,4 @@
--- {"id":951,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":951,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
 
 local baseURL = "https://www.asianhobbyist.com"
 
