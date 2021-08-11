@@ -7,27 +7,36 @@ local tbl = {}
 -- abuse of lua's syntax but it looks nice
 local function def(key)
     return function(value)
-        tbl[key] = value:gsub("[ \n]+", " ")
+        local function id(c) return c end
+
+        tbl[key] = value
+            :gsub("^%s+", "")
+            :gsub("%s+$", "")
+            :gsub("%s*([;{}])%s*", id)
+
         return def
     end
 end
 
 def
 
-"" [[]]
+"a" [[a]]
 
 "table" [[
+:root {
+    --table-color: #004b7a;
+}
 table {
     background: none;
     margin: 10px auto;
     width: 90%;
-    outline: #004b7a solid 3px;
+    outline: var(--table-color) solid 3px;
     border-spacing: 3px;
     border-collapse: separate;
 }
 td {
     padding: 3px;
-    background: #004b7a;
+    background: var(--table-color);
 }
 ]]
 
