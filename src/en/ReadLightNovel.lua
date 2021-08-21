@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"1.0.5","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"1.0.6","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.org"
 local qs = Require("url").querystring
@@ -55,16 +55,17 @@ return {
 	},
 
 	getPassage = function(chapterURL)
-		return pipeline
-				(GETDocument(expandURL(chapterURL)):selectFirst(".container--content .row .desc"):children())
-				(filter, function(v)
-					return v:tagName() ~= "script"
-				end)
-				(map, text)
-				(filter, function(v)
-					return not v:match("support RLN")
-				end)
-				(table.concat, "\n")()
+		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
+		htmlElement:select("br"):remove()
+
+		-- Get the actual chapter content and remove the html. Due to the HTML format no need to add line breaks.
+		local content = htmlElement:html()
+		content = content:gsub("&nbsp;", " ") -- Do not break line here whitespace, not sure if it appears on this website
+		content = content:gsub("<p>", "")
+		content = content:gsub("</p>", "")
+		--content = content:gsub("<br>", "") -- Can be skipped as br gets removed.
+		content = content:gsub("<hr>", "-----")
+		return content
 	end,
 
 	parseNovel = function(novelURL, loadChapters)
