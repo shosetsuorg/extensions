@@ -1,4 +1,4 @@
--- {"id":3301,"ver":"1.0.0","libVer":"1.0.0","author":"Ali Mohamed"}
+-- {"id":3301,"ver":"1.0.1","libVer":"1.0.0","author":"Ali Mohamed"}
 local baseURL = "https://kolnovel.com"
 
 local function shrinkURL(url)
@@ -13,7 +13,7 @@ return {
     id = 3301,
     name = "Kolnovel - ملوك الروايات",
     baseURL = baseURL,
-    imageURL = "https://kolnovel.com/wp-content/uploads/2021/01/PicsArt_10-21-02.01.20.png",
+    imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/Kolnovel.png",
     hasSearch = true,
     listings = {
         Listing("Novel List", true, function(data)

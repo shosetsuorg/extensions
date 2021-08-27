@@ -13,7 +13,7 @@ return {
     baseURL = baseURL,
     hasSearch = true,
     chapterType = ChapterType.HTML,
-
+    imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/RewayatClub.png",
     listings = {
         Listing("Novel List", true, function(data)
             local d = json.GET(baseURL .. "/api/novels/?page=" .. data[PAGE] + 1)
