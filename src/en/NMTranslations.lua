@@ -1,5 +1,4 @@
--- {"id":93082,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":[]}
-
+-- {"id":93082,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":[]}
 local baseURL = "https://www.nanomashin.online"
 
 local function text(v)
@@ -14,7 +13,7 @@ return {
 	hasSearch = false,
 	listings = {
 		Listing("Projects", false, function()
-			local doc = GETDocument(baseURL .. "/projects")
+			local doc = GETDocument(baseURL)
 
 			return map(doc:select("div.p-4"), function(v)
 				local title = v:selectFirst("h2.mb-3"):selectFirst("a")
