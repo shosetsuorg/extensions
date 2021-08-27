@@ -1,4 +1,4 @@
--- {"id":3302,"ver":"1.0.0","libVer":"1.0.0","author":"Ali Mohamed"}
+-- {"id":3302,"ver":"1.0.1","libVer":"1.0.0","author":"Ali Mohamed"}
 
 local baseURL = "https://rewayat.club"
 local baseUrlApi = "https://api.rewayat.club"
