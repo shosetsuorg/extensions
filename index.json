@@ -10,7 +10,7 @@
     },
     {
       "name": "NovelFull",
-      "ver": "1.0.0"
+      "ver": "2.0.0"
     },
     {
       "name": "url",
@@ -22,7 +22,7 @@
     },
     {
       "name": "Madara",
-      "ver": "1.3.6"
+      "ver": "2.0.0"
     }
   ],
   "scripts": [
@@ -43,7 +43,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Foxaholic.png",
       "id": 173,
       "lang": "en",
-      "ver": "1.0.4",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": "c5977c9ba48c5115426fb3010cc65894"
     },
@@ -53,7 +53,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelFull.png",
       "id": 1,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": "5f95559b552725914228f3b29126fd1"
     },
@@ -73,7 +73,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/VipNovel.png",
       "id": 586,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": "911fedf88cf4fad6ccc1561e625dd219"
     },
@@ -123,7 +123,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/BoxNovel.png",
       "id": 2,
       "lang": "en",
-      "ver": "2.0.3",
+      "ver": "3.0.0",
       "libVer": "1.0.0",
       "md5": "c82a5cdff73aee7385e2da5cec371f89"
     },
@@ -153,7 +153,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
       "id": 81,
       "lang": "en",
-      "ver": "1.0.3",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -163,7 +163,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
       "id": 4217,
       "lang": "en",
-      "ver": "1.0.4",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -173,7 +173,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
       "id": 6118,
       "lang": "en",
-      "ver": "1.0.6",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -183,7 +183,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/LightNovelHeaven.png",
       "id": 2925,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": "480c6c32b3cd81cde7faf19cc3496b0d"
     },
@@ -193,7 +193,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/LightNovelBastion.png",
       "id": 762,
       "lang": "en",
-      "ver": "1.0.3",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": "6e3dd280e11a4ba1b3dcf7f67b917e81"
     },
@@ -233,7 +233,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/AsianHobbyist.png",
       "id": 951,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "2.0.0",
       "libVer": "1.0.0",
       "md5": "16348946cb5981a279d80b5f34ffe505"
     },

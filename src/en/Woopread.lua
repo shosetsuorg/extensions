@@ -1,4 +1,4 @@
--- {"id":4217,"ver":"1.0.4","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=1.2.2"]}
+-- {"id":4217,"ver":"2.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.0.0"]}
 
 return Require("Madara")("https://woopread.com", {
     id = 4217,
