@@ -1,4 +1,4 @@
--- {"ver":"2.0.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.1","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -110,6 +110,7 @@ function defaults:getPassage(url)
 	local htmlElement = GETDocument(self.expandURL(url)):selectFirst("div.text-left")
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
+	htmlElement:removeAttr("style") -- Hopefully only temporary as a hotfix
 	htmlElement:select("div.lnbad-tag"):remove() -- LightNovelBastion text size
 
 	return pageOfElem(htmlElement)
