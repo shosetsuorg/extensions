@@ -1,4 +1,4 @@
--- {"id":93082,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":[]}
+-- {"id":93082,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":[]}
 local baseURL = "https://www.nanomashin.online"
 
 local function text(v)
@@ -30,7 +30,7 @@ return {
 		local document = GETDocument(baseURL .. url)
 
 		local info = NovelInfo {
-			title = document:selectFirst("h1.text-2xl"):text(),
+			title = document:selectFirst("h1.text-3xl"):text(),
 			imageURL = baseURL .. document:selectFirst("img.object-contain"):attr("src"),
 			description = document:selectFirst("div.pt-6.pb-8"):selectFirst("div.pt-6.pb-8"):text(),
 		}
