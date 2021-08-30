@@ -1,4 +1,4 @@
--- {"id":951,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":951,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
 
 local baseURL = "https://www.asianhobbyist.com"
 
@@ -30,11 +30,12 @@ end
 --- @param chapterURL string @url of the chapter
 --- @return string @of chapter
 local function getPassage(chapterURL)
-	local d = GETDocument(expandURL(chapterURL, KEY_CHAPTER_URL))
-	local htmlBody = d:selectFirst("div.entry-content")
-	local htmlLines = htmlBody:select("p")
-	local lines = map(htmlLines, textOf)
-	return table.concat(lines, "\n")
+	local htmlElement = GETDocument(expandURL(chapterURL, KEY_CHAPTER_URL)):selectFirst("div.entry-content")
+
+	-- Remove/modify unwanted HTML elements to get a clean webpage.
+	htmlElement:select("div.code-block"):remove() -- Install mobile app and donation block
+
+	return pageOfElem(htmlElement)
 end
 
 --- @param data table
@@ -44,7 +45,7 @@ local function search(data)
 			POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
 					FormBodyBuilder()
 							:add("action", "gsr")
-							:add("enc", "25e9bf9508")
+							:add("enc", "082cf9edb4")
 							:add("src", queryContent):build())
 	)
 
@@ -94,7 +95,7 @@ return {
 				local image = a:selectFirst("img")
 				return Novel {
 					title = image:attr("alt"),
-					imageURL = image:attr("href"),
+					imageURL = image:attr("data-lazy-src"),
 					link = shrinkURL(a:attr("href"), KEY_NOVEL_URL)
 				}
 			end)
@@ -102,6 +103,7 @@ return {
 	},
 	parseNovel = parseNovel,
 	getPassage = getPassage,
+	chapterType = ChapterType.HTML,
 	search = search,
 	shrinkURL = shrinkURL,
 	expandURL = expandURL

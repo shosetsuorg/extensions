@@ -1,4 +1,4 @@
--- {"id":3302,"ver":"1.0.0","libVer":"1.0.0","author":"Ali Mohamed"}
+-- {"id":3302,"ver":"1.0.1","libVer":"1.0.0","author":"Ali Mohamed"}
 
 local baseURL = "https://rewayat.club"
 local baseUrlApi = "https://api.rewayat.club"
@@ -13,7 +13,7 @@ return {
     baseURL = baseURL,
     hasSearch = true,
     chapterType = ChapterType.HTML,
-
+    imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/RewayatClub.png",
     listings = {
         Listing("Novel List", true, function(data)
             local d = json.GET(baseURL .. "/api/novels/?page=" .. data[PAGE] + 1)

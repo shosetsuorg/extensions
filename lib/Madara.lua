@@ -1,4 +1,4 @@
--- {"ver":"1.3.6","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.1","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -16,6 +16,7 @@ local defaults = {
 	searchHasOper = false, -- is AND/OR operation selector present?
 	hasCloudFlare = false,
 	hasSearch = true,
+	chapterType = ChapterType.HTML,
 	ajaxUrl = "/wp-admin/admin-ajax.php",
 	--- To load chapters for a novel, another request must be made
 	doubleLoadChapters = false
@@ -106,7 +107,13 @@ end
 ---@param url string
 ---@return string
 function defaults:getPassage(url)
-	return table.concat(map(GETDocument(self.expandURL(url)):select("div.text-left p"), text), "\n")
+	local htmlElement = GETDocument(self.expandURL(url)):selectFirst("div.text-left")
+
+	-- Remove/modify unwanted HTML elements to get a clean webpage.
+	htmlElement:removeAttr("style") -- Hopefully only temporary as a hotfix
+	htmlElement:select("div.lnbad-tag"):remove() -- LightNovelBastion text size
+
+	return pageOfElem(htmlElement)
 end
 
 local function img_src(e)

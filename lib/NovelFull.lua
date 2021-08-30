@@ -1,9 +1,6 @@
--- {"ver":"1.0.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.1","author":"TechnoJo4","dep":["url"]}
 
 -- rename this if you ever figure out its real name
----@author TechnoJo4
----@version 1.0.0
-
 
 ---@type fun(tbl: table , url: string): string
 local qs = Require("url").querystring
@@ -21,7 +18,8 @@ local defaults = {
 	searchTitleSel = ".novel-title",
 
 	hasCloudFlare = false,
-	hasSearch = true
+	hasSearch = true,
+	chapterType = ChapterType.HTML
 }
 
 function defaults:search(data)
@@ -61,7 +59,16 @@ function defaults:search(data)
 end
 
 function defaults:getPassage(url)
-	return table.concat(mapNotNil(GETDocument(self.baseURL..url):selectFirst("#chr-content, #chapter-content"):select("p"), text), "\n")
+	local htmlElement = GETDocument(self.baseURL..url):selectFirst("div#chapter-content")
+
+	-- Remove/modify unwanted HTML elements to get a clean webpage.
+	htmlElement:removeAttr("style") -- Hopefully only temporary as a hotfix
+	htmlElement:select("script"):remove()
+	htmlElement:select("ins"):remove()
+	htmlElement:select("div.ads"):remove()
+	htmlElement:select("div[align=\"left\"]:last-child"):remove() -- Report error text
+
+	return pageOfElem(htmlElement)
 end
 
 function defaults:parseNovel(url, loadChapters)
