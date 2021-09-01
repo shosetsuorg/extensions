@@ -1,4 +1,4 @@
--- {"ver":"2.0.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.1.0","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -17,9 +17,14 @@ local defaults = {
 	hasCloudFlare = false,
 	hasSearch = true,
 	chapterType = ChapterType.HTML,
-	ajaxUrl = "/wp-admin/admin-ajax.php",
-	--- To load chapters for a novel, another request must be made
-	doubleLoadChapters = false
+	-- If chaptersScriptLoaded is true, then a ajax request has to be made to get the chapter list.
+	-- Otherwise the chapter list is already loaded when loading the novel overview.
+	chaptersScriptLoaded = false,
+	-- If ajaxUsesFormData is true, then a POST request will be send to baseURL/ajaxFormDataUrl.
+	-- Otherwise to baseURL/shrinkURLNovel/novelurl/ajaxSeriesUrl .
+	ajaxUsesFormData = true,
+	ajaxFormDataUrl = "/wp-admin/admin-ajax.php",
+	ajaxSeriesUrl = "ajax/chapters/"
 }
 
 local ORDER_BY_FILTER_EXT = { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }
@@ -140,49 +145,61 @@ end
 function defaults:parseNovel(url, loadChapters)
 	local doc = GETDocument(self.expandURL(url))
 
-	local elements = doc:selectFirst("div.post-content"):select("div.post-content_item")
+	local content = doc:selectFirst("div.post-content")
 	local info = NovelInfo {
 		description = doc:selectFirst("p"):text(),
-		authors = map(elements:get(3):select("a"), text),
-		artists = map(elements:get(4):select("a"), text),
-		genres = map(elements:get(5):select("a"), text),
 		title = doc:selectFirst(self.novelPageTitleSel):text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
 		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
 		            :select("div.summary-content"):text() == "OnGoing"
 				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
 	}
+	-- Not every Novel has an guaranteed author, artist or genres (looking at you NovelTrench).
+	if content:selectFirst("div.author-content") ~= nil then
+		info:setAuthors( map(content:selectFirst("div.author-content"):select("a"), text) )
+	end
+	if content:selectFirst("div.artist-content") ~= nil then
+		info:setArtists( map(content:selectFirst("div.artist-content"):select("a"), text) )
+	end
+	if content:selectFirst("div.genres-content") ~= nil then
+		info:setGenres( map(content:selectFirst("div.genres-content"):select("a"), text) )
+	end
 
 	-- Chapters
-	-- Overrides `doc` if self.doubleLoadChapters is true
+	-- Overrides `doc` if self.chaptersScriptLoaded is true.
 	if loadChapters then
-		if self.doubleLoadChapters then
-			local button = doc:selectFirst("a.wp-manga-action-button")
-			local id = button:attr("data-post")
+		if self.chaptersScriptLoaded then
+			if self.ajaxUsesFormData then
+				-- Used by Foxaholic and WoopRead.
+				local button = doc:selectFirst("a.wp-manga-action-button")
+				local id = button:attr("data-post")
 
-			doc = RequestDocument(
-					POST(self.baseURL .. self.ajaxUrl, nil,
-							FormBodyBuilder()
-									:add("action", "manga_get_chapters")
-									:add("manga", id):build())
-			)
+				doc = RequestDocument(
+						POST(self.baseURL .. self.ajaxFormDataUrl, nil,
+								FormBodyBuilder()
+										:add("action", "manga_get_chapters")
+										:add("manga", id):build())
+				)
+			else
+				-- Used by NovelTrench and LightNovelHeaven.
+				doc = RequestDocument(
+						POST(self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url .. self.ajaxSeriesUrl,
+								nil, nil)
+				)
+			end
 		end
 
-		local e = doc:select("li.wp-manga-chapter")
-		local a = e:size()
-		local l = AsList(map(e, function(v)
-			local c = NovelChapter()
-			c:setLink(self.shrinkURL(v:selectFirst("a"):attr("href")))
-			c:setTitle(v:selectFirst("a"):text())
-
+		local chapterList = doc:select("li.wp-manga-chapter")
+		local novelList = AsList(map(chapterList, function(v)
 			local i = v:selectFirst("i")
-			c:setRelease(i and i:text() or v:selectFirst("img[alt]"):attr("alt"))
-			c:setOrder(a)
-			a = a - 1
-			return c
+			return NovelChapter{
+				title = v:selectFirst("a"):text(),
+				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
+				release = i and i:text() or v:selectFirst("img[alt]"):attr("alt")
+			}
 		end))
-		Reverse(l)
-		info:setChapters(l)
+		Reverse(novelList)
+		info:setChapters(novelList)
 	end
 
 	return info

@@ -22,7 +22,7 @@
     },
     {
       "name": "Madara",
-      "ver": "2.0.1"
+      "ver": "2.1.0"
     }
   ],
   "scripts": [
@@ -43,7 +43,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Foxaholic.png",
       "id": 173,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": "c5977c9ba48c5115426fb3010cc65894"
     },
@@ -153,17 +153,17 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
       "id": 81,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
     {
-      "name": "Woopread",
+      "name": "WoopRead",
       "fileName": "Woopread",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
       "id": 4217,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -183,7 +183,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/LightNovelHeaven.png",
       "id": 2925,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": "480c6c32b3cd81cde7faf19cc3496b0d"
     },

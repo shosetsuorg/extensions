@@ -1,6 +1,6 @@
--- {"id":173,"ver":"2.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.0.0"]}
+-- {"id":173,"ver":"2.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.0.0"]}
 
-return Require("Madara")("https://foxaholic.com", {
+return Require("Madara")("https://www.foxaholic.com", {
 	id = 173,
 	name = "Foxaholic",
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/Foxaholic.png",
@@ -44,7 +44,7 @@ return Require("Madara")("https://foxaholic.com", {
 		japanese = "Japanese Novels",
 		original = "Original Novel",
 	},
-	doubleLoadChapters = true,
+	chaptersScriptLoaded = true,
 	latestNovelSel = "div.col-6",
 	novelPageTitleSel = "h1"
 })

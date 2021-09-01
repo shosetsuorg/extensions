@@ -1,8 +1,8 @@
--- {"id":4217,"ver":"2.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.0.0"]}
+-- {"id":4217,"ver":"2.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.0.0"]}
 
 return Require("Madara")("https://woopread.com", {
     id = 4217,
-    name = "Woopread",
+    name = "WoopRead",
     imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
     searchHasOper = true,
     shrinkURLNovel = "series",
@@ -44,5 +44,5 @@ return Require("Madara")("https://woopread.com", {
         ["complete"] = "Completed",
         ["slice-of-life"] = "Slice of Life",
     },
-    doubleLoadChapters = true
+    chaptersScriptLoaded = true
 })
