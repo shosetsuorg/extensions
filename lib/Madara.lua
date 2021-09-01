@@ -162,33 +162,24 @@ function defaults:parseNovel(url, loadChapters)
 		title = doc:selectFirst(self.novelPageTitleSel):text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive"))
 	}
-	local status = nil
+	-- Determine status,
 	local statusElement = doc:selectFirst("div.post-status"):select("div.post-content_item")
 	local statusHeading = statusElement:get(0):select("div.summary-heading"):text()
 	local statusContent = statusElement:get(0):select("div.summary-content"):text()
-	if statusHeading == "Project" then
-		status = ({
-			Active = NovelStatus("PUBLISHING"),
-			Dropped = NovelStatus("PAUSED"),
-			Finished = NovelStatus("COMPLETED"),
-			Teaser = NovelStatus("UNKNOWN"),
-			Hiatus = NovelStatus("PAUSED") -- Seemingly a secret on Foxaholic
-		})[statusContent]
-	elseif statusHeading == "Release" then
+	if statusHeading == "Release" then
 		statusHeading = statusElement:get(1):select("div.summary-heading"):text()
 		statusContent = statusElement:get(1):select("div.summary-content"):text()
 	end
-	if statusHeading == "Novel" or statusHeading == "Status" then
-		status = ({
-			OnGoing = NovelStatus("PUBLISHING"),
-			Completed = NovelStatus("COMPLETED")
-		})[statusContent]
-	end
-	if status == nil then
-		info:setStatus(NovelStatus("UNKNOWN"))
-	else
-		info:setStatus(status)
-	end
+	Log("Status", statusContent)
+	info:setStatus(({
+		OnGoing = NovelStatus("PUBLISHING"),
+		Completed = NovelStatus("COMPLETED"),
+		Active = NovelStatus("PUBLISHING"),
+		Dropped = NovelStatus("PAUSED"),
+		Finished = NovelStatus("COMPLETED"),
+		Teaser = NovelStatus("UNKNOWN"),
+		Hiatus = NovelStatus("PAUSED") -- Seemingly a secret on Foxaholic
+	})[statusContent])
 
 	-- Not every Novel has an guaranteed author, artist or genres (looking at you NovelTrench).
 	if content:selectFirst("div.author-content") ~= nil then
