@@ -182,7 +182,10 @@ function defaults:parseNovel(url, loadChapters)
 		status = ({
 			OnGoing = NovelStatus("PUBLISHING"),
 			Completed = NovelStatus("COMPLETED")
+		})[statusContent]
+	end
 	if status == nil then
+		info:setStatus(NovelStatus("UNKNOWN"))
 	else
 		info:setStatus(status)
 	end
