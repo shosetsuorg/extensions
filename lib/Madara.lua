@@ -158,7 +158,7 @@ function defaults:parseNovel(url, loadChapters)
 
 	local content = doc:selectFirst("div.post-content")
 	local info = NovelInfo {
-		description = doc:selectFirst("p"):text(),
+		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
 		title = doc:selectFirst(self.novelPageTitleSel):text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
 		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
