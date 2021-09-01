@@ -120,23 +120,34 @@ function defaults:getPassage(url)
 	return pageOfElem(htmlElement, true)
 end
 
-local function img_src(e)
-	local srcset = e:attr("data-srcset")
+---@param image_element Element An img element of which the biggest image shall be selected.
+---@return string A link to the biggest image of the image_element.
+local function img_src(image_element)
+	-- Different extensions have the image(s) saved in different attributes. Not even uniformly for one extension.
+	-- Partially this comes down to script loading the pictures. Therefore, scour for a picture in the default HTML page.
 
+	-- Check data-srcset:
+	local srcset = image_element:attr("data-srcset")
 	if srcset ~= "" then
-		-- get largest image
-		local max, max_url = 0, ""
-
+		-- Get the largest image.
+		local max_size, max_url = 0, ""
 		for url, size in srcset:gmatch("(http.-) (%d+)w") do
-			if tonumber(size) > max then
-				max = tonumber(size)
+			if tonumber(size) > max_size then
+				max_size = tonumber(size)
 				max_url = url
 			end
 		end
-
 		return max_url
 	end
-	return e:attr("src")
+
+	-- Check data-src:
+	srcset = image_element:attr("data-src")
+	if srcset ~= "" then
+		return srcset
+	end
+
+	-- Default to src (the most likely place to be loaded via script):
+	return image_element:attr("src")
 end
 
 ---@param url string
