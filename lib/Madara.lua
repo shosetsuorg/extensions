@@ -124,7 +124,6 @@ local function img_src(e)
 		local max, max_url = 0, ""
 
 		for url, size in srcset:gmatch("(http.-) (%d+)w") do
-			print("URL: " .. url)
 			if tonumber(size) > max then
 				max = tonumber(size)
 				max_url = url
