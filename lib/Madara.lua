@@ -166,14 +166,17 @@ function defaults:parseNovel(url, loadChapters)
 				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
 	}
 	-- Not every Novel has an guaranteed author, artist or genres (looking at you NovelTrench).
-	if content:selectFirst("div.author-content") ~= nil then
-		info:setAuthors( map(content:selectFirst("div.author-content"):select("a"), text) )
+	local selectedContent = content:selectFirst("div.author-content")
+	if selectedContent ~= nil then
+		info:setAuthors( map(selectedContent:select("a"), text) )
 	end
-	if content:selectFirst("div.artist-content") ~= nil then
-		info:setArtists( map(content:selectFirst("div.artist-content"):select("a"), text) )
+	selectedContent = content:selectFirst("div.artist-content")
+	if selectedContent ~= nil then
+		info:setArtists( map(selectedContent:select("a"), text) )
 	end
-	if content:selectFirst("div.genres-content") ~= nil then
-		info:setGenres( map(content:selectFirst("div.genres-content"):select("a"), text) )
+	selectedContent = content:selectFirst("div.genres-content")
+	if selectedContent ~= nil then
+		info:setGenres( map(selectedContent:select("a"), text) )
 	end
 
 	-- Chapters
