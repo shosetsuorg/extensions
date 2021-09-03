@@ -1,4 +1,4 @@
--- {"ver":"2.0.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.1.0","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -17,9 +17,14 @@ local defaults = {
 	hasCloudFlare = false,
 	hasSearch = true,
 	chapterType = ChapterType.HTML,
-	ajaxUrl = "/wp-admin/admin-ajax.php",
-	--- To load chapters for a novel, another request must be made
-	doubleLoadChapters = false
+	-- If chaptersScriptLoaded is true, then a ajax request has to be made to get the chapter list.
+	-- Otherwise the chapter list is already loaded when loading the novel overview.
+	chaptersScriptLoaded = false,
+	-- If ajaxUsesFormData is true, then a POST request will be send to baseURL/ajaxFormDataUrl.
+	-- Otherwise to baseURL/shrinkURLNovel/novelurl/ajaxSeriesUrl .
+	ajaxUsesFormData = true,
+	ajaxFormDataUrl = "/wp-admin/admin-ajax.php",
+	ajaxSeriesUrl = "ajax/chapters/"
 }
 
 local ORDER_BY_FILTER_EXT = { "Relevance", "Latest", "A-Z", "Rating", "Trending", "Most Views", "New" }
@@ -110,30 +115,39 @@ function defaults:getPassage(url)
 	local htmlElement = GETDocument(self.expandURL(url)):selectFirst("div.text-left")
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
-	htmlElement:removeAttr("style") -- Hopefully only temporary as a hotfix
 	htmlElement:select("div.lnbad-tag"):remove() -- LightNovelBastion text size
 
-	return pageOfElem(htmlElement)
+	return pageOfElem(htmlElement, true)
 end
 
-local function img_src(e)
-	local srcset = e:attr("data-srcset")
+---@param image_element Element An img element of which the biggest image shall be selected.
+---@return string A link to the biggest image of the image_element.
+local function img_src(image_element)
+	-- Different extensions have the image(s) saved in different attributes. Not even uniformly for one extension.
+	-- Partially this comes down to script loading the pictures. Therefore, scour for a picture in the default HTML page.
 
+	-- Check data-srcset:
+	local srcset = image_element:attr("data-srcset")
 	if srcset ~= "" then
-		-- get largest image
-		local max, max_url = 0, ""
-
+		-- Get the largest image.
+		local max_size, max_url = 0, ""
 		for url, size in srcset:gmatch("(http.-) (%d+)w") do
-			print("URL: " .. url)
-			if tonumber(size) > max then
-				max = tonumber(size)
+			if tonumber(size) > max_size then
+				max_size = tonumber(size)
 				max_url = url
 			end
 		end
-
 		return max_url
 	end
-	return e:attr("src")
+
+	-- Check data-src:
+	srcset = image_element:attr("data-src")
+	if srcset ~= "" then
+		return srcset
+	end
+
+	-- Default to src (the most likely place to be loaded via script):
+	return image_element:attr("src")
 end
 
 ---@param url string
@@ -142,49 +156,64 @@ end
 function defaults:parseNovel(url, loadChapters)
 	local doc = GETDocument(self.expandURL(url))
 
-	local elements = doc:selectFirst("div.post-content"):select("div.post-content_item")
+	local content = doc:selectFirst("div.post-content")
 	local info = NovelInfo {
-		description = doc:selectFirst("p"):text(),
-		authors = map(elements:get(3):select("a"), text),
-		artists = map(elements:get(4):select("a"), text),
-		genres = map(elements:get(5):select("a"), text),
+		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
 		title = doc:selectFirst(self.novelPageTitleSel):text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
 		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
 		            :select("div.summary-content"):text() == "OnGoing"
 				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
 	}
+	-- Not every Novel has an guaranteed author, artist or genres (looking at you NovelTrench).
+	local selectedContent = content:selectFirst("div.author-content")
+	if selectedContent ~= nil then
+		info:setAuthors( map(selectedContent:select("a"), text) )
+	end
+	selectedContent = content:selectFirst("div.artist-content")
+	if selectedContent ~= nil then
+		info:setArtists( map(selectedContent:select("a"), text) )
+	end
+	selectedContent = content:selectFirst("div.genres-content")
+	if selectedContent ~= nil then
+		info:setGenres( map(selectedContent:select("a"), text) )
+	end
 
 	-- Chapters
-	-- Overrides `doc` if self.doubleLoadChapters is true
+	-- Overrides `doc` if self.chaptersScriptLoaded is true.
 	if loadChapters then
-		if self.doubleLoadChapters then
-			local button = doc:selectFirst("a.wp-manga-action-button")
-			local id = button:attr("data-post")
+		if self.chaptersScriptLoaded then
+			if self.ajaxUsesFormData then
+				-- Used by Foxaholic and WoopRead.
+				local button = doc:selectFirst("a.wp-manga-action-button")
+				local id = button:attr("data-post")
 
-			doc = RequestDocument(
-					POST(self.baseURL .. self.ajaxUrl, nil,
-							FormBodyBuilder()
-									:add("action", "manga_get_chapters")
-									:add("manga", id):build())
-			)
+				doc = RequestDocument(
+						POST(self.baseURL .. self.ajaxFormDataUrl, nil,
+								FormBodyBuilder()
+										:add("action", "manga_get_chapters")
+										:add("manga", id):build())
+				)
+			else
+				-- Used by NovelTrench and LightNovelHeaven.
+				doc = RequestDocument(
+						POST(self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url .. self.ajaxSeriesUrl,
+								nil, nil)
+				)
+			end
 		end
 
-		local e = doc:select("li.wp-manga-chapter")
-		local a = e:size()
-		local l = AsList(map(e, function(v)
-			local c = NovelChapter()
-			c:setLink(self.shrinkURL(v:selectFirst("a"):attr("href")))
-			c:setTitle(v:selectFirst("a"):text())
-
+		local chapterList = doc:select("li.wp-manga-chapter")
+		local novelList = AsList(map(chapterList, function(v)
 			local i = v:selectFirst("i")
-			c:setRelease(i and i:text() or v:selectFirst("img[alt]"):attr("alt"))
-			c:setOrder(a)
-			a = a - 1
-			return c
+			return NovelChapter{
+				title = v:selectFirst("a"):text(),
+				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
+				release = i and i:text() or v:selectFirst("img[alt]"):attr("alt")
+			}
 		end))
-		Reverse(l)
-		info:setChapters(l)
+		Reverse(novelList)
+		info:setChapters(novelList)
 	end
 
 	return info
