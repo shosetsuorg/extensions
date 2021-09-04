@@ -1,4 +1,4 @@
--- {"id":2,"ver":"3.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.0.0"]}
+-- {"id":2,"ver":"3.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.0.0"]}
 
 return Require("Madara")("https://boxnovel.com", {
 	id = 2,
@@ -37,5 +37,6 @@ return Require("Madara")("https://boxnovel.com", {
 		"Xuanhuan",
 		"Yaoi"
 	},
-	chaptersScriptLoaded = true
+	chaptersScriptLoaded = true,
+	novelPageTitleSel = "h1"
 })
