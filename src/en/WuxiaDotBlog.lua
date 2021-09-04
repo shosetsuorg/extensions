@@ -1,5 +1,5 @@
--- {"id":1376,"ver":"1.0.4","libVer":"1.0.0","author":"AriaMoradi"}
---- @author AriaMoradi
+-- {"id":1376,"ver":"1.0.5","libVer":"1.0.0","author":"AriaMoradi, Doomsdayrs"}
+--- @author AriaMoradi, Doomsdayrs
 --- @version 1.0.2
 
 local baseURL = "https://www.wuxia.blog"
@@ -63,7 +63,8 @@ return {
 			end)
 		end)
 	},
-
+	shrinkURL = shrinkURL,
+        expandURL = function(url) return baseURL .. url end,
 	parseNovel = function(novelURL, loadChapters)
 		local novel = NovelInfo()
 		local document = GETDocument(baseURL .. novelURL)
