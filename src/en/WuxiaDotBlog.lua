@@ -1,6 +1,4 @@
--- {"id":1376,"ver":"1.0.5","libVer":"1.0.0","author":"AriaMoradi, Doomsdayrs"}
---- @author AriaMoradi, Doomsdayrs
---- @version 1.0.2
+-- {"id":1376,"ver":"1.0.5","libVer":"1.0.0","author":"AriaMoradi"}
 
 local baseURL = "https://www.wuxia.blog"
 local _links = {}
