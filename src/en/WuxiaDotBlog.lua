@@ -64,7 +64,9 @@ return {
 		end)
 	},
 	shrinkURL = shrinkURL,
-        expandURL = function(url) return baseURL .. url end,
+	expandURL = function(url)
+		return baseURL .. url
+	end,
 	parseNovel = function(novelURL, loadChapters)
 		local novel = NovelInfo()
 		local document = GETDocument(baseURL .. novelURL)
