@@ -1,4 +1,4 @@
--- {"id":81,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.0.0"]}
+-- {"id":81,"ver":"2.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.0.0"]}
 
 return Require("Madara")("https://noveltrench.com",{
 	id = 81,
@@ -62,6 +62,10 @@ return Require("Madara")("https://noveltrench.com",{
 		"Xuanhuan",
 		"Yaoi"
 	},
+	-- Settings needed to enable the loading of chapters
+	chaptersScriptLoaded = true,
+	ajaxUsesFormData = false,
+
 	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
 	novelPageTitleSel = "h1",
 	novelListingURLPath = "manga"
