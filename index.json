@@ -26,7 +26,6 @@
     }
   ],
   "scripts": [
-
     {
       "name": "MTLNovel",
       "fileName": "MTLNovel",
@@ -264,6 +263,16 @@
       "id": 3302,
       "lang": "ar",
       "ver": "1.0.1",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Very Active Fan Translations",
+      "fileName": "VeryActiveFanTranslations",
+      "imageURL": "https://a-t.nu/wp-content/uploads/2021/06/cropped-AT-LOGO-192x192.png",
+      "id": 3746,
+      "lang": "en",
+      "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
     }
