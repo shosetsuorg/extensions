@@ -1,4 +1,4 @@
--- {"id":586,"ver":"2.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.0.0"]}
+-- {"id":586,"ver":"2.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.0.0"]}
 
 return Require("Madara")("https://vipnovel.com", {
 	id = 586,
@@ -43,5 +43,8 @@ return Require("Madara")("https://vipnovel.com", {
 		"Xuanhuan",
 		"Yaoi",
 		"Yuri"
-	}
+	},
+	chaptersScriptLoaded = true,
+	ajaxUsesFormData = false,
+	novelPageTitleSel = "h1"
 })
