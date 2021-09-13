@@ -1,4 +1,4 @@
--- {"id":93082,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":[]}
+-- {"id":93082,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs","dep":[]}
 local baseURL = "https://www.nanomashin.online"
 
 local function text(v)
@@ -16,11 +16,13 @@ return {
 			local doc = GETDocument(baseURL)
 
 			return map(doc:select("div.p-4"), function(v)
-				local title = v:selectFirst("h2.mb-3"):selectFirst("a")
+				local title = v:selectFirst("h2.text-center"):text()
+				local link = v:selectFirst("a"):attr("href")
+
 				return Novel {
-					title = title:text(),
-					link = title:attr("href"),
-					imageURL = baseURL .. v:selectFirst("img.object-cover"):attr("src"),
+					title = title,
+					link = link,
+					imageURL = v:selectFirst("img.object-fill"):attr("src"),
 				}
 			end)
 		end)
