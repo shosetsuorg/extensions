@@ -184,7 +184,7 @@ function defaults:parseNovel(url, loadChapters)
 	if loadChapters then
 		if self.chaptersScriptLoaded then
 			if self.ajaxUsesFormData then
-				-- Used by Foxaholic and WoopRead.
+				-- Used by Foxaholic.
 				local button = doc:selectFirst("a.wp-manga-action-button")
 				local id = button:attr("data-post")
 
@@ -195,7 +195,7 @@ function defaults:parseNovel(url, loadChapters)
 										:add("manga", id):build())
 				)
 			else
-				-- Used by BoxNovel, NovelTrench, LightNovelHeaven and VipNovel.
+				-- Used by BoxNovel, NovelTrench, LightNovelHeaven, VipNovel and WoopRead.
 				doc = RequestDocument(
 						POST(self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url .. self.ajaxSeriesUrl,
 								nil, nil)
