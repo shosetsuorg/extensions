@@ -195,7 +195,7 @@ function defaults:parseNovel(url, loadChapters)
 										:add("manga", id):build())
 				)
 			else
-				-- Used by BoxNovel, NovelTrench and LightNovelHeaven.
+				-- Used by BoxNovel, NovelTrench, LightNovelHeaven and VipNovel.
 				doc = RequestDocument(
 						POST(self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url .. self.ajaxSeriesUrl,
 								nil, nil)
