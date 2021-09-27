@@ -1,8 +1,16 @@
--- {"id":93082,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":[]}
+-- {"id":93082,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
 local baseURL = "https://www.nanomashin.online"
 
 local function text(v)
 	return v:text()
+end
+
+local function shrinkURL(url)
+	return url:gsub("^.-nanomashin%.online/?", "")
+end
+
+local function expandURL(url)
+	return baseURL .. url
 end
 
 return {
@@ -11,16 +19,19 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NMTranslations.png",
 	hasSearch = false,
+	chapterType = ChapterType.HTML,
+	shrinkURL = shrinkURL,
+	expandURL = expandURL,
+
 	listings = {
 		Listing("Projects", false, function()
 			local doc = GETDocument(baseURL)
 
-			return map(doc:select("div.p-4"), function(v)
-				local title = v:selectFirst("h2.mb-3"):selectFirst("a")
+			return map(doc:select("div.p-4 a"), function(v)
 				return Novel {
-					title = title:text(),
-					link = title:attr("href"),
-					imageURL = baseURL .. v:selectFirst("img.object-cover"):attr("src"),
+					title = v:selectFirst("h2"):text(),
+					link = v:attr("href"),
+					imageURL = expandURL("/_next/image?url=%2Fstatic%2Fimages%2F" .. v:attr("href") .. "-cover.png&w=384&q=75"),
 				}
 			end)
 		end)
@@ -31,7 +42,7 @@ return {
 
 		local info = NovelInfo {
 			title = document:selectFirst("h1.text-3xl"):text(),
-			imageURL = baseURL .. document:selectFirst("img.object-contain"):attr("src"),
+			imageURL = expandURL(document:selectFirst("img.object-contain"):attr("src")),
 			description = document:selectFirst("div.pt-6.pb-8"):selectFirst("div.pt-6.pb-8"):text(),
 		}
 
@@ -56,7 +67,7 @@ return {
 				local maxPage = tonumber(navBox:selectFirst("span"):text():match("of (%d+)"))
 
 				for page = 2, maxPage do
-					local chaptersDocument = GETDocument(baseURL .. url .. "/page/" .. page)
+					local chaptersDocument = GETDocument(expandURL(url .. "/page/" .. page))
 					chapters[page] = parseChapters(chaptersDocument)
 				end
 			end
@@ -77,8 +88,16 @@ return {
 		return info
 	end,
 
-	getPassage = function(url)
-		local doc = GETDocument(baseURL .. "/" .. url)
-		return table.concat(map(doc:selectFirst("div.pt-10"):select("p"), text), "\n")
+	getPassage = function(chapterURL)
+		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("article")
+		local title = htmlElement:selectFirst("header.pt-6 h1")
+		htmlElement:selectFirst("div.pt-10")
+		-- Chapter title inserted before chapter text
+		htmlElement:child(0):before(title);
+
+		-- Remove/modify unwanted HTML elements to get a clean webpage.
+		--htmlElement:select("br"):remove()
+
+		return pageOfElem(htmlElement, true)
 	end
 }
