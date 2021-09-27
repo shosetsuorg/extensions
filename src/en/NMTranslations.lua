@@ -91,7 +91,7 @@ return {
 	getPassage = function(chapterURL)
 		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("article")
 		local title = htmlElement:selectFirst("header.pt-6 h1")
-		htmlElement:selectFirst("div.pt-10")
+		htmlElement = htmlElement:selectFirst("div.pt-10")
 		-- Chapter title inserted before chapter text
 		htmlElement:child(0):before(title);
 
