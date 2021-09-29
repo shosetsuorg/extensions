@@ -1,4 +1,4 @@
--- {"id":951,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":951,"ver":"2.0.1","libVer":"1.0.0","author":"Doomsdayrs"}
 
 local baseURL = "https://www.asianhobbyist.com"
 
@@ -35,7 +35,7 @@ local function getPassage(chapterURL)
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
 	htmlElement:select("div.code-block"):remove() -- Install mobile app and donation block
 
-	return pageOfElem(htmlElement)
+	return pageOfElem(htmlElement, true)
 end
 
 --- @param data table
