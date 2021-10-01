@@ -1,4 +1,4 @@
--- {"id":951,"ver":"2.0.2","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":951,"ver":"2.0.3","libVer":"1.0.0","author":"Doomsdayrs"}
 
 local baseURL = "https://www.asianhobbyist.com"
 
@@ -45,7 +45,7 @@ local function search(data)
 			POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
 					FormBodyBuilder()
 							:add("action", "gsr")
-							:add("enc", "ecc07af28b")
+							:add("enc", "cb16b9dce1")
 							:add("src", queryContent):build())
 	)
 
