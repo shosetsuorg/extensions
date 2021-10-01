@@ -1,6 +1,7 @@
--- {"id":951,"ver":"2.0.2","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":951,"ver":"2.0.3","libVer":"1.0.0","author":"Doomsdayrs"}
 
 local baseURL = "https://www.asianhobbyist.com"
+local encoding = ""
 
 ---@param v Element
 local function textOf(v)
@@ -40,12 +41,18 @@ end
 
 --- @param data table
 local function search(data)
+	-- Failsafe of getting the encoding in case the default listing never loaded the website
+	-- and therefore has not set the encoding.
+	if encoding == "" then
+		encoding = GETDocument(baseURL):selectFirst("meta[name=\"enc\"]"):attr("content")
+	end
+
 	local queryContent = data[QUERY]
 	local doc = RequestDocument(
 			POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
 					FormBodyBuilder()
 							:add("action", "gsr")
-							:add("enc", "ecc07af28b")
+							:add("enc", encoding)
 							:add("src", queryContent):build())
 	)
 
@@ -90,6 +97,9 @@ return {
 	listings = {
 		Listing("Latest", false, function()
 			local document = GETDocument(baseURL)
+			-- The encoding is needed for search, gets loaded here due to the website being loaded already anyway.
+			-- Failsafe present in search in case encoding is empty.
+			encoding = document:selectFirst("meta[name=\"enc\"]"):attr("content")
 			return map(document:select("li.item"), function(v)
 				local a = v:selectFirst("a")
 				local image = a:selectFirst("img")
