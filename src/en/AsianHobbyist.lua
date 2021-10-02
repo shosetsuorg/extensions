@@ -41,30 +41,49 @@ end
 
 --- @param data table
 local function search(data)
-	-- Failsafe of getting the encoding in case the default listing never loaded the website
-	-- and therefore has not set the encoding.
+	local function getSearchResult(queryContent)
+		return RequestDocument(
+				POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
+						FormBodyBuilder()
+								:add("action", "gsr")
+								:add("enc", encoding)
+								:add("src", queryContent):build())
+		)
+	end
+
+	local function getEncoding()
+		return GETDocument(baseURL):selectFirst("meta[name=\"enc\"]"):attr("content")
+	end
+
+	-- Check if encoding is already set.
 	if encoding == "" then
-		encoding = GETDocument(baseURL):selectFirst("meta[name=\"enc\"]"):attr("content")
+		encoding = getEncoding()
 	end
 
 	local queryContent = data[QUERY]
-	local doc = RequestDocument(
-			POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
-					FormBodyBuilder()
-							:add("action", "gsr")
-							:add("enc", encoding)
-							:add("src", queryContent):build())
-	)
+	local doc = getSearchResult(queryContent)
+
+	-- If encoding is not up to date, then the result will be a simple HTML document containing "Shit!".
+	if doc:text() == "Shit!" then
+		encoding = getEncoding()
+		doc = getSearchResult(queryContent)
+	end
+
+	-- If the search result contains no novel, then it is just an empty HTML body.
+	if doc:text() == "" then
+		return {}
+	end
 
 	return map(doc:select("li.flex"), function(v)
-		local htmlTitle = v:selectFirst("div.title"):selectFirst("a")
+		local titleElement = v:selectFirst("div.title"):selectFirst("a")
 		return Novel {
-			title = htmlTitle:attr("title"),
+			title = titleElement:attr("title"),
 			imageURL = v:selectFirst("img"):attr("src"),
-			link = shrinkURL(htmlTitle:attr("href"), KEY_NOVEL_URL)
+			link = shrinkURL(titleElement:attr("href"), KEY_NOVEL_URL)
 		}
 	end)
 end
+
 --- @param novelURL string @URL of novel
 --- @return NovelInfo
 local function parseNovel(novelURL)
