@@ -20,11 +20,9 @@ end
 
 def
 
-"a" [[a]]
-
 "table" [[
 :root {
-    --table-color: #004b7a;
+    --table-color: #007CBA;
 }
 table {
     background: none;
@@ -39,11 +37,5 @@ td {
     background: var(--table-color);
 }
 ]]
-
-local all = ""
-for _,v in pairs(tbl) do
-    all = all .. v
-end
-tbl.all = all
 
 return tbl
