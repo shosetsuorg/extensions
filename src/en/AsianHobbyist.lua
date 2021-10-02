@@ -69,11 +69,6 @@ local function search(data)
 		doc = getSearchResult(queryContent)
 	end
 
-	-- If the search result contains no novel, then it is just an empty HTML body.
-	if doc:text() == "" then
-		return {}
-	end
-
 	return map(doc:select("li.flex"), function(v)
 		local titleElement = v:selectFirst("div.title"):selectFirst("a")
 		return Novel {
