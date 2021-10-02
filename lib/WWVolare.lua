@@ -1,4 +1,6 @@
--- {"ver":"1.1.0","author":"TechnoJo4","dep":["dkjson"]}
+-- {"ver":"1.2.0","author":"TechnoJo4","dep":["dkjson","CommonCSS"]}
+
+local css = Require("CommonCSS").table
 
 return function(id, name, base, contentSel, image)
 	local settings
@@ -43,18 +45,26 @@ return function(id, name, base, contentSel, image)
 		name = name,
 		baseURL = base,
 		imageURL = image,
+		chapterType = ChapterType.HTML,
+
 		listings = {
 			Listing("All Novels", false, function()
 				getNovels()
 				return map(novels, Novel)
 			end)
 		},
+
 		getPassage = function(url)
-			return table.concat(map(GETDocument(base .. url):selectFirst(contentSel):children(),
-					function(v)
-						return v:is(".chapter-nav") and "" or v:text()
-					end), "\n")
+			local content = GETDocument(base .. url):selectFirst(contentSel)
+			map(content:select(".chapter-nav"), function(v)
+				v:remove()
+			end)
+			map(content:select("[border]"), function(elem)
+				elem:removeAttr("border")
+			end)
+			return pageOfElem(content, true, css)
 		end,
+
 		parseNovel = function(slug, loadChapters)
 			getNovels()
 			local info = infos[slug]
@@ -75,6 +85,7 @@ return function(id, name, base, contentSel, image)
 			end
 			return NovelInfo(info)
 		end,
+
 		search = function(s)
 			getNovels()
 			local q = s[QUERY]:lower()
@@ -82,6 +93,7 @@ return function(id, name, base, contentSel, image)
 				return v.title:lower():find(q, 1, true) ~= nil
 			end), Novel)
 		end,
+
 		setSettings = function(s) settings = s end,
 		updateSetting = function() end,
 		expandURL = function(url, type)
