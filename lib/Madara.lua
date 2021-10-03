@@ -155,11 +155,15 @@ end
 ---@return NovelInfo
 function defaults:parseNovel(url, loadChapters)
 	local doc = GETDocument(self.expandURL(url))
-
 	local content = doc:selectFirst("div.post-content")
+
+	-- Removing HOT or NEW from title.
+	local titleElement = doc:selectFirst(self.novelPageTitleSel)
+	titleElement:select("span"):remove()
+
 	local info = NovelInfo {
 		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
-		title = doc:selectFirst(self.novelPageTitleSel):text(),
+		title = titleElement:text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
 		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
 		            :select("div.summary-content"):text() == "OnGoing"
