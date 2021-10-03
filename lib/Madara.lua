@@ -155,7 +155,7 @@ end
 ---@return NovelInfo
 function defaults:parseNovel(url, loadChapters)
 	local doc = GETDocument(self.expandURL(url))
-	print("Test title: " .. doc:selectFirst(self.novelPageTitleSel):text())
+
 	local content = doc:selectFirst("div.post-content")
 	local info = NovelInfo {
 		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
