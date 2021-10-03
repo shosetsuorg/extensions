@@ -1,4 +1,4 @@
--- {"id":173,"ver":"2.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
+-- {"id":173,"ver":"2.1.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://www.foxaholic.com", {
 	id = 173,
