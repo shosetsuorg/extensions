@@ -205,11 +205,10 @@ function defaults:parseNovel(url, loadChapters)
 
 		local chapterList = doc:select("li.wp-manga-chapter")
 		local novelList = AsList(map(chapterList, function(v)
-			local i = v:selectFirst("i")
 			return NovelChapter{
 				title = v:selectFirst("a"):text(),
 				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
-				release = i and i:text() or v:selectFirst("img[alt]"):attr("alt")
+				release = v:selectFirst("span.chapter-release-date"):text()
 			}
 		end))
 		Reverse(novelList)
