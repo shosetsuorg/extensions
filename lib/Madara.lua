@@ -1,4 +1,4 @@
--- {"ver":"2.1.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.2.0","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -11,7 +11,7 @@ local defaults = {
 	latestNovelSel = "div.col-12.col-md-6",
 	searchNovelSel = "div.c-tabs-item__content",
 	novelListingURLPath = "novel",
-	novelPageTitleSel = "h3",
+	novelPageTitleSel = "div.post-title",
 	shrinkURLNovel = "novel",
 	searchHasOper = false, -- is AND/OR operation selector present?
 	hasCloudFlare = false,
@@ -19,10 +19,10 @@ local defaults = {
 	chapterType = ChapterType.HTML,
 	-- If chaptersScriptLoaded is true, then a ajax request has to be made to get the chapter list.
 	-- Otherwise the chapter list is already loaded when loading the novel overview.
-	chaptersScriptLoaded = false,
+	chaptersScriptLoaded = true,
 	-- If ajaxUsesFormData is true, then a POST request will be send to baseURL/ajaxFormDataUrl.
 	-- Otherwise to baseURL/shrinkURLNovel/novelurl/ajaxSeriesUrl .
-	ajaxUsesFormData = true,
+	ajaxUsesFormData = false,
 	ajaxFormDataUrl = "/wp-admin/admin-ajax.php",
 	ajaxSeriesUrl = "ajax/chapters/"
 }
@@ -155,7 +155,7 @@ end
 ---@return NovelInfo
 function defaults:parseNovel(url, loadChapters)
 	local doc = GETDocument(self.expandURL(url))
-
+	print("Test title: " .. doc:selectFirst(self.novelPageTitleSel):text())
 	local content = doc:selectFirst("div.post-content")
 	local info = NovelInfo {
 		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
@@ -184,7 +184,7 @@ function defaults:parseNovel(url, loadChapters)
 	if loadChapters then
 		if self.chaptersScriptLoaded then
 			if self.ajaxUsesFormData then
-				-- Used by Foxaholic.
+				-- Old method.
 				local button = doc:selectFirst("a.wp-manga-action-button")
 				local id = button:attr("data-post")
 
@@ -195,7 +195,7 @@ function defaults:parseNovel(url, loadChapters)
 										:add("manga", id):build())
 				)
 			else
-				-- Used by BoxNovel, NovelTrench, LightNovelHeaven, VipNovel and WoopRead.
+				-- Used by BoxNovel, Foxaholic, NovelTrench, LightNovelHeaven, VipNovel and WoopRead.
 				doc = RequestDocument(
 						POST(self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url .. self.ajaxSeriesUrl,
 								nil, nil)

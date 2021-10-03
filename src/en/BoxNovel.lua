@@ -1,9 +1,10 @@
--- {"id":2,"ver":"3.0.3","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.0.0"]}
+-- {"id":2,"ver":"3.1.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://boxnovel.com", {
 	id = 2,
 	name = "BoxNovel",
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/BoxNovel.png",
+
 	genres = {
 		"Action",
 		"Adventure",
@@ -36,8 +37,5 @@ return Require("Madara")("https://boxnovel.com", {
 		"Xianxia",
 		"Xuanhuan",
 		"Yaoi"
-	},
-	chaptersScriptLoaded = true,
-	ajaxUsesFormData = false,
-	novelPageTitleSel = "h1"
+	}
 })

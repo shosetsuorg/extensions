@@ -1,11 +1,14 @@
--- {"id":586,"ver":"2.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.0.0"]}
+-- {"id":586,"ver":"2.1.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://vipnovel.com", {
 	id = 586,
 	name = "VipNovel",
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/VipNovel.png",
+
+	-- defaults values
 	novelListingURLPath = "vipnovel",
 	shrinkURLNovel = "vipnovel",
+
 	genres = {
 		"Action",
 		"Adult",
@@ -43,8 +46,5 @@ return Require("Madara")("https://vipnovel.com", {
 		"Xuanhuan",
 		"Yaoi",
 		"Yuri"
-	},
-	chaptersScriptLoaded = true,
-	ajaxUsesFormData = false,
-	novelPageTitleSel = "h1"
+	}
 })
