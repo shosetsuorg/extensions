@@ -1,4 +1,4 @@
--- {"id":573,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":573,"ver":"1.0.4","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = { [1] = 0 }
@@ -11,6 +11,14 @@ local ORDERS_KEY = 103
 
 local STATUES_INT = { [0] = "all",[1] = "completed",[2] = "ongoing" }
 local STATUSES_KEY = 104
+
+local function shrinkURL(url)
+	return url:gsub("^.-mtlnovel%.com", "")
+end
+
+local function expandURL(url)
+	return baseURL .. url
+end
 
 ---@type fun(table, string): string
 local qs = Require("url").querystring
@@ -95,9 +103,16 @@ end
 --- @param chapterURL string @url of the chapter
 --- @return string @of chapter
 local function getPassage(chapterURL)
-	local d = GETDocument(baseURL .. "/" .. chapterURL)
-	--({ [0] = "p.en", [1] = "p.cn" })[settings[1]]
-	return table.concat(map(d:selectFirst("div.par"):select("p"), text), "\n")
+	local htmlElement = GETDocument(baseURL .. "/" .. chapterURL):selectFirst("article.post")
+	local title = htmlElement:selectFirst("span.current-crumb"):text()
+	htmlElement = htmlElement:selectFirst("div.par")
+	-- Chapter title inserted before chapter text
+	htmlElement:child(0):before("<h1>" .. title .. "</h1>");
+
+	-- Remove/modify unwanted HTML elements to get a clean webpage.
+	htmlElement:select("div.ads"):remove()
+
+	return pageOfElem(htmlElement, true)
 end
 
 return {
@@ -106,6 +121,11 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/MTLNovel.png",
 	hasSearch = true,
+	chapterType = ChapterType.HTML,
+
+	shrinkURL = shrinkURL,
+	expandURL = expandURL,
+
 	listings = {
 		Listing("Novel List", true, function(data)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
