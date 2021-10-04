@@ -1,4 +1,4 @@
--- {"id":573,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":573,"ver":"1.0.3","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = { [1] = 0 }
@@ -30,6 +30,24 @@ end
 ---@return string
 local function getDetail(element)
 	return text(getDetailE(element))
+end
+
+local function search(data)
+	local query = data[QUERY]
+	if query ~= nil then
+		query = ""
+	end
+	local m = MediaType("multipart/form-data; boundary=----aWhhdGVrb3RsaW4K")
+	local body = RequestBody("------aWhhdGVrb3RsaW4K\r\nContent-Disposition: form-data; name=\"s\"\r\n\r\n" .. data[QUERY] .. "\r\n------aWhhdGVrb3RsaW4K--\r\n", m)
+	local doc = RequestDocument(POST(baseURL, nil, body))
+	return map(doc:select("div.search-results > div.box"),
+			function(v)
+				return Novel {
+					link = v:selectFirst("a"):attr("href"):match(baseURL .. "/(.+)/"),
+					title = v:selectFirst(".list-title"):text(),
+					imageURL = v:selectFirst(".list-img"):attr("src")
+				}
+			end)
 end
 
 --- @param novelURL string @URL of novel
@@ -87,7 +105,7 @@ return {
 	name = "MTLNovel",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/MTLNovel.png",
-	hasSearch = false,
+	hasSearch = true,
 	listings = {
 		Listing("Novel List", true, function(data)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
@@ -118,4 +136,5 @@ return {
 	--updateSetting = function(id, value)
 	--	settings[id] = value
 	--end
+	search = search
 }
