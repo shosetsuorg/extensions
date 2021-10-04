@@ -1,4 +1,4 @@
--- {"ver":"2.1.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.2.0","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -11,7 +11,7 @@ local defaults = {
 	latestNovelSel = "div.col-12.col-md-6",
 	searchNovelSel = "div.c-tabs-item__content",
 	novelListingURLPath = "novel",
-	novelPageTitleSel = "h3",
+	novelPageTitleSel = "div.post-title",
 	shrinkURLNovel = "novel",
 	searchHasOper = false, -- is AND/OR operation selector present?
 	hasCloudFlare = false,
@@ -19,10 +19,10 @@ local defaults = {
 	chapterType = ChapterType.HTML,
 	-- If chaptersScriptLoaded is true, then a ajax request has to be made to get the chapter list.
 	-- Otherwise the chapter list is already loaded when loading the novel overview.
-	chaptersScriptLoaded = false,
+	chaptersScriptLoaded = true,
 	-- If ajaxUsesFormData is true, then a POST request will be send to baseURL/ajaxFormDataUrl.
 	-- Otherwise to baseURL/shrinkURLNovel/novelurl/ajaxSeriesUrl .
-	ajaxUsesFormData = true,
+	ajaxUsesFormData = false,
 	ajaxFormDataUrl = "/wp-admin/admin-ajax.php",
 	ajaxSeriesUrl = "ajax/chapters/"
 }
@@ -112,7 +112,11 @@ end
 ---@param url string
 ---@return string
 function defaults:getPassage(url)
-	local htmlElement = GETDocument(self.expandURL(url)):selectFirst("div.text-left")
+	local htmlElement = GETDocument(self.expandURL(url)):selectFirst("div.c-blog-post")
+	local title = htmlElement:selectFirst("ol.breadcrumb li.active"):text()
+	htmlElement = htmlElement:selectFirst("div.text-left")
+	-- Chapter title inserted before chapter text
+	htmlElement:child(0):before("<h1>" .. title .. "</h1>");
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
 	htmlElement:select("div.lnbad-tag"):remove() -- LightNovelBastion text size
@@ -155,11 +159,15 @@ end
 ---@return NovelInfo
 function defaults:parseNovel(url, loadChapters)
 	local doc = GETDocument(self.expandURL(url))
-
 	local content = doc:selectFirst("div.post-content")
+
+	-- Removing HOT or NEW from title.
+	local titleElement = doc:selectFirst(self.novelPageTitleSel)
+	titleElement:select("span"):remove()
+
 	local info = NovelInfo {
 		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
-		title = doc:selectFirst(self.novelPageTitleSel):text(),
+		title = titleElement:text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
 		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
 		            :select("div.summary-content"):text() == "OnGoing"
@@ -184,7 +192,7 @@ function defaults:parseNovel(url, loadChapters)
 	if loadChapters then
 		if self.chaptersScriptLoaded then
 			if self.ajaxUsesFormData then
-				-- Used by Foxaholic.
+				-- Old method.
 				local button = doc:selectFirst("a.wp-manga-action-button")
 				local id = button:attr("data-post")
 
@@ -195,7 +203,7 @@ function defaults:parseNovel(url, loadChapters)
 										:add("manga", id):build())
 				)
 			else
-				-- Used by BoxNovel, NovelTrench, LightNovelHeaven, VipNovel and WoopRead.
+				-- Used by BoxNovel, Foxaholic, NovelTrench, LightNovelHeaven, VipNovel and WoopRead.
 				doc = RequestDocument(
 						POST(self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url .. self.ajaxSeriesUrl,
 								nil, nil)
@@ -205,11 +213,10 @@ function defaults:parseNovel(url, loadChapters)
 
 		local chapterList = doc:select("li.wp-manga-chapter")
 		local novelList = AsList(map(chapterList, function(v)
-			local i = v:selectFirst("i")
 			return NovelChapter{
 				title = v:selectFirst("a"):text(),
 				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
-				release = i and i:text() or v:selectFirst("img[alt]"):attr("alt")
+				release = v:selectFirst("span.chapter-release-date"):text()
 			}
 		end))
 		Reverse(novelList)
