@@ -66,7 +66,7 @@ local function parseNovel(novelURL)
 	local n = NovelInfo()
 	n:setTitle(document:selectFirst("h1.entry-title"):text())
 	n:setImageURL(document:selectFirst("amp-img.main-tmb"):selectFirst("amp-img.main-tmb"):attr("src"))
-	n:setDescription(table.concat(map(document:selectFirst("div.desc"):select("p"), text)))
+	n:setDescription(table.concat(map(document:selectFirst("div.desc"):select("p"), text), "\n"))
 
 	local details = document:selectFirst("table.info"):select("tr")
 	local details2 = document:select("table.info"):get(1):select("tr")
