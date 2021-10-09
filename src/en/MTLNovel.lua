@@ -1,4 +1,4 @@
--- {"id":573,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
+-- {"id":573,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.mtlnovel.com"
 local settings = { [1] = 0 }
@@ -11,6 +11,14 @@ local ORDERS_KEY = 103
 
 local STATUES_INT = { [0] = "all",[1] = "completed",[2] = "ongoing" }
 local STATUSES_KEY = 104
+
+local function shrinkURL(url)
+	return url:gsub("^.-mtlnovel%.com", "")
+end
+
+local function expandURL(url)
+	return baseURL .. url
+end
 
 ---@type fun(table, string): string
 local qs = Require("url").querystring
@@ -32,6 +40,24 @@ local function getDetail(element)
 	return text(getDetailE(element))
 end
 
+local function search(data)
+	local query = data[QUERY]
+	if query ~= nil then
+		query = ""
+	end
+	local m = MediaType("multipart/form-data; boundary=----aWhhdGVrb3RsaW4K")
+	local body = RequestBody("------aWhhdGVrb3RsaW4K\r\nContent-Disposition: form-data; name=\"s\"\r\n\r\n" .. data[QUERY] .. "\r\n------aWhhdGVrb3RsaW4K--\r\n", m)
+	local doc = RequestDocument(POST(baseURL, nil, body))
+	return map(doc:select("div.search-results > div.box"),
+			function(v)
+				return Novel {
+					link = v:selectFirst("a"):attr("href"):match(baseURL .. "/(.+)/"),
+					title = v:selectFirst(".list-title"):text(),
+					imageURL = v:selectFirst(".list-img"):attr("src")
+				}
+			end)
+end
+
 --- @param novelURL string @URL of novel
 --- @return NovelInfo
 local function parseNovel(novelURL)
@@ -40,7 +66,7 @@ local function parseNovel(novelURL)
 	local n = NovelInfo()
 	n:setTitle(document:selectFirst("h1.entry-title"):text())
 	n:setImageURL(document:selectFirst("amp-img.main-tmb"):selectFirst("amp-img.main-tmb"):attr("src"))
-	n:setDescription(table.concat(map(document:selectFirst("div.desc"):select("p"), text)))
+	n:setDescription(table.concat(map(document:selectFirst("div.desc"):select("p"), text), "\n"))
 
 	local details = document:selectFirst("table.info"):select("tr")
 	local details2 = document:select("table.info"):get(1):select("tr")
@@ -77,9 +103,16 @@ end
 --- @param chapterURL string @url of the chapter
 --- @return string @of chapter
 local function getPassage(chapterURL)
-	local d = GETDocument(baseURL .. "/" .. chapterURL)
-	--({ [0] = "p.en", [1] = "p.cn" })[settings[1]]
-	return table.concat(map(d:selectFirst("div.par"):select("p"), text), "\n")
+	local htmlElement = GETDocument(baseURL .. "/" .. chapterURL):selectFirst("article.post")
+	local title = htmlElement:selectFirst("span.current-crumb"):text()
+	htmlElement = htmlElement:selectFirst("div.par")
+	-- Chapter title inserted before chapter text
+	htmlElement:child(0):before("<h1>" .. title .. "</h1>");
+
+	-- Remove/modify unwanted HTML elements to get a clean webpage.
+	htmlElement:select("div.ads"):remove()
+
+	return pageOfElem(htmlElement, true)
 end
 
 return {
@@ -87,7 +120,12 @@ return {
 	name = "MTLNovel",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/MTLNovel.png",
-	hasSearch = false,
+	hasSearch = true,
+	chapterType = ChapterType.HTML,
+
+	shrinkURL = shrinkURL,
+	expandURL = expandURL,
+
 	listings = {
 		Listing("Novel List", true, function(data)
 			local d = GETDocument(baseURL .. "/novel-list/" ..
@@ -118,4 +156,5 @@ return {
 	--updateSetting = function(id, value)
 	--	settings[id] = value
 	--end
+	search = search
 }
