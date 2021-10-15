@@ -289,6 +289,17 @@
       "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
+    },
+    {
+      "name": "NOVA",
+      "fileName": "NOVA",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NOVA.png",
+      "imageURL": "https://github.com/khonkhortisan/extensions/raw/novelasligeras.net/icons/NOVA.png",
+      "id": 28505740,
+      "lang": "es",
+      "ver": "1.0.56",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
