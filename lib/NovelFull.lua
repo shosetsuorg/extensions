@@ -1,4 +1,4 @@
--- {"ver":"2.0.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.2","author":"TechnoJo4","dep":["url"]}
 
 -- rename this if you ever figure out its real name
 
@@ -80,9 +80,11 @@ function defaults:parseNovel(url, loadChapters)
 
 	local meta_offset = elem:size() < 3 and self.meta_offset or 0
 
-	info:setArtists(map(elem:get(meta_offset):select("a"), text))
-	info:setGenres(map(elem:get(meta_offset + 1):select("a"), text))
-	info:setStatus(NovelStatus(elem:get(meta_offset + 3):select("a"):text() == "Completed" and 1 or 0))
+	info:setAuthors(          (map(elem:get(meta_offset    ):select("a"), text)))
+	info:setAlternativeTitles((map(elem:get(meta_offset + 1):select("a"), text)))
+	info:setGenres(           (map(elem:get(meta_offset + 2):select("a"), text)))
+	--info:setSources(        (map(elem:get(meta_offset + 3):select("a"), text)))
+	info:setStatus(   (NovelStatus(elem:get(meta_offset + 4):select("a"):text() == "Completed" and 1 or 0)))
 
 	info:setImageURL((self.appendURLToInfoImage and self.baseURL or "") .. doc:selectFirst("div.book img"):attr("src"))
 	info:setDescription(table.concat(map(doc:select("div.desc-text p"), text), "\n"))

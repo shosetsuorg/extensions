@@ -14,7 +14,7 @@
     },
     {
       "name": "NovelFull",
-      "ver": "2.0.1"
+      "ver": "2.0.2"
     },
     {
       "name": "url",
@@ -56,9 +56,9 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelFull.png",
       "id": 1,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
-      "md5": "5f95559b552725914228f3b29126fd1"
+      "md5": "ad8a6211419b89c1c9bda5d6cd07e19e"
     },
     {
       "name": "FastNovel",
