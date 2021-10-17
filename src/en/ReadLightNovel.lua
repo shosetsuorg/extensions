@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"2.0.1","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"2.0.2","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.me"
 local qs = Require("url").querystring
@@ -81,7 +81,10 @@ return {
 				Ongoing = NovelStatus("PUBLISHING"),
 				Completed = NovelStatus("COMPLETED")
 			})[leftdetails:get(leftdetails:size()-1):selectFirst("li"):text()],
-			language = leftdetails:get(3):selectFirst("li"):text()
+			genres = map(leftdetails:get(1):select("a"), text),
+			language = leftdetails:get(3):selectFirst("li"):text(),
+			authors = map(leftdetails:get(4):select("a"), text),
+			artists = map(leftdetails:get(5):select("a"), text)
 		}
 		if details:selectFirst(".novel-detail-item.color-gray") ~= nil then
 			info:setAlternativeTitles(map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text))
