@@ -1,4 +1,4 @@
--- {"ver":"2.0.2","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.3","author":"TechnoJo4","dep":["url"]}
 
 -- rename this if you ever figure out its real name
 
@@ -80,7 +80,7 @@ function defaults:parseNovel(url, loadChapters)
 
 	local meta_offset = elem:size() < 3 and self.meta_offset or 0
 
-	function meta_links(i)
+	local function meta_links(i)
 		return map(elem:get(meta_offset + i):select("a"), text)
 	end
 
