@@ -1,4 +1,4 @@
--- {"ver":"2.2.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.2.1","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -45,12 +45,14 @@ end
 ---@return string
 function defaults:createSearchString(tbl)
 	local query = tbl[QUERY]
+	local page = tbl[PAGE]
 	local orderBy = tbl[ORDER_BY_FILTER_KEY]
 	local author = tbl[AUTHOR_FILTER_KEY]
 	local artist = tbl[ARTIST_FILTER_KEY]
 	local release = tbl[RELEASE_FILTER_KEY]
 
-	local url = self.baseURL .. "/?s=" .. encode(query) .. "&post_type=wp-manga" ..
+	local url = self.baseURL .. "/page/" .. page ..
+			"/?s=" .. encode(query) .. "&post_type=wp-manga" ..
 			"&author=" .. encode(author) ..
 			"&artist=" .. encode(artist) ..
 			"&release=" .. encode(release)
@@ -280,6 +282,7 @@ return function(baseURL, _self)
 		end)) -- 6
 	}
 
+	_self["isSearchIncrementing"] = true
 	if _self.searchHasOper then
 		keyID = keyID + 1
 		_self.searchOperId = keyID
