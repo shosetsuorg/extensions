@@ -1,4 +1,4 @@
--- {"id":951,"ver":"2.0.3","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":951,"ver":"2.0.4","libVer":"1.0.0","author":"Doomsdayrs"}
 
 local baseURL = "https://www.asianhobbyist.com"
 local encoding = ""
@@ -93,7 +93,7 @@ local function parseNovel(novelURL)
 					local a = v:selectFirst("a")
 					return NovelChapter {
 						order = tonumber(divs:get(0):text()),
-						release = divs:get(1):text(),
+						release = divs:get(2):text(),
 						title = a:text(),
 						link = shrinkURL(a:attr("href"), KEY_CHAPTER_URL),
 					}
