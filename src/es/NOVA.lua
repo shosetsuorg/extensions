@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.57","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.58","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -85,6 +85,7 @@ local PAIS_FILTER_INT = {
 }
 local PAIS_FILTER_KEY = 2121
 local TAG_FILTER_KEY = 2222
+local searchHasOperId = 2323
 
 local ADBLOCK_SETTING_KEY = 0
 local SUBSCRIBEBLOCK_SETTING_KEY = 1
@@ -170,7 +171,8 @@ local function createFilterString(data)
 		(data[ESTADO_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]]) or "")..
 		(data[TIPO_FILTER_KEY]~=0   and "&ixwpst[pa_tipo][]="  ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])     or "")..
 		(data[PAIS_FILTER_KEY]~=0   and "&ixwpst[pa_pais][]="  ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])     or "")..
-		(data[TAG_FILTER_KEY]~=""   and "&product_tag[0]="     ..encode(data[TAG_FILTER_KEY])                       or "")
+		(data[TAG_FILTER_KEY]~=""   and "&product_tag[0]="     ..encode(data[TAG_FILTER_KEY])                       or "")..
+		(data[searchHasOperId]~=0   and "&ixwpst[op]="         ..encode(data[searchHasOperId])                      or "")
 		--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
 		--other than orderby, filters in url must not be empty
 		--Logic is (cat1 OR cat2) AND (tag1 OR tag2)
@@ -289,7 +291,7 @@ return {
 	searchFilters = {
 		DropdownFilter(ORDER_BY_FILTER_KEY, "Pedido de la tienda", ORDER_BY_FILTER_EXT),
 		SwitchFilter(ORDER_FILTER_KEY, "Ascendiendo / Descendiendo"),
-		FilterGroup("Categorías", {
+		FilterGroup("Géneros", {
 			CheckboxFilter(40, "Acción"),
 			CheckboxFilter(53, "Adulto"),
 			CheckboxFilter(52, "Artes Marciales"),
@@ -322,6 +324,7 @@ return {
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
 		DropdownFilter(PAIS_FILTER_KEY, "País", {"🌐 Cualquiera","🇦🇷 Argentina","🇨🇱 Chile","🇨🇳 China","🇨🇴 Colombia","🇰🇷 Corea","🇪🇨 Ecuador","🇯🇵 Japón","🇲🇽 México","🇳🇮 Nicaragua","🇵🇪 Perú","🇻🇪 Venezuela"}),
 		TextFilter(TAG_FILTER_KEY, "Etiqueta"),
+		DropdownFilter(searchHasOperId, "Condición de géneros", {"O (cualquiera de los seleccionados)", "Y (todos los seleccionados)"}),
 	},
 
 	isSearchIncrementing = false,
