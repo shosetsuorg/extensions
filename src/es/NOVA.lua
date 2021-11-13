@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.58","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.59","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -320,11 +320,11 @@ return {
 			CheckboxFilter(58, "Vida Escolar"),
 			CheckboxFilter(73, "Xuanhuan"),
 		}),
+		DropdownFilter(searchHasOperId, "Condición de géneros", {"O (cualquiera de los seleccionados)", "Y (todos los seleccionados)"}),
 		DropdownFilter(ESTADO_FILTER_KEY, "Estado", {"⏯️ Cualquiera","▶️ En Proceso","⏸️ Pausado","⏹️ Completado"}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
 		DropdownFilter(PAIS_FILTER_KEY, "País", {"🌐 Cualquiera","🇦🇷 Argentina","🇨🇱 Chile","🇨🇳 China","🇨🇴 Colombia","🇰🇷 Corea","🇪🇨 Ecuador","🇯🇵 Japón","🇲🇽 México","🇳🇮 Nicaragua","🇵🇪 Perú","🇻🇪 Venezuela"}),
 		TextFilter(TAG_FILTER_KEY, "Etiqueta"),
-		DropdownFilter(searchHasOperId, "Condición de géneros", {"O (cualquiera de los seleccionados)", "Y (todos los seleccionados)"}),
 	},
 
 	isSearchIncrementing = false,
