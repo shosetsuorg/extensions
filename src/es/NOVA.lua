@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.59","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.60","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -168,7 +168,9 @@ local function createFilterString(data)
 		(data[70] and "&ixwpst[product_cat][70]=70" or "").. --Tragedia
 		(data[58] and "&ixwpst[product_cat][58]=58" or "").. --Vida Escolar
 		(data[73] and "&ixwpst[product_cat][73]=73" or "").. --Xuanhuan
-		(data[ESTADO_FILTER_KEY]~=0 and "&ixwpst[pa_estado][]="..encode(ESTADO_FILTER_INT[data[ESTADO_FILTER_KEY]]) or "")..
+		(data[16] and "&ixwpst[pa_estado][16]=16"   or "").. --En Proceso --NovelStatus.PUBLISHING
+		(data[17] and "&ixwpst[pa_estado][17]=17"   or "").. --Pausado    --            On Hold/haitus
+		(data[407]and "&ixwpst[pa_estado][407]=407" or "").. --Completado --NovelStatus.COMPLETED
 		(data[TIPO_FILTER_KEY]~=0   and "&ixwpst[pa_tipo][]="  ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])     or "")..
 		(data[PAIS_FILTER_KEY]~=0   and "&ixwpst[pa_pais][]="  ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])     or "")..
 		(data[TAG_FILTER_KEY]~=""   and "&product_tag[0]="     ..encode(data[TAG_FILTER_KEY])                       or "")..
@@ -321,7 +323,11 @@ return {
 			CheckboxFilter(73, "Xuanhuan"),
 		}),
 		DropdownFilter(searchHasOperId, "Condición de géneros", {"O (cualquiera de los seleccionados)", "Y (todos los seleccionados)"}),
-		DropdownFilter(ESTADO_FILTER_KEY, "Estado", {"⏯️ Cualquiera","▶️ En Proceso","⏸️ Pausado","⏹️ Completado"}),
+		FilterGroup("Estado", {
+			CheckboxFilter(16, "▶️ En Proceso"),
+			CheckboxFilter(17, "⏸️ Pausado"),
+			CheckboxFilter(407, "⏹️ Completado"),
+		}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
 		DropdownFilter(PAIS_FILTER_KEY, "País", {"🌐 Cualquiera","🇦🇷 Argentina","🇨🇱 Chile","🇨🇳 China","🇨🇴 Colombia","🇰🇷 Corea","🇪🇨 Ecuador","🇯🇵 Japón","🇲🇽 México","🇳🇮 Nicaragua","🇵🇪 Perú","🇻🇪 Venezuela"}),
 		TextFilter(TAG_FILTER_KEY, "Etiqueta"),
