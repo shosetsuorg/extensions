@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.60","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.61","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -138,7 +138,6 @@ local function expandURL(url)
 end
 
 local function createFilterString(data)
-	--  (data[CATEGORIAS_FILTER_KEY]~=0 and "&ixwpst[product_cat][]="..encode(CATEGORIAS_FILTER_INT[data[CATEGORIAS_FILTER_KEY]]) or "")..
 	--ixwpst[product_cat] is fine being a sparse array, so no need to count up from 0
 	return "orderby=" .. encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]) .. (data[ORDER_FILTER_KEY] and "-desc" or "") ..
 		(data[40] and "&ixwpst[product_cat][40]=40" or "").. --Acción
@@ -172,7 +171,17 @@ local function createFilterString(data)
 		(data[17] and "&ixwpst[pa_estado][17]=17"   or "").. --Pausado    --            On Hold/haitus
 		(data[407]and "&ixwpst[pa_estado][407]=407" or "").. --Completado --NovelStatus.COMPLETED
 		(data[TIPO_FILTER_KEY]~=0   and "&ixwpst[pa_tipo][]="  ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])     or "")..
-		(data[PAIS_FILTER_KEY]~=0   and "&ixwpst[pa_pais][]="  ..encode(PAIS_FILTER_INT[data[PAIS_FILTER_KEY]])     or "")..
+		(data[1865] and "&ixwpst[pa_pais][1865]=1865" or "").. --Argentina
+		(data[1749] and "&ixwpst[pa_pais][1749]=1749" or "").. --Chile
+		(data[20]   and "&ixwpst[pa_pais][20]=20"     or "").. --China
+		(data[4184] and "&ixwpst[pa_pais][4184]=4184" or "").. --Colombia
+		(data[22]   and "&ixwpst[pa_pais][22]=22"     or "").. --Corea
+		(data[1792] and "&ixwpst[pa_pais][1792]=1792" or "").. --Ecuador
+		(data[21]   and "&ixwpst[pa_pais][21]=21"     or "").. --Japón
+		(data[1704] and "&ixwpst[pa_pais][1704]=1704" or "").. --México
+		(data[1657] and "&ixwpst[pa_pais][1657]=1657" or "").. --Nicaragua
+		(data[4341] and "&ixwpst[pa_pais][4341]=4341" or "").. --Perú
+		(data[2524] and "&ixwpst[pa_pais][2524]=2524" or "").. --Venezuela
 		(data[TAG_FILTER_KEY]~=""   and "&product_tag[0]="     ..encode(data[TAG_FILTER_KEY])                       or "")..
 		(data[searchHasOperId]~=0   and "&ixwpst[op]="         ..encode(data[searchHasOperId])                      or "")
 		--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
@@ -329,7 +338,19 @@ return {
 			CheckboxFilter(407, "⏹️ Completado"),
 		}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
-		DropdownFilter(PAIS_FILTER_KEY, "País", {"🌐 Cualquiera","🇦🇷 Argentina","🇨🇱 Chile","🇨🇳 China","🇨🇴 Colombia","🇰🇷 Corea","🇪🇨 Ecuador","🇯🇵 Japón","🇲🇽 México","🇳🇮 Nicaragua","🇵🇪 Perú","🇻🇪 Venezuela"}),
+		FilterGroup("País", {
+			CheckboxFilter(1865, "🇦🇷 Argentina"),
+			CheckboxFilter(1749, "🇨🇱 Chile"),
+			CheckboxFilter(20  , "🇨🇳 China"),
+			CheckboxFilter(4184, "🇨🇴 Colombia"),
+			CheckboxFilter(22  , "🇰🇷 Corea"),
+			CheckboxFilter(1792, "🇪🇨 Ecuador"),
+			CheckboxFilter(21  , "🇯🇵 Japón"),
+			CheckboxFilter(1704, "🇲🇽 México"),
+			CheckboxFilter(1657, "🇳🇮 Nicaragua"),
+			CheckboxFilter(4341, "🇵🇪 Perú"),
+			CheckboxFilter(2524, "🇻🇪 Venezuela"),
+		}),
 		TextFilter(TAG_FILTER_KEY, "Etiqueta"),
 	},
 
