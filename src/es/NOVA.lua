@@ -2,7 +2,7 @@
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
-local ORDER_BY_FILTER_EXT = {"Ordenar por los últimos", "Orden alfabético", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por precio: bajo a alto", "Orden aleatorio", "Ordenar por id", "Ordenar por slug", "Ordenar por include"}
+local ORDER_BY_FILTER_EXT = {"Ordenar por los últimos", "Orden alfabético", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por precio: bajo a alto", "Orden aleatorio", "Ordenar por id", "Ordenar por slug", "Ordenar por include"} 	--translate to identificación/babosa/incluír?
 local ORDER_BY_FILTER_INT = {
 	[0]="date"      , --Ordenar por los últimos
 	[1]="title"     , --Orden alfabético/Orden por defecto (Listing is title, webview search is title-DESC, selecting Orden por defecto is menu_order)
