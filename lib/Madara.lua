@@ -1,4 +1,4 @@
--- {"ver":"2.2.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.2.1","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -120,6 +120,7 @@ function defaults:getPassage(url)
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
 	htmlElement:select("div.lnbad-tag"):remove() -- LightNovelBastion text size
+	htmlElement:select("i.icon.j_open_para_comment.j_para_comment_count"):remove() -- BoxNovel, VipNovel numbers
 
 	return pageOfElem(htmlElement, true)
 end
