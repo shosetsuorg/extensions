@@ -1,6 +1,7 @@
--- {"ver":"1.2.0","author":"TechnoJo4","dep":["dkjson","CommonCSS"]}
+-- {"ver":"1.2.1","author":"TechnoJo4","dep":["dkjson","CommonCSS","Utilities>=1.0.0"]}
 
 local css = Require("CommonCSS").table
+local convertHTMLToText = Require("Utilities").convertHTMLToText
 
 return function(id, name, base, contentSel, image)
 	local settings
@@ -26,12 +27,21 @@ return function(id, name, base, contentSel, image)
 				imageURL = v.coverUrl
 			}
 
-			-- TODO: Clean description html
+			local description = ""
+			if v.description ~= nil then
+				description = "Description:\n" .. convertHTMLToText(v.description, true, false)
+			end
+			if v.synopsis ~= nil then
+				if v.description ~= nil then
+					description = description .. "\n\n"
+				end
+				description = description .. "Synopsis:\n" .. convertHTMLToText(v.synopsis, true, false)
+			end
+
 			infos[v.slug] = {
 				title = v.name,
 				imageURL = v.coverUrl,
-				description = ("Description:\n%s\n\nSynopsis:\n%s\n"):format(v.description or "None", v.synopsis or "None"),
-				authors = { v.authorName },
+				description = description,
 				tags = v.tags,
 				genres = v.genres,
 				language = v.language,
