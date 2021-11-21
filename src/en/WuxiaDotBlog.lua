@@ -122,7 +122,6 @@ return {
 		htmlElement:select("div"):remove()
 		htmlElement:select("button"):remove()
 
-		print(pageOfElem(htmlElement, true))
 		return pageOfElem(htmlElement, true)
 	end,
 
