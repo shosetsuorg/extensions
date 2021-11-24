@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"2.0.2","libVer":"1.0.0","dep":["url>=1.0.0"],"author":"TechnoJo4"}
+-- {"id":6118,"ver":"2.0.3","libVer":"1.0.0","dep":["url>=1.0.0"],"author":"TechnoJo4"}
 
 local baseURL = "https://www.readlightnovel.me"
 local qs = Require("url").querystring
@@ -59,7 +59,8 @@ return {
 		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
 
 		-- Remove/modify unwanted HTML elements to get a clean webpage.
-		htmlElement:removeAttr("class") -- Remove hidden
+		htmlElement:select(".hid"):remove() -- Hide .hid elements
+		htmlElement:removeAttr("class") -- Show .hidden elements
 		--htmlElement:select("br"):remove()
 
 		return pageOfElem(htmlElement)
