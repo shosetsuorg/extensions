@@ -1,9 +1,11 @@
--- {"id":36833,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.4","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
 
 local css = Require("CommonCSS").table
+
+local GENRES_FILTER_EXT = {"Action", "Adventure", "Comedy", "Contemporary", "Drama", "Fantasy", "Historical", "Horror", "Mystery", "Psychological", "Romance", "Satire", "Sci-fi", "Short Story", "Tragedy"}
 
 local function shrinkURL(url)
 	return url:gsub("^.-royalroad%.com/?", "")
@@ -61,9 +63,12 @@ return {
 		local header = page:selectFirst(".fic-header")
 		local title = header:selectFirst(".fic-title")
 		local info = page:selectFirst(".fiction-info")
-		local tags = info:selectFirst(".margin-bottom-10")
+		local type_status_genrestags = info:selectFirst(".margin-bottom-10")
+		local novel_type = type_status_genrestags:select(":nth-child(1)")
+		local genres_tags = type_status_genrestags:selectFirst(".tags")
+		local content_warnings = info:selectFirst(".text-center")
 
-		local s = mapNotNil(tags:children(), function(v)
+		local s = mapNotNil(type_status_genrestags:select(":nth-child(2)"), function(v)
 			local text = v:ownText()
 			if text == "" or text ~= text:upper() then
 				return
@@ -72,16 +77,44 @@ return {
 		end)[1]
 
 		s = s and ({
-			ONGOING = NovelStatus.PUBLISHING,
 			COMPLETED = NovelStatus.COMPLETED,
+			--DROPPED = NovelStatus.DROPPED,
+			ONGOING = NovelStatus.PUBLISHING,
+			HIATUS = NovelStatus.PAUSED,
+			--STUB = NovelStatus.STUB,
 		})[s] or NovelStatus.UNKNOWN
+
+		local function tablecontains(t, e)
+			for _, v in ipairs(t) do
+				if e == v then
+					return true
+				end
+			end
+			return false
+		end
+
+		local genres = {}
+		local tags = {}
+		table.insert(tags, novel_type)
+		mapNotNil(genres_tags:select("a"), function(a)
+			local genre_tag = a:text()
+			if tablecontains(GENRES_FILTER_EXT, genre_tag) then
+				table.insert(genres, genre_tag)
+			else
+				table.insert(tags, genre_tag)
+			end
+		end)
+		mapNotNil(content_warnings:select("li"), function(cw)
+			table.insert(tags, cw:text())
+		end)
 
 		local text = function(v) return v:text() end
 		local novel = NovelInfo {
 			title = title:selectFirst("h1"):text(),
 			imageURL = header:selectFirst("img"):attr("src"),
 			description = info:selectFirst(".description .hidden-content"):text(),
-			tags = map(tags:selectFirst(".tags"):select("a"), text),
+			genres = genres,
+			tags = tags,
 			authors = { title:selectFirst("h4 a"):text() },
 			status = s
 		}
