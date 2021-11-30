@@ -1,4 +1,4 @@
--- {"id":36833,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
@@ -61,9 +61,11 @@ return {
 		local header = page:selectFirst(".fic-header")
 		local title = header:selectFirst(".fic-title")
 		local info = page:selectFirst(".fiction-info")
-		local tags = info:selectFirst(".margin-bottom-10")
+		local type_status_genrestags = info:selectFirst(".margin-bottom-10")
+		local novel_type = type_status_genrestags:select(":nth-child(1)")
+		local genres_tags = type_status_genrestags:selectFirst(".tags")
 
-		local s = mapNotNil(tags:children(), function(v)
+		local s = mapNotNil(type_status_genrestags:select(":nth-child(2)"), function(v)
 			local text = v:ownText()
 			if text == "" or text ~= text:upper() then
 				return
@@ -72,8 +74,11 @@ return {
 		end)[1]
 
 		s = s and ({
-			ONGOING = NovelStatus.PUBLISHING,
 			COMPLETED = NovelStatus.COMPLETED,
+			--DROPPED = NovelStatus.DROPPED,
+			ONGOING = NovelStatus.PUBLISHING,
+			HIATUS = NovelStatus.PAUSED,
+			--STUB = NovelStatus.STUB,
 		})[s] or NovelStatus.UNKNOWN
 
 		local text = function(v) return v:text() end
@@ -81,7 +86,8 @@ return {
 			title = title:selectFirst("h1"):text(),
 			imageURL = header:selectFirst("img"):attr("src"),
 			description = info:selectFirst(".description .hidden-content"):text(),
-			tags = map(tags:selectFirst(".tags"):select("a"), text),
+			--genres = map(genres_tags:select("a"), text), --TODO: filter IN genres
+			tags = map(genres_tags:select("a"), text), --TODO: add novel_type, filter NOT IN genres
 			authors = { title:selectFirst("h4 a"):text() },
 			status = s
 		}
