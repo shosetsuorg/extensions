@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.63","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.64","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -90,8 +90,8 @@ local searchHasOperId = 2323
 local ADBLOCK_SETTING_KEY = 0
 local SUBSCRIBEBLOCK_SETTING_KEY = 1
 local settings = {
-	[ADBLOCK_SETTING_KEY] = true,
-	[SUBSCRIBEBLOCK_SETTING_KEY] = true,
+--	[ADBLOCK_SETTING_KEY] = false,
+--	[SUBSCRIBEBLOCK_SETTING_KEY] = false,
 }
 
 local qs = Require("url").querystring
@@ -293,11 +293,9 @@ return {
 	getPassage = function(url)
 		local doc = GETDocument(url)
 		--leave any other possible <center> tags alone
-----	if settings[ADBLOCK_SETTING_KEY] then --block Publicidad Y-AR, Publicidad M-M4, etc.
 		if not settings[ADBLOCK_SETTING_KEY] then --block Publicidad Y-AR, Publicidad M-M4, etc.
 			doc:select(".wpb_text_column .wpb_wrapper div center:matchesOwn(^Publicidad [A-Z0-9]-[A-Z0-9][A-Z0-9])"):remove()
 		end
-----	if settings[SUBSCRIBEBLOCK_SETTING_KEY] then --hide "¡Ayudanos! A traducir novelas del japones ¡Suscribete! A NOVA" (86)
 		if not settings[SUBSCRIBEBLOCK_SETTING_KEY] then --hide "¡Ayudanos! A traducir novelas del japones ¡Suscribete! A NOVA" (86)
 			doc:select(".wpb_text_column .wpb_wrapper div center a[href*=index.php/nuestras-suscripciones/]"):remove()
 		end
@@ -366,8 +364,6 @@ return {
 	end,
 	
 	settings = {
-----	SwitchFilter(ADBLOCK_SETTING_KEY, "Ocultar publicidades", true),
-----	SwitchFilter(SUBSCRIBEBLOCK_SETTING_KEY, "Ocultar imagen de suscripción", true),
 		SwitchFilter(ADBLOCK_SETTING_KEY, "Mostrar publicidades"),
 		SwitchFilter(SUBSCRIBEBLOCK_SETTING_KEY, "Mostrar imagen de suscripción"),
 	},
