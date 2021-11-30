@@ -1,4 +1,4 @@
--- {"id":36833,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
@@ -90,11 +90,13 @@ return {
 			local i = 0
 			novel:setChapters(AsList(map(doc:selectFirst("#chapters tbody"):children(), function(v)
 				local a = v:selectFirst("a")
+				local a_time = v:selectFirst("time")
 				i = i + 1
 				return NovelChapter {
 					order = i,
 					title = a:text(),
-					link = a:attr("href")
+					link = a:attr("href"),
+					release = (a_time and (a_time:attr("title") or a_time:attr("unixtime") or v:selectLast("a"):text())) or nil
 				}
 			end)))
 		end
