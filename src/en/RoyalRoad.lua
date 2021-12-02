@@ -1,4 +1,4 @@
--- {"id":36833,"ver":"1.0.4","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.5","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
@@ -64,7 +64,7 @@ return {
 		local title = header:selectFirst(".fic-title")
 		local info = page:selectFirst(".fiction-info")
 		local type_status_genrestags = info:selectFirst(".margin-bottom-10")
-		local novel_type = type_status_genrestags:select(":nth-child(1)")
+		local novel_type = type_status_genrestags:selectFirst(".label")
 		local genres_tags = type_status_genrestags:selectFirst(".tags")
 		local content_warnings = info:selectFirst(".text-center")
 
@@ -95,7 +95,7 @@ return {
 
 		local genres = {}
 		local tags = {}
-		table.insert(tags, novel_type)
+		table.insert(tags, novel_type:text())
 		mapNotNil(genres_tags:select("a"), function(a)
 			local genre_tag = a:text()
 			if tablecontains(GENRES_FILTER_EXT, genre_tag) then
