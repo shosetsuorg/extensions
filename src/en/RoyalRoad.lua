@@ -148,16 +148,25 @@ local function listing(name, inc, url)
 	end)
 end
 
-local function triquery(data, filter, int)
-	return (data[int] and (data[int]==2 and "&tagsRemove" or "&tagsAdd=")..filter[int] or "")
+local function triquery(data, filter_int, int)
+	return (data[int] and (data[int]==2 and "&tagsRemove" or "&tagsAdd=")..filter_int[int] or "")
 end
-local function triquerymulti(data, filter, start_, end_)
+local function triquerymulti(data, filter_int, start_, end_)
 	local q=""
 	for int = start_,end_,1
 	do
-		q =q.. triquery(data, filter, int)
+		q =q.. triquery(data, filter_int, int)
 	end
 	return q
+end
+local function trifiltermulti(offset, filter_ext, end_)
+	local f={}
+	for int = 1,end_,1
+	do
+		--table.insert(f, CheckboxFilter(offset+int, filter_ext[int]))
+		table.insert(f, TriStateFilter(offset+int, filter_ext[int]))
+	end
+	return f
 end
 
 return {
@@ -303,77 +312,9 @@ return {
 	searchFilters = {
 		TextFilter(KEYWORD_FILTER_KEY, "Keyword (title or description)"),
 		TextFilter(AUTHOR_FILTER_KEY, "Author name"),
-		FilterGroup("Genres", {
-			TriStateFilter(201, GENRES_FILTER_EXT[01]),
-			TriStateFilter(202, GENRES_FILTER_EXT[02]),
-			TriStateFilter(203, GENRES_FILTER_EXT[03]),
-			TriStateFilter(204, GENRES_FILTER_EXT[04]),
-			TriStateFilter(205, GENRES_FILTER_EXT[05]),
-			TriStateFilter(206, GENRES_FILTER_EXT[06]),
-			TriStateFilter(207, GENRES_FILTER_EXT[07]),
-			TriStateFilter(208, GENRES_FILTER_EXT[08]),
-			TriStateFilter(209, GENRES_FILTER_EXT[09]),
-			TriStateFilter(210, GENRES_FILTER_EXT[10]),
-			TriStateFilter(211, GENRES_FILTER_EXT[11]),
-			TriStateFilter(212, GENRES_FILTER_EXT[12]),
-			TriStateFilter(213, GENRES_FILTER_EXT[13]),
-			TriStateFilter(214, GENRES_FILTER_EXT[14]),
-			TriStateFilter(215, GENRES_FILTER_EXT[15]),
-		}),
-		FilterGroup("Additional Tags", {
-			TriStateFilter(301, TAGS_FILTER_EXT[01]),
-			TriStateFilter(302, TAGS_FILTER_EXT[02]),
-			TriStateFilter(303, TAGS_FILTER_EXT[03]),
-			TriStateFilter(304, TAGS_FILTER_EXT[04]),
-			TriStateFilter(305, TAGS_FILTER_EXT[05]),
-			TriStateFilter(306, TAGS_FILTER_EXT[06]),
-			TriStateFilter(307, TAGS_FILTER_EXT[07]),
-			TriStateFilter(308, TAGS_FILTER_EXT[08]),
-			TriStateFilter(309, TAGS_FILTER_EXT[09]),
-			TriStateFilter(310, TAGS_FILTER_EXT[10]),
-			TriStateFilter(311, TAGS_FILTER_EXT[11]),
-			TriStateFilter(312, TAGS_FILTER_EXT[12]),
-			TriStateFilter(313, TAGS_FILTER_EXT[13]),
-			TriStateFilter(314, TAGS_FILTER_EXT[14]),
-			TriStateFilter(315, TAGS_FILTER_EXT[15]),
-			TriStateFilter(316, TAGS_FILTER_EXT[16]),
-			TriStateFilter(317, TAGS_FILTER_EXT[17]),
-			TriStateFilter(318, TAGS_FILTER_EXT[18]),
-			TriStateFilter(319, TAGS_FILTER_EXT[19]),
-			TriStateFilter(320, TAGS_FILTER_EXT[20]),
-			TriStateFilter(321, TAGS_FILTER_EXT[21]),
-			TriStateFilter(322, TAGS_FILTER_EXT[22]),
-			TriStateFilter(323, TAGS_FILTER_EXT[23]),
-			TriStateFilter(324, TAGS_FILTER_EXT[24]),
-			TriStateFilter(325, TAGS_FILTER_EXT[25]),
-			TriStateFilter(326, TAGS_FILTER_EXT[26]),
-			TriStateFilter(327, TAGS_FILTER_EXT[27]),
-			TriStateFilter(328, TAGS_FILTER_EXT[28]),
-			TriStateFilter(329, TAGS_FILTER_EXT[29]),
-			TriStateFilter(330, TAGS_FILTER_EXT[30]),
-			TriStateFilter(331, TAGS_FILTER_EXT[31]),
-			TriStateFilter(332, TAGS_FILTER_EXT[32]),
-			TriStateFilter(333, TAGS_FILTER_EXT[33]),
-			TriStateFilter(334, TAGS_FILTER_EXT[34]),
-			TriStateFilter(335, TAGS_FILTER_EXT[35]),
-			TriStateFilter(336, TAGS_FILTER_EXT[36]),
-			TriStateFilter(337, TAGS_FILTER_EXT[37]),
-			TriStateFilter(338, TAGS_FILTER_EXT[38]),
-			TriStateFilter(339, TAGS_FILTER_EXT[39]),
-			TriStateFilter(340, TAGS_FILTER_EXT[40]),
-			TriStateFilter(341, TAGS_FILTER_EXT[41]),
-			TriStateFilter(342, TAGS_FILTER_EXT[42]),
-			TriStateFilter(343, TAGS_FILTER_EXT[43]),
-			TriStateFilter(344, TAGS_FILTER_EXT[44]),
-			TriStateFilter(345, TAGS_FILTER_EXT[45]),
-			TriStateFilter(346, TAGS_FILTER_EXT[46]),
-		}),
-		FilterGroup("Content Warnings", {
-			TriStateFilter(401, CONTENT_WARNINGS_FILTER_EXT[01]),
-			TriStateFilter(402, CONTENT_WARNINGS_FILTER_EXT[02]),
-			TriStateFilter(403, CONTENT_WARNINGS_FILTER_EXT[03]),
-			TriStateFilter(404, CONTENT_WARNINGS_FILTER_EXT[04]),
-		}),
+		FilterGroup("Genres", trifiltermulti(200, GENRES_FILTER_EXT, 15)),
+		FilterGroup("Additional Tags", trifiltermulti(300, TAGS_FILTER_EXT, 46)),
+		FilterGroup("Content Warnings", trifiltermulti(400, CONTENT_WARNINGS_FILTER_EXT, 4)),
 		TextFilter(PAGES_MIN_FILTER_KEY, "Number of Pages min 0"), --todo number slider/selector
 		TextFilter(PAGES_MAX_FILTER_KEY, "Number of Pages max 20000"),
 		TextFilter(RATING_MIN_FILTER_KEY, "Rating min 0.0"),
