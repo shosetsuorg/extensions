@@ -163,8 +163,11 @@ local function trifiltermulti(offset, filter_ext, end_)
 	local f={}
 	for int = 1,end_,1
 	do
-		--table.insert(f, CheckboxFilter(offset+int, filter_ext[int]))
-		table.insert(f, TriStateFilter(offset+int, filter_ext[int]))
+		if TriStateFilter then
+			table.insert(f, TriStateFilter(offset+int, filter_ext[int]))
+		else
+			table.insert(f, CheckboxFilter(offset+int, filter_ext[int]))
+		end
 	end
 	return f
 end
