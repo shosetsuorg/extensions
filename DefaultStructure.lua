@@ -50,14 +50,18 @@ return {
 	searchFilters = {
 		TextFilter(1, "RANDOM STRING INPUT"),
 		SwitchFilter(2, "RANDOM SWITCH INPUT"),
-		RadioGroupFilter(3, "RANDOM RGROUP INPUT", { "A","B","C" }),
-		DropdownFilter(4, "RANDOM DDOWN INPUT", { "A","B","C" })
+		CheckboxFilter(3, "RANDOM CHECKBOX INPUT"),
+		TriStateFilter(4, "RANDOM TRISTATE CHECKBOX INPUT"),
+		RadioGroupFilter(5, "RANDOM RGROUP INPUT", { "A","B","C" }),
+		DropdownFilter(6, "RANDOM DDOWN INPUT", { "A","B","C" })
 	},
 	settings = {
 		TextFilter(1, "RANDOM STRING INPUT"),
 		SwitchFilter(2, "RANDOM SWITCH INPUT"),
-		RadioGroupFilter(3, "RANDOM RGROUP INPUT", { "A","B","C" }),
-		DropdownFilter(4, "RANDOM DDOWN INPUT", { "A","B","C" })
+		CheckboxFilter(3, "RANDOM CHECKBOX INPUT"),
+		TriStateFilter(4, "RANDOM TRISTATE CHECKBOX INPUT"),
+		RadioGroupFilter(5, "RANDOM RGROUP INPUT", { "A","B","C" }),
+		DropdownFilter(6, "RANDOM DDOWN INPUT", { "A","B","C" })
 	},
 
 	-- Default functions that have to be set
