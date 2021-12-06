@@ -148,28 +148,31 @@ local function listing(name, inc, url)
 	end)
 end
 
-local function triquery(data, filter_int, int)
-	return (data[int] and (data[int]==2 and "&tagsRemove" or "&tagsAdd=")..filter_int[int] or "")
-end
-local function triquerymulti(data, filter_int, start_, end_)
-	local q=""
-	for int = start_,end_,1
-	do
-		q =q.. triquery(data, filter_int, int)
+local function TriStateFilter_(int, str)
+	if TriStateFilter then
+		return TriStateFilter(int, str)
+	else
+		return CheckboxFilter(int, str)
 	end
-	return q
 end
-local function trifiltermulti(offset, filter_ext, end_)
+local function MultiTriStateFilter(offset, filter_ext, stop)
 	local f={}
-	for int = 1,end_,1
+	for int = 1,stop,1
 	do
-		if TriStateFilter then
-			table.insert(f, TriStateFilter(offset+int, filter_ext[int]))
-		else
-			table.insert(f, CheckboxFilter(offset+int, filter_ext[int]))
-		end
+		table.insert(f, TriStateFilter_(offset+int, filter_ext[int]))
 	end
 	return f
+end
+local function TriQuery(data, filter_int, int)
+	return (data[int] and (data[int]==2 and "&tagsRemove" or "&tagsAdd=")..filter_int[int] or "")
+end
+local function MultiTriQuery(data, filter_int, start, stop)
+	local q=""
+	for int = start,stop,1
+	do
+		q =q.. TriQuery(data, filter_int, int)
+	end
+	return q
 end
 
 return {
@@ -291,9 +294,9 @@ return {
 				(data[QUERY]~="" and "&tile="..data[QUERY] or "")..
 				(data[AUTHOR_FILTER_KEY]~="" and "&keyword="..data[KEYWORD_FILTER_KEY] or "")..
 				(data[AUTHOR_FILTER_KEY]~="" and "&author="..data[AUTHOR_FILTER_KEY] or "")..
-				triquerymulti(data, GENRES_FILTER_INT, 201, 215)..
-				triquerymulti(data, TAGS_FILTER_INT, 301, 346)..
-				triquerymulti(data, CONTENT_WARNINGS_FILTER_INT, 401, 404)..
+				MultiTriQuery(data, GENRES_FILTER_INT, 201, 215)..
+				MultiTriQuery(data, TAGS_FILTER_INT, 301, 346)..
+				MultiTriQuery(data, CONTENT_WARNINGS_FILTER_INT, 401, 404)..
 				(data[PAGES_MIN_FILTER_KEY ]~="" and "&minPages=" ..data[PAGES_MIN_FILTER_KEY ] or "")..
 				(data[PAGES_MAX_FILTER_KEY ]~="" and "&maxPages=" ..data[PAGES_MAX_FILTER_KEY ] or "")..
 				(data[RATING_MIN_FILTER_KEY]~="" and "&minRating="..data[RATING_MIN_FILTER_KEY] or "")..
@@ -315,9 +318,9 @@ return {
 	searchFilters = {
 		TextFilter(KEYWORD_FILTER_KEY, "Keyword (title or description)"),
 		TextFilter(AUTHOR_FILTER_KEY, "Author name"),
-		FilterGroup("Genres", trifiltermulti(200, GENRES_FILTER_EXT, 15)),
-		FilterGroup("Additional Tags", trifiltermulti(300, TAGS_FILTER_EXT, 46)),
-		FilterGroup("Content Warnings", trifiltermulti(400, CONTENT_WARNINGS_FILTER_EXT, 4)),
+		FilterGroup("Genres", MultiTriStateFilter(200, GENRES_FILTER_EXT, 15)),
+		FilterGroup("Additional Tags", MultiTriStateFilter(300, TAGS_FILTER_EXT, 46)),
+		FilterGroup("Content Warnings", MultiTriStateFilter(400, CONTENT_WARNINGS_FILTER_EXT, 4)),
 		TextFilter(PAGES_MIN_FILTER_KEY, "Number of Pages min 0"), --todo number slider/selector
 		TextFilter(PAGES_MAX_FILTER_KEY, "Number of Pages max 20000"),
 		TextFilter(RATING_MIN_FILTER_KEY, "Rating min 0.0"),
