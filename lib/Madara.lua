@@ -1,4 +1,4 @@
--- {"ver":"2.2.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.3.0","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -20,6 +20,7 @@ local defaults = {
 	-- If chaptersScriptLoaded is true, then a ajax request has to be made to get the chapter list.
 	-- Otherwise the chapter list is already loaded when loading the novel overview.
 	chaptersScriptLoaded = true,
+	chaptersListSelector= "li.wp-manga-chapter",
 	-- If ajaxUsesFormData is true, then a POST request will be send to baseURL/ajaxFormDataUrl.
 	-- Otherwise to baseURL/shrinkURLNovel/novelurl/ajaxSeriesUrl .
 	ajaxUsesFormData = false,
@@ -214,7 +215,7 @@ function defaults:parseNovel(url, loadChapters)
 			end
 		end
 
-		local chapterList = doc:select("li.wp-manga-chapter")
+		local chapterList = doc:select(self.chaptersListSelector)
 		local novelList = AsList(map(chapterList, function(v)
 			return NovelChapter{
 				title = v:selectFirst("a"):text(),
