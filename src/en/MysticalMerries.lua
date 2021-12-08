@@ -1,9 +1,9 @@
--- {"id":4221,"ver":"2.3.2","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.0"]}
+-- {"id":4221,"ver":"1.0.2","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.0"]}
 
 return Require("Madara")("https://mysticalmerries.com", {
 	id = 4221,
 	name = "MysticalMerries",
-	imageURL = "https://github.com/MechTechnology/extensions/raw/dev/icons/MysticalMerries.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/MysticalMerries.png",
 	chaptersScriptLoaded = false,
 	chaptersListSelector= "li.wp-manga-chapter.free-chap",
 	novelListingURLPath = "genre/korean-novel",
