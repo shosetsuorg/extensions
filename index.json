@@ -26,7 +26,7 @@
     },
     {
       "name": "Madara",
-      "ver": "2.2.1"
+      "ver": "2.3.0"
     }
   ],
   "scripts": [
@@ -167,6 +167,16 @@
       "id": 4217,
       "lang": "en",
       "ver": "2.1.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "MysticalMerries",
+      "fileName": "MysticalMerries",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/MysticalMerries.png",
+      "id": 4221,
+      "lang": "en",
+      "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": ""
     },
