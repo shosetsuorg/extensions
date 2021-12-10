@@ -1,10 +1,11 @@
--- {"id":4222,"ver":"1.0.2","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.0"]}
+-- {"id":4222,"ver":"1.0.3","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.0"]}
 
 return Require("Madara")("https://sleepytranslations.com", {
 	id = 4222,
-	name = "SleepyTranslations",
+	name = "Sleepy Translations",
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/SleepyTranslations.png",
 	chaptersScriptLoaded = true,
+	novelPageTitleSel = "div.post-title > h1",
 	latestNovelSel = ".col-6.col-md-3.badge-pos-2",
 	novelListingURLPath = "series",
 	shrinkURLNovel = "series",

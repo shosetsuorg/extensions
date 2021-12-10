@@ -171,22 +171,32 @@
       "md5": ""
     },
     {
-      "name": "MysticalMerries",
+      "name": "Mystical Merries",
       "fileName": "MysticalMerries",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/MysticalMerries.png",
       "id": 4221,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": ""
     },
     {
-      "name": "SleepyTranslations",
+      "name": "Sleepy Translations",
       "fileName": "SleepyTranslations",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SleepyTranslations.png",
       "id": 4222,
       "lang": "en",
-      "ver": "1.0.2",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Reaper Scans",
+      "fileName": "ReaperScans",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReaperScans.png",
+      "id": 4223,
+      "lang": "en",
+      "ver": "1.0.3",
       "libVer": "1.0.0",
       "md5": ""
     },
