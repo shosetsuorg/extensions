@@ -1,11 +1,8 @@
--- {"id":1376,"ver":"2.0.0","libVer":"1.0.0","dep":["Utilities>=1.0.0"],"author":"AriaMoradi"}
+-- {"id":1376,"ver":"2.0.0","libVer":"1.0.0","author":"AriaMoradi"}
 
 local baseURL = "https://www.wuxia.blog"
 -- An hash containing the already displayed links to avoid the same novel appearing on multiple pages.
 local _linksHash = {}
-
-local removeDuplicateNovels = Require("Utilities").removeDuplicateNovels
-local convertHTMLToText = Require("Utilities").convertHTMLToText
 
 local function shrinkURL(url)
 	return url:gsub(".-wuxia%.blog", "")
@@ -16,6 +13,33 @@ local function expandURL(url)
 end
 
 local text = function(v) return v:text() end
+
+--- Removes the duplicate link entries from a list of novels.
+---@param novelList {Novel} A list of novels.
+---@param hash [boolean] If true, then the key (the link) has already been shown.
+---@return {Novel} The list of novels with removed duplicates.
+local function removeDuplicateNovels(novelList, hash)
+	local res = {}
+	if hash == nil then
+		hash = {}
+	end
+
+	for _, novel in ipairs(novelList) do
+		if (not hash[novel:getLink()]) then
+			res[#res+1] = novel
+			hash[novel:getLink()] = true
+		end
+	end
+	--[=====[
+	print("Source length: " .. #novelList)
+	print("Length: " .. #res)
+	for i, v in ipairs(res) do
+		print( i .. " " .. v:getTitle() .. " " .. v:getLink() .. " " .. v:getImageURL() )
+	end
+	--]=====]
+
+	return res, hash
+end
 
 return {
 	id = 1376,
@@ -68,15 +92,11 @@ return {
 		local panelBody = panel:selectFirst("div.panel-body .row")
 		local information = panelBody:selectFirst(".row")
 
-		-- Removal of elements needs to be its own step.
-		local description = panelBody:selectFirst('[itemprop="description"]')
-		description:select("h4"):remove()
-
 		local novel = NovelInfo {
 			title = panel:selectFirst("h4.panel-title"):text(),
 			setAlternativeTitles = map(information:select(".coll:nth-child(1) a"), text),
 			imageURL = panelBody:selectFirst(".imageCover img"):attr("src"),
-			description = convertHTMLToText(description, false, true),
+			description = table.concat(map(panelBody:selectFirst('[itemprop="description"]'):select("p"), text), "\n"),
 			genres = map(information:select(".label"), text),
 			tags = map(document:select(".panel .panel .label"), text),
 			authors = map(information:select(".row > div:nth-child(2) > a"), text)
