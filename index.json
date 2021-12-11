@@ -26,15 +26,7 @@
     },
     {
       "name": "Madara",
-      "ver": "2.2.2"
-    },
-    {
-      "name": "Utilities",
-      "ver": "1.0.0"
-    },
-    {
-      "name": "htmlEntities",
-      "ver": "1.3.1"
+      "ver": "2.3.1"
     }
   ],
   "scripts": [
@@ -179,6 +171,46 @@
       "md5": ""
     },
     {
+      "name": "Mystical Merries",
+      "fileName": "MysticalMerries",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/MysticalMerries.png",
+      "id": 4221,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Sleepy Translations",
+      "fileName": "SleepyTranslations",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SleepyTranslations.png",
+      "id": 4222,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Reaper Scans",
+      "fileName": "ReaperScans",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReaperScans.png",
+      "id": 4223,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Rain of Snow Translations",
+      "fileName": "RainOfSnow",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RainOfSnow.png",
+      "id": 4300,
+      "lang": "en",
+      "ver": "1.0.8",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
@@ -254,7 +286,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RoyalRoad.png",
       "id": 36833,
       "lang": "en",
-      "ver": "1.0.1",
+      "ver": "1.0.5",
       "libVer": "1.0.0",
       "md5": ""
     },
