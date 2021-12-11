@@ -1,4 +1,4 @@
--- {"ver":"2.3.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.3.1","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -216,11 +216,14 @@ function defaults:parseNovel(url, loadChapters)
 		end
 
 		local chapterList = doc:select(self.chaptersListSelector)
+		local chapterOrder = chapterList:size()
 		local novelList = AsList(map(chapterList, function(v)
+			chapterOrder = chapterOrder - 1
 			return NovelChapter{
 				title = v:selectFirst("a"):text(),
 				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
-				release = v:selectFirst("span.chapter-release-date"):text()
+				release = v:selectFirst("span.chapter-release-date"):text(),
+				order = chapterOrder
 			}
 		end))
 		Reverse(novelList)
