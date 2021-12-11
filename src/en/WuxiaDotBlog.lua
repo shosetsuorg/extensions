@@ -154,14 +154,14 @@ return {
 			local rows = GETDocument(expandURL("/?search=" .. string.gsub(data[QUERY]," ","+"))):select("tr")
 			for i=1, rows:size()-1 do -- ignore the first
 				local row = rows:get(i)
-				local novel = Novel()
-				novel:setImageURL(row:selectFirst("td:nth-child(2) img"):attr("src"))
-				novel:setTitle(row:selectFirst("td:nth-child(3) a"):text())
-				novel:setLink(shrinkURL(row:selectFirst("td:nth-child(3) a"):attr("href")))
-
-				result[#result+1] = novel
+				result[#result+1] = Novel {
+					title = row:selectFirst("td:nth-child(3) a"):text(),
+					link = shrinkURL(row:selectFirst("td:nth-child(3) a"):attr("href")),
+					imageURL = row:selectFirst("td:nth-child(2) img"):attr("src")
+				}
 			end
 		end)
+
 		return result
 	end,
 }
