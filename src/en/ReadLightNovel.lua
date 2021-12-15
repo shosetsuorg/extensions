@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"2.0.3","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"2.0.4","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.readlightnovel.me"
 local qs = Require("url").querystring
@@ -51,7 +51,7 @@ return {
 
 	listings = {
 		Listing("Top Novels", true, function(data)
-			return parseTop(GETDocument(baseURL .. "/top-novel/" .. data[PAGE]))
+			return parseTop(GETDocument(baseURL .. "/top-novels/" .. data[PAGE]))
 		end)
 	},
 
