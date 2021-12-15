@@ -61,16 +61,6 @@
       "md5": "ad8a6211419b89c1c9bda5d6cd07e19e"
     },
     {
-      "name": "FastNovel",
-      "fileName": "FastNovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/FastNovel.png",
-      "id": 258,
-      "lang": "en",
-      "ver": "0.1.5",
-      "libVer": "1.0.0",
-      "md5": "161b6193d54c876cc658bd353f6623"
-    },
-    {
       "name": "VipNovel",
       "fileName": "VipNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/VipNovel.png",

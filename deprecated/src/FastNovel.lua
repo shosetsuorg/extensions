@@ -1,5 +1,5 @@
 -- {"id":258,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]}
-
+-- TODO IMPORTANT: Some text paragraphs of a chapter get decoded via JavaScript. Removal due to those missing paragraphs, which are not obvious to the user.
 
 local baseURL = "https://fastnovel.net"
 local encode = Require("url").encode
