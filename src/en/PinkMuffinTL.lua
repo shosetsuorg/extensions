@@ -1,4 +1,4 @@
--- {"id":4301,"ver":"1.0.8","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4301,"ver":"1.0.9","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://pinkmuffinyum.wordpress.com"
 
@@ -15,7 +15,7 @@ local function expandURL(url)
 end
 
 local function getPassage(chapterURL)
-	local doc = GETDocument(chapterURL):selectFirst("div.wp-site-blocks")
+	local doc = GETDocument(expandURL(chapterURL)):selectFirst("div.wp-site-blocks")
 	local chap = doc:selectFirst(".entry-content.wp-block-post-content")
 	local title = doc:selectFirst("h2.wp-block-post-title"):text()
 	chap:child(0):before("<h1>" .. title .. "</h1>")
@@ -23,7 +23,7 @@ local function getPassage(chapterURL)
 end
 
 local function parseNovel(novelURL, loadChapters)
-	local doc = GETDocument(novelURL):selectFirst("div.wp-site-blocks")
+	local doc = GETDocument(expandURL(novelURL)):selectFirst("div.wp-site-blocks")
 	local content = doc:selectFirst("main.wp-block-group")
 
 	local info = NovelInfo {
