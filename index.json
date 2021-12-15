@@ -201,6 +201,16 @@
       "md5": ""
     },
     {
+      "name": "Pink Muffin TL",
+      "fileName": "PinkMuffinTL",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/PinkMuffinTL.png",
+      "id": 4301,
+      "lang": "en",
+      "ver": "1.0.8",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
