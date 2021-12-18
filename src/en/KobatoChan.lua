@@ -1,4 +1,4 @@
--- {"id":74485,"ver":"1.1.0","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":74485,"ver":"1.1.1","libVer":"1.0.0","author":"TechnoJo4"}
 
 local baseURL = "https://kobatochan.com"
 
@@ -54,7 +54,7 @@ return {
 			return map(flatten(mapNotNil(doc:selectFirst("nav#access ul"):children(), function(v)
 				local text = v:selectFirst("a"):text()
 				return (text:find("Novels", 0, true) or text == "Original Works") and
-						map(v:selectFirst("ul.sub-menu"):select("a"), function(v) return v end)
+						map(v:selectFirst("ul.sub-menu"):select("> li > a"), function(v) return v end)
 			end)), function(v)
 				return Novel {
 					title = v:text(),

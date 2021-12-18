@@ -1,4 +1,4 @@
--- {"id":93082,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":93082,"ver":"2.0.1","libVer":"1.0.0","author":"Doomsdayrs"}
 local baseURL = "https://www.nanomashin.online"
 
 local function text(v)
@@ -26,10 +26,9 @@ return {
 	listings = {
 		Listing("Projects", false, function()
 			local doc = GETDocument(baseURL)
-
-			return map(doc:select("div.p-4 a"), function(v)
+			return map(doc:select("div.shadow-md div.flex a"), function(v)
 				return Novel {
-					title = v:selectFirst("h2"):text(),
+					title = v:text(),
 					link = v:attr("href"),
 					imageURL = expandURL("/_next/image?url=%2Fstatic%2Fimages%2F" .. v:attr("href") .. "-cover.png&w=384&q=75"),
 				}
@@ -42,7 +41,7 @@ return {
 
 		local info = NovelInfo {
 			title = document:selectFirst("h1.text-3xl"):text(),
-			imageURL = expandURL(document:selectFirst("img.object-contain"):attr("src")),
+			imageURL = expandURL("/_next/image?url=%2Fstatic%2Fimages%2F" .. url .. "-cover.png&w=384&q=75"),
 			description = document:selectFirst("div.pt-6.pb-8"):selectFirst("div.pt-6.pb-8"):text(),
 		}
 

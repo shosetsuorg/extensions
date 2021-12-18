@@ -1,4 +1,4 @@
--- {"ver":"2.3.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.3.2","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -169,16 +169,25 @@ function defaults:parseNovel(url, loadChapters)
 	local titleElement = doc:selectFirst(self.novelPageTitleSel)
 	titleElement:select("span"):remove()
 
+	-- Temporarily saves a Jsoup selection for repeated use. Initial value used for status.
+	local selectedContent = doc:selectFirst("div.post-status"):select("div.post-content_item")
+
 	local info = NovelInfo {
 		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
 		title = titleElement:text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
-		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
-		            :select("div.summary-content"):text() == "OnGoing"
-				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
+		status = ({
+					OnGoing = NovelStatus.PUBLISHING,
+					Completed = NovelStatus.COMPLETED,
+					Canceled = NovelStatus.PAUSED,
+					["On Hold"] = NovelStatus.PAUSED,
+					Ongoing = NovelStatus.PUBLISHING -- Never spotted, but better safe than sorry.
+				-- If there is a 'Release' content item then it comes before the 'Status'.
+				-- Therefore, select last content item.
+				})[selectedContent:get(selectedContent:size()-1):select("div.summary-content"):text()]
 	}
 	-- Not every Novel has an guaranteed author, artist or genres (looking at you NovelTrench).
-	local selectedContent = content:selectFirst("div.author-content")
+	selectedContent = content:selectFirst("div.author-content")
 	if selectedContent ~= nil then
 		info:setAuthors( map(selectedContent:select("a"), text) )
 	end

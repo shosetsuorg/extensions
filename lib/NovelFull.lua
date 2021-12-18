@@ -1,4 +1,4 @@
--- {"ver":"2.0.3","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.4","author":"TechnoJo4","dep":["url"]}
 
 -- rename this if you ever figure out its real name
 
@@ -87,8 +87,10 @@ function defaults:parseNovel(url, loadChapters)
 	info:setAuthors(meta_links(0))
 	info:setAlternativeTitles(meta_links(1))
 	info:setGenres(meta_links(2))
-	info:setStatus(elem:get(meta_offset + 4):select("a"):text() == "Completed"
-			and NovelStatus.COMPLETED or NovelStatus.UNKNOWN)
+	info:setStatus( ({
+		Ongoing = NovelStatus.PUBLISHING,
+		Completed = NovelStatus.COMPLETED
+	})[elem:get(meta_offset + 4):select("a"):text()] )
 
 	info:setImageURL((self.appendURLToInfoImage and self.baseURL or "") .. doc:selectFirst("div.book img"):attr("src"))
 	info:setDescription(table.concat(map(doc:select("div.desc-text p"), text), "\n"))

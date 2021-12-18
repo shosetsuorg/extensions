@@ -14,7 +14,7 @@
     },
     {
       "name": "NovelFull",
-      "ver": "2.0.3"
+      "ver": "2.0.4"
     },
     {
       "name": "url",
@@ -22,11 +22,11 @@
     },
     {
       "name": "WWVolare",
-      "ver": "1.2.0"
+      "ver": "1.2.1"
     },
     {
       "name": "Madara",
-      "ver": "2.3.1"
+      "ver": "2.3.2"
     }
   ],
   "scripts": [
@@ -266,7 +266,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/KobatoChan.png",
       "id": 74485,
       "lang": "en",
-      "ver": "1.1.0",
+      "ver": "1.1.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -276,7 +276,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ScribbleHub.png",
       "id": 86802,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -306,7 +306,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NMTranslations.png",
       "id": 93082,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
