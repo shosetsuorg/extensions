@@ -26,7 +26,7 @@
     },
     {
       "name": "Madara",
-      "ver": "2.3.2"
+      "ver": "2.3.5"
     }
   ],
   "scripts": [
@@ -196,7 +196,7 @@
       "imageURL": "http://github.com/shosetsuorg/extensions/raw/dev/icons/EternalTranslation.png",
       "id": 4224,
       "lang": "en",
-      "ver": "1.0.3",
+      "ver": "1.0.5",
       "libVer": "1.0.0",
       "md5": ""
     },

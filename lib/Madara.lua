@@ -1,4 +1,4 @@
--- {"ver":"2.3.2","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.3.5","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -17,6 +17,7 @@ local defaults = {
 	hasCloudFlare = false,
 	hasSearch = true,
 	chapterType = ChapterType.HTML,
+	chaptersOrderReversed = true,
 	-- If chaptersScriptLoaded is true, then a ajax request has to be made to get the chapter list.
 	-- Otherwise the chapter list is already loaded when loading the novel overview.
 	chaptersScriptLoaded = true,
@@ -218,9 +219,17 @@ function defaults:parseNovel(url, loadChapters)
 		end
 
 		local chapterList = doc:select(self.chaptersListSelector)
-		local chapterOrder = chapterList:size()
+		local chapterOrder = -1
+		if self.chaptersOrderReversed then
+			chapterOrder = chapterList:size()
+		end
 		local novelList = AsList(map(chapterList, function(v)
-			chapterOrder = chapterOrder - 1
+			if self.chaptersOrderReversed then
+				chapterOrder = chapterOrder - 1
+			else
+				chapterOrder = chapterOrder + 1
+			end
+			print(chapterOrder)
 			return NovelChapter{
 				title = v:selectFirst("a"):text(),
 				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
@@ -228,7 +237,9 @@ function defaults:parseNovel(url, loadChapters)
 				order = chapterOrder
 			}
 		end))
-		Reverse(novelList)
+		if self.chaptersOrderReversed then
+			Reverse(novelList)
+		end
 		info:setChapters(novelList)
 	end
 
