@@ -1,4 +1,4 @@
--- {"ver":"2.3.2","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.3.3","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
