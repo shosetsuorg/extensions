@@ -1,4 +1,4 @@
--- {"id":4224,"ver":"1.0.5","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.5"]}
+-- {"id":4224,"ver":"1.0.3","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.2"]}
 
 return Require("Madara")("https://eternaltranslation.com", {
 	id = 4224,

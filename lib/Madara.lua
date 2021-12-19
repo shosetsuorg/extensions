@@ -1,4 +1,4 @@
--- {"ver":"2.3.5","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.3.2","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -229,7 +229,6 @@ function defaults:parseNovel(url, loadChapters)
 			else
 				chapterOrder = chapterOrder + 1
 			end
-			print(chapterOrder)
 			return NovelChapter{
 				title = v:selectFirst("a"):text(),
 				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
