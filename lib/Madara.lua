@@ -17,6 +17,7 @@ local defaults = {
 	hasCloudFlare = false,
 	hasSearch = true,
 	chapterType = ChapterType.HTML,
+	chaptersOrderReversed = true,
 	-- If chaptersScriptLoaded is true, then a ajax request has to be made to get the chapter list.
 	-- Otherwise the chapter list is already loaded when loading the novel overview.
 	chaptersScriptLoaded = true,
@@ -24,6 +25,8 @@ local defaults = {
 	-- If ajaxUsesFormData is true, then a POST request will be send to baseURL/ajaxFormDataUrl.
 	-- Otherwise to baseURL/shrinkURLNovel/novelurl/ajaxSeriesUrl .
 	ajaxUsesFormData = false,
+	ajaxFormDataSel= "a.wp-manga-action-button",
+	ajaxFormDataAttr = "data-post",
 	ajaxFormDataUrl = "/wp-admin/admin-ajax.php",
 	ajaxSeriesUrl = "ajax/chapters/"
 }
@@ -206,8 +209,8 @@ function defaults:parseNovel(url, loadChapters)
 		if self.chaptersScriptLoaded then
 			if self.ajaxUsesFormData then
 				-- Old method.
-				local button = doc:selectFirst("a.wp-manga-action-button")
-				local id = button:attr("data-post")
+				local button = doc:selectFirst(self.ajaxFormDataSel)
+				local id = button:attr(self.ajaxFormDataAttr)
 
 				doc = RequestDocument(
 						POST(self.baseURL .. self.ajaxFormDataUrl, nil,
@@ -225,9 +228,16 @@ function defaults:parseNovel(url, loadChapters)
 		end
 
 		local chapterList = doc:select(self.chaptersListSelector)
-		local chapterOrder = chapterList:size()
+		local chapterOrder = -1
+		if self.chaptersOrderReversed then
+			chapterOrder = chapterList:size()
+		end
 		local novelList = AsList(map(chapterList, function(v)
-			chapterOrder = chapterOrder - 1
+			if self.chaptersOrderReversed then
+				chapterOrder = chapterOrder - 1
+			else
+				chapterOrder = chapterOrder + 1
+			end
 			return NovelChapter{
 				title = v:selectFirst("a"):text(),
 				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
@@ -235,7 +245,9 @@ function defaults:parseNovel(url, loadChapters)
 				order = chapterOrder
 			}
 		end))
-		Reverse(novelList)
+		if self.chaptersOrderReversed then
+			Reverse(novelList)
+		end
 		info:setChapters(novelList)
 	end
 
