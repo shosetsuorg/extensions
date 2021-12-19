@@ -1,4 +1,4 @@
--- {"ver":"1.2.0","author":"TechnoJo4","dep":["dkjson","CommonCSS"]}
+-- {"ver":"1.2.1","author":"TechnoJo4","dep":["dkjson","CommonCSS"]}
 
 local css = Require("CommonCSS").table
 
@@ -35,7 +35,9 @@ return function(id, name, base, contentSel, image)
 				tags = v.tags,
 				genres = v.genres,
 				language = v.language,
-				status = v.status == 1 and NovelStatus.PUBLISHING or NovelStatus.UNKNOWN
+				status = v.status == 1 and NovelStatus.PUBLISHING
+						or v.status == 2 and NovelStatus.COMPLETED
+						or NovelStatus.UNKNOWN
 			}
 		end
 	end
