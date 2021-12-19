@@ -26,7 +26,7 @@
     },
     {
       "name": "Madara",
-      "ver": "2.3.1"
+      "ver": "2.3.2"
     }
   ],
   "scripts": [
@@ -185,6 +185,16 @@
       "fileName": "ReaperScans",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReaperScans.png",
       "id": 4223,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Eternal Translation",
+      "fileName": "EternalTranslation",
+      "imageURL": "http://github.com/shosetsuorg/extensions/raw/dev/icons/EternalTranslation.png",
+      "id": 4224,
       "lang": "en",
       "ver": "1.0.3",
       "libVer": "1.0.0",

@@ -1,4 +1,4 @@
--- {"ver":"2.3.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.3.2","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -24,6 +24,8 @@ local defaults = {
 	-- If ajaxUsesFormData is true, then a POST request will be send to baseURL/ajaxFormDataUrl.
 	-- Otherwise to baseURL/shrinkURLNovel/novelurl/ajaxSeriesUrl .
 	ajaxUsesFormData = false,
+	ajaxFormDataSel= "a.wp-manga-action-button",
+	ajaxFormDataAttr = "data-post",
 	ajaxFormDataUrl = "/wp-admin/admin-ajax.php",
 	ajaxSeriesUrl = "ajax/chapters/"
 }
@@ -197,8 +199,8 @@ function defaults:parseNovel(url, loadChapters)
 		if self.chaptersScriptLoaded then
 			if self.ajaxUsesFormData then
 				-- Old method.
-				local button = doc:selectFirst("a.wp-manga-action-button")
-				local id = button:attr("data-post")
+				local button = doc:selectFirst(self.ajaxFormDataSel)
+				local id = button:attr(self.ajaxFormDataAttr)
 
 				doc = RequestDocument(
 						POST(self.baseURL .. self.ajaxFormDataUrl, nil,
