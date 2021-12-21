@@ -221,6 +221,16 @@
       "md5": ""
     },
     {
+      "name": "Travis Translations",
+      "fileName": "TravisTranslations",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/TravisTranslations.png",
+      "id": 4302,
+      "lang": "en",
+      "ver": "1.0.10",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
