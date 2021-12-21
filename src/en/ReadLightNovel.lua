@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"2.0.4","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
+-- {"id":6118,"ver":"2.0.5","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.readlightnovel.me"
 local qs = Require("url").querystring
@@ -51,7 +51,7 @@ return {
 
 	listings = {
 		Listing("Top Novels", true, function(data)
-			return parseTop(GETDocument(baseURL .. "/top-novels/" .. data[PAGE]))
+			return parseTop(GETDocument(expandURL("/top-novels/top-rated/" .. data[PAGE])))
 		end)
 	},
 
@@ -125,7 +125,7 @@ return {
 
 	search = function(data)
 		return parseTop(RequestDocument(
-			POST(baseURL .. "/detailed-search", nil,
+			POST(expandURL("/detailed-search"), nil,
 				RequestBody(qs({ keyword=data[QUERY], search=1 }), MediaType("application/x-www-form-urlencoded")))
 			))
 	end,
