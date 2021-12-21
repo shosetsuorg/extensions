@@ -1,4 +1,4 @@
--- {"id":4301,"ver":"1.0.9","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4301,"ver":"1.1.0","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://pinkmuffinyum.wordpress.com"
 
@@ -19,7 +19,10 @@ local function getPassage(chapterURL)
 	local chap = doc:selectFirst(".entry-content.wp-block-post-content")
 	local title = doc:selectFirst("h2.wp-block-post-title"):text()
 	chap:child(0):before("<h1>" .. title .. "</h1>")
-	return pageOfElem(chap, false, css)
+	-- Removes the like button div and script
+	chap:selectFirst("script"):remove()
+	chap:selectFirst("#jp-post-flair"):remove()
+	return pageOfElem(chap, true)
 end
 
 local function parseNovel(novelURL, loadChapters)
@@ -37,11 +40,13 @@ local function parseNovel(novelURL, loadChapters)
 
 	if loadChapters then
 		local chapters = (mapNotNil(content:selectFirst(".entry-content.wp-block-post-content"):select("a.wp-block-button__link"), function(v, i)
-			return NovelChapter {
-				order = i,
-				title = v:text(),
-				link = shrinkURL(v:attr("href"))
-			}
+			if v:attr("href") ~= "" then
+				return NovelChapter {
+					order = i,
+					title = v:text(),
+					link = shrinkURL(v:attr("href"))
+				}
+			end
 		end))
 		info:setChapters(AsList(chapters))
 	end
