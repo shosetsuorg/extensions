@@ -301,12 +301,12 @@ return {
 				(data[PAGES_MAX_FILTER_KEY ]~="" and "&maxPages=" ..data[PAGES_MAX_FILTER_KEY ] or "")..
 				(data[RATING_MIN_FILTER_KEY]~="" and "&minRating="..data[RATING_MIN_FILTER_KEY] or "")..
 				(data[RATING_MAX_FILTER_KEY]~="" and "&maxRating="..data[RATING_MAX_FILTER_KEY] or "")..
-				(data[600] and "&status="..STATUS_FILTER_INT[600] or "")..
 				(data[601] and "&status="..STATUS_FILTER_INT[601] or "")..
 				(data[602] and "&status="..STATUS_FILTER_INT[602] or "")..
 				(data[603] and "&status="..STATUS_FILTER_INT[603] or "")..
 				(data[604] and "&status="..STATUS_FILTER_INT[604] or "")..
 				(data[605] and "&status="..STATUS_FILTER_INT[605] or "")..
+				(data[606] and "&status="..STATUS_FILTER_INT[606] or "")..
 				(data[ORDER_BY_FILTER_KEY]~=0 and "&orderBy="..ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]] or "")..
 				(data[ORDER_FILTER_KEY] and "&dir=asc" or "")..
 				(data[TYPE_FILTER_KEY]~=0 and "&type="..TYPE_FILTER_INT[data[TYPE_FILTER_KEY]] or "")
@@ -326,12 +326,12 @@ return {
 		TextFilter(RATING_MIN_FILTER_KEY, "Rating min 0.0"),
 		TextFilter(RATING_MAX_FILTER_KEY, "Rating max 5.0"),
 		FilterGroup("Status", {
-			CheckboxFilter(701, STATUS_FILTER_EXT[01]),
-			CheckboxFilter(702, STATUS_FILTER_EXT[02]),
-			CheckboxFilter(703, STATUS_FILTER_EXT[03]),
-			CheckboxFilter(704, STATUS_FILTER_EXT[04]),
-			CheckboxFilter(705, STATUS_FILTER_EXT[05]),
-			CheckboxFilter(706, STATUS_FILTER_EXT[06]),
+			CheckboxFilter(601, STATUS_FILTER_EXT[01]),
+			CheckboxFilter(602, STATUS_FILTER_EXT[02]),
+			CheckboxFilter(603, STATUS_FILTER_EXT[03]),
+			CheckboxFilter(604, STATUS_FILTER_EXT[04]),
+			CheckboxFilter(605, STATUS_FILTER_EXT[05]),
+			CheckboxFilter(606, STATUS_FILTER_EXT[06]),
 		}),
 		DropdownFilter(ORDER_BY_FILTER_KEY, "Order by", ORDER_BY_FILTER_EXT),
 		SwitchFilter(ORDER_FILTER_KEY, "Descending / Ascending"),
