@@ -91,10 +91,9 @@ local function expandURL(url)
 end
 
 local function getPassage(chapterURL)
-	local content = GETDocument(expandURL(chapterURL)):selectFirst("main#primary")
-	-- Removes the title and makes it an H1 for consistant custom CSS.
+	local chap = GETDocument(expandURL(chapterURL)):selectFirst("main#primary")
 	local title = content:selectFirst("h2"):text()
-	local chap = content:selectFirst(".reader-content")
+	chap = content:selectFirst(".reader-content")
 	chap:child(0):before("<h1>" .. title .. "</h1>")
 	-- Remove empty <p> tags
 	local toRemove = {}
@@ -113,7 +112,7 @@ local function getPassage(chapterURL)
 end
 
 local function parseNovel(novelURL, loadChapters)
-	local doc = GETDocument(baseURL .. novelURL)
+	local doc = GETDocument(expandURL(novelURL))
 	local content = doc:selectFirst("main#primary")
 
 	local info = NovelInfo {
@@ -163,6 +162,7 @@ end
 
 local function getSearch(data)
 	local query = data[QUERY]
+	-- Remove the +1 work around when the indexing gets changed.
 	local page = data[PAGE] + 1
 	local status = data[STATUS_FILTER]
 	local orderBy = data[ORDER_BY_FILTER]
@@ -195,8 +195,7 @@ local function getSearch(data)
 	if orderBy ~= nil then
 		url = url .. "&orderby=" .. ORDER_BY_TERMS[orderBy+1]
 	end
-	local docURL = expandURL(url)
-	return parseListing(docURL)
+	return parseListing(expandURL(url))
 end
 
 local function getListing(data)
