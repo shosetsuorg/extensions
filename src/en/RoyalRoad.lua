@@ -200,8 +200,9 @@ local function listing(name, inc, url)
 		local filterstring = createFilterString(data)
 		if filterstring ~= "?" then
 			url = expandURL("/fictions/search")
+			inc = false --don't crash the site
 		end
-		return parseListing(GETDocument(inc and (url..filterstring.."&page="..data[PAGE]) or url))
+		return parseListing(GETDocument(url..filterstring..(inc and "&page="..data[PAGE] or "")))
 	end)
 end
 
