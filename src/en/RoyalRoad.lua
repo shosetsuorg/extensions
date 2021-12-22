@@ -195,7 +195,13 @@ end
 local function listing(name, inc, url)
 	url = expandURL(url)
 	return Listing(name, inc, function(data)
-		return parseListing(GETDocument(inc and (url..createFilterString(data).."&page="..data[PAGE]) or url))
+		-- ?genre= (instead of ?tagsAdd=) is the only working listing filter,
+		-- so if any filter is used, switch from listing to search
+		local filterstring = createFilterString(data)
+		if filterstring ~= "?" then
+			url = expandURL("/fictions/search")
+		end
+		return parseListing(GETDocument(inc and (url..filterstring.."&page="..data[PAGE]) or url))
 	end)
 end
 
