@@ -32,10 +32,9 @@ local function expandURL(url)
 end
 
 local function getPassage(chapterURL)
-	-- The additional shrinkURL is to support older version of the extension. (That didn't have shortened links)
-	local content = GETDocument(expandURL(chapterURL))
-	local title = content:selectFirst("li.menu-toc-current"):text()
-	local chap = content:selectFirst(".zoomdesc-cont")
+	local chap = GETDocument(expandURL(chapterURL))
+	local title = chap:selectFirst("li.menu-toc-current"):text()
+	chap = chap:selectFirst(".zoomdesc-cont")
 	chap:child(0):before("<h1>" .. title .. "</h1>")
 	-- Remove empty <p> tags
 	local toRemove = {}
@@ -115,6 +114,7 @@ local function parseListing(listingURL)
 end
 
 local function getListing(data)
+	-- Remove the +1 work around when the indexing gets changed.
 	local page = data[PAGE] + 1
 	local orderBy = data[ORDER_BY_FILTER]
 	local genre = data[GENRE_FILTER]
