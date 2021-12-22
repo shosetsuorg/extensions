@@ -124,7 +124,7 @@ local function getListing(data)
 	if genre ~= 0 then
 		url = "/novels/" .. "?n_orderby=" .. GENRE_TERMS[genre+1]
 	else
-		url = "/"	.. ORDER_BY_TERMS[orderBy+1].. "/page/" ..page
+		url = "/" .. ORDER_BY_TERMS[orderBy+1] .. "/page/" .. page
 	end
 
 	return parseListing(expandURL(url))
