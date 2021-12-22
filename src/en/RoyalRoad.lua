@@ -292,7 +292,7 @@ return {
 		return parseListing(GETDocument(baseURL .. "/fictions/search" ..
 			string.gsub("?"..
 				(data[QUERY]~="" and "&title="..data[QUERY] or "")..
-				(data[AUTHOR_FILTER_KEY]~="" and "&keyword="..data[KEYWORD_FILTER_KEY] or "")..
+				(data[KEYWORD_FILTER_KEY]~="" and "&keyword="..data[KEYWORD_FILTER_KEY] or "")..
 				(data[AUTHOR_FILTER_KEY]~="" and "&author="..data[AUTHOR_FILTER_KEY] or "")..
 				MultiTriQuery(data, GENRES_FILTER_INT, 201, 215)..
 				MultiTriQuery(data, TAGS_FILTER_INT, 301, 346)..
