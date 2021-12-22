@@ -69,8 +69,7 @@ local function parseListing(listingURL)
 end
 
 local function getListing()
-	local docURL = expandURL("/all-projects/")
-	return parseListing(docURL)
+	return parseListing(expandURL("/all-projects/"))
 end
 
 return {
