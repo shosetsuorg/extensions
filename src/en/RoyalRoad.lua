@@ -182,13 +182,16 @@ end
 local function parseListing(doc)
 	local results = doc:selectFirst(".fiction-list")
 
-	return map(results:children(), function(v)
+	return mapNotNil(results:children(), function(v)
 		local a = v:selectFirst(".fiction-title a")
-		return Novel {
-			title = a:text(),
-			link = a:attr("href"):match("/fiction/(%d+)/.-"),
-			imageURL = v:selectFirst("a img"):attr("src")
-		}
+		--No results matching these criteria were found
+		if a then
+			return Novel {
+				title = a:text(),
+				link = a:attr("href"):match("/fiction/(%d+)/.-"),
+				imageURL = v:selectFirst("a img"):attr("src")
+			}
+		end
 	end)
 end
 
