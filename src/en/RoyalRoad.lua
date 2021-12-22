@@ -135,6 +135,7 @@ local function TriStateFilter_(int, str)
 		return CheckboxFilter(int, str)
 	end
 end
+
 local function MultiTriStateFilter(offset, filter_ext, stop)
 	local f={}
 	for int = 1,stop,1
@@ -143,9 +144,11 @@ local function MultiTriStateFilter(offset, filter_ext, stop)
 	end
 	return f
 end
+
 local function TriQuery(data, filter_int, int)
 	return (data[int] and (data[int]==2 and "&tagsRemove" or "&tagsAdd=")..filter_int[int] or "")
 end
+
 local function MultiTriQuery(data, filter_int, start, stop)
 	local q=""
 	for int = start,stop,1
@@ -315,16 +318,8 @@ return {
 		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".chapter-content"), true, css)
 	end,
 
-	--search = function(data)
-	--	return parseListing(GETDocument(qs({
-	--		title = data[QUERY]
-	--	}, baseURL .. "/fictions/search")))
-	--end,
 	search = function(data)
---https://www.royalroad.com/fictions/search?title=world&minPages=&maxPages=&minRating=&maxRating=&dir=asc
-		--return parseListing(GETDocument(qs({
-		return parseListing(GETDocument(baseURL .. "/fictions/search" .. createFilterString(data) ))
-		--}, baseURL .. "/fictions/search")))
+		return parseListing(GETDocument(baseURL .. "/fictions/search" .. createFilterString(data)))
 	end,
 	isSearchIncrementing = false,
 	searchFilters = {
