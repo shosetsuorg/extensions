@@ -10,21 +10,21 @@ local AUTHOR_FILTER_KEY = 100
 local GENRES_FILTER_EXT = {"Action", "Adventure", "Comedy", "Contemporary", "Drama", "Fantasy", "Historical", "Horror", "Mystery", "Psychological", "Romance", "Satire", "Sci-fi", "Short Story", "Tragedy"}
 local GENRES_FILTER_KEY = 200
 local GENRES_FILTER_INT = { --individual, start from 1 to match ext
-	[201]="action",
-	[202]="adventure",
-	[203]="comedy",
-	[204]="contemporary",
-	[205]="drama",
-	[206]="fantasy",
-	[207]="historical",
-	[208]="horror",
-	[209]="mystery",
-	[210]="psychological",
-	[211]="romance",
-	[212]="satire",
-	[213]="sci_fi",
-	[214]="one_shot",
-	[215]="tragedy",
+	[GENRES_FILTER_KEY+1] = "action",
+	"adventure",
+	"comedy",
+	"contemporary",
+	"drama",
+	"fantasy",
+	"historical",
+	"horror",
+	"mystery",
+	"psychological",
+	"romance",
+	"satire",
+	"sci_fi",
+	"one_shot",
+	"tragedy",
 }
 local TAGS_FILTER_EXT = {"Anti-Hero Lead", "Artificial Intelligence", "Attractive MC", "Cyberpunk", "Dungeon", "Dystopia", "Female Lead", "First Contact", "GameLit", "Gender Bender", "Genetically Engineered", "Grimdark", "Hard Sci-fi", "Harem", "High Fantasy", "LitRPG", "Loop", "Low Fantasy", "Magic", "Male Lead", "Martial Arts", "Multiple Lead Characters", "Mythos", "Non-Human lead", "Portal Fantasy / Isekai", "Post Apocalyptic", "Progression", "Reader interactive", "Reincarnation", "Ruling Class", "School Life", "Secret Identity", "Slice of Life", "Soft Sci-fi", "Space Opera", "Sports", "Steampunk", "Strategy", "Strong Lead", "Super Heroes", "Supernatural", "Technologically Engineered", "Time Travel", "Urban Fantasy", "Villainous Lead", "Virtual Reality", "War and Military", "Wuxia", "Xianxia"}
 local TAGS_FILTER_KEY = 300
@@ -138,9 +138,8 @@ end
 
 local function MultiTriStateFilter(offset, filter_ext, stop)
 	local f={}
-	for int = 1,stop,1
-	do
-		table.insert(f, TriStateFilter_(offset+int, filter_ext[int]))
+	for i=1,stop do
+		f[#f+1] = TriStateFilter(offset+i, filter_ext[i])
 	end
 	return f
 end
@@ -159,27 +158,66 @@ local function MultiTriQuery(data, filter_int, start, stop)
 end
 
 local function createFilterString(data)
-	return string.gsub("?"..
-		(data[QUERY] and "&title="..data[QUERY] or "")..
-		(data[KEYWORD_FILTER_KEY]~="" and "&keyword="..data[KEYWORD_FILTER_KEY] or "")..
-		(data[AUTHOR_FILTER_KEY]~="" and "&author="..data[AUTHOR_FILTER_KEY] or "")..
-		MultiTriQuery(data, GENRES_FILTER_INT, 201, 215)..
-		MultiTriQuery(data, TAGS_FILTER_INT, 301, 346)..
-		MultiTriQuery(data, CONTENT_WARNINGS_FILTER_INT, 401, 404)..
-		(data[PAGES_MIN_FILTER_KEY ]~="" and "&minPages=" ..data[PAGES_MIN_FILTER_KEY ] or "")..
-		(data[PAGES_MAX_FILTER_KEY ]~="" and "&maxPages=" ..data[PAGES_MAX_FILTER_KEY ] or "")..
-		(data[RATING_MIN_FILTER_KEY]~="" and "&minRating="..data[RATING_MIN_FILTER_KEY] or "")..
-		(data[RATING_MAX_FILTER_KEY]~="" and "&maxRating="..data[RATING_MAX_FILTER_KEY] or "")..
-		(data[601] and "&status="..STATUS_FILTER_INT[601] or "")..
-		(data[602] and "&status="..STATUS_FILTER_INT[602] or "")..
-		(data[603] and "&status="..STATUS_FILTER_INT[603] or "")..
-		(data[604] and "&status="..STATUS_FILTER_INT[604] or "")..
-		(data[605] and "&status="..STATUS_FILTER_INT[605] or "")..
-		(data[606] and "&status="..STATUS_FILTER_INT[606] or "")..
-		(data[ORDER_BY_FILTER_KEY]~=0 and "&orderBy="..ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]] or "")..
-		(data[ORDER_FILTER_KEY] and "&dir=asc" or "")..
-		(data[TYPE_FILTER_KEY]~=0 and "&type="..TYPE_FILTER_INT[data[TYPE_FILTER_KEY]] or "")
-	, "?&", "?")
+	local function emptyNil(str)
+		if str == "" then
+			return nil
+		end
+		return str
+	end
+
+	local statuses = {}
+	for i=1,#STATUS_FILTER_EXT do
+		if data[STATUS_FILTER_KEY+i] then
+			statuses[#statuses+1] = STATUS_FILTER_INT[STATUS_FILTER_KEY+i]
+		end
+	end
+	
+	local order
+	if data[ORDER_BY_FILTER_KEY] ~= 0 then
+		order = ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]
+	end
+	
+	local dir
+	if data[ORDER_FILTER_KEY] then
+		dir = "asc"
+	end
+	
+	local type
+	if data[TYPE_FILTER_KEY] ~= 0 then
+		type = TYPE_FILTER_INT[data[TYPE_FILTER_KEY]]
+	end
+	
+	local tagsAdd, tagsRemove = {}, {}
+	local function MultiTryQuery(strings, start, len)
+		for i=start+1,start+len do
+			if data[i] then
+				if data[i] == 2 then
+					tagsRemove[#tagsRemove+1] = strings[i]
+				else
+					tagsAdd[#tagsAdd+1] = strings[i]
+				end
+			end
+		end
+	end
+	
+	MultiTriQuery(GENRES_FILTER_INT, GENRES_FILTER_KEY, #GENRES_FILTER_EXT)
+	MultiTriQuery(TAGS_FILTER_INT, TAGS_FILTER_KEY, #TAGS_FILTER_EXT)
+	MultiTriQuery(CONTENT_WARNINGS_FILTER_INT, CONTENT_WARNINGS_FILTER_KEY, #CONTENT_WARNINGS_FILTER_EXT)
+	
+	return "?"..qs({
+		title = data[QUERY],
+		keyword = emptyNil(data[KEYWORD_FILTER_KEY]),
+		author = emptyNil(data[AUTHOR_FILTER_KEY]),
+		minPages = emptyNil(data[PAGES_MIN_FILTER_KEY]),
+		maxPages = emptyNil(data[PAGES_MAX_FILTER_KEY]),
+		minRating = emptyNil(data[RATING_MIN_FILTER_KEY]),
+		maxRating = emptyNil(data[RATING_MAX_FILTER_KEY]),
+		status = statuses,
+		orderBy = order,
+		dir = dir,
+		tagsAdd = tagsAdd,
+		tagsRemove = tagsRemove
+	})
 end
 
 local function parseListing(doc)
@@ -325,9 +363,9 @@ return {
 	searchFilters = {
 		TextFilter(KEYWORD_FILTER_KEY, "Keyword (title or description)"),
 		TextFilter(AUTHOR_FILTER_KEY, "Author name"),
-		FilterGroup("Genres", MultiTriStateFilter(200, GENRES_FILTER_EXT, 15)),
-		FilterGroup("Additional Tags", MultiTriStateFilter(300, TAGS_FILTER_EXT, 46)),
-		FilterGroup("Content Warnings", MultiTriStateFilter(400, CONTENT_WARNINGS_FILTER_EXT, 4)),
+		FilterGroup("Genres", MultiTriStateFilter(GENRES_FILTER_KEY, GENRES_FILTER_EXT, #GENRES_FILTER_EXT)),
+		FilterGroup("Additional Tags", MultiTriStateFilter(TAGS_FILTER_KEY, TAGS_FILTER_EXT, #TAGS_FILTER_EXT)),
+		FilterGroup("Content Warnings", MultiTriStateFilter(CONTENT_WARNINGS_FILTER_KEY, CONTENT_WARNINGS_FILTER_EXT, #CONTENT_WARNINGS_FILTER_EXT)),
 		TextFilter(PAGES_MIN_FILTER_KEY, "Number of Pages min 0"), --todo number slider/selector
 		TextFilter(PAGES_MAX_FILTER_KEY, "Number of Pages max 20000"),
 		TextFilter(RATING_MIN_FILTER_KEY, "Rating min 0.0"),
