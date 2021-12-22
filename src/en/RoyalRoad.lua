@@ -128,26 +128,6 @@ local function expandURL(url)
 	return baseURL .. (url:sub(1, 1) == "/" and "" or "/") .. url
 end
 
-local function parseListing(doc)
-	local results = doc:selectFirst(".fiction-list")
-
-	return map(results:children(), function(v)
-		local a = v:selectFirst(".fiction-title a")
-		return Novel {
-			title = a:text(),
-			link = a:attr("href"):match("/fiction/(%d+)/.-"),
-			imageURL = v:selectFirst("a img"):attr("src")
-		}
-	end)
-end
-
-local function listing(name, inc, url)
-	url = expandURL(url)
-	return Listing(name, inc, function(data)
-		return parseListing(GETDocument(inc and (url.."?page="..data[PAGE]) or url))
-	end)
-end
-
 local function TriStateFilter_(int, str)
 	if TriStateFilter then
 		return TriStateFilter(int, str)
@@ -173,6 +153,50 @@ local function MultiTriQuery(data, filter_int, start, stop)
 		q =q.. TriQuery(data, filter_int, int)
 	end
 	return q
+end
+
+local function createFilterString(data)
+	return string.gsub("?"..
+		(data[QUERY] and "&title="..data[QUERY] or "")..
+		(data[KEYWORD_FILTER_KEY]~="" and "&keyword="..data[KEYWORD_FILTER_KEY] or "")..
+		(data[AUTHOR_FILTER_KEY]~="" and "&author="..data[AUTHOR_FILTER_KEY] or "")..
+		MultiTriQuery(data, GENRES_FILTER_INT, 201, 215)..
+		MultiTriQuery(data, TAGS_FILTER_INT, 301, 346)..
+		MultiTriQuery(data, CONTENT_WARNINGS_FILTER_INT, 401, 404)..
+		(data[PAGES_MIN_FILTER_KEY ]~="" and "&minPages=" ..data[PAGES_MIN_FILTER_KEY ] or "")..
+		(data[PAGES_MAX_FILTER_KEY ]~="" and "&maxPages=" ..data[PAGES_MAX_FILTER_KEY ] or "")..
+		(data[RATING_MIN_FILTER_KEY]~="" and "&minRating="..data[RATING_MIN_FILTER_KEY] or "")..
+		(data[RATING_MAX_FILTER_KEY]~="" and "&maxRating="..data[RATING_MAX_FILTER_KEY] or "")..
+		(data[601] and "&status="..STATUS_FILTER_INT[601] or "")..
+		(data[602] and "&status="..STATUS_FILTER_INT[602] or "")..
+		(data[603] and "&status="..STATUS_FILTER_INT[603] or "")..
+		(data[604] and "&status="..STATUS_FILTER_INT[604] or "")..
+		(data[605] and "&status="..STATUS_FILTER_INT[605] or "")..
+		(data[606] and "&status="..STATUS_FILTER_INT[606] or "")..
+		(data[ORDER_BY_FILTER_KEY]~=0 and "&orderBy="..ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]] or "")..
+		(data[ORDER_FILTER_KEY] and "&dir=asc" or "")..
+		(data[TYPE_FILTER_KEY]~=0 and "&type="..TYPE_FILTER_INT[data[TYPE_FILTER_KEY]] or "")
+	, "?&", "?")
+end
+
+local function parseListing(doc)
+	local results = doc:selectFirst(".fiction-list")
+
+	return map(results:children(), function(v)
+		local a = v:selectFirst(".fiction-title a")
+		return Novel {
+			title = a:text(),
+			link = a:attr("href"):match("/fiction/(%d+)/.-"),
+			imageURL = v:selectFirst("a img"):attr("src")
+		}
+	end)
+end
+
+local function listing(name, inc, url)
+	url = expandURL(url)
+	return Listing(name, inc, function(data)
+		return parseListing(GETDocument(inc and (url..createFilterString(data).."&page="..data[PAGE]) or url))
+	end)
 end
 
 return {
@@ -289,29 +313,7 @@ return {
 	search = function(data)
 --https://www.royalroad.com/fictions/search?title=world&minPages=&maxPages=&minRating=&maxRating=&dir=asc
 		--return parseListing(GETDocument(qs({
-		return parseListing(GETDocument(baseURL .. "/fictions/search" ..
-			string.gsub("?"..
-				(data[QUERY]~="" and "&title="..data[QUERY] or "")..
-				(data[KEYWORD_FILTER_KEY]~="" and "&keyword="..data[KEYWORD_FILTER_KEY] or "")..
-				(data[AUTHOR_FILTER_KEY]~="" and "&author="..data[AUTHOR_FILTER_KEY] or "")..
-				MultiTriQuery(data, GENRES_FILTER_INT, 201, 215)..
-				MultiTriQuery(data, TAGS_FILTER_INT, 301, 346)..
-				MultiTriQuery(data, CONTENT_WARNINGS_FILTER_INT, 401, 404)..
-				(data[PAGES_MIN_FILTER_KEY ]~="" and "&minPages=" ..data[PAGES_MIN_FILTER_KEY ] or "")..
-				(data[PAGES_MAX_FILTER_KEY ]~="" and "&maxPages=" ..data[PAGES_MAX_FILTER_KEY ] or "")..
-				(data[RATING_MIN_FILTER_KEY]~="" and "&minRating="..data[RATING_MIN_FILTER_KEY] or "")..
-				(data[RATING_MAX_FILTER_KEY]~="" and "&maxRating="..data[RATING_MAX_FILTER_KEY] or "")..
-				(data[601] and "&status="..STATUS_FILTER_INT[601] or "")..
-				(data[602] and "&status="..STATUS_FILTER_INT[602] or "")..
-				(data[603] and "&status="..STATUS_FILTER_INT[603] or "")..
-				(data[604] and "&status="..STATUS_FILTER_INT[604] or "")..
-				(data[605] and "&status="..STATUS_FILTER_INT[605] or "")..
-				(data[606] and "&status="..STATUS_FILTER_INT[606] or "")..
-				(data[ORDER_BY_FILTER_KEY]~=0 and "&orderBy="..ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]] or "")..
-				(data[ORDER_FILTER_KEY] and "&dir=asc" or "")..
-				(data[TYPE_FILTER_KEY]~=0 and "&type="..TYPE_FILTER_INT[data[TYPE_FILTER_KEY]] or "")
-			, "?&", "?")
-		))
+		return parseListing(GETDocument(baseURL .. "/fictions/search" .. createFilterString(data) ))
 		--}, baseURL .. "/fictions/search")))
 	end,
 	isSearchIncrementing = false,
