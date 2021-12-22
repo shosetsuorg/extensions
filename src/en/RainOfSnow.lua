@@ -33,7 +33,7 @@ end
 
 local function getPassage(chapterURL)
 	-- The additional shrinkURL is to support older version of the extension. (That didn't have shortened links)
-	local content = GETDocument(expandURL(shrinkURL(chapterURL)))
+	local content = GETDocument(expandURL(chapterURL))
 	local title = content:selectFirst("li.menu-toc-current"):text()
 	local chap = content:selectFirst(".zoomdesc-cont")
 	chap:child(0):before("<h1>" .. title .. "</h1>")
