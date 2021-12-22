@@ -79,7 +79,7 @@ local TAGS_FILTER_INT = { --individual, start from 1 to match ext
 local CONTENT_WARNINGS_FILTER_EXT = {"Profanity", "Sexual Content", "Gore", "Traumatising content"}
 local CONTENT_WARNINGS_FILTER_KEY = 400
 local CONTENT_WARNINGS_FILTER_INT = { --individual, start from 1 to match ext
-	[CONTENT_WARNINGS_FILTER_INT+1] = "profanity",
+	[CONTENT_WARNINGS_FILTER_KEY+1] = "profanity",
 	"sexuality",
 	"gore",
 	"traumatising",
@@ -91,7 +91,7 @@ local RATING_MAX_FILTER_KEY = 503
 local STATUS_FILTER_EXT = {"ALL", "COMPLETED", "DROPPED", "ONGOING", "HIATUS", "STUB"}
 local STATUS_FILTER_KEY = 600
 local STATUS_FILTER_INT = { --individual, start from 1 to match ext
-	[STATUS_FILTER_INT+1] = "ALL",
+	[STATUS_FILTER_KEY+1] = "ALL",
 	"COMPLETED",
 	"DROPPED",
 	"ONGOING",
