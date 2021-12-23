@@ -139,7 +139,7 @@ end
 local function MultiTriStateFilter(offset, filter_ext, stop)
 	local f={}
 	for i=1,stop do
-		f[#f+1] = TriStateFilter(offset+i, filter_ext[i])
+		f[#f+1] = TriStateFilter_(offset+i, filter_ext[i])
 	end
 	return f
 end
