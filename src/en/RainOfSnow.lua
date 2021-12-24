@@ -1,6 +1,23 @@
--- {"id":4300,"ver":"1.0.8","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4300,"ver":"1.1.0","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://rainofsnow.com"
+
+-- Filter Keys & Values
+local ORDER_BY_FILTER = 3
+local ORDER_BY_VALUES = { "Popular", "Latest Update" }
+local ORDER_BY_TERMS = { "novels", "latest-release" }
+local GENRE_FILTER = 4
+local GENRE_VALUES = { 
+	"All", "Action", "Adventure", "Chinese", "Comedy", "Cultivation", "Drama", "Fantasy", "Japanese", "Korean", "Mystery", "Original Novel", "Romance",	"Sci-Fi"
+ }
+ local GENRE_TERMS = { 0,	16, 11, 342, 13, 15, 3, 7, 343, 341, 12, 339, 5, 14 }
+
+local searchFilters = {
+	DropdownFilter(ORDER_BY_FILTER, "Order by", ORDER_BY_VALUES),
+	DropdownFilter(GENRE_FILTER, "Genre", GENRE_VALUES)
+}
+
+local encode = Require("url").encode
 
 local text = function(v)
 	return v:text()
@@ -15,10 +32,9 @@ local function expandURL(url)
 end
 
 local function getPassage(chapterURL)
-	local chap = GETDocument(chapterURL):selectFirst("div.content")
-	-- Removes the title and makes it an H1 for consistant custom CSS.
-	local title = chap:selectFirst("h2"):text()
-	chap:selectFirst("h2"):remove()
+	local chap = GETDocument(expandURL(chapterURL))
+	local title = chap:selectFirst("li.menu-toc-current"):text()
+	chap = chap:selectFirst(".zoomdesc-cont")
 	chap:child(0):before("<h1>" .. title .. "</h1>")
 	-- Remove empty <p> tags
 	local toRemove = {}
@@ -33,11 +49,11 @@ local function getPassage(chapterURL)
 	for _,v in pairs(toRemove) do
 		v:remove()
 	end
-	return pageOfElem(chap, false, css)
+	return pageOfElem(chap, true)
 end
 
 local function parseNovel(novelURL, loadChapters)
-	local doc = GETDocument(baseURL .. novelURL)
+	local doc = GETDocument(expandURL(novelURL))
 	local content = doc:selectFirst("div.queen")
 
 	local info = NovelInfo {
@@ -59,7 +75,7 @@ local function parseNovel(novelURL, loadChapters)
 			return NovelChapter {
 				order = i,
 				title = v:selectFirst("a"):text(),
-				link = v:selectFirst("a"):attr("href"),
+				link = shrinkURL(v:selectFirst("a"):attr("href")),
 				release = v:selectFirst(".july"):text()
 			}
 		end))
@@ -73,7 +89,7 @@ local function parseNovel(novelURL, loadChapters)
 					return NovelChapter {
 						order = i,
 						title = v:selectFirst("a"):text(),
-						link = v:selectFirst("a"):attr("href"),
+						link = shrinkURL(v:selectFirst("a"):attr("href")),
 						release = v:selectFirst(".july"):text()
 					}
 					end)
@@ -98,12 +114,24 @@ local function parseListing(listingURL)
 end
 
 local function getListing(data)
-	local docURL = expandURL("/novels/page/" ..data[PAGE])
-	return parseListing(docURL)
+	-- Remove the +1 work around when the indexing gets changed.
+	local page = data[PAGE] + 1
+	local orderBy = data[ORDER_BY_FILTER]
+	local genre = data[GENRE_FILTER]
+	
+	local url
+	-- Genre filtering only works with popular order by.
+	if genre ~= 0 then
+		url = "/novels/" .. "?n_orderby=" .. GENRE_TERMS[genre+1]
+	else
+		url = "/" .. ORDER_BY_TERMS[orderBy+1] .. "/page/" .. page
+	end
+
+	return parseListing(expandURL(url))
 end
 
 local function getSearch(data)
-	local docURL = expandURL("?s=" ..data[QUERY])
+	local docURL = expandURL("?s=" ..encode(data[QUERY]))
 	return parseListing(docURL)
 end
 
@@ -114,13 +142,16 @@ return {
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/RainOfSnow.png",
 	chapterType = ChapterType.HTML,
 	
-	listings = { Listing("Popular", true, getListing) },
+	listings = { 
+		Listing("Popular", true, getListing), 
+	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	
 	hasSearch = true,
 	isSearchIncrementing = false,
 	search = getSearch,
+	searchFilters = searchFilters,
 
 	shrinkURL = shrinkURL,
 	expandURL = expandURL
