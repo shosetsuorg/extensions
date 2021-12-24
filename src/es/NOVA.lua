@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.68","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.69","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -208,6 +208,7 @@ local function parseListing(doc)
 			}
 		end)
 	end
+	return {}
 end
 
 local function listing(name, inc, url)
