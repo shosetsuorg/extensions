@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.1.0","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.1.1","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -148,11 +148,11 @@ local function createFilterString(data)
 		orderby =orderby.. "-desc"
 	end
 	
-	local function MultiQuery(strings, start, len)
+	local function MultiQuery(ints)
 		local arr = {}
-		for i=start+1,start+len do
-			if data[i] then
-				arr[#arr+1] = strings[i]
+		for i=0,#ints do
+			if data[ints[i]] then
+				arr[#arr+1] = ints[i]
 			end
 		end
 		return arr
@@ -161,13 +161,13 @@ local function createFilterString(data)
 	return qs({
 		orderby = orderby,
 		ixwpst = {
-			product_cat = MultiQuery(CATEGORIAS_FILTER_INT, CATEGORIAS_FILTER_KEY, #CATEGORIAS_FILTER_INT),
-			pa_estado = MultiQuery(ESTADO_FILTER_INT, ESTADO_FILTER_KEY, #ESTADO_FILTER_INT),
+			product_cat = MultiQuery(CATEGORIAS_FILTER_INT),
+			pa_estado = MultiQuery(ESTADO_FILTER_INT),
 			pa_tipo = TIPO_FILTER_INT[data[TIPO_FILTER_KEY]],
-			pa_pais = MultiQuery(PAIS_FILTER_INT, PAIS_FILTER_KEY, #PAIS_FILTER_INT),
+			pa_pais = MultiQuery(PAIS_FILTER_INT),
 			op = data[searchHasOperId],
 		},
-		product_tag = product_tag,
+		product_tag = data[TAG_FILTER_KEY],
 	})
 	--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
 	--other than orderby, filters in url must not be empty
