@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.1.1","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.1.2","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -143,11 +143,6 @@ end
 local function createFilterString(data)
 	--ixwpst[product_cat] is fine being a sparse array, so no need to count up from 0
 	
-	local orderby = ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]
-	if data[ORDER_FILTER_KEY] then
-		orderby =orderby.. "-desc"
-	end
-	
 	local function MultiQuery(ints)
 		local arr = {}
 		for i=0,#ints do
@@ -158,16 +153,27 @@ local function createFilterString(data)
 		return arr
 	end
 	
+	local orderby = ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]
+	if data[ORDER_FILTER_KEY] then
+		orderby =orderby.. "-desc"
+	end
+	local product_cat = MultiQuery(CATEGORIAS_FILTER_INT)
+	local pa_estado = MultiQuery(ESTADO_FILTER_INT)
+	local pa_tipo = TIPO_FILTER_INT[data[TIPO_FILTER_KEY]]
+	local pa_pais = MultiQuery(PAIS_FILTER_INT)
+	local op = data[searchHasOperId]
+	local product_tag = data[TAG_FILTER_KEY]
+	
 	return qs({
 		orderby = orderby,
 		ixwpst = {
-			product_cat = MultiQuery(CATEGORIAS_FILTER_INT),
-			pa_estado = MultiQuery(ESTADO_FILTER_INT),
-			pa_tipo = TIPO_FILTER_INT[data[TIPO_FILTER_KEY]],
-			pa_pais = MultiQuery(PAIS_FILTER_INT),
-			op = data[searchHasOperId],
+			product_cat = product_cat,
+			pa_estado = pa_estado,
+			pa_tipo = pa_tipo,
+			pa_pais = pa_pais,
+			op = op,
 		},
-		product_tag = data[TAG_FILTER_KEY],
+		product_tag = product_tag,
 	})
 	--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
 	--other than orderby, filters in url must not be empty
