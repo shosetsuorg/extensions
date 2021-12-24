@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.69","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.1.0","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -142,54 +142,36 @@ end
 
 local function createFilterString(data)
 	--ixwpst[product_cat] is fine being a sparse array, so no need to count up from 0
-	return "orderby=" .. encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]) .. (data[ORDER_FILTER_KEY] and "-desc" or "") ..
-		(data[CATEGORIAS_FILTER_INT[01]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[01] or "").. --Acción
-		(data[CATEGORIAS_FILTER_INT[02]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[02] or "").. --Adulto
-		(data[CATEGORIAS_FILTER_INT[03]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[03] or "").. --Artes Marciales
-		(data[CATEGORIAS_FILTER_INT[04]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[04] or "").. --Aventura
-		(data[CATEGORIAS_FILTER_INT[05]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[05] or "").. --Ciencia Ficción
-		(data[CATEGORIAS_FILTER_INT[06]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[06] or "").. --Comedia
-		(data[CATEGORIAS_FILTER_INT[07]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[07] or "").. --Deportes
-		(data[CATEGORIAS_FILTER_INT[08]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[08] or "").. --Drama
-		(data[CATEGORIAS_FILTER_INT[09]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[09] or "").. --Ecchi
-		(data[CATEGORIAS_FILTER_INT[10]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[10] or "").. --Fantasía
-		(data[CATEGORIAS_FILTER_INT[11]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[11] or "").. --Gender Bender
-		(data[CATEGORIAS_FILTER_INT[12]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[12] or "").. --Harem
-		(data[CATEGORIAS_FILTER_INT[13]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[13] or "").. --Histórico
-		(data[CATEGORIAS_FILTER_INT[14]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[14] or "").. --Horror
-		(data[CATEGORIAS_FILTER_INT[15]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[15] or "").. --Mechas (Robots Gigantes)
-		(data[CATEGORIAS_FILTER_INT[16]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[16] or "").. --Misterio
-		(data[CATEGORIAS_FILTER_INT[17]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[17] or "").. --Psicológico
-		(data[CATEGORIAS_FILTER_INT[18]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[18] or "").. --Recuentos de la Vida
-		(data[CATEGORIAS_FILTER_INT[19]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[19] or "").. --Romance
-		(data[CATEGORIAS_FILTER_INT[20]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[20] or "").. --Seinen
-		(data[CATEGORIAS_FILTER_INT[21]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[21] or "").. --Shojo
-		(data[CATEGORIAS_FILTER_INT[22]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[22] or "").. --Shojo Ai
-		(data[CATEGORIAS_FILTER_INT[23]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[23] or "").. --Shonen
-		(data[CATEGORIAS_FILTER_INT[24]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[24] or "").. --Sobrenatural
-		(data[CATEGORIAS_FILTER_INT[25]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[25] or "").. --Tragedia
-		(data[CATEGORIAS_FILTER_INT[26]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[26] or "").. --Vida Escolar
-		(data[CATEGORIAS_FILTER_INT[27]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[27] or "").. --Xuanhuan
-		(data[ESTADO_FILTER_INT[1]]      and "&ixwpst[pa_estado][]="  ..ESTADO_FILTER_INT[1] or "").. --En Proceso --NovelStatus.PUBLISHING
-		(data[ESTADO_FILTER_INT[2]]      and "&ixwpst[pa_estado][]="  ..ESTADO_FILTER_INT[2] or "").. --Pausado    --            On Hold/haitus
-		(data[ESTADO_FILTER_INT[3]]      and "&ixwpst[pa_estado][]="  ..ESTADO_FILTER_INT[3] or "").. --Completado --NovelStatus.COMPLETED
-		(data[TIPO_FILTER_KEY]~=0        and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])     or "")..
-		(data[PAIS_FILTER_INT[01]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[01] or "").. --Argentina
-		(data[PAIS_FILTER_INT[02]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[02] or "").. --Chile
-		(data[PAIS_FILTER_INT[03]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[03] or "").. --China
-		(data[PAIS_FILTER_INT[04]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[04] or "").. --Colombia
-		(data[PAIS_FILTER_INT[05]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[05] or "").. --Corea
-		(data[PAIS_FILTER_INT[06]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[06] or "").. --Ecuador
-		(data[PAIS_FILTER_INT[07]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[07] or "").. --Japón
-		(data[PAIS_FILTER_INT[08]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[08] or "").. --México
-		(data[PAIS_FILTER_INT[09]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[09] or "").. --Nicaragua
-		(data[PAIS_FILTER_INT[10]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[10] or "").. --Perú
-		(data[PAIS_FILTER_INT[11]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[11] or "").. --Venezuela
-		(data[TAG_FILTER_KEY]~=""        and "&product_tag[0]="       ..encode(data[TAG_FILTER_KEY])   or "")..
-		(data[searchHasOperId]~=0       and "&ixwpst[op]="            ..encode(data[searchHasOperId]) or "")
-		--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
-		--other than orderby, filters in url must not be empty
-		--Logic is (cat1 OR cat2) AND (tag1 OR tag2)
+	
+	local orderby = ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]
+	if data[ORDER_FILTER_KEY] then
+		orderby =orderby.. "-desc"
+	end
+	
+	local function MultiQuery(strings, start, len)
+		local arr = {}
+		for i=start+1,start+len do
+			if data[i] then
+				arr[#arr+1] = strings[i]
+			end
+		end
+		return arr
+	end
+	
+	return qs({
+		orderby = orderby,
+		ixwpst = {
+			product_cat = MultiQuery(CATEGORIAS_FILTER_INT, CATEGORIAS_FILTER_KEY, #CATEGORIAS_FILTER_INT),
+			pa_estado = MultiQuery(ESTADO_FILTER_INT, ESTADO_FILTER_KEY, #ESTADO_FILTER_INT),
+			pa_tipo = TIPO_FILTER_INT[data[TIPO_FILTER_KEY]],
+			pa_pais = MultiQuery(PAIS_FILTER_INT, PAIS_FILTER_KEY, #PAIS_FILTER_INT),
+			op = data[searchHasOperId],
+		},
+		product_tag = product_tag,
+	})
+	--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
+	--other than orderby, filters in url must not be empty
+	--Logic is (cat1 OR cat2) AND (tag1 OR tag2)
 end
 local function createSearchString(data)
 	return expandURL("?s="..encode(data[QUERY]).."&post_type=product&"..createFilterString(data))
