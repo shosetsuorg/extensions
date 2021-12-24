@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.65","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.66","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -24,64 +24,64 @@ local ORDER_FILTER_KEY = 1010
 --currently in OR mode, not AND https://wordpress.org/support/topic/multiple-categories-per-filter-results/ https://prnt.sc/tl9zt9 https://prnt.sc/t9wsoy
 local CATEGORIAS_FILTER_INT = {
 	[0] = "", --Cualquier Categoría
-	"40", --Acción
-	"53", --Adulto
-	"52", --Artes Marciales
-	"41", --Aventura
-	"59", --Ciencia Ficción
-	"43", --Comedia
-	"68", --Deportes
-	"44", --Drama
-	"45", --Ecchi
-	"46", --Fantasía
-	"47", --Gender Bender
-	"48", --Harem
-	"49", --Histórico
-	"50", --Horror
-	"54", --Mechas (Robots Gigantes)
-	"55", --Misterio
-	"56", --Psicológico
-	"66", --Recuentos de la Vida
-	"57", --Romance
-	"60", --Seinen
-	"62", --Shojo
-	"63", --Shojo Ai
-	"64", --Shonen
-	"69", --Sobrenatural
-	"70", --Tragedia
-	"58", --Vida Escolar
-	"73", --Xuanhuan
+	40, --Acción
+	53, --Adulto
+	52, --Artes Marciales
+	41, --Aventura
+	59, --Ciencia Ficción
+	43, --Comedia
+	68, --Deportes
+	44, --Drama
+	45, --Ecchi
+	46, --Fantasía
+	47, --Gender Bender
+	48, --Harem
+	49, --Histórico
+	50, --Horror
+	54, --Mechas (Robots Gigantes)
+	55, --Misterio
+	56, --Psicológico
+	66, --Recuentos de la Vida
+	57, --Romance
+	60, --Seinen
+	62, --Shojo
+	63, --Shojo Ai
+	64, --Shonen
+	69, --Sobrenatural
+	70, --Tragedia
+	58, --Vida Escolar
+	73, --Xuanhuan
 }
 local CATEGORIAS_FILTER_KEY = 4242
 
 local ESTADO_FILTER_INT = {
 	[0] = "", --Cualquiera --NovelStatus.UNKNOWN
-	"16",     --En Proceso --NovelStatus.PUBLISHING
-	"17",     --Pausado    --            On Hold/haitus
-	"407",    --Completado --NovelStatus.COMPLETED
+	 16,     --En Proceso --NovelStatus.PUBLISHING
+	 17,     --Pausado    --            On Hold/haitus
+	407,    --Completado --NovelStatus.COMPLETED
 }
 local ESTADO_FILTER_KEY = 407
 
 local TIPO_FILTER_INT = {
 	[0] = "", --Cualquier
-	"23", --Novela Ligera
-	"24", --Novela Web
+	23, --Novela Ligera
+	24, --Novela Web
 }
 local TIPO_FILTER_KEY = 2324
 
 local PAIS_FILTER_INT = {
 	[0] = "", --Cualquiera
-	"1865", --Argentina
-	"1749", --Chile
-	"20"  , --China
-	"4184", --Colombia
-	"22"  , --Corea
-	"1792", --Ecuador
-	"21"  , --Japón
-	"1704", --México
-	"1657", --Nicaragua
-	"4341", --Perú
-	"2524", --Venezuela
+	1865, --Argentina
+	1749, --Chile
+	  20, --China
+	4184, --Colombia
+	  22, --Corea
+	1792, --Ecuador
+	  21, --Japón
+	1704, --México
+	1657, --Nicaragua
+	4341, --Perú
+	2524, --Venezuela
 }
 local PAIS_FILTER_KEY = 2121
 local TAG_FILTER_KEY = 2222
