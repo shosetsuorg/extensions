@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.0.66","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.67","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -198,13 +198,15 @@ end
 local function parseListing(doc)
 	local results = doc:selectFirst(".dt-css-grid")
 
-	return map(results:children(), function(v)
+	return mapNotNil(results:children(), function(v)
 		local a = v:selectFirst(".entry-title a")
-		return Novel {
-			title = a:text(),
-			link = a:attr("href"):match("(index.php/producto/[^/]+)/.-"),
-			imageURL = img_src(v:selectFirst("img")),
-		}
+		if a then
+			return Novel {
+				title = a:text(),
+				link = a:attr("href"):match("(index.php/producto/[^/]+)/.-"),
+				imageURL = img_src(v:selectFirst("img")),
+			}
+		end
 	end)
 end
 
