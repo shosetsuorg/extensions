@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.1.3","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.1.4","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -99,6 +99,7 @@ local qs = Require("url").querystring
 local css = Require("CommonCSS").table
 
 local encode = Require("url").encode
+local decode = Require("url").decode
 local text = function(v)
 	return v:text()
 end
@@ -164,24 +165,29 @@ local function createFilterString(data)
 	if data[ORDER_FILTER_KEY] then
 		orderby =orderby.. "-desc"
 	end
-	local product_cat = MultiQuery(CATEGORIAS_FILTER_INT)
-	local pa_estado = MultiQuery(ESTADO_FILTER_INT)
-	local pa_tipo = TIPO_FILTER_INT[data[TIPO_FILTER_KEY]]
-	local pa_pais = MultiQuery(PAIS_FILTER_INT)
-	local op = data[searchHasOperId]
+	
+	local pa_tipo
+	if data[TIPO_FILTER_KEY] ~= 0 then
+		pa_tipo = TIPO_FILTER_INT[data[TIPO_FILTER_KEY]]
+	end
+	
+	local op
+	if data[searchHasOperId] ~= 0 then
+		op = data[searchHasOperId]
+	end
+	
 	local product_tag = emptyNil(data[TAG_FILTER_KEY])
 	
-	return qs({
+	return decode(qs({
 		orderby = orderby,
-		ixwpst = {
-			product_cat = product_cat,
-			pa_estado = pa_estado,
-			pa_tipo = pa_tipo,
-			pa_pais = pa_pais,
-			op = op,
-		},
+		['ixwpst[product_cat][]'] = MultiQuery(CATEGORIAS_FILTER_INT),
+		['ixwpst[pa_estado][]'] = MultiQuery(ESTADO_FILTER_INT),
+		['ixwpst[pa_tipo][]'] = pa_tipo,
+		['ixwpst[pa_pais][]'] = MultiQuery(PAIS_FILTER_INT),
+		['ixwpst[op][]'] = op,
 		product_tag = product_tag,
-	})
+	}))
+	
 	--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
 	--other than orderby, filters in url must not be empty
 	--Logic is (cat1 OR cat2) AND (tag1 OR tag2)
