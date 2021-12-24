@@ -1,88 +1,92 @@
--- {"id":36833,"ver":"1.0.6","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.9","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
 
 local css = Require("CommonCSS").table
 
+-- LUA ARRAYS ONLY KNOW HOW TO COUNT FROM 0 or 1
 local KEYWORD_FILTER_KEY = 099
 local AUTHOR_FILTER_KEY = 100
 local GENRES_FILTER_EXT = {"Action", "Adventure", "Comedy", "Contemporary", "Drama", "Fantasy", "Historical", "Horror", "Mystery", "Psychological", "Romance", "Satire", "Sci-fi", "Short Story", "Tragedy"}
 local GENRES_FILTER_KEY = 200
 local GENRES_FILTER_INT = { --individual, start from 1 to match ext
-	[GENRES_FILTER_KEY+1] = "action",
-	"adventure",
-	"comedy",
-	"contemporary",
-	"drama",
-	"fantasy",
-	"historical",
-	"horror",
-	"mystery",
-	"psychological",
-	"romance",
-	"satire",
-	"sci_fi",
-	"one_shot",
-	"tragedy",
+	[GENRES_FILTER_KEY+01] = "action",
+	[GENRES_FILTER_KEY+02] = "adventure",
+	[GENRES_FILTER_KEY+03] = "comedy",
+	[GENRES_FILTER_KEY+04] = "contemporary",
+	[GENRES_FILTER_KEY+05] = "drama",
+	[GENRES_FILTER_KEY+06] = "fantasy",
+	[GENRES_FILTER_KEY+07] = "historical",
+	[GENRES_FILTER_KEY+08] = "horror",
+	[GENRES_FILTER_KEY+09] = "mystery",
+	[GENRES_FILTER_KEY+10] = "psychological",
+	[GENRES_FILTER_KEY+11] = "romance",
+	[GENRES_FILTER_KEY+12] = "satire",
+	[GENRES_FILTER_KEY+13] = "sci_fi",
+	[GENRES_FILTER_KEY+14] = "one_shot",
+	[GENRES_FILTER_KEY+15] = "tragedy",
 }
 local TAGS_FILTER_EXT = {"Anti-Hero Lead", "Artificial Intelligence", "Attractive MC", "Cyberpunk", "Dungeon", "Dystopia", "Female Lead", "First Contact", "GameLit", "Gender Bender", "Genetically Engineered", "Grimdark", "Hard Sci-fi", "Harem", "High Fantasy", "LitRPG", "Loop", "Low Fantasy", "Magic", "Male Lead", "Martial Arts", "Multiple Lead Characters", "Mythos", "Non-Human lead", "Portal Fantasy / Isekai", "Post Apocalyptic", "Progression", "Reader interactive", "Reincarnation", "Ruling Class", "School Life", "Secret Identity", "Slice of Life", "Soft Sci-fi", "Space Opera", "Sports", "Steampunk", "Strategy", "Strong Lead", "Super Heroes", "Supernatural", "Technologically Engineered", "Time Travel", "Urban Fantasy", "Villainous Lead", "Virtual Reality", "War and Military", "Wuxia", "Xianxia"}
 local TAGS_FILTER_KEY = 300
 local TAGS_FILTER_INT = { --individual, start from 1 to match ext
-	[TAGS_FILTER_KEY+1] = "anti-hero_lead",
-	"attractive-mc",
-	"cyberpunk",
-	"dungeon",
-	"Dystopia",
-	"female_lead",
-	"gamelit",
-	"gender_bender",
-	"Genetically_Engineered",
-	"grimdark",
-	"Hard_Sci_fi",
-	"harem",
-	"high_fantasy",
-	"litrpg",
-	"Loop",
-	"low_fantasy",
-	"magic",
-	"male_lead",
-	"martial_arts",
-	"mutliple_lead",
-	"mythos",
-	"non-human_lead",
-	"summoned_hero",
-	"post_apocalyptic",
-	"Progression",
-	"reader_interactive",
-	"reincarnation",
-	"ruling_class",
-	"school_life",
-	"secret_identity",
-	"slice_of_life",
-	"Soft_Sci_fi",
-	"space_opera",
-	"sports",
-	"steampunk",
-	"strategy",
-	"strong_lead",
-	"super_heroes",
-	"supernatural",
-	"Time_Travel",
-	"urban_fantasy",
-	"villainous_lead",
-	"virtual_reality",
-	"war_and_military",
-	"wuxia",
-	"xianxia",
+	[TAGS_FILTER_KEY+01] = "anti-hero_lead",
+	[TAGS_FILTER_KEY+02] = "Artificial_Intelligence",
+	[TAGS_FILTER_KEY+03] = "attractive-mc",
+	[TAGS_FILTER_KEY+04] = "cyberpunk",
+	[TAGS_FILTER_KEY+05] = "dungeon",
+	[TAGS_FILTER_KEY+06] = "Dystopia",
+	[TAGS_FILTER_KEY+07] = "female_lead",
+	[TAGS_FILTER_KEY+08] = "First_Contact",
+	[TAGS_FILTER_KEY+09] = "gamelit",
+	[TAGS_FILTER_KEY+10] = "gender_bender",
+	[TAGS_FILTER_KEY+11] = "Genetically_Engineered",
+	[TAGS_FILTER_KEY+12] = "grimdark",
+	[TAGS_FILTER_KEY+13] = "Hard_Sci_fi",
+	[TAGS_FILTER_KEY+14] = "harem",
+	[TAGS_FILTER_KEY+15] = "high_fantasy",
+	[TAGS_FILTER_KEY+16] = "litrpg",
+	[TAGS_FILTER_KEY+17] = "Loop",
+	[TAGS_FILTER_KEY+18] = "low_fantasy",
+	[TAGS_FILTER_KEY+19] = "magic",
+	[TAGS_FILTER_KEY+20] = "male_lead",
+	[TAGS_FILTER_KEY+21] = "martial_arts",
+	[TAGS_FILTER_KEY+22] = "multiple_lead",
+	[TAGS_FILTER_KEY+23] = "mythos",
+	[TAGS_FILTER_KEY+24] = "non-human_lead",
+	[TAGS_FILTER_KEY+25] = "summoned_hero",
+	[TAGS_FILTER_KEY+26] = "post_apocalyptic",
+	[TAGS_FILTER_KEY+27] = "Progression",
+	[TAGS_FILTER_KEY+28] = "reader_interactive",
+	[TAGS_FILTER_KEY+29] = "reincarnation",
+	[TAGS_FILTER_KEY+30] = "ruling_class",
+	[TAGS_FILTER_KEY+31] = "school_life",
+	[TAGS_FILTER_KEY+32] = "secret_identity",
+	[TAGS_FILTER_KEY+33] = "slice_of_life",
+	[TAGS_FILTER_KEY+34] = "Soft_Sci_fi",
+	[TAGS_FILTER_KEY+35] = "space_opera",
+	[TAGS_FILTER_KEY+36] = "sports",
+	[TAGS_FILTER_KEY+37] = "steampunk",
+	[TAGS_FILTER_KEY+38] = "strategy",
+	[TAGS_FILTER_KEY+39] = "strong_lead",
+	[TAGS_FILTER_KEY+40] = "super_heroes",
+	[TAGS_FILTER_KEY+41] = "supernatural",
+	[TAGS_FILTER_KEY+42] = "Technologically_Engineered",
+	[TAGS_FILTER_KEY+43] = "Time_Travel",
+	[TAGS_FILTER_KEY+44] = "urban_fantasy",
+	[TAGS_FILTER_KEY+45] = "villainous_lead",
+	[TAGS_FILTER_KEY+46] = "virtual_reality",
+	[TAGS_FILTER_KEY+47] = "war_and_military",
+	[TAGS_FILTER_KEY+48] = "wuxia",
+	[TAGS_FILTER_KEY+49] = "xianxia",
 }
 local CONTENT_WARNINGS_FILTER_EXT = {"Profanity", "Sexual Content", "Gore", "Traumatising content"}
 local CONTENT_WARNINGS_FILTER_KEY = 400
 local CONTENT_WARNINGS_FILTER_INT = { --individual, start from 1 to match ext
 	[CONTENT_WARNINGS_FILTER_KEY+1] = "profanity",
-	"sexuality",
-	"gore",
-	"traumatising",
+	[CONTENT_WARNINGS_FILTER_KEY+2] = "sexuality",
+	[CONTENT_WARNINGS_FILTER_KEY+3] = "gore",
+	[CONTENT_WARNINGS_FILTER_KEY+4] = "traumatising",
 }
 local PAGES_MIN_FILTER_KEY = 500
 local PAGES_MAX_FILTER_KEY = 501
@@ -92,11 +96,11 @@ local STATUS_FILTER_EXT = {"ALL", "COMPLETED", "DROPPED", "ONGOING", "HIATUS", "
 local STATUS_FILTER_KEY = 600
 local STATUS_FILTER_INT = { --individual, start from 1 to match ext
 	[STATUS_FILTER_KEY+1] = "ALL",
-	"COMPLETED",
-	"DROPPED",
-	"ONGOING",
-	"HIATUS",
-	"STUB",
+	[STATUS_FILTER_KEY+2] = "COMPLETED",
+	[STATUS_FILTER_KEY+3] = "DROPPED",
+	[STATUS_FILTER_KEY+4] = "ONGOING",
+	[STATUS_FILTER_KEY+5] = "HIATUS",
+	[STATUS_FILTER_KEY+6] = "STUB",
 }
 local ORDER_BY_FILTER_EXT = {"Relevance", "Popularity", "Average Rating", "Last Update", "Release Date", "Followers", "Number of Pages", "Views", "Title"}
 local ORDER_BY_FILTER_KEY = 700
@@ -144,19 +148,6 @@ local function MultiTriStateFilter(offset, filter_ext, stop)
 	return f
 end
 
-local function TriQuery(data, filter_int, int)
-	return (data[int] and (data[int]==2 and "&tagsRemove" or "&tagsAdd=")..filter_int[int] or "")
-end
-
-local function MultiTriQuery(data, filter_int, start, stop)
-	local q=""
-	for int = start,stop,1
-	do
-		q =q.. TriQuery(data, filter_int, int)
-	end
-	return q
-end
-
 local function createFilterString(data)
 	local function emptyNil(str)
 		if str == "" then
@@ -188,7 +179,7 @@ local function createFilterString(data)
 	end
 	
 	local tagsAdd, tagsRemove = {}, {}
-	local function MultiTryQuery(strings, start, len)
+	local function MultiTriQuery(strings, start, len)
 		for i=start+1,start+len do
 			if data[i] then
 				if data[i] == 2 then
