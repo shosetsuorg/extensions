@@ -1,4 +1,4 @@
--- {"id":28505740,"ver":"1.1.2","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.1.3","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
@@ -143,9 +143,16 @@ end
 local function createFilterString(data)
 	--ixwpst[product_cat] is fine being a sparse array, so no need to count up from 0
 	
+	local function emptyNil(str)
+		if str == "" then
+			return nil
+		end
+		return str
+	end
+	
 	local function MultiQuery(ints)
 		local arr = {}
-		for i=0,#ints do
+		for i=1,#ints do
 			if data[ints[i]] then
 				arr[#arr+1] = ints[i]
 			end
@@ -162,7 +169,7 @@ local function createFilterString(data)
 	local pa_tipo = TIPO_FILTER_INT[data[TIPO_FILTER_KEY]]
 	local pa_pais = MultiQuery(PAIS_FILTER_INT)
 	local op = data[searchHasOperId]
-	local product_tag = data[TAG_FILTER_KEY]
+	local product_tag = emptyNil(data[TAG_FILTER_KEY])
 	
 	return qs({
 		orderby = orderby,
