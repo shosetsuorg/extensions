@@ -1,19 +1,19 @@
--- {"id":28505740,"ver":"1.0.64","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":28505740,"ver":"1.0.65","libVer":"1.0.0","author":"Khonkhortisan","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://novelasligeras.net" --WordPress site, plugins: WooCommerce, Yoast SEO, js_composer, user_verificat_front, avatar-privacy
 
 local ORDER_BY_FILTER_EXT = {"Ordenar por los últimos", "Orden alfabético", "Relevancia", "Ordenar por popularidad", "Ordenar por calificación media", "Ordenar por precio: bajo a alto", "Orden aleatorio", "Ordenar por id", "Ordenar por slug", "Ordenar por include"} 	--translate to identificación/babosa/incluír?
 local ORDER_BY_FILTER_INT = {
-	[0]="date"      , --Ordenar por los últimos
-	[1]="title"     , --Orden alfabético/Orden por defecto (Listing is title, webview search is title-DESC, selecting Orden por defecto is menu_order)
-	[2]="relevance" , --Relevancia (webview search is title-DESC when it should be relevance)
-	[3]="popularity", --Ordenar por popularidad
-	[4]="rating"    , --Ordenar por calificación media
-	[5]="price"     , --Ordenar por precio: bajo a alto
-	[6]="rand"      , --single-seed random order
-	[7]="id"        , --id/slug/include are supported by WooCommerce, but not currently shown in the extension
-	[8]="slug"      , --id is different from slug
-	[9]="include"   , --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
+	[0] = "date", --Ordenar por los últimos
+	"title"     , --Orden alfabético/Orden por defecto (Listing is title, webview search is title-DESC, selecting Orden por defecto is menu_order)
+	"relevance" , --Relevancia (webview search is title-DESC when it should be relevance)
+	"popularity", --Ordenar por popularidad
+	"rating"    , --Ordenar por calificación media
+	"price"     , --Ordenar por precio: bajo a alto
+	"rand"      , --single-seed random order
+	"id"        , --id/slug/include are supported by WooCommerce, but not currently shown in the extension
+	"slug"      , --id is different from slug
+	"include"   , --is what? https://woocommerce.github.io/woocommerce-rest-api-docs/#list-all-products
 	--only some of these can be descending
 }
 local ORDER_BY_FILTER_KEY = 789
@@ -23,65 +23,65 @@ local ORDER_FILTER_KEY = 1010
 --https://novelasligeras.net/index.php/lista-de-novela-ligera-novela-web/?ixwpst[product_cat][0]=52&ixwpst[product_cat][1]=49&ixwpst[product_cat][2]=-45
 --currently in OR mode, not AND https://wordpress.org/support/topic/multiple-categories-per-filter-results/ https://prnt.sc/tl9zt9 https://prnt.sc/t9wsoy
 local CATEGORIAS_FILTER_INT = {
-	[0] =""  , --Cualquier Categoría
-	[1] ="40", --Acción
-	[2] ="53", --Adulto
-	[3] ="52", --Artes Marciales
-	[4] ="41", --Aventura
-	[5] ="59", --Ciencia Ficción
-	[6] ="43", --Comedia
-	[7] ="68", --Deportes
-	[8] ="44", --Drama
-	[9] ="45", --Ecchi
-	[10]="46", --Fantasía
-	[11]="47", --Gender Bender
-	[12]="48", --Harem
-	[13]="49", --Histórico
-	[14]="50", --Horror
-	[15]="54", --Mechas (Robots Gigantes)
-	[16]="55", --Misterio
-	[17]="56", --Psicológico
-	[18]="66", --Recuentos de la Vida
-	[19]="57", --Romance
-	[20]="60", --Seinen
-	[21]="62", --Shojo
-	[22]="63", --Shojo Ai
-	[23]="64", --Shonen
-	[24]="69", --Sobrenatural
-	[25]="70", --Tragedia
-	[26]="58", --Vida Escolar
-	[27]="73", --Xuanhuan
+	[0] = "", --Cualquier Categoría
+	"40", --Acción
+	"53", --Adulto
+	"52", --Artes Marciales
+	"41", --Aventura
+	"59", --Ciencia Ficción
+	"43", --Comedia
+	"68", --Deportes
+	"44", --Drama
+	"45", --Ecchi
+	"46", --Fantasía
+	"47", --Gender Bender
+	"48", --Harem
+	"49", --Histórico
+	"50", --Horror
+	"54", --Mechas (Robots Gigantes)
+	"55", --Misterio
+	"56", --Psicológico
+	"66", --Recuentos de la Vida
+	"57", --Romance
+	"60", --Seinen
+	"62", --Shojo
+	"63", --Shojo Ai
+	"64", --Shonen
+	"69", --Sobrenatural
+	"70", --Tragedia
+	"58", --Vida Escolar
+	"73", --Xuanhuan
 }
 local CATEGORIAS_FILTER_KEY = 4242
 
 local ESTADO_FILTER_INT = {
-	[0]=""   , --Cualquiera --NovelStatus.UNKNOWN
-	[1]="16" , --En Proceso --NovelStatus.PUBLISHING
-	[2]="17" , --Pausado    --            On Hold/haitus
-	[3]="407", --Completado --NovelStatus.COMPLETED
+	[0] = "", --Cualquiera --NovelStatus.UNKNOWN
+	"16",     --En Proceso --NovelStatus.PUBLISHING
+	"17",     --Pausado    --            On Hold/haitus
+	"407",    --Completado --NovelStatus.COMPLETED
 }
 local ESTADO_FILTER_KEY = 407
 
 local TIPO_FILTER_INT = {
-	[0]=""  , --Cualquier
-	[1]="23", --Novela Ligera
-	[2]="24", --Novela Web
+	[0] = "", --Cualquier
+	"23", --Novela Ligera
+	"24", --Novela Web
 }
 local TIPO_FILTER_KEY = 2324
 
 local PAIS_FILTER_INT = {
-	[0] =""    , --Cualquiera
-	[1] ="1865", --Argentina
-	[2] ="1749", --Chile
-	[3] ="20"  , --China
-	[4] ="4184", --Colombia
-	[5] ="22"  , --Corea
-	[6] ="1792", --Ecuador
-	[7] ="21"  , --Japón
-	[8] ="1704", --México
-	[9] ="1657", --Nicaragua
-	[10]="4341", --Perú
-	[11]="2524", --Venezuela
+	[0] = "", --Cualquiera
+	"1865", --Argentina
+	"1749", --Chile
+	"20"  , --China
+	"4184", --Colombia
+	"22"  , --Corea
+	"1792", --Ecuador
+	"21"  , --Japón
+	"1704", --México
+	"1657", --Nicaragua
+	"4341", --Perú
+	"2524", --Venezuela
 }
 local PAIS_FILTER_KEY = 2121
 local TAG_FILTER_KEY = 2222
@@ -143,50 +143,50 @@ end
 local function createFilterString(data)
 	--ixwpst[product_cat] is fine being a sparse array, so no need to count up from 0
 	return "orderby=" .. encode(ORDER_BY_FILTER_INT[data[ORDER_BY_FILTER_KEY]]) .. (data[ORDER_FILTER_KEY] and "-desc" or "") ..
-		(data[40] and "&ixwpst[product_cat][40]=40" or "").. --Acción
-		(data[53] and "&ixwpst[product_cat][53]=53" or "").. --Adulto
-		(data[52] and "&ixwpst[product_cat][52]=52" or "").. --Artes Marciales
-		(data[41] and "&ixwpst[product_cat][41]=41" or "").. --Aventura
-		(data[59] and "&ixwpst[product_cat][59]=59" or "").. --Ciencia Ficción
-		(data[43] and "&ixwpst[product_cat][43]=43" or "").. --Comedia
-		(data[68] and "&ixwpst[product_cat][68]=68" or "").. --Deportes
-		(data[44] and "&ixwpst[product_cat][44]=44" or "").. --Drama
-		(data[45] and "&ixwpst[product_cat][45]=45" or "").. --Ecchi
-		(data[46] and "&ixwpst[product_cat][46]=46" or "").. --Fantasía
-		(data[47] and "&ixwpst[product_cat][47]=47" or "").. --Gender Bender
-		(data[48] and "&ixwpst[product_cat][48]=48" or "").. --Harem
-		(data[49] and "&ixwpst[product_cat][49]=49" or "").. --Histórico
-		(data[50] and "&ixwpst[product_cat][50]=50" or "").. --Horror
-		(data[54] and "&ixwpst[product_cat][54]=54" or "").. --Mechas (Robots Gigantes)
-		(data[55] and "&ixwpst[product_cat][55]=55" or "").. --Misterio
-		(data[56] and "&ixwpst[product_cat][56]=56" or "").. --Psicológico
-		(data[66] and "&ixwpst[product_cat][66]=66" or "").. --Recuentos de la Vida
-		(data[57] and "&ixwpst[product_cat][57]=57" or "").. --Romance
-		(data[60] and "&ixwpst[product_cat][60]=60" or "").. --Seinen
-		(data[62] and "&ixwpst[product_cat][62]=62" or "").. --Shojo
-		(data[63] and "&ixwpst[product_cat][63]=63" or "").. --Shojo Ai
-		(data[64] and "&ixwpst[product_cat][64]=64" or "").. --Shonen
-		(data[69] and "&ixwpst[product_cat][69]=69" or "").. --Sobrenatural
-		(data[70] and "&ixwpst[product_cat][70]=70" or "").. --Tragedia
-		(data[58] and "&ixwpst[product_cat][58]=58" or "").. --Vida Escolar
-		(data[73] and "&ixwpst[product_cat][73]=73" or "").. --Xuanhuan
-		(data[16] and "&ixwpst[pa_estado][16]=16"   or "").. --En Proceso --NovelStatus.PUBLISHING
-		(data[17] and "&ixwpst[pa_estado][17]=17"   or "").. --Pausado    --            On Hold/haitus
-		(data[407]and "&ixwpst[pa_estado][407]=407" or "").. --Completado --NovelStatus.COMPLETED
-		(data[TIPO_FILTER_KEY]~=0   and "&ixwpst[pa_tipo][]="  ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])     or "")..
-		(data[1865] and "&ixwpst[pa_pais][1865]=1865" or "").. --Argentina
-		(data[1749] and "&ixwpst[pa_pais][1749]=1749" or "").. --Chile
-		(data[20]   and "&ixwpst[pa_pais][20]=20"     or "").. --China
-		(data[4184] and "&ixwpst[pa_pais][4184]=4184" or "").. --Colombia
-		(data[22]   and "&ixwpst[pa_pais][22]=22"     or "").. --Corea
-		(data[1792] and "&ixwpst[pa_pais][1792]=1792" or "").. --Ecuador
-		(data[21]   and "&ixwpst[pa_pais][21]=21"     or "").. --Japón
-		(data[1704] and "&ixwpst[pa_pais][1704]=1704" or "").. --México
-		(data[1657] and "&ixwpst[pa_pais][1657]=1657" or "").. --Nicaragua
-		(data[4341] and "&ixwpst[pa_pais][4341]=4341" or "").. --Perú
-		(data[2524] and "&ixwpst[pa_pais][2524]=2524" or "").. --Venezuela
-		(data[TAG_FILTER_KEY]~=""   and "&product_tag[0]="     ..encode(data[TAG_FILTER_KEY])                       or "")..
-		(data[searchHasOperId]~=0   and "&ixwpst[op]="         ..encode(data[searchHasOperId])                      or "")
+		(data[CATEGORIAS_FILTER_INT[01]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[01] or "").. --Acción
+		(data[CATEGORIAS_FILTER_INT[02]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[02] or "").. --Adulto
+		(data[CATEGORIAS_FILTER_INT[03]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[03] or "").. --Artes Marciales
+		(data[CATEGORIAS_FILTER_INT[04]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[04] or "").. --Aventura
+		(data[CATEGORIAS_FILTER_INT[05]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[05] or "").. --Ciencia Ficción
+		(data[CATEGORIAS_FILTER_INT[06]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[06] or "").. --Comedia
+		(data[CATEGORIAS_FILTER_INT[07]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[07] or "").. --Deportes
+		(data[CATEGORIAS_FILTER_INT[08]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[08] or "").. --Drama
+		(data[CATEGORIAS_FILTER_INT[09]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[09] or "").. --Ecchi
+		(data[CATEGORIAS_FILTER_INT[10]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[10] or "").. --Fantasía
+		(data[CATEGORIAS_FILTER_INT[11]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[11] or "").. --Gender Bender
+		(data[CATEGORIAS_FILTER_INT[12]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[12] or "").. --Harem
+		(data[CATEGORIAS_FILTER_INT[13]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[13] or "").. --Histórico
+		(data[CATEGORIAS_FILTER_INT[14]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[14] or "").. --Horror
+		(data[CATEGORIAS_FILTER_INT[15]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[15] or "").. --Mechas (Robots Gigantes)
+		(data[CATEGORIAS_FILTER_INT[16]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[16] or "").. --Misterio
+		(data[CATEGORIAS_FILTER_INT[17]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[17] or "").. --Psicológico
+		(data[CATEGORIAS_FILTER_INT[18]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[18] or "").. --Recuentos de la Vida
+		(data[CATEGORIAS_FILTER_INT[19]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[19] or "").. --Romance
+		(data[CATEGORIAS_FILTER_INT[20]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[20] or "").. --Seinen
+		(data[CATEGORIAS_FILTER_INT[21]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[21] or "").. --Shojo
+		(data[CATEGORIAS_FILTER_INT[22]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[22] or "").. --Shojo Ai
+		(data[CATEGORIAS_FILTER_INT[23]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[23] or "").. --Shonen
+		(data[CATEGORIAS_FILTER_INT[24]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[24] or "").. --Sobrenatural
+		(data[CATEGORIAS_FILTER_INT[25]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[25] or "").. --Tragedia
+		(data[CATEGORIAS_FILTER_INT[26]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[26] or "").. --Vida Escolar
+		(data[CATEGORIAS_FILTER_INT[27]] and "&ixwpst[product_cat][]="..CATEGORIAS_FILTER_INT[27] or "").. --Xuanhuan
+		(data[ESTADO_FILTER_INT[1]]      and "&ixwpst[pa_estado][]="  ..ESTADO_FILTER_INT[1] or "").. --En Proceso --NovelStatus.PUBLISHING
+		(data[ESTADO_FILTER_INT[2]]      and "&ixwpst[pa_estado][]="  ..ESTADO_FILTER_INT[2] or "").. --Pausado    --            On Hold/haitus
+		(data[ESTADO_FILTER_INT[3]]      and "&ixwpst[pa_estado][]="  ..ESTADO_FILTER_INT[3] or "").. --Completado --NovelStatus.COMPLETED
+		(data[TIPO_FILTER_KEY]~=0        and "&ixwpst[pa_tipo][]="    ..encode(TIPO_FILTER_INT[data[TIPO_FILTER_KEY]])     or "")..
+		(data[PAIS_FILTER_INT[01]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[01] or "").. --Argentina
+		(data[PAIS_FILTER_INT[02]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[02] or "").. --Chile
+		(data[PAIS_FILTER_INT[03]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[03] or "").. --China
+		(data[PAIS_FILTER_INT[04]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[04] or "").. --Colombia
+		(data[PAIS_FILTER_INT[05]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[05] or "").. --Corea
+		(data[PAIS_FILTER_INT[06]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[06] or "").. --Ecuador
+		(data[PAIS_FILTER_INT[07]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[07] or "").. --Japón
+		(data[PAIS_FILTER_INT[08]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[08] or "").. --México
+		(data[PAIS_FILTER_INT[09]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[09] or "").. --Nicaragua
+		(data[PAIS_FILTER_INT[10]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[10] or "").. --Perú
+		(data[PAIS_FILTER_INT[11]]       and "&ixwpst[pa_pais][]="    ..PAIS_FILTER_INT[11] or "").. --Venezuela
+		(data[TAG_FILTER_KEY]~=""        and "&product_tag[0]="       ..encode(data[TAG_FILTER_KEY])   or "")..
+		(data[searchHasOperId]~=0       and "&ixwpst[op]="            ..encode(data[searchHasOperId]) or "")
 		--https://novelasligeras.net/?product_tag[0]=guerras&product_tag[1]=Asesinatos
 		--other than orderby, filters in url must not be empty
 		--Logic is (cat1 OR cat2) AND (tag1 OR tag2)
@@ -307,53 +307,53 @@ return {
 		DropdownFilter(ORDER_BY_FILTER_KEY, "Pedido de la tienda", ORDER_BY_FILTER_EXT),
 		SwitchFilter(ORDER_FILTER_KEY, "Ascendiendo / Descendiendo"),
 		FilterGroup("Géneros", {
-			CheckboxFilter(40, "Acción"),
-			CheckboxFilter(53, "Adulto"),
-			CheckboxFilter(52, "Artes Marciales"),
-			CheckboxFilter(41, "Aventura"),
-			CheckboxFilter(59, "Ciencia Ficción"),
-			CheckboxFilter(43, "Comedia"),
-			CheckboxFilter(68, "Deportes"),
-			CheckboxFilter(44, "Drama"),
-			CheckboxFilter(45, "Ecchi"),
-			CheckboxFilter(46, "Fantasía"),
-			CheckboxFilter(47, "Gender Bender"),
-			CheckboxFilter(48, "Harem"),
-			CheckboxFilter(49, "Histórico"),
-			CheckboxFilter(50, "Horror"),
-			CheckboxFilter(54, "Mechas (Robots Gigantes)"),
-			CheckboxFilter(55, "Misterio"),
-			CheckboxFilter(56, "Psicológico"),
-			CheckboxFilter(66, "Recuentos de la Vida"),
-			CheckboxFilter(57, "Romance"),
-			CheckboxFilter(60, "Seinen"),
-			CheckboxFilter(62, "Shojo"),
-			CheckboxFilter(63, "Shojo Ai"),
-			CheckboxFilter(64, "Shonen"),
-			CheckboxFilter(69, "Sobrenatural"),
-			CheckboxFilter(70, "Tragedia"),
-			CheckboxFilter(58, "Vida Escolar"),
-			CheckboxFilter(73, "Xuanhuan"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[01], "Acción"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[02], "Adulto"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[03], "Artes Marciales"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[04], "Aventura"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[05], "Ciencia Ficción"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[06], "Comedia"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[07], "Deportes"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[08], "Drama"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[09], "Ecchi"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[10], "Fantasía"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[11], "Gender Bender"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[12], "Harem"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[13], "Histórico"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[14], "Horror"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[15], "Mechas (Robots Gigantes)"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[16], "Misterio"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[17], "Psicológico"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[18], "Recuentos de la Vida"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[19], "Romance"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[20], "Seinen"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[21], "Shojo"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[22], "Shojo Ai"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[23], "Shonen"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[24], "Sobrenatural"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[25], "Tragedia"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[26], "Vida Escolar"),
+			CheckboxFilter(CATEGORIAS_FILTER_INT[27], "Xuanhuan"),
 		}),
 		DropdownFilter(searchHasOperId, "Condición de géneros", {"O (cualquiera de los seleccionados)", "Y (todos los seleccionados)"}),
 		FilterGroup("Estado", {
-			CheckboxFilter(16, "▶️ En Proceso"),
-			CheckboxFilter(17, "⏸️ Pausado"),
-			CheckboxFilter(407, "⏹️ Completado"),
+			CheckboxFilter(ESTADO_FILTER_INT[1], "▶️ En Proceso"),
+			CheckboxFilter(ESTADO_FILTER_INT[2], "⏸️ Pausado"),
+			CheckboxFilter(ESTADO_FILTER_INT[3], "⏹️ Completado"),
 		}),
 		DropdownFilter(TIPO_FILTER_KEY, "Tipo", {"Cualquiera","Novela Ligera","Novela Web"}),
 		FilterGroup("País", {
-			CheckboxFilter(1865, "🇦🇷 Argentina"),
-			CheckboxFilter(1749, "🇨🇱 Chile"),
-			CheckboxFilter(20  , "🇨🇳 China"),
-			CheckboxFilter(4184, "🇨🇴 Colombia"),
-			CheckboxFilter(22  , "🇰🇷 Corea"),
-			CheckboxFilter(1792, "🇪🇨 Ecuador"),
-			CheckboxFilter(21  , "🇯🇵 Japón"),
-			CheckboxFilter(1704, "🇲🇽 México"),
-			CheckboxFilter(1657, "🇳🇮 Nicaragua"),
-			CheckboxFilter(4341, "🇵🇪 Perú"),
-			CheckboxFilter(2524, "🇻🇪 Venezuela"),
+			CheckboxFilter(PAIS_FILTER_INT[01], "🇦🇷 Argentina"),
+			CheckboxFilter(PAIS_FILTER_INT[02], "🇨🇱 Chile"),
+			CheckboxFilter(PAIS_FILTER_INT[03], "🇨🇳 China"),
+			CheckboxFilter(PAIS_FILTER_INT[04], "🇨🇴 Colombia"),
+			CheckboxFilter(PAIS_FILTER_INT[05], "🇰🇷 Corea"),
+			CheckboxFilter(PAIS_FILTER_INT[06], "🇪🇨 Ecuador"),
+			CheckboxFilter(PAIS_FILTER_INT[07], "🇯🇵 Japón"),
+			CheckboxFilter(PAIS_FILTER_INT[08], "🇲🇽 México"),
+			CheckboxFilter(PAIS_FILTER_INT[09], "🇳🇮 Nicaragua"),
+			CheckboxFilter(PAIS_FILTER_INT[10], "🇵🇪 Perú"),
+			CheckboxFilter(PAIS_FILTER_INT[11], "🇻🇪 Venezuela"),
 		}),
 		TextFilter(TAG_FILTER_KEY, "Etiqueta"),
 	},
