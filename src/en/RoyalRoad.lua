@@ -1,4 +1,4 @@
--- {"id":36833,"ver":"1.0.6","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.7","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
@@ -144,19 +144,6 @@ local function MultiTriStateFilter(offset, filter_ext, stop)
 	return f
 end
 
-local function TriQuery(data, filter_int, int)
-	return (data[int] and (data[int]==2 and "&tagsRemove" or "&tagsAdd=")..filter_int[int] or "")
-end
-
-local function MultiTriQuery(data, filter_int, start, stop)
-	local q=""
-	for int = start,stop,1
-	do
-		q =q.. TriQuery(data, filter_int, int)
-	end
-	return q
-end
-
 local function createFilterString(data)
 	local function emptyNil(str)
 		if str == "" then
@@ -188,7 +175,7 @@ local function createFilterString(data)
 	end
 	
 	local tagsAdd, tagsRemove = {}, {}
-	local function MultiTryQuery(strings, start, len)
+	local function MultiTriQuery(strings, start, len)
 		for i=start+1,start+len do
 			if data[i] then
 				if data[i] == 2 then
