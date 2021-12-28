@@ -1,4 +1,4 @@
--- {"id":4302,"ver":"1.0.10","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4302,"ver":"1.0.11","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://travistranslations.com"
 
@@ -92,8 +92,8 @@ end
 
 local function getPassage(chapterURL)
 	local chap = GETDocument(expandURL(chapterURL)):selectFirst("main#primary")
-	local title = content:selectFirst("h2"):text()
-	chap = content:selectFirst(".reader-content")
+	local title = chap:selectFirst("h2"):text()
+	chap = chap:selectFirst(".reader-content")
 	chap:child(0):before("<h1>" .. title .. "</h1>")
 	-- Remove empty <p> tags
 	local toRemove = {}
