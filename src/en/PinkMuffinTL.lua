@@ -1,4 +1,4 @@
--- {"id":4301,"ver":"1.1.0","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4301,"ver":"1.1.1","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://pinkmuffinyum.wordpress.com"
 
@@ -56,13 +56,12 @@ end
 
 local function parseListing(listingURL)
 	local doc = GETDocument(listingURL)
-	return map(doc:select(".blocks-gallery-item__caption"), function(v)
-		local a = v:selectFirst("a")
-		if a ~= nil then
+	return map(doc:select(".wp-block-image.size-full > a"), function(v)
+		if v ~= nil then
 			return Novel {
-				title = a:text(),
-				link = shrinkURL(a:attr("href")),
-				imageURL = v:parent():selectFirst("img"):attr("data-orig-file")
+				title = v:parent():selectFirst("figcaption"):selectFirst("a"):text(),
+				link = shrinkURL(v:attr("href")),
+				imageURL = v:selectFirst("img"):attr("data-orig-file")
 			}
 		end
 	end)
