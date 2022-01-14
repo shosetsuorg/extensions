@@ -201,6 +201,16 @@
       "md5": ""
     },
     {
+      "name": "ZinNovel",
+      "fileName": "ZinNovel",
+      "imageURL": "http://github.com/shosetsuorg/extensions/raw/dev/icons/ZinNovel.png",
+      "id": 4225,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Rain of Snow Translations",
       "fileName": "RainOfSnow",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RainOfSnow.png",
