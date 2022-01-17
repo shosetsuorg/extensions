@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"2.0.5","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
+-- {"id":6118,"ver":"2.0.6","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.readlightnovel.me"
 local qs = Require("url").querystring
@@ -79,8 +79,8 @@ return {
 			imageURL = left:selectFirst(".novel-cover img"):attr("src"),
 			description = table.concat(map(details:selectFirst(".novel-detail-body"):select("p"), text), "\n"),
 			status = ({
-				Ongoing = NovelStatus("PUBLISHING"),
-				Completed = NovelStatus("COMPLETED")
+				Ongoing = NovelStatus.PUBLISHING,
+				Completed = NovelStatus.COMPLETED,
 			})[leftdetails:get(leftdetails:size()-1):selectFirst("li"):text()],
 			genres = map(leftdetails:get(1):select("a"), text),
 			language = leftdetails:get(3):selectFirst("li"):text(),
