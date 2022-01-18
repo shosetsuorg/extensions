@@ -241,6 +241,16 @@
       "md5": ""
     },
     {
+      "name": "Mylovenovel",
+      "fileName": "Mylovenovel",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Mylovenovel.png",
+      "id": 4303,
+      "lang": "en",
+      "ver": "1.0.1",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
