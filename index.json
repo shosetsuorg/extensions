@@ -281,16 +281,6 @@
       "md5": "6e3dd280e11a4ba1b3dcf7f67b917e81"
     },
     {
-      "name": "Saikai Scan",
-      "fileName": "SaikaiScan",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SaikaiScan.png",
-      "id": 2443,
-      "lang": "pt",
-      "ver": "1.0.4",
-      "libVer": "1.0.0",
-      "md5": "c47e56dfa754a3f0e95fc6a57d9e15b6"
-    },
-    {
       "name": "wuxia.blog",
       "fileName": "WuxiaDotBlog",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WuxiaDotBlog.png",
