@@ -1,4 +1,4 @@
--- {"id":4301,"ver":"1.1.1","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4301,"ver":"1.1.2","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://pinkmuffinyum.wordpress.com"
 
@@ -20,7 +20,6 @@ local function getPassage(chapterURL)
 	local title = doc:selectFirst("h2.wp-block-post-title"):text()
 	chap:child(0):before("<h1>" .. title .. "</h1>")
 	-- Removes the like button div and script
-	chap:selectFirst("script"):remove()
 	chap:selectFirst("#jp-post-flair"):remove()
 	return pageOfElem(chap, true)
 end
@@ -59,7 +58,7 @@ local function parseListing(listingURL)
 	return map(doc:select(".wp-block-image.size-full > a"), function(v)
 		if v ~= nil then
 			return Novel {
-				title = v:parent():selectFirst("figcaption"):selectFirst("a"):text(),
+				title = v:parent():selectFirst("figcaption"):text(),
 				link = shrinkURL(v:attr("href")),
 				imageURL = v:selectFirst("img"):attr("data-orig-file")
 			}
