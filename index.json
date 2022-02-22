@@ -369,6 +369,16 @@
       "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
+    },
+    {
+      "name": "Zetro Translations",
+      "fileName": "ZetroTranslation",
+      "imageURL": "https://zetrotranslation.com/wp-content/uploads/2020/12/logo_red-e1607700845220.png",
+      "id": 428270,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
