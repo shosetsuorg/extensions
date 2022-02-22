@@ -131,16 +131,6 @@
       "md5": "d2edddc58222392b59ed34b73e25d6b2"
     },
     {
-      "name": "WuxiaWorld",
-      "fileName": "WuxiaWorld",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WuxiaWorld.png",
-      "id": 1273,
-      "lang": "en",
-      "ver": "1.0.3",
-      "libVer": "1.0.0",
-      "md5": "adde12e1a74dd843afc870295831fda"
-    },
-    {
       "name": "NovelTrench",
       "fileName": "NovelTrench",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
