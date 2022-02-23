@@ -371,6 +371,16 @@
       "md5": ""
     },
     {
+      "name": "MORENOVEL",
+      "fileName": "MoreNovel",
+      "imageURL": "https://morenovel.net/wp-content/uploads/2019/04/morenovel-1.png",
+      "id": 823465,
+      "lang": "ind",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "NeoSekai Translations",
       "fileName": "NeoSekaiTranslations",
       "imageURL": "https://www.neosekaitranslations.com/wp-content/uploads/2021/04/NeoSekaiLogoSpelled_correctly1.png",
