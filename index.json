@@ -369,6 +369,16 @@
       "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
+    },
+    {
+      "name": "Nocturne Translations",
+      "fileName": "Nocturnetls",
+      "imageURL": "https://nocturnetls.net/wp-content/uploads/2017/10/nocturne_mask-with-sheen.png",
+      "id": 16581,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
