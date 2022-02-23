@@ -371,6 +371,16 @@
       "md5": ""
     },
     {
+      "name": "LatestNovel",
+      "fileName": "Latestnovel",
+      "imageURL": "https://latestnovel.net/wp-content/themes/madara/images/logo.png",
+      "id": 2672381,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Novel Team",
       "fileName": "Novelteam",
       "imageURL": "https://novelteam.net/wp-content/themes/madara/images/logo.png",
