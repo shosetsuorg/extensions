@@ -2,7 +2,7 @@
 
 return Require("Madara")("https://latestnovel.net/",{
 	id = 2672381,
-	name = "Latest Novel",
+	name = "LatestNovel",
 	imageURL = "https://latestnovel.net/wp-content/themes/madara/images/logo.png",
 
 	-- defaults values
