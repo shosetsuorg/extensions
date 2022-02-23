@@ -379,6 +379,46 @@
       "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
+    },
+    {
+      "name": "NeoSekai Translations",
+      "fileName": "NeoSekaiTranslations",
+      "imageURL": "https://www.neosekaitranslations.com/wp-content/uploads/2021/04/NeoSekaiLogoSpelled_correctly1.png",
+      "id": 8323,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "LatestNovel",
+      "fileName": "Latestnovel",
+      "imageURL": "https://latestnovel.net/wp-content/themes/madara/images/logo.png",
+      "id": 2672381,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Novel Team",
+      "fileName": "Novelteam",
+      "imageURL": "https://novelteam.net/wp-content/themes/madara/images/logo.png",
+      "id": 724098,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Nocturne Translations",
+      "fileName": "Nocturnetls",
+      "imageURL": "https://nocturnetls.net/wp-content/uploads/2017/10/nocturne_mask-with-sheen.png",
+      "id": 16581,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
