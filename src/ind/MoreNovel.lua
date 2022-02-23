@@ -1,4 +1,4 @@
--- {"id":823465,"ver":"2.1.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":823465,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://morenovel.net",{
 	id = 823465,
