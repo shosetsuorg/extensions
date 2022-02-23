@@ -1,0 +1,63 @@
+-- {"id":16581,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["madara>=2.3.3"]}
+
+return Require("Madara")("https://nocturnetls.net", {
+	id = 16581,
+	name = "Nocturne Translations",
+	imageURL = "https://nocturnetls.net/wp-content/uploads/2017/10/nocturne_mask-with-sheen.png",
+
+	-- defaults values
+	latestNovelSel = "div.col-12.col-md-6.badge-pos-1",
+	novelListingURLPath = "novel-list",
+	shrinkURLNovel = "novels",
+	ajaxUsesFormData = true,
+
+	genres = {
+		"Action",
+		"Adult",
+		"Adventure",
+		"Anime",
+		"Cartoon",
+		"Comedy",
+		"Comic",
+		"Cooking",
+		"Detective",
+		"Doujinshi",
+		"Drama",
+		"Ecchi",
+		"Fantasy",
+		"Gender Bender",
+		"Harem",
+		"Historical",
+		"Horror",
+		"Josei",
+		"Live action",
+		"Manga",
+		"Manhua",
+		"Manhwa",
+		"Martial Arts",
+		"Mature",
+		"Mecha",
+		"Mystery",
+		"One shot",
+		"Psychological",
+		"Romance",
+		"School Life",
+		"Sci-fi",
+		"Seinen",
+		"Shoujo",
+		"Shoujo AI",
+		"Shounen",
+		"Shounen Ai",
+		"Slice of Life",
+		"Smut",
+		"Soft Yaoi",
+		"Soft Yuri",
+		"Sports",
+		"Supernatural",
+		"Tragedy",
+		"Webtoon",
+		"Yaoi",
+		"Yuri"
+	}
+})
+

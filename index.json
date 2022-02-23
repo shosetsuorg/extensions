@@ -46,7 +46,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Foxaholic.png",
       "id": 173,
       "lang": "en",
-      "ver": "2.1.0",
+      "ver": "2.1.1",
       "libVer": "1.0.0",
       "md5": "c5977c9ba48c5115426fb3010cc65894"
     },
@@ -375,6 +375,56 @@
       "fileName": "ZetroTranslation",
       "imageURL": "https://zetrotranslation.com/wp-content/uploads/2020/12/logo_red-e1607700845220.png",
       "id": 428270,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "MORENOVEL",
+      "fileName": "MoreNovel",
+      "imageURL": "https://morenovel.net/wp-content/uploads/2019/04/morenovel-1.png",
+      "id": 823465,
+      "lang": "ind",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "NeoSekai Translations",
+      "fileName": "NeoSekaiTranslations",
+      "imageURL": "https://www.neosekaitranslations.com/wp-content/uploads/2021/04/NeoSekaiLogoSpelled_correctly1.png",
+      "id": 8323,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "LatestNovel",
+      "fileName": "Latestnovel",
+      "imageURL": "https://latestnovel.net/wp-content/themes/madara/images/logo.png",
+      "id": 2672381,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Novel Team",
+      "fileName": "Novelteam",
+      "imageURL": "https://novelteam.net/wp-content/themes/madara/images/logo.png",
+      "id": 724098,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Nocturne Translations",
+      "fileName": "Nocturnetls",
+      "imageURL": "https://nocturnetls.net/wp-content/uploads/2017/10/nocturne_mask-with-sheen.png",
+      "id": 16581,
       "lang": "en",
       "ver": "1.0.0",
       "libVer": "1.0.0",

@@ -16,4 +16,4 @@ assignees: ''
 
 ## Has Cloudflare protection
 
-## Addtional notes 
+## Addtional notes
