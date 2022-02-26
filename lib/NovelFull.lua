@@ -1,4 +1,4 @@
--- {"ver":"2.0.4","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.5","author":"TechnoJo4","dep":["url"]}
 
 -- rename this if you ever figure out its real name
 
@@ -59,7 +59,9 @@ function defaults:search(data)
 end
 
 function defaults:getPassage(url)
-	local htmlElement = GETDocument(self.baseURL..url):selectFirst("div#chapter-content")
+	local htmlElement = GETDocument(self.baseURL..url):selectFirst("div#chapter")
+	local title = htmlElement:selectFirst("a.chapter-title"):text()
+	htmlElement = htmlElement:selectFirst("div#chapter-content")
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
 	htmlElement:removeAttr("style") -- Hopefully only temporary as a hotfix
@@ -67,6 +69,9 @@ function defaults:getPassage(url)
 	htmlElement:select("ins"):remove()
 	htmlElement:select("div.ads"):remove()
 	htmlElement:select("div[align=\"left\"]:last-child"):remove() -- Report error text
+
+	-- Chapter title inserted before chapter text.
+	htmlElement:child(0):before("<h1>" .. title .. "</h1>");
 
 	return pageOfElem(htmlElement)
 end

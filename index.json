@@ -14,7 +14,7 @@
     },
     {
       "name": "NovelFull",
-      "ver": "2.0.4"
+      "ver": "2.0.5"
     },
     {
       "name": "url",
@@ -266,7 +266,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
       "id": 6118,
       "lang": "en",
-      "ver": "2.0.6",
+      "ver": "2.0.7",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -326,7 +326,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RoyalRoad.png",
       "id": 36833,
       "lang": "en",
-      "ver": "1.0.9",
+      "ver": "1.0.10",
       "libVer": "1.0.0",
       "md5": ""
     },
