@@ -1,4 +1,4 @@
--- {"id":86802,"ver":"1.0.1","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":86802,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.scribblehub.com"
 local qs = Require("url").querystring
@@ -124,10 +124,12 @@ return {
 		local title = chap:selectFirst(".chapter-title"):text()
 		chap = chap:getElementById("chp_raw")
 
-		-- remove empty <p> tags
+		-- Remove <p></p>.
 		local toRemove = {}
 		chap:traverse(NodeVisitor(function(v)
-			if v:tagName() == "p" and v:text() == "" then
+			if v:tagName() == "p" and v:childNodeSize() == 0 then -- and v:text() == "" then
+				-- childNodeSize() == 0 iff <tag></tag>, therefore not triggered by <p> </p>.
+				-- Avoids removal of things like <p><img src="some link"></p> though.
 				toRemove[#toRemove+1] = v
 			end
 			if v:hasAttr("border") then
