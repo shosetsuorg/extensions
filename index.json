@@ -261,6 +261,16 @@
       "md5": ""
     },
     {
+      "name": "ArNovel",
+      "fileName": "ArNovel",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ArNovel.png",
+      "id": 4500,
+      "lang": "ar",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
