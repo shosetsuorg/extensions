@@ -127,9 +127,7 @@ return {
 		-- Remove <p></p>.
 		local toRemove = {}
 		chap:traverse(NodeVisitor(function(v)
-			if v:tagName() == "p" and v:childNodeSize() == 0 then -- and v:text() == "" then
-				-- childNodeSize() == 0 iff <tag></tag>, therefore not triggered by <p> </p>.
-				-- Avoids removal of things like <p><img src="some link"></p> though.
+			if v:tagName() == "p" and v:childrenSize() == 0 and v:text() == "" then
 				toRemove[#toRemove+1] = v
 			end
 			if v:hasAttr("border") then
