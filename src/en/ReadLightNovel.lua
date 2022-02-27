@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"2.0.6","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
+-- {"id":6118,"ver":"2.0.7","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.readlightnovel.me"
 local qs = Require("url").querystring
@@ -56,12 +56,15 @@ return {
 	},
 
 	getPassage = function(chapterURL)
-		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
+		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div.content2")
+		local title = htmlElement:selectFirst("div.block-title"):text()
+		htmlElement = htmlElement:selectFirst("div#chapterhidden")
 
 		-- Remove/modify unwanted HTML elements to get a clean webpage.
-		htmlElement:select(".hid"):remove() -- Hide .hid elements
-		htmlElement:removeAttr("class") -- Show .hidden elements
-		--htmlElement:select("br"):remove()
+		htmlElement:select("br"):remove() -- Between each <p> is a <br>.
+
+		-- Chapter title inserted before chapter text.
+		htmlElement:child(0):before("<h1>" .. title .. "</h1>");
 
 		return pageOfElem(htmlElement)
 	end,

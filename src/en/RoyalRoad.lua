@@ -1,4 +1,4 @@
--- {"id":36833,"ver":"1.0.9","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.10","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
@@ -344,7 +344,14 @@ return {
 	end,
 
 	getPassage = function(url)
-		return pageOfElem(GETDocument(expandURL(url)):selectFirst(".chapter-content"), true, css)
+		local htmlElement = GETDocument(expandURL(url)):selectFirst(".chapter-page")
+		local title = htmlElement:selectFirst(".fic-header h1"):text()
+		htmlElement = htmlElement:selectFirst(".chapter-content")
+
+		-- Chapter title inserted before chapter text.
+		htmlElement:child(0):before("<h1>" .. title .. "</h1>");
+
+		return pageOfElem(htmlElement, true, css)
 	end,
 
 	search = function(data)
