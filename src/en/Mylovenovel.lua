@@ -1,4 +1,4 @@
--- {"id":4303,"ver":"1.0.1","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4303,"ver":"1.0.2","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://www.mylovenovel.com"
 
@@ -107,16 +107,14 @@ end
 
 local function getSearch(data)
 	local query = data[QUERY]
-	-- Remove the +1 work around when the indexing gets changed.
-	local page = data[PAGE] + 1
+	local page = data[PAGE]
 	local url = "/index.php?s=so&module=book&keyword=" .. query .. "&page=" .. page
 	return parseListing(expandURL(url))
 end
 
 local function getListing(data)
 	-- Filters only work with the listing, their search does not support them.
-	-- Remove the +1 work around when the indexing gets changed.
-	local page = data[PAGE] + 1
+	local page = data[PAGE] 
 	local status = STATUS_TERMS[data[STATUS_FILTER]+1]
 	local orderBy = ORDER_BY_TERMS[data[ORDER_BY_FILTER]+1]
 	local genre = ""
