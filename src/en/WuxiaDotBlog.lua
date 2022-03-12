@@ -1,4 +1,4 @@
--- {"id":1376,"ver":"2.0.0","libVer":"1.0.0","author":"AriaMoradi"}
+-- {"id":1376,"ver":"2.0.1","libVer":"1.0.0","author":"AriaMoradi"}
 
 local baseURL = "https://www.wuxia.blog"
 -- An hash containing the already displayed links to avoid the same novel appearing on multiple pages.
@@ -53,18 +53,12 @@ return {
 
 	listings = {
 		Listing("Latest Updated", true, function(data)
-			-- TODO Remove when start index of page is 1 instead of 0.
-			local pageOffset = 0
-			if data[PAGE] == 0 then
-				pageOffset = 1
-			end
-
 			-- Reset displayed link hash when starting with the first page.
-			if data[PAGE] + pageOffset == 1 then
+			if data[PAGE] == 1 then
 				_linksHash = {}
 			end
 
-			local document = GETDocument(expandURL( "/?page=" .. data[PAGE] + pageOffset)):select(".media")
+			local document = GETDocument(expandURL( "/?page=" .. data[PAGE])):select(".media")
 			local novels = map(document, function(it)
 				return Novel {
 					title = it:selectFirst(".media-heading"):text(),
