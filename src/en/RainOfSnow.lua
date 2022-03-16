@@ -1,4 +1,4 @@
--- {"id":4300,"ver":"1.1.0","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4300,"ver":"1.1.1","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://rainofsnow.com"
 
@@ -114,8 +114,7 @@ local function parseListing(listingURL)
 end
 
 local function getListing(data)
-	-- Remove the +1 work around when the indexing gets changed.
-	local page = data[PAGE] + 1
+	local page = data[PAGE]
 	local orderBy = data[ORDER_BY_FILTER]
 	local genre = data[GENRE_FILTER]
 	

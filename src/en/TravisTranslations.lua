@@ -1,4 +1,4 @@
--- {"id":4302,"ver":"1.0.11","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4302,"ver":"1.0.12","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://travistranslations.com"
 
@@ -162,8 +162,7 @@ end
 
 local function getSearch(data)
 	local query = data[QUERY]
-	-- Remove the +1 work around when the indexing gets changed.
-	local page = data[PAGE] + 1
+	local page = data[PAGE]
 	local status = data[STATUS_FILTER]
 	local orderBy = data[ORDER_BY_FILTER]
 
