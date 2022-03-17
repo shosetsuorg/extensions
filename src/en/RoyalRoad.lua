@@ -182,9 +182,9 @@ local function createFilterString(data)
 	local function MultiTriQuery(strings, start, len)
 		for i=start+1,start+len do
 			if data[i] then
-				if data[i] == 2 then
+				if (data[i] == 2) then
 					tagsRemove[#tagsRemove+1] = strings[i]
-				else
+				elseif (data[i] == 1) then
 					tagsAdd[#tagsAdd+1] = strings[i]
 				end
 			end
