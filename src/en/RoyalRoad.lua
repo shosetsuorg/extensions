@@ -1,4 +1,4 @@
--- {"id":36833,"ver":"1.0.10","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.11","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
@@ -182,9 +182,9 @@ local function createFilterString(data)
 	local function MultiTriQuery(strings, start, len)
 		for i=start+1,start+len do
 			if data[i] then
-				if data[i] == 2 then
+				if (data[i] == 2) then
 					tagsRemove[#tagsRemove+1] = strings[i]
-				else
+				elseif (data[i] == 1) then
 					tagsAdd[#tagsAdd+1] = strings[i]
 				end
 			end
