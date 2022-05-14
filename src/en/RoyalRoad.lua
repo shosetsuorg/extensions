@@ -344,14 +344,43 @@ return {
 	end,
 
 	getPassage = function(url)
-		local htmlElement = GETDocument(expandURL(url)):selectFirst(".chapter-page")
-		local title = htmlElement:selectFirst(".fic-header h1"):text()
-		htmlElement = htmlElement:selectFirst(".chapter-content")
+		local chap = GETDocument(expandURL(url)):selectFirst(".chapter-page")
+		local title = chap:selectFirst(".fic-header h1"):text()
+		chap = chap:selectFirst(".chapter-content")
 
 		-- Chapter title inserted before chapter text.
-		htmlElement:child(0):before("<h1>" .. title .. "</h1>");
+		chap:child(0):before("<h1>" .. title .. "</h1>");
 
-		return pageOfElem(htmlElement, true, css)
+		-- remove empty paragraphs & forced paragraph indents
+		local toRemove = {}
+		chap:traverse(NodeVisitor(function(v)
+			if v:tagName() == "p" or v:tagName() == "span" then
+				local tnodes = v:textNodes()
+				local text = filter(tnodes, function(tn)
+					-- remove whitespace at the start of text nodes
+					local o = tn:text()
+					local s = o:gsub("^[ \n ]+", "")
+					if o ~= s then
+						tn:text(s)
+					end
+					return s ~= ""
+				end)
+
+				-- remove empty paragraphs
+				if v:childNodeSize() == 0 or (#text == 0 and 0 < tnodes:size()) then
+					toRemove[#toRemove+1] = v
+				end
+			end
+			if v:hasAttr("border") then
+				v:removeAttr("border")
+			end
+		end, nil, true))
+
+		for _,v in pairs(toRemove) do
+			v:remove()
+		end
+
+		return pageOfElem(chap, true, css)
 	end,
 
 	search = function(data)
