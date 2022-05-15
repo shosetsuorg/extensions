@@ -1,4 +1,4 @@
--- {"id":4302,"ver":"1.0.13","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4302,"ver":"1.0.14","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://travistranslations.com"
 
@@ -114,10 +114,10 @@ end
 local function parseNovel(novelURL, loadChapters)
 	local doc = GETDocument(expandURL(novelURL))
 	local content = doc:selectFirst("main#primary")
-
+	
 	local info = NovelInfo {
 		title = content:selectFirst("h1#heading"):attr("title"),
-		imageURL = "https:" .. content:selectFirst("img"):attr("src"),
+		imageURL = "https:" .. content:selectFirst("img"):attr("data-src"),
 		status = ({
 			Completed = NovelStatus.COMPLETED,
 			Ongoing = NovelStatus.PUBLISHING
@@ -155,7 +155,7 @@ local function parseListing(listingURL)
 		return Novel {
 			title = a:attr("title"),
 			link = shrinkURL(a:attr("href")),
-			imageURL = "https:" .. v:selectFirst("img"):attr("src")
+			imageURL = "https:" .. v:selectFirst("figure"):selectFirst("img"):attr("data-src")
 		}
 	end)
 end
