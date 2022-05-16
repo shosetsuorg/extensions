@@ -14,7 +14,7 @@
     },
     {
       "name": "NovelFull",
-      "ver": "2.0.1"
+      "ver": "2.0.5"
     },
     {
       "name": "url",
@@ -22,11 +22,11 @@
     },
     {
       "name": "WWVolare",
-      "ver": "1.2.0"
+      "ver": "1.2.1"
     },
     {
       "name": "Madara",
-      "ver": "2.2.0"
+      "ver": "2.3.3"
     }
   ],
   "scripts": [
@@ -46,7 +46,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Foxaholic.png",
       "id": 173,
       "lang": "en",
-      "ver": "2.1.0",
+      "ver": "2.1.1",
       "libVer": "1.0.0",
       "md5": "c5977c9ba48c5115426fb3010cc65894"
     },
@@ -56,19 +56,9 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelFull.png",
       "id": 1,
       "lang": "en",
-      "ver": "2.0.0",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
-      "md5": "5f95559b552725914228f3b29126fd1"
-    },
-    {
-      "name": "FastNovel",
-      "fileName": "FastNovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/FastNovel.png",
-      "id": 258,
-      "lang": "en",
-      "ver": "0.1.5",
-      "libVer": "1.0.0",
-      "md5": "161b6193d54c876cc658bd353f6623"
+      "md5": "ad8a6211419b89c1c9bda5d6cd07e19e"
     },
     {
       "name": "VipNovel",
@@ -141,16 +131,6 @@
       "md5": "d2edddc58222392b59ed34b73e25d6b2"
     },
     {
-      "name": "WuxiaWorld",
-      "fileName": "WuxiaWorld",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WuxiaWorld.png",
-      "id": 1273,
-      "lang": "en",
-      "ver": "1.0.3",
-      "libVer": "1.0.0",
-      "md5": "adde12e1a74dd843afc870295831fda"
-    },
-    {
       "name": "NovelTrench",
       "fileName": "NovelTrench",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
@@ -171,12 +151,122 @@
       "md5": ""
     },
     {
+      "name": "Mystical Merries",
+      "fileName": "MysticalMerries",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/MysticalMerries.png",
+      "id": 4221,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Sleepy Translations",
+      "fileName": "SleepyTranslations",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SleepyTranslations.png",
+      "id": 4222,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Reaper Scans",
+      "fileName": "ReaperScans",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReaperScans.png",
+      "id": 4223,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Eternal Translation",
+      "fileName": "EternalTranslation",
+      "imageURL": "http://github.com/shosetsuorg/extensions/raw/dev/icons/EternalTranslation.png",
+      "id": 4224,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "ZinNovel",
+      "fileName": "ZinNovel",
+      "imageURL": "http://github.com/shosetsuorg/extensions/raw/dev/icons/ZinNovel.png",
+      "id": 4225,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Wonpress",
+      "fileName": "Wonpress",
+      "imageURL": "http://github.com/shosetsuorg/extensions/raw/dev/icons/Wonpress.png",
+      "id": 4226,
+      "lang": "en",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Rain of Snow Translations",
+      "fileName": "RainOfSnow",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RainOfSnow.png",
+      "id": 4300,
+      "lang": "en",
+      "ver": "1.1.1",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Pink Muffin TL",
+      "fileName": "PinkMuffinTL",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/PinkMuffinTL.png",
+      "id": 4301,
+      "lang": "en",
+      "ver": "1.1.2",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Travis Translations",
+      "fileName": "TravisTranslations",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/TravisTranslations.png",
+      "id": 4302,
+      "lang": "en",
+      "ver": "1.0.14",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Mylovenovel",
+      "fileName": "Mylovenovel",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Mylovenovel.png",
+      "id": 4303,
+      "lang": "en",
+      "ver": "1.0.2",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "ArNovel",
+      "fileName": "ArNovel",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ArNovel.png",
+      "id": 4500,
+      "lang": "ar",
+      "ver": "1.0.3",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
       "id": 6118,
       "lang": "en",
-      "ver": "2.0.1",
+      "ver": "2.0.8",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -201,22 +291,12 @@
       "md5": "6e3dd280e11a4ba1b3dcf7f67b917e81"
     },
     {
-      "name": "Saikai Scan",
-      "fileName": "SaikaiScan",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SaikaiScan.png",
-      "id": 2443,
-      "lang": "pt",
-      "ver": "1.0.4",
-      "libVer": "1.0.0",
-      "md5": "c47e56dfa754a3f0e95fc6a57d9e15b6"
-    },
-    {
       "name": "wuxia.blog",
       "fileName": "WuxiaDotBlog",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/WuxiaDotBlog.png",
       "id": 1376,
       "lang": "en",
-      "ver": "1.0.5",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": "c4a2b8bfb6e6103ad0c8615fb6602bbe"
     },
@@ -226,7 +306,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/KobatoChan.png",
       "id": 74485,
       "lang": "en",
-      "ver": "1.1.0",
+      "ver": "1.1.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -236,7 +316,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ScribbleHub.png",
       "id": 86802,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -246,7 +326,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RoyalRoad.png",
       "id": 36833,
       "lang": "en",
-      "ver": "1.0.1",
+      "ver": "1.0.12",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -256,7 +336,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/AsianHobbyist.png",
       "id": 951,
       "lang": "en",
-      "ver": "2.0.3",
+      "ver": "2.0.4",
       "libVer": "1.0.0",
       "md5": "16348946cb5981a279d80b5f34ffe505"
     },
@@ -266,17 +346,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NMTranslations.png",
       "id": 93082,
       "lang": "en",
-      "ver": "2.0.0",
-      "libVer": "1.0.0",
-      "md5": ""
-    },
-    {
-      "name": "Kolnovel - ملوك الروايات",
-      "fileName": "Kolnovel",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Kolnovel.png",
-      "id": 3301,
-      "lang": "ar",
-      "ver": "1.0.1",
+      "ver": "2.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -298,6 +368,76 @@
       "id": 28505740,
       "lang": "es",
       "ver": "1.1.4",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Octopii",
+      "fileName": "Octopii",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Octopii.png",
+      "id": 420,
+      "lang": "en",
+      "ver": "2.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Zetro Translations",
+      "fileName": "ZetroTranslation",
+      "imageURL": "https://zetrotranslation.com/wp-content/uploads/2020/12/logo_red-e1607700845220.png",
+      "id": 428270,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "MORENOVEL",
+      "fileName": "MoreNovel",
+      "imageURL": "https://morenovel.net/wp-content/uploads/2019/04/morenovel-1.png",
+      "id": 823465,
+      "lang": "ind",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "NeoSekai Translations",
+      "fileName": "NeoSekaiTranslations",
+      "imageURL": "https://www.neosekaitranslations.com/wp-content/uploads/2021/04/NeoSekaiLogoSpelled_correctly1.png",
+      "id": 8323,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "LatestNovel",
+      "fileName": "Latestnovel",
+      "imageURL": "https://latestnovel.net/wp-content/themes/madara/images/logo.png",
+      "id": 2672381,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Novel Team",
+      "fileName": "Novelteam",
+      "imageURL": "https://novelteam.net/wp-content/themes/madara/images/logo.png",
+      "id": 724098,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Nocturne Translations",
+      "fileName": "Nocturnetls",
+      "imageURL": "https://nocturnetls.net/wp-content/uploads/2017/10/nocturne_mask-with-sheen.png",
+      "id": 16581,
+      "lang": "en",
+      "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
     }

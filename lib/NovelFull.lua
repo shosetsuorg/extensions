@@ -1,4 +1,4 @@
--- {"ver":"2.0.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.5","author":"TechnoJo4","dep":["url"]}
 
 -- rename this if you ever figure out its real name
 
@@ -59,7 +59,9 @@ function defaults:search(data)
 end
 
 function defaults:getPassage(url)
-	local htmlElement = GETDocument(self.baseURL..url):selectFirst("div#chapter-content")
+	local htmlElement = GETDocument(self.baseURL..url):selectFirst("div#chapter")
+	local title = htmlElement:selectFirst("a.chapter-title"):text()
+	htmlElement = htmlElement:selectFirst("div#chapter-content")
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
 	htmlElement:removeAttr("style") -- Hopefully only temporary as a hotfix
@@ -67,6 +69,9 @@ function defaults:getPassage(url)
 	htmlElement:select("ins"):remove()
 	htmlElement:select("div.ads"):remove()
 	htmlElement:select("div[align=\"left\"]:last-child"):remove() -- Report error text
+
+	-- Chapter title inserted before chapter text.
+	htmlElement:child(0):before("<h1>" .. title .. "</h1>");
 
 	return pageOfElem(htmlElement)
 end
@@ -80,9 +85,17 @@ function defaults:parseNovel(url, loadChapters)
 
 	local meta_offset = elem:size() < 3 and self.meta_offset or 0
 
-	info:setArtists(map(elem:get(meta_offset):select("a"), text))
-	info:setGenres(map(elem:get(meta_offset + 1):select("a"), text))
-	info:setStatus(NovelStatus(elem:get(meta_offset + 3):select("a"):text() == "Completed" and 1 or 0))
+	local function meta_links(i)
+		return map(elem:get(meta_offset + i):select("a"), text)
+	end
+
+	info:setAuthors(meta_links(0))
+	info:setAlternativeTitles(meta_links(1))
+	info:setGenres(meta_links(2))
+	info:setStatus( ({
+		Ongoing = NovelStatus.PUBLISHING,
+		Completed = NovelStatus.COMPLETED
+	})[elem:get(meta_offset + 4):select("a"):text()] )
 
 	info:setImageURL((self.appendURLToInfoImage and self.baseURL or "") .. doc:selectFirst("div.book img"):attr("src"))
 	info:setDescription(table.concat(map(doc:select("div.desc-text p"), text), "\n"))

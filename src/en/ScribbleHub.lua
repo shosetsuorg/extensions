@@ -1,4 +1,4 @@
--- {"id":86802,"ver":"1.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":86802,"ver":"1.0.2","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.scribblehub.com"
 local qs = Require("url").querystring
@@ -84,6 +84,8 @@ return {
 			s = NovelStatus.PUBLISHING
 		elseif s:match("Complete") then
 			s = NovelStatus.COMPLETED
+		elseif s:match("Hiatus") then
+			s = NovelStatus.PAUSED
 		else
 			s = NovelStatus.UNKNOWN
 		end
@@ -118,12 +120,14 @@ return {
 	end,
 
 	getPassage = function(url)
-		local chap = GETDoc(expandURL(url)):getElementById("chp_raw")
+		local chap = GETDoc(expandURL(url)):getElementById("main read chapter")
+		local title = chap:selectFirst(".chapter-title"):text()
+		chap = chap:getElementById("chp_raw")
 
-		-- remove empty <p> tags
+		-- Remove <p></p>.
 		local toRemove = {}
 		chap:traverse(NodeVisitor(function(v)
-			if v:tagName() == "p" and v:text() == "" then
+			if v:tagName() == "p" and v:childrenSize() == 0 and v:text() == "" then
 				toRemove[#toRemove+1] = v
 			end
 			if v:hasAttr("border") then
@@ -133,6 +137,9 @@ return {
 		for _,v in pairs(toRemove) do
 			v:remove()
 		end
+
+		-- Chapter title inserted before chapter text
+		chap:child(0):before("<h1>" .. title .. "</h1>");
 
 		return pageOfElem(chap, false, css)
 	end,

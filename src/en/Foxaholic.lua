@@ -1,4 +1,4 @@
--- {"id":173,"ver":"2.1.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
+-- {"id":173,"ver":"2.1.1","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://www.foxaholic.com", {
 	id = 173,
@@ -6,7 +6,7 @@ return Require("Madara")("https://www.foxaholic.com", {
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/Foxaholic.png",
 
 	-- defaults values
-	latestNovelSel = "div.col-6",
+	latestNovelSel = "div.col-12.col-md-3.badge-pos-2",
 
 	genres = {
 		"Action",

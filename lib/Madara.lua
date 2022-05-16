@@ -1,4 +1,4 @@
--- {"ver":"2.2.0","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.3.3","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -17,12 +17,16 @@ local defaults = {
 	hasCloudFlare = false,
 	hasSearch = true,
 	chapterType = ChapterType.HTML,
+	chaptersOrderReversed = true,
 	-- If chaptersScriptLoaded is true, then a ajax request has to be made to get the chapter list.
 	-- Otherwise the chapter list is already loaded when loading the novel overview.
 	chaptersScriptLoaded = true,
+	chaptersListSelector= "li.wp-manga-chapter",
 	-- If ajaxUsesFormData is true, then a POST request will be send to baseURL/ajaxFormDataUrl.
 	-- Otherwise to baseURL/shrinkURLNovel/novelurl/ajaxSeriesUrl .
 	ajaxUsesFormData = false,
+	ajaxFormDataSel= "a.wp-manga-action-button",
+	ajaxFormDataAttr = "data-post",
 	ajaxFormDataUrl = "/wp-admin/admin-ajax.php",
 	ajaxSeriesUrl = "ajax/chapters/"
 }
@@ -45,12 +49,14 @@ end
 ---@return string
 function defaults:createSearchString(tbl)
 	local query = tbl[QUERY]
+	local page = tbl[PAGE]
 	local orderBy = tbl[ORDER_BY_FILTER_KEY]
 	local author = tbl[AUTHOR_FILTER_KEY]
 	local artist = tbl[ARTIST_FILTER_KEY]
 	local release = tbl[RELEASE_FILTER_KEY]
 
-	local url = self.baseURL .. "/?s=" .. encode(query) .. "&post_type=wp-manga" ..
+	local url = self.baseURL .. "/page/" .. page ..
+			"/?s=" .. encode(query) .. "&post_type=wp-manga" ..
 			"&author=" .. encode(author) ..
 			"&artist=" .. encode(artist) ..
 			"&release=" .. encode(release)
@@ -120,6 +126,7 @@ function defaults:getPassage(url)
 
 	-- Remove/modify unwanted HTML elements to get a clean webpage.
 	htmlElement:select("div.lnbad-tag"):remove() -- LightNovelBastion text size
+	htmlElement:select("i.icon.j_open_para_comment.j_para_comment_count"):remove() -- BoxNovel, VipNovel numbers
 
 	return pageOfElem(htmlElement, true)
 end
@@ -165,16 +172,25 @@ function defaults:parseNovel(url, loadChapters)
 	local titleElement = doc:selectFirst(self.novelPageTitleSel)
 	titleElement:select("span"):remove()
 
+	-- Temporarily saves a Jsoup selection for repeated use. Initial value used for status.
+	local selectedContent = doc:selectFirst("div.post-status"):select("div.post-content_item")
+
 	local info = NovelInfo {
 		description = table.concat(map(doc:selectFirst("div.summary__content"):select("p"), text), "\n"),
 		title = titleElement:text(),
 		imageURL = img_src(doc:selectFirst("div.summary_image"):selectFirst("img.img-responsive")),
-		status = doc:selectFirst("div.post-status"):select("div.post-content_item"):get(0)
-		            :select("div.summary-content"):text() == "OnGoing"
-				and NovelStatus.PUBLISHING or NovelStatus.COMPLETED
+		status = ({
+					OnGoing = NovelStatus.PUBLISHING,
+					Completed = NovelStatus.COMPLETED,
+					Canceled = NovelStatus.PAUSED,
+					["On Hold"] = NovelStatus.PAUSED,
+					Ongoing = NovelStatus.PUBLISHING -- Never spotted, but better safe than sorry.
+				-- If there is a 'Release' content item then it comes before the 'Status'.
+				-- Therefore, select last content item.
+				})[selectedContent:get(selectedContent:size()-1):select("div.summary-content"):text()]
 	}
 	-- Not every Novel has an guaranteed author, artist or genres (looking at you NovelTrench).
-	local selectedContent = content:selectFirst("div.author-content")
+	selectedContent = content:selectFirst("div.author-content")
 	if selectedContent ~= nil then
 		info:setAuthors( map(selectedContent:select("a"), text) )
 	end
@@ -193,8 +209,8 @@ function defaults:parseNovel(url, loadChapters)
 		if self.chaptersScriptLoaded then
 			if self.ajaxUsesFormData then
 				-- Old method.
-				local button = doc:selectFirst("a.wp-manga-action-button")
-				local id = button:attr("data-post")
+				local button = doc:selectFirst(self.ajaxFormDataSel)
+				local id = button:attr(self.ajaxFormDataAttr)
 
 				doc = RequestDocument(
 						POST(self.baseURL .. self.ajaxFormDataUrl, nil,
@@ -211,15 +227,27 @@ function defaults:parseNovel(url, loadChapters)
 			end
 		end
 
-		local chapterList = doc:select("li.wp-manga-chapter")
+		local chapterList = doc:select(self.chaptersListSelector)
+		local chapterOrder = -1
+		if self.chaptersOrderReversed then
+			chapterOrder = chapterList:size()
+		end
 		local novelList = AsList(map(chapterList, function(v)
+			if self.chaptersOrderReversed then
+				chapterOrder = chapterOrder - 1
+			else
+				chapterOrder = chapterOrder + 1
+			end
 			return NovelChapter{
 				title = v:selectFirst("a"):text(),
 				link = self.shrinkURL(v:selectFirst("a"):attr("href")),
-				release = v:selectFirst("span.chapter-release-date"):text()
+				release = v:selectFirst("span.chapter-release-date"):text(),
+				order = chapterOrder
 			}
 		end))
-		Reverse(novelList)
+		if self.chaptersOrderReversed then
+			Reverse(novelList)
+		end
 		info:setChapters(novelList)
 	end
 
@@ -280,6 +308,7 @@ return function(baseURL, _self)
 		end)) -- 6
 	}
 
+	_self["isSearchIncrementing"] = true
 	if _self.searchHasOper then
 		keyID = keyID + 1
 		_self.searchOperId = keyID

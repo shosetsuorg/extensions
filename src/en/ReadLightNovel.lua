@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"2.0.1","libVer":"1.0.0","author":"TechnoJo4"}
+-- {"id":6118,"ver":"2.0.8","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.readlightnovel.me"
 local qs = Require("url").querystring
@@ -51,16 +51,20 @@ return {
 
 	listings = {
 		Listing("Top Novels", true, function(data)
-			return parseTop(GETDocument(baseURL .. "/top-novel/" .. data[PAGE]))
+			return parseTop(GETDocument(expandURL("/top-novels/top-rated/" .. data[PAGE])))
 		end)
 	},
 
 	getPassage = function(chapterURL)
-		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div#chapterhidden")
+		local htmlElement = GETDocument(expandURL(chapterURL)):selectFirst("div.content2")
+		local title = htmlElement:selectFirst("div.block-title"):text()
+		htmlElement = htmlElement:selectFirst("div#chapterhidden")
 
 		-- Remove/modify unwanted HTML elements to get a clean webpage.
-		htmlElement:removeAttr("class") -- Remove hidden
-		--htmlElement:select("br"):remove()
+		htmlElement:select("br"):remove() -- Between each <p> is a <br>.
+
+		-- Chapter title inserted before chapter text.
+		htmlElement:child(0):before("<h1>" .. title .. "</h1>");
 
 		return pageOfElem(htmlElement)
 	end,
@@ -78,10 +82,13 @@ return {
 			imageURL = left:selectFirst(".novel-cover img"):attr("src"),
 			description = table.concat(map(details:selectFirst(".novel-detail-body"):select("p"), text), "\n"),
 			status = ({
-				Ongoing = NovelStatus("PUBLISHING"),
-				Completed = NovelStatus("COMPLETED")
+				Ongoing = NovelStatus.PUBLISHING,
+				Completed = NovelStatus.COMPLETED,
 			})[leftdetails:get(leftdetails:size()-1):selectFirst("li"):text()],
-			language = leftdetails:get(3):selectFirst("li"):text()
+			genres = map(leftdetails:get(1):select("a"), text),
+			language = leftdetails:get(3):selectFirst("li"):text(),
+			authors = map(leftdetails:get(4):select("a"), text),
+			artists = map(leftdetails:get(5):select("a"), text)
 		}
 		if details:selectFirst(".novel-detail-item.color-gray") ~= nil then
 			info:setAlternativeTitles(map(details:selectFirst(".novel-detail-item.color-gray"):select("li a"), text))
@@ -121,7 +128,7 @@ return {
 
 	search = function(data)
 		return parseTop(RequestDocument(
-			POST(baseURL .. "/detailed-search", nil,
+			POST(expandURL("/detailed-search-rln"), nil,
 				RequestBody(qs({ keyword=data[QUERY], search=1 }), MediaType("application/x-www-form-urlencoded")))
 			))
 	end,

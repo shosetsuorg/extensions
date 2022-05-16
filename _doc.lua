@@ -510,6 +510,10 @@ do
         function CheckboxFilter(id, name) return end
 
         ---@param name string
+        ---return TriStateFilter
+        function TriStateFilter(id, name) return end
+
+        ---@param name string
         ---@param choices string[] | Array | table
         ---return RadioGroupFilter
         function RadioGroupFilter(id, name, choices) return end
