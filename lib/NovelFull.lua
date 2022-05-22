@@ -1,4 +1,4 @@
--- {"ver":"2.0.5","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.0.6","author":"TechnoJo4, Doomsdayrs","dep":["url"]}
 
 -- rename this if you ever figure out its real name
 
@@ -24,10 +24,9 @@ local defaults = {
 
 function defaults:search(data)
 	-- search gives covers but they're in some weird aspect ratio
-	local doc = GETDocument(qs({ keyword = data[QUERY] }, self.baseURL .. "/search"))
-	local pager = doc:selectFirst(".pagination.pagination-sm")
-	local pages = {
-		map(doc:selectFirst("div." .. self.searchListSel):select("div.row"), function(v)
+	local doc = GETDocument(qs({ keyword = data[QUERY], page = data[PAGE] }, self.baseURL .. "/search"))
+
+	return map(doc:selectFirst("div." .. self.searchListSel):select("div.row"), function(v)
 			local novel = Novel()
 			novel:setImageURL(v:selectFirst("img.cover"):attr("src"))
 			local d = v:selectFirst(self.searchTitleSel .. " a")
@@ -35,27 +34,6 @@ function defaults:search(data)
 			novel:setTitle(d:attr("title"))
 			return novel
 		end)
-	}
-	if pager then
-		local last = pager:selectFirst("li.last:not(.disabled) a")
-		if not last then
-			last = pager:select("li a[data-page]")
-			last = last:get(last:size())
-		end
-		last = tonumber(last:attr("data-page")) + 1
-
-		for i = 2, last do
-			pages[i] = map(GETDocument(qs({ s = data[QUERY],page = data[PAGE] }, self.baseURL .. "/search")):select(".novel-title a"),
-					function(v)
-						local novel = Novel()
-						novel:setLink(self.shrinkURL(v:attr("href")))
-						novel:setTitle(v:attr("title"))
-						return novel
-					end)
-		end
-	end
-
-	return flatten(pages)
 end
 
 function defaults:getPassage(url)
