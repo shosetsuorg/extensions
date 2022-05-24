@@ -1,4 +1,4 @@
--- {"id":911,"ver":"1.0.3","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
+-- {"id":911,"ver":"2.0.0","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","dkjson>=1.0.0"]}
 
 local baseURL = "https://creativenovels.com"
 local ajaxURL = "https://creativenovels.com/wp-admin/admin-ajax.php"
@@ -27,11 +27,25 @@ end
 
 ---@param url string
 local function getPassage(url)
-	return table.concat(map(
-			GETDocument(baseURL.."/"..url):selectFirst("div.entry-content.content"):select("p"),
-			function(v)
-				return v:text()
-			end), "\n")
+	local document = GETDocument(baseURL.."/"..url)
+	local htmlElement = document:selectFirst("div.entry-content.content")
+	local title = document:selectFirst("h1.entry-title")
+
+	-- remove advertisements
+	local toRemove = {}
+	htmlElement:traverse(NodeVisitor(function(v)
+		if v:hasAttr("style") and v:attr("style"):match("color: *transparent") then
+			toRemove[#toRemove+1] = v
+		end
+	end, nil, true))
+	for _,v in pairs(toRemove) do
+		v:remove()
+	end
+
+	-- Chapter title inserted before chapter text
+	htmlElement:child(0):before(title)
+
+	return pageOfElem(htmlElement, true)
 end
 
 local statuses = {
@@ -102,6 +116,7 @@ return {
 	name = "Creative Novels",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/CreativeNovels.png",
+	chapterType = ChapterType.HTML,
 	hasSearch = false,
 	shrinkURL = shrinkURL,
 	expandURL = function(url, key)
