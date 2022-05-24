@@ -28,7 +28,7 @@ end
 ---@param url string
 local function getPassage(url)
 	local document = GETDocument(baseURL.."/"..url)
-	local htmlElement =	document:selectFirst("div.entry-content.content")
+	local htmlElement = document:selectFirst("div.entry-content.content")
 	local title = document:selectFirst("h1.entry-title")
 
 	-- remove advertisements
