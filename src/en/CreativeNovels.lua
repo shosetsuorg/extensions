@@ -31,6 +31,17 @@ local function getPassage(url)
 	local htmlElement =	document:selectFirst("div.entry-content.content")
 	local title = document:selectFirst("h1.entry-title")
 
+	-- remove advertisements
+	local toRemove = {}
+	htmlElement:traverse(NodeVisitor(function(v)
+		if v:hasAttr("style") and v:attr("style"):match("color: *transparent") then
+			toRemove[#toRemove+1] = v
+		end
+	end, nil, true))
+	for _,v in pairs(toRemove) do
+		v:remove()
+	end
+
 	-- Chapter title inserted before chapter text
 	htmlElement:child(0):before(title)
 
