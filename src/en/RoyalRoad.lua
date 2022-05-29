@@ -124,12 +124,21 @@ local TYPE_FILTER_INT = { --dropdown, start from 0
 	"original",
 }
 
-local function shrinkURL(url)
-	return url:gsub("^.-royalroad%.com/?", "")
+local function shrinkURL(url, t)
+	if t == 1 then -- novel url
+		url = url:match("/fiction/(%d+)")
+	else
+		url = url:gsub("^.-royalroad%.com/?", "")
+	end
+	return url
 end
 
-local function expandURL(url)
-	return baseURL .. (url:sub(1, 1) == "/" and "" or "/") .. url
+local function expandURL(url, t)
+	url = (url:sub(1, 1) == "/" and "" or "/") .. url
+	if t == 1 then -- novel url
+		url = "/fiction" .. url
+	end
+	return baseURL .. url
 end
 
 local function TriStateFilter_(int, str)
