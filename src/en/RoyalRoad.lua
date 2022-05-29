@@ -1,4 +1,4 @@
--- {"id":36833,"ver":"1.0.12","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
+-- {"id":36833,"ver":"1.0.13","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0","CommonCSS>=1.0.0"]}
 
 local baseURL = "https://www.royalroad.com"
 local qs = Require("url").querystring
@@ -241,6 +241,10 @@ local function listing(name, inc, url)
 	end)
 end
 
+local styleKeep = {
+	["text-decoration"] = true
+}
+
 return {
 	id = 36833,
 	name = "RoyalRoad",
@@ -348,31 +352,56 @@ return {
 		local title = chap:selectFirst(".fic-header h1"):text()
 		chap = chap:selectFirst(".chapter-content")
 
-		-- Chapter title inserted before chapter text.
-		chap:child(0):before("<h1>" .. title .. "</h1>");
+		-- insert title at start of chapter
+		chap:prepend("<h1>" .. title .. "</h1>")
 
 		-- remove empty paragraphs & forced paragraph indents
 		local toRemove = {}
 		chap:traverse(NodeVisitor(function(v)
 			if v:tagName() == "p" or v:tagName() == "span" then
+				local nr = 0
 				local tnodes = v:textNodes()
-				local text = filter(tnodes, function(tn)
-					-- remove whitespace at the start of text nodes
+
+				-- remove whitespace at the start of the paragraph
+				for i=0,tnodes:size()-1 do
+					local tn = tnodes:get(i)
 					local o = tn:text()
 					local s = o:gsub("^[ \n ]+", "")
+
 					if o ~= s then
 						tn:text(s)
 					end
-					return s ~= ""
-				end)
+					if s ~= "" then
+						break
+					else
+						nr = nr + 1
+					end
+				end
 
 				-- remove empty paragraphs
-				if v:childNodeSize() == 0 or (#text == 0 and 0 < tnodes:size()) then
+				if v:childNodeSize() == nr then
 					toRemove[#toRemove+1] = v
 				end
 			end
+
 			if v:hasAttr("border") then
 				v:removeAttr("border")
+			end
+
+			-- manually remove all style attributes except the useful ones
+			-- TODO: if this becomes useful for other extensions, move this to a lib
+			if v:hasAttr("style") then
+				local s = ""
+				for k,v in (v:attr("style")..";"):gmatch("(.-):%s*(.-);%s*") do
+					if styleKeep[k] then
+						s = s .. k .. ":" .. v .. ";"
+					end
+				end
+				if s == "" then
+					v:removeAttr("style")
+				else
+					v:attr("style", s)
+				end
 			end
 		end, nil, true))
 
@@ -380,7 +409,25 @@ return {
 			v:remove()
 		end
 
-		return pageOfElem(chap, true, css)
+		-- insert author notes
+		local noteTitleStyle = "text-transform:uppercase;font-weight:700"
+		map(chap:previousElementSiblings(), function(v)
+			if v:hasClass("author-note-portlet") then
+				v:selectFirst(".portlet-title"):attr("style", noteTitleStyle)
+				chap:prepend("<hr>")
+				chap:prepend(v)
+			end
+		end)
+
+		map(chap:nextElementSiblings(), function(v)
+			if v:hasClass("author-note-portlet") then
+				v:selectFirst(".portlet-title"):attr("style", noteTitleStyle)
+				chap:append("<hr>")
+				chap:append(v)
+			end
+		end)
+
+		return pageOfElem(chap, false, css)
 	end,
 
 	search = function(data)
