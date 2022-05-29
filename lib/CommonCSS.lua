@@ -1,4 +1,4 @@
--- {"ver":"1.0.0","author":"TechnoJo4"}
+-- {"ver":"1.0.1","author":"TechnoJo4"}
 
 -- Collection of common CSS snippets
 
