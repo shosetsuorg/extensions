@@ -1,4 +1,4 @@
--- {"ver":"1.0.0","author":"TechnoJo4"}
+-- {"ver":"1.0.1","author":"TechnoJo4"}
 
 -- Collection of common CSS snippets
 
@@ -25,16 +25,16 @@ def
     --table-color: #007CBA;
 }
 table {
-    background: none;
-    margin: 10px auto;
-    width: 90%;
-    outline: var(--table-color) solid 3px;
-    border-spacing: 3px;
-    border-collapse: separate;
+    background: none !important;
+    margin: 10px auto !important;
+    width: 90% !important;
+    outline: var(--table-color) solid 3px !important;
+    border-spacing: 3px !important;
+    border-collapse: separate !important;
 }
 td {
-    padding: 3px;
-    background: var(--table-color);
+    padding: 3px !important;
+    background: var(--table-color) !important;
 }
 ]]
 
