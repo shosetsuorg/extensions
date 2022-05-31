@@ -1,4 +1,4 @@
--- {"id":4303,"ver":"1.0.2","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4303,"ver":"1.0.3","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://www.mylovenovel.com"
 
@@ -115,13 +115,24 @@ end
 local function getListing(data)
 	-- Filters only work with the listing, their search does not support them.
 	local page = data[PAGE] 
-	local status = STATUS_TERMS[data[STATUS_FILTER]+1]
-	local orderBy = ORDER_BY_TERMS[data[ORDER_BY_FILTER]+1]
-	local genre = ""
-	if data[GENRE_FILTER] ~= 0 then
-		genre = GENRE_VALUES[data[GENRE_FILTER]+1]:lower()
+	local genre = data[GENRE_FILTER]
+	local status = data[STATUS_FILTER]
+	local orderBy = data[ORDER_BY_FILTER]
+
+	local genreValue = ""
+	if genre ~= nil and genre ~= 0 then
+		genreValue = GENRE_VALUES[genre+1]:lower()
 	end
-	local url = "/search-" .. genre .. "-" .. status .. "-" .. orderBy .. "-" .. page .. ".html"
+	local statusValue = ""
+	if status ~= nil then
+		statusValue = STATUS_TERMS[status+1]
+	end
+	local orderByValue = ""
+	if orderBy ~= nil then
+		orderByValue = ORDER_BY_TERMS[orderBy+1]
+	end
+
+	local url = "/search-" .. genreValue .. "-" .. statusValue .. "-" .. orderByValue .. "-" .. page .. ".html"
 	return parseListing(expandURL(url))
 end
 
