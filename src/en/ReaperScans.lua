@@ -1,4 +1,4 @@
--- {"id":4223,"ver":"1.0.3","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.0"]}
+-- {"id":4223,"ver":"1.0.4","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.0"]}
 
 return Require("Madara")("https://reaperscans.com", {
 	id = 4223,
@@ -6,7 +6,7 @@ return Require("Madara")("https://reaperscans.com", {
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReaperScans.png",
 	chaptersScriptLoaded = false,
 	chaptersListSelector= "li.wp-manga-chapter.free-chap",
-	latestNovelSel = ".col-6.col-md-3.badge-pos-2",
+	latestNovelSel = ".col-4.col-md-2.badge-pos-2",
 	novelListingURLPath = "all-series/novels",
 	shrinkURLNovel = "series",
 	searchHasOper = true,

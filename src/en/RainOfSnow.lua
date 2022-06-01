@@ -1,4 +1,4 @@
--- {"id":4300,"ver":"1.1.1","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4300,"ver":"1.1.2","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://rainofsnow.com"
 
@@ -120,7 +120,7 @@ local function getListing(data)
 	
 	local url
 	-- Genre filtering only works with popular order by.
-	if genre ~= 0 then
+	if genre ~= nil and genre ~= 0 then
 		url = "/novels/" .. "?n_orderby=" .. GENRE_TERMS[genre+1]
 	else
 		url = "/" .. ORDER_BY_TERMS[orderBy+1] .. "/page/" .. page
