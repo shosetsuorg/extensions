@@ -1,4 +1,4 @@
--- {"id":93082,"ver":"2.0.1","libVer":"1.0.0","author":"Doomsdayrs"}
+-- {"id":93082,"ver":"2.0.2","libVer":"1.0.0","author":"Doomsdayrs"}
 local baseURL = "https://skydemonorder.com/"
 
 local function text(v)
