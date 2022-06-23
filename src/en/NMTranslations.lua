@@ -1,5 +1,5 @@
--- {"id":93082,"ver":"2.0.1","libVer":"1.0.0","author":"Doomsdayrs"}
-local baseURL = "https://www.nanomashin.online"
+-- {"id":93082,"ver":"2.0.2","libVer":"1.0.0","author":"Doomsdayrs"}
+local baseURL = "https://skydemonorder.com/"
 
 local function text(v)
 	return v:text()
@@ -15,7 +15,7 @@ end
 
 return {
 	id = 93082,
-	name = "NM Translations",
+	name = "Sky Demon Order",
 	baseURL = baseURL,
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NMTranslations.png",
 	hasSearch = false,
