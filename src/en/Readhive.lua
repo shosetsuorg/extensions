@@ -80,7 +80,7 @@ local function parseNovel(novelURL, loadChapters)
 				release = v:selectFirst("span.text-xs"):text()
 			}
 		end))
-		info:setChapters(Reverse(AsList(chapters)))
+		info:setChapters(AsList(Reverse(chapters)))
 	end
 	return info
 end
