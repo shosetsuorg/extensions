@@ -67,12 +67,14 @@ local function parseNovel(novelURL, loadChapters)
 	
 	if loadChapters then
 		local chapterList = content:selectFirst(".grid-in-content"):select("a")
+		local chapterOrder = chapterList:size()
 		local chapters = (mapNotNil(chapterList, function(v, i)
 			-- This is to ignore the premium chapter, those have a lock icon in their anchor.
+			chapterOrder = chapterOrder - 1
 			local PremChapter = v:selectFirst("svg")
 			if PremChapter ~= nil then return nil end
 			return NovelChapter {
-				order = i,
+				order = chapterOrder,
 				title = v:selectFirst("p"):text(),
 				link = shrinkURL(v:attr("href")),
 				release = v:selectFirst("span.text-xs"):text()
