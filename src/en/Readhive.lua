@@ -112,9 +112,9 @@ local function getSearch(data)
 	local m = MediaType("multipart/form-data; boundary=----aWhhdGVrb3RsaW4K")
 	local body = RequestBody("------aWhhdGVrb3RsaW4K\r\nContent-Disposition: form-data; name=\"query\"\r\n\r\n" 
 		.. query.. 
-	 	"\r\n------aWhhdGVrb3RsaW4K--\r\n"
-	 	.. "------aWhhdGVrb3RsaW4K\r\nContent-Disposition: form-data; name=\"action\"\r\n\r\n"
-	  .. "search" .. 
+		"\r\n------aWhhdGVrb3RsaW4K--\r\n"
+		.. "------aWhhdGVrb3RsaW4K\r\nContent-Disposition: form-data; name=\"action\"\r\n\r\n"
+		.. "search" .. 
 		"\r\n------aWhhdGVrb3RsaW4K--\r\n", m)
 
 	local response = RequestDocument(POST(expandURL("/ajax"), nil, body))
