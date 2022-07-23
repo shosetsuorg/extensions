@@ -35,9 +35,7 @@ local function clearNewLines(v)
 end
 
 local function getLatestListing(data)
-	local page = data[PAGE]
-	local url = "/page/" ..page.. "/?"
-	local doc = GETDocument(expandURL(url))
+	local doc = GETDocument(expandURL("/page/" ..data[PAGE] .. "/?"))
 	local data = doc:selectFirst(".mb-16.space-y-16"):selectFirst(".flex.flex-wrap")
 	return map(data:select(".flex.flex-col.w-full.px-2"), function(v)
 		local a = v:selectFirst("a")
@@ -117,15 +115,11 @@ local function getSearch(data)
 	end)
 end
 
-local function getListing(data)
-	return getSearch(data)
-end
-
 return {
 	id = 4304,
 	name = "Readhive",
 	baseURL = baseURL,
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/TravisTranslations.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/Readhive.png",
 	chapterType = ChapterType.HTML,
 
 	listings = {
