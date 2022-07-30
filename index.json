@@ -352,11 +352,11 @@
     },
     {
       "name": "Sky Demon Order",
-      "fileName": "NMTranslations",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NMTranslations.png",
+      "fileName": "SkyDemonOrder",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/SkyDemonOrder.png",
       "id": 93082,
       "lang": "en",
-      "ver": "2.0.2",
+      "ver": "3.0.0",
       "libVer": "1.0.0",
       "md5": ""
     },
