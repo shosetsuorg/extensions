@@ -1,7 +1,7 @@
--- {"id":4502,"ver":"1.0.0","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4501,"ver":"1.0.0","libVer":"1.0.0","author":"MechTechnology"}
 
 return Require("Madara")("https://teamxnovel.com", {
-	id = 4221,
+	id = 4501,
 	name = "Team X Novel",
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/TeamXNovel.png",
 	chaptersScriptLoaded = true,
