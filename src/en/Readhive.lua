@@ -1,4 +1,4 @@
--- {"id":4304,"ver":"1.0.0","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4304,"ver":"1.0.1","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://readhive.org"
 
@@ -36,7 +36,7 @@ end
 
 local function getLatestListing(data)
 	local doc = GETDocument(expandURL("/page/" ..data[PAGE] .. "/?"))
-	local data = doc:selectFirst(".mb-16.space-y-16"):selectFirst(".flex.flex-wrap")
+	local data = doc:selectFirst(".space-y-16"):selectFirst(".flex.flex-wrap")
 	return map(data:select(".flex.flex-col.w-full.px-2"), function(v)
 		local a = v:selectFirst("a")
 		if a ~= nil then
