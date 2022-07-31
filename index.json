@@ -271,6 +271,16 @@
       "md5": ""
     },
     {
+      "name": "Team X Novel",
+      "fileName": "TeamXNovel",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/TeamXNovel.png",
+      "id": 4501,
+      "lang": "ar",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "ReadLightNovel",
       "fileName": "ReadLightNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReadLightNovel.png",
