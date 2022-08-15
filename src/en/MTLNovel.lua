@@ -17,7 +17,7 @@ local function shrinkURL(url)
 end
 
 local function expandURL(url)
-	return baseURL .. url
+	return baseURL .. "/" .. url
 end
 
 ---@type fun(table, string): string
