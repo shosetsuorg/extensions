@@ -1,4 +1,4 @@
--- {"id":227675,"ver":"1.0.0","libVer":"1.0.0","author":"Claudemirovsky",deps=["url>=1.0.0"]}
+-- {"id":227675,"ver":"1.0.0","libVer":"1.0.0","author":"Claudemirovsky","dep":["url>=1.0.0"]}
 
 -- ============================= CONSTANTS ==============================
 local id = 227675 -- from a good doujinshi
