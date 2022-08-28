@@ -51,6 +51,16 @@
       "md5": "c5977c9ba48c5115426fb3010cc65894"
     },
     {
+      "name": "Central Novel",
+      "fileName": "CentralNovel",
+      "id": 227675,
+      "imageURL": "https://centralnovel.com/wp-content/uploads/2021/06/CENTRAL-NOVEL-LOGO-DARK-.png",
+      "lang": "pt",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "NovelFull",
       "fileName": "NovelFull",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelFull.png",
