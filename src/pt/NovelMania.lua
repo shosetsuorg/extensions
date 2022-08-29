@@ -149,7 +149,6 @@ local function getChapterList(document)
     count = count + 1
     return chapter
   end))
-  Reverse(chapterList)
   return chapterList
 end
 
