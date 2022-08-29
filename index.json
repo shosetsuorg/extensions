@@ -61,6 +61,16 @@
       "md5": ""
     },
     {
+      "name": "Novel Mania",
+      "fileName": "NovelMania",
+      "id": 250401,
+      "imageURL": "https://novelmania.com.br/assets/logo-blue-ccbd5d317242b0f0479edd2cad954fd235dbdfeb662bb338d987f8f57e3794a2.png",
+      "lang": "pt",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "NovelFull",
       "fileName": "NovelFull",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelFull.png",
