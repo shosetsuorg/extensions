@@ -138,7 +138,7 @@ end
 ---@return NovelChapter[]
 local function getChapterList(document)
   local chapters = document:select("ol.list-inline a")
-  local count = chapters:size()
+  local count = 1
   local chapterList = AsList(map(chapters, function(el)
     local chapter = NovelChapter {
       title = el:selectFirst("strong"):text(),
@@ -146,7 +146,7 @@ local function getChapterList(document)
       release = el:selectFirst("small"):text(),
       order = count
     }
-    count = count - 1
+    count = count + 1
     return chapter
   end))
   Reverse(chapterList)
