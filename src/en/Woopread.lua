@@ -1,11 +1,11 @@
--- {"id":4217,"ver":"2.1.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
+-- {"id":4217,"ver":"2.2.0","libVer":"1.0.0","author":"TechnoJo4","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://woopread.com", {
     id = 4217,
     name = "WoopRead",
     imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/WoopRead.png",
-
     -- defaults values
+    chaptersListSelector= "li.wp-manga-chapter.free-chap",
     novelListingURLPath = "novellist",
     shrinkURLNovel = "series",
     searchHasOper = true,
