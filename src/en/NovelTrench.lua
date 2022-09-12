@@ -1,8 +1,8 @@
 -- {"id":81,"ver":"2.1.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
-return Require("Madara")("https://noveltrench.com",{
+return Require("Madara")("https://novelhard.com",{
 	id = 81,
-	name = "NovelTrench",
+	name = "NovelHard",
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
 
 	-- defaults values
