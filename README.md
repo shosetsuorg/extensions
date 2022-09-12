@@ -18,3 +18,10 @@ A very generic how to:
 4. Create a new branch on your local repository, following the following naming scheme `impl-thisisaname.domain`
 5. Start to develop the extension
 6. Make a PR of that branch into master
+
+### Icon creation
+
+Unique Icons can be created for each extension. 
+Following the above steps, but at step 5, develop the icon!
+
+Please ensure the source of the icons are present, so they can be edited later on. 
