@@ -7,8 +7,8 @@ return Require("Madara")("https://novelhard.com",{
 
 	-- defaults values
 	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
-	novelListingURLPath = "manga",
-	shrinkURLNovel = "manga",
+	novelListingURLPath = "novel",
+	shrinkURLNovel = "novel",
 	searchHasOper = true,
 
 	genres = {
