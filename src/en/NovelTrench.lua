@@ -1,4 +1,4 @@
--- {"id":81,"ver":"2.1.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":81,"ver":"2.1.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://novelhard.com",{
 	id = 81,
