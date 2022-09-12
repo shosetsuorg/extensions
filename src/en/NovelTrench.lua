@@ -3,7 +3,7 @@
 return Require("Madara")("https://novelhard.com",{
 	id = 81,
 	name = "NovelHard",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
+	imageURL = "https://novelhard.com/wp-content/uploads/2019/08/novelhard.com_-1.png",
 
 	-- defaults values
 	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
