@@ -151,12 +151,12 @@
       "md5": "d2edddc58222392b59ed34b73e25d6b2"
     },
     {
-      "name": "NovelTrench",
+      "name": "NovelHard",
       "fileName": "NovelTrench",
-      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
+      "imageURL": "https://novelhard.com/wp-content/uploads/2019/08/novelhard.com_-1.png",
       "id": 81,
       "lang": "en",
-      "ver": "2.1.0",
+      "ver": "2.1.1",
       "libVer": "1.0.0",
       "md5": ""
     },

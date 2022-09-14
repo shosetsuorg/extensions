@@ -1,14 +1,14 @@
--- {"id":81,"ver":"2.1.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":81,"ver":"2.1.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
-return Require("Madara")("https://noveltrench.com",{
+return Require("Madara")("https://novelhard.com",{
 	id = 81,
-	name = "NovelTrench",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/NovelTrench.png",
+	name = "NovelHard",
+	imageURL = "https://novelhard.com/wp-content/uploads/2019/08/novelhard.com_-1.png",
 
 	-- defaults values
 	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
-	novelListingURLPath = "manga",
-	shrinkURLNovel = "manga",
+	novelListingURLPath = "novel",
+	shrinkURLNovel = "novel",
 	searchHasOper = true,
 
 	genres = {
