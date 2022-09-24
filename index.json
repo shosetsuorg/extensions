@@ -115,7 +115,7 @@
       "fileName": "Tangsanshu",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Tangsanshu.png",
       "id": 234,
-      "lang": "zn",
+      "lang": "zh",
       "ver": "1.0.2",
       "libVer": "1.0.0",
       "md5": "d8dfa1e373af2b72353a1464f715b39"
@@ -145,7 +145,7 @@
       "fileName": "Syosetsu",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Syosetsu.png",
       "id": 3,
-      "lang": "jp",
+      "lang": "ja",
       "ver": "1.2.2",
       "libVer": "1.0.0",
       "md5": "d2edddc58222392b59ed34b73e25d6b2"
