@@ -23,11 +23,9 @@ local function getPassage(chapterURL)
 	chap:select(".title-wrapper"):remove()
 	chap:child(0):before("<h1>" .. doc:selectFirst("head > title"):text() .. "</h1>");
 
-	--[[
 	map(chap:select("img"), function(v)
-		v:setAttribute("src", baseURL .. "/api/media/" .. v:attr("data-media-id"))
+		v:attr("src", baseURL .. "/api/media/" .. v:attr("data-media-id"))
 	end)
-	]]
 
 	return pageOfElem(chap, true)
 end
