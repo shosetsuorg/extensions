@@ -483,10 +483,20 @@
     {
       "name": "РанобэРФ",
       "fileName": "Ranoberf",
-      "imageURL": "https://ранобэ.рф/favicon/favicon-16x16.png",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Ranoberf.png",
       "id": 71,
       "lang": "ru",
       "ver": "1.0.1",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Ranobehub",
+      "fileName": "Ranobehub",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/Ranobehub.png",
+      "id": 72,
+      "lang": "ru",
+      "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
     }

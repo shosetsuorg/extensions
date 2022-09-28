@@ -80,7 +80,7 @@ return {
 	id = 71,
 	name = "РанобэРФ",
 	baseURL = baseURL,
-	imageURL = "https://ранобэ.рф/favicon/favicon-16x16.png",
+	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/Ranoberf.png",
 	chapterType = ChapterType.HTML,
 
 	listings = {
