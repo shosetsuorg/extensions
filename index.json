@@ -281,6 +281,16 @@
       "md5": ""
     },
     {
+      "name": "MoonlightNovels",
+      "fileName": "MoonlightNovels",
+      "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/MoonlightNovels.png",
+      "id": 4305,
+      "lang": "en",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "ArNovel",
       "fileName": "ArNovel",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/ArNovel.png",
