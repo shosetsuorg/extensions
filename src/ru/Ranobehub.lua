@@ -105,9 +105,9 @@ return {
 
 			for k, v in pairs(data) do
 				if v then
-					if (k > 1999 and k < 2050) then
+					if (k > 999 and k < 2099) then
 						table.insert(tags, k - 1000)
-					elseif (k > 2050 and k < 3100) then
+					elseif (k > 2099 and k < 3100) then
 						table.insert(tags, k - 2100)
 					end
 				end
@@ -119,7 +119,7 @@ return {
 				url = url .. "&sort=computed_rating"
 			end
 			if data[COUNTRY_BY_FILTER] then
-				url = url .. "&country=" .. (countryBy + 1)
+				url = url .. "&country=" .. (data[COUNTRY_BY_FILTER] + 1)
 			end
 			if data[STATUS_BY_FILTER] then
 				url = url .. "&status=" .. data[STATUS_BY_FILTER]
