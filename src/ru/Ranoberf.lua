@@ -13,7 +13,6 @@ local settings = {
 	[PAIDCHAPTERSHOW_KEY] = false,
 }
 
-
 local function shrinkURL(url)
 	return url:gsub(baseURL .. "/", "")
 end
@@ -24,7 +23,7 @@ end
 
 local function getSearch(data)
 	local query = data[QUERY]
-	local url = "v3/books?filter[or][0][title][like]=" .. query .."&filter[or][1][titleEn][like]=" 
+	local url = "v3/books?filter[or][0][title][like]=" .. query .. "&filter[or][1][titleEn][like]="
 		.. query .. "&filter[or][2][fullTitle][like]=" .. query .. "&expand=verticalImage"
 	local response = json.GET(expandURL(url))
 	return map(response["items"], function(v)
@@ -39,7 +38,16 @@ end
 local function getPassage(chapterURL)
 	local doc = GETDocument(baseURL .. chapterURL)
 	local response = json.decode(doc:selectFirst("#__NEXT_DATA__"):html())
-	return pageOfElem(Document("<h1>" .. response.props.pageProps.chapter.title .. "</h1>" .. response.props.pageProps.chapter.content.text))
+	local chap = Document(response.props.pageProps.chapter.content.text)
+	chap:child(0):before("<h1>" .. response.props.pageProps.chapter.title .. "</h1>");
+
+	map(chap:select("img"), function(v)
+		if not string.match(v:attr("src") or v:attr("data-src"), "[a-z]*://[^ >,;]*") then
+			v:attr("src", baseURL .. (v:attr("src") or v:attr("data-src")))
+		end
+	end)
+
+	return pageOfElem(chap)
 end
 
 local function parseNovel(novelURL, loadChapters)
