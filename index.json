@@ -401,6 +401,16 @@
       "md5": ""
     },
     {
+      "name": "Novel Nb",
+      "fileName": "NovelNb",
+      "imageURL": "https://novelnb.com/assets/css/img/logo.png",
+      "id": 1781,
+      "lang": "en",
+      "ver": "1.0.1",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
       "name": "Rewayat Club - نادي الروايات",
       "fileName": "RewayatClub",
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/RewayatClub.png",
