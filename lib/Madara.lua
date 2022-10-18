@@ -1,4 +1,4 @@
--- {"ver":"2.3.3","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.4.1","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -153,6 +153,12 @@ local function img_src(image_element)
 
 	-- Check data-src:
 	srcset = image_element:attr("data-src")
+	if srcset ~= "" then
+		return srcset
+	end
+
+	-- Check data-lazy-src:
+	srcset = image_element:attr("data-lazy-src")
 	if srcset ~= "" then
 		return srcset
 	end

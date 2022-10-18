@@ -1,12 +1,12 @@
--- {"id":724098,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":724098,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
 
-return Require("Madara")("https://novelteam.net/",{
+return Require("Madara")("https://mixednovel.net/",{
 	id = 724098,
 	name = "Novel Team",
 	imageURL = "https://novelteam.net/wp-content/themes/madara/images/logo.png",
 
 	-- defaults values
-	latestNovelSel = "div.col-12.col-md-6.badge-pos-1",
+	latestNovelSel = "div.col-12.col-md-6.badge-pos-2",
 
 	genres = {
 		"Action",
