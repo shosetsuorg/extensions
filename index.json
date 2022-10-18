@@ -509,6 +509,16 @@
       "ver": "1.0.0",
       "libVer": "1.0.0",
       "md5": ""
+    },
+    {
+      "name": "Ranobelib",
+      "fileName": "Ranobelib",
+      "imageURL": "https://ranobelib.me/icons/android-icon-192x192.png",
+      "id": 73,
+      "lang": "ru",
+      "ver": "1.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
     }
   ]
 }
