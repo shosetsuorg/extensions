@@ -20,12 +20,18 @@ end
 local function getPassage(chapterURL)
 	local doc = GETDocument(baseURL .. chapterURL)
 	local chap = doc:selectFirst(".reader-container")
+	chap:child(0):before("<h1>" .. doc:select("div.reader-header-action__title:nth-child(3)"):text() .. "</h1>");
 
 	map(chap:select("img"), function(v)
-		if not string.match(v:attr("src") or v:attr("data-src"), "[a-z]*://[^ >,;]*") then
-			v:attr("src", baseURL .. (v:attr("src") or v:attr("data-src")))
+		if string.sub(v:attr("src"), 0, 1) == "/" then
+			v:attr("src", baseURL .. v:attr("src"))
+		elseif string.sub(v:attr("data-src"), 0, 1) == "/" then
+			v:attr("src", baseURL .. v:attr("data-src"))
+		elseif string.match(v:attr("data-src"), "[a-z]*://[^ >,;]*") then
+			v:attr("src", v:attr("data-src"))
 		end
 	end)
+
 	return pageOfElem(chap)
 end
 
@@ -40,13 +46,13 @@ local function parseNovel(novelURL, loadChapters)
 		description = d:select(".media-description__text"):text(),
 		status = NovelStatus(response.manga.status)
 	}
-	
+
 	if loadChapters then
 		local chapters = map(response.chapters.list, function(v, i)
 			return NovelChapter {
-				order = tonumber(v.chapter_number),
+				order = #response.chapters.list - i,
 				release = v.chapter_created_at,
-				title = "Том " .. v.chapter_volume .." Глава ".. v.chapter_number .." ".. v.chapter_name,
+				title = "Том " .. v.chapter_volume .. " Глава " .. v.chapter_number .. " " .. v.chapter_name,
 				link = "/" .. response.manga.slug .. "/v" .. v.chapter_volume .. "/c" .. v.chapter_number,
 			}
 		end)
@@ -64,9 +70,9 @@ return {
 
 	listings = {
 		Listing("Novel List", true, function(data)
-			local d = GETDocument(qs({ 
-				sort = ORDER_BY_TERMS[data[ORDER_BY_FILTER] + 1], 
-				page = data[PAGE] 
+			local d = GETDocument(qs({
+				sort = ORDER_BY_TERMS[data[ORDER_BY_FILTER] + 1],
+				page = data[PAGE]
 			}, baseURL .. "/manga-list"))
 
 			return map(d:select("div.media-card-wrap > a"), function(v)
