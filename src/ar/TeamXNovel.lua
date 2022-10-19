@@ -1,4 +1,4 @@
--- {"id":4501,"ver":"1.0.0","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4501,"ver":"1.0.1","libVer":"1.0.0","author":"MechTechnology"}
 
 return Require("Madara")("https://teamxnovel.com", {
 	id = 4501,
@@ -6,7 +6,8 @@ return Require("Madara")("https://teamxnovel.com", {
 	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/TeamXNovel.png",
 	chaptersScriptLoaded = true,
 	latestNovelSel = ".col-6.col-md-3.badge-pos-2",
-	novelListingURLPath = "novel",
+	novelListingURLPath = "",
+	novelListingURLSuffix="&post_type=wp-manga",
 	shrinkURLNovel = "novel",
 	searchHasOper = true,
 

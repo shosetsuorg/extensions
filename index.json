@@ -26,7 +26,7 @@
     },
     {
       "name": "Madara",
-      "ver": "2.3.3"
+      "ver": "2.4.0"
     }
   ],
   "scripts": [
@@ -306,7 +306,7 @@
       "imageURL": "https://github.com/shosetsuorg/extensions/raw/dev/icons/TeamXNovel.png",
       "id": 4501,
       "lang": "ar",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
@@ -397,6 +397,16 @@
       "id": 93082,
       "lang": "en",
       "ver": "3.0.0",
+      "libVer": "1.0.0",
+      "md5": ""
+    },
+    {
+      "name": "Novel Nb",
+      "fileName": "NovelNb",
+      "imageURL": "https://novelnb.com/assets/css/img/logo.png",
+      "id": 1781,
+      "lang": "en",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     },
