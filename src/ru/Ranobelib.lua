@@ -119,16 +119,16 @@ return {
 			end
 
 			if #tags > 0 then
-				url = url .. "?" .. table.concat(tags, "?")
+				url = url .. "&" .. table.concat(tags, "&")
 			end
 			if #genres > 0 then
-				url = url .. "?" .. table.concat(genres, "?")
+				url = url .. "&" .. table.concat(genres, "&")
 			end
 			if #types > 0 then
-				url = url .. "?" .. table.concat(types, "?")
+				url = url .. "&" .. table.concat(types, "&")
 			end
 			if #status > 0 then
-				url = url .. "?" .. table.concat(status, "?")
+				url = url .. "&" .. table.concat(status, "&")
 			end
 
 			local d = GETDocument(url)
