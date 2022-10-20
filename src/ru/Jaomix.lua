@@ -24,19 +24,20 @@ local function getSearch(data)
 	}, baseURL .. "/")
 	local d = GETDocument(url)
 
-	return map(d:select("div.one > div > div > a"), function(v)
+	return map(d:select("div.one div.img-home > a"), function(v)
 		return Novel {
 			title = v:attr("title"),
 			link = shrinkURL(v:attr("href")),
-			imageURL = v:select("img"):attr("src")
+			imageURL = v:select("img"):attr("src"):gsub("-150x150", "")
 		}
 	end)
 end
 
 local function getPassage(chapterURL)
-	local chap = GETDocument(baseURL .. chapterURL)
-		:selectFirst('.entry-content')
+	local d = GETDocument(baseURL .. chapterURL)
+	local chap = d:selectFirst(".entry-content")
 	chap:select(".adblock-service"):remove()
+	chap:child(0):before("<h1>" .. d:select(".entry-title"):text() .. "</h1>");
 
 	return pageOfElem(chap, true)
 end
@@ -47,14 +48,14 @@ local function parseNovel(novelURL, loadChapters)
 	local novel = NovelInfo {
 		title = d:select('h1[itemprop="name"]'):text(),
 		imageURL = d:select(".img-book > img"):attr("src"),
-		description = d:select("#desc-tab"):text(),
+		description = d:select("#desc-tab"):text()
 	}
 
 	if loadChapters then
 		local chapterList = {}
-		local chapterHtml = d
-		local termid = d:select('div[class="like-but"]'):attr('id')
-		local order = tonumber(d:selectFirst('div.columns-toc:nth-child(1) h2'):text():match("%d+") or "5000")
+		local chapterHtml = d --page 1
+		local termid = d:select('div[class="like-but"]'):attr("id")
+		local order = 9999999
 		local page = RequestDocument(
 			POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
 				FormBodyBuilder()
@@ -71,7 +72,8 @@ local function parseNovel(novelURL, loadChapters)
 						FormBodyBuilder()
 						:add("action", "toc")
 						:add("page", i)
-						:add("selectall", termid):build()
+						:add("termid", termid)
+						:build()
 					)
 				)
 			end
@@ -97,23 +99,19 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://jaomix.ru/wp-content/uploads/2019/08/cropped-logo-2.png",
 	chapterType = ChapterType.HTML,
-
 	listings = {
 		Listing("Novel List", true, function(data)
 			return getSearch(data)
 		end)
 	},
-
 	getPassage = getPassage,
 	parseNovel = parseNovel,
-
 	hasSearch = true,
 	isSearchIncrementing = true,
 	search = getSearch,
 	searchFilters = {
-		DropdownFilter(ORDER_BY_FILTER, "Сортировка", ORDER_BY_VALUES),
+		DropdownFilter(ORDER_BY_FILTER, "Сортировка", ORDER_BY_VALUES)
 	},
-
 	shrinkURL = shrinkURL,
-	expandURL = expandURL,
+	expandURL = expandURL
 }
