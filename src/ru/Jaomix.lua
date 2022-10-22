@@ -1,12 +1,66 @@
--- {"id":74,"ver":"1.0.1","libVer":"1.0.0","author":"Rider21","dep":["url>=1.0.1"]}
+-- {"id":74,"ver":"1.0.1","libVer":"1.0.0","author":"Rider21"}
 
 local baseURL = "https://jaomix.ru"
-
-local qs = Require("url").querystring
 
 local ORDER_BY_FILTER = 3
 local ORDER_BY_VALUES = { "Дате добавления", "Имя", "Просмотры", "Дате обновления" }
 local ORDER_BY_TERMS = { "new", "alphabet", "count", "upd" }
+
+local LANGUAGE_FILTER = 4
+local LANGUAGE_VALUES = {
+	"Английский",
+	"Китайский",
+	"Корейский",
+	"Японский"
+}
+
+local GENRE_FILTER = 10
+local GENRE_VALUES = {
+	"Боевые Искусства",
+	"Виртуальный Мир",
+	"Гарем",
+	"Детектив",
+	"Драма",
+	"Игра",
+	"Истории из жизни",
+	"Исторический",
+	"История",
+	"Комедия",
+	"Меха",
+	"Мистика",
+	"Научная Фантастика",
+	"Повседневность",
+	"Постапокалипсис",
+	"Приключения",
+	"Психология",
+	"Романтика",
+	"Сверхъестественное",
+	"Сёнэн",
+	"Сёнэн-ай",
+	"Спорт",
+	"Сэйнэн",
+	"Сюаньхуа",
+	"Трагедия",
+	"Триллер",
+	"Фантастика",
+	"Фэнтези",
+	"Хоррор",
+	"Школьная жизнь",
+	"Шоунен",
+	"Экшн",
+	"Этти",
+	"Adult",
+	"Ecchi",
+	"Josei",
+	"Lolicon",
+	"Mature",
+	"Sci-fi",
+	"Shoujo",
+	"Wuxia",
+	"Xianxia",
+	"Xuanhuan",
+	"Yaoi"
+}
 
 local function shrinkURL(url)
 	return url:gsub(baseURL .. "/", "")
@@ -17,13 +71,25 @@ local function expandURL(url)
 end
 
 local function getSearch(data)
-	local url = qs({
-		search = data[0] or "", --data[QUERY]
-		sortby = ORDER_BY_TERMS[data[ORDER_BY_FILTER] + 1],
-		page = data[PAGE]
-	}, baseURL .. "/")
-	local d = GETDocument(url)
+	local url = baseURL .. "/?search="
 
+	if data[0] then --search
+		url = url .. data[0] .. "&but=Поиск+по+названию"
+	end
+
+	url = url .. "&sortby=" .. ORDER_BY_TERMS[data[ORDER_BY_FILTER] + 1] .. "&page=" .. data[PAGE]
+
+	for k, v in pairs(data) do
+		if v then
+			if (k > 4 and k < 10) then
+				url = url .. "&lang[]=" .. LANGUAGE_VALUES[k - LANGUAGE_FILTER]
+			elseif (k > 10 and k < 100) then
+				url = url .. "&genre[]=" .. GENRE_VALUES[k - GENRE_FILTER]
+			end
+		end
+	end
+
+	local d = GETDocument(url)
 	return map(d:select("div.one div.img-home > a"), function(v)
 		return Novel {
 			title = v:attr("title"),
@@ -53,7 +119,7 @@ local function parseNovel(novelURL, loadChapters)
 
 	if loadChapters then
 		local chapterList = {}
-		local chapterHtml = d --page 1
+		local chapterHtml = d:select("div.columns-toc div.title") --page 1
 		local termid = d:select('div[class="like-but"]'):attr("id")
 		local order = 9999999
 		local page = RequestDocument(
@@ -65,9 +131,9 @@ local function parseNovel(novelURL, loadChapters)
 			)
 		):select("select > option"):size()
 
-		for i = 1, page do
+		for i = 1, page do --it might take a long time if there are a lot of chapters
 			if i > 1 then
-				chapterHtml = RequestDocument(
+				chapterHtml = RequestDocument( --gets 25 chapters
 					POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
 						FormBodyBuilder()
 						:add("action", "toc")
@@ -75,10 +141,10 @@ local function parseNovel(novelURL, loadChapters)
 						:add("termid", termid)
 						:build()
 					)
-				)
+				):select("div.columns-toc div.title")
 			end
 
-			map(chapterHtml:select("div.columns-toc div.title"), function(v)
+			map(chapterHtml, function(v)
 				table.insert(chapterList, NovelChapter {
 					title = v:select("h2"):text(),
 					link = v:select("a"):attr("href"),
@@ -99,6 +165,7 @@ return {
 	baseURL = baseURL,
 	imageURL = "https://jaomix.ru/wp-content/uploads/2019/08/cropped-logo-2.png",
 	chapterType = ChapterType.HTML,
+
 	listings = {
 		Listing("Novel List", true, function(data)
 			return getSearch(data)
@@ -106,12 +173,20 @@ return {
 	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,
+
 	hasSearch = true,
 	isSearchIncrementing = true,
 	search = getSearch,
 	searchFilters = {
-		DropdownFilter(ORDER_BY_FILTER, "Сортировка", ORDER_BY_VALUES)
+		DropdownFilter(ORDER_BY_FILTER, "Сортировка", ORDER_BY_VALUES),
+		FilterGroup("Страна", map(LANGUAGE_VALUES, function(v, i)
+			return CheckboxFilter(LANGUAGE_FILTER + i, v)
+		end)),
+		FilterGroup("Жанры", map(GENRE_VALUES, function(v, i)
+			return CheckboxFilter(GENRE_FILTER + i, v)
+		end))
 	},
+
 	shrinkURL = shrinkURL,
 	expandURL = expandURL
 }
