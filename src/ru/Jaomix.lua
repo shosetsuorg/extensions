@@ -70,6 +70,14 @@ local function expandURL(url)
 	return baseURL .. "/" .. url
 end
 
+local function split(str, pat)
+	local t = {}
+	for str in string.gmatch(str, "([^" .. pat .. "]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
+
 local function getSearch(data)
 	local url = baseURL .. "/?search="
 
@@ -117,6 +125,21 @@ local function parseNovel(novelURL, loadChapters)
 		description = d:select("#desc-tab"):text()
 	}
 
+	map(d:select('#info-book > p'), function(v)
+		local str = v:text()
+		if str:match("Автор:") then
+			novel:setAuthors(split(str:gsub("Автор: ", ""), ", "))
+		elseif str:match("Жанры:") then
+			novel:setGenres(split(str:gsub("Жанры: ", ""), ", "))
+		elseif str:match("Статус:") then
+			if str:match("продолжается") then
+				novel:setStatus(NovelStatus(0))
+			else
+				novel:setStatus(NovelStatus(1))
+			end
+		end
+	end)
+
 	if loadChapters then
 		local chapterList = {}
 		local chapterHtml = d:select("div.columns-toc div.title") --page 1
@@ -133,7 +156,7 @@ local function parseNovel(novelURL, loadChapters)
 
 		for i = 1, page do --it might take a long time if there are a lot of chapters
 			if i > 1 then
-				chapterHtml = RequestDocument( --gets 25 chapters
+				chapterHtml = RequestDocument(--gets 25 chapters
 					POST(baseURL .. "/wp-admin/admin-ajax.php", nil,
 						FormBodyBuilder()
 						:add("action", "toc")
@@ -161,7 +184,7 @@ end
 
 return {
 	id = 74,
-	name = "Jaomix.ru",
+	name = "Jaomix",
 	baseURL = baseURL,
 	imageURL = "https://jaomix.ru/wp-content/uploads/2019/08/cropped-logo-2.png",
 	chapterType = ChapterType.HTML,
