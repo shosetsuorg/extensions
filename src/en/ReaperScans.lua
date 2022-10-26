@@ -10,10 +10,18 @@ local function expandURL(url)
 	return baseURL .. "/novels/" .. url
 end
 
-local function getPassage(){
+local function getPassage(chapterURL){
+	local url = baseURL .. "/" .. chapterURL
+	local document = GETDocument(url)
+	local htmlElement = document:selectFirst("section.p-2")
+
+	return pageOfElem(htmlElement, true)
 }
 
-local parseNovel(){
+local parseNovel(novelURL){
+	local url = baseURL .. "/" .. novelURL
+	local document = GETDocument(url):selectFirst("article.post")
+	
 }
 
 return {
