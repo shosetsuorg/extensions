@@ -1,51 +1,63 @@
--- {"id":4223,"ver":"1.0.4","libVer":"1.0.0","author":"MechTechnology","dep":["Madara>=2.3.0"]}
+-- {"id":4223,"ver":"2.0.0","libVer":"1.0.0","author":"Doomsdayrs"}
 
-return Require("Madara")("https://reaperscans.com", {
+local baseURL = "https://reaperscans.com"
+
+local function shrinkURL(url)
+	return url:match(baseURL .. "/novels/(.+)/")
+end
+
+local function expandURL(url)
+	return baseURL .. "/novels/" .. url
+end
+
+local function getPassage(){
+}
+
+local parseNovel(){
+}
+
+return {
 	id = 4223,
-	name = "Reaper Scans",
-	imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReaperScans.png",
-	chaptersScriptLoaded = false,
-	chaptersListSelector= "li.wp-manga-chapter.free-chap",
-	latestNovelSel = ".col-4.col-md-2.badge-pos-2",
-	novelListingURLPath = "all-series/novels",
-	shrinkURLNovel = "series",
-	searchHasOper = true,
+	name = "MTLNovel",
+	baseURL = baseURL,
+	imageURl imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/ReaperScans.png",
+	hasSearch = true,
+	chapterType = ChapterType.HTML,
 
-	genres = {
-		"Action",
-		"Adult",
-		"Adventure",
-		"Comedy",
-		"Crime",
-		"Drama",
-		"Ecchi",
-		"Fantasy",
-		"Harem",
-		"Historical",
-		"Horror",
-		"Isekai",
-		"Manhua",
-		"Manhwa",
-		"Martial Arts",
-		"Mature",
-		"Mecha",
-		"Mystery",
-		"Novel",
-		"Psychological",
-		"Romance",
-		"School Life",
-		"Sci-fi",
-		"Seinen",
-		"Shoujo",
-		"Shounen",
-		["slice-of-life"] = "Slice of Life",
-		"Sports",
-		"Supernatural",
-		"Tragedy",
-		["complete"] = "Completed",
-		["on-going"] = "Ongoing",
-		"Canceled",
-		"On Hold",
-		"On Hold",
-	}
-})
+	shrinkURL = shrinkURL,
+	expandURL = expandURL,
+
+	listings = {
+		Listing("Latest", true, function(data)
+			local url = baseURL .. "/latest/novels"
+
+			local d = GETDocument(url)
+
+			return map(d:select("div.relative.flex.space-x-2"), function(v)
+				local lis = Novel()
+				lis:setImageURL(v:selectFirst("img"):attr("src"))
+				local title = v:selectFirst("p.text-sm"):selectFirst("a")
+				lis:setLink(shrinkURL(title:attr("href")))
+				lis:setTitle(title:text())
+				return lis
+			end)
+		end),
+		Listing("All", true, function(data)
+			local url = baseURL .. "/novels"
+
+			local d = GETDocument(url)
+
+			return map(d:select("li.col-span-1"), function(v)
+				local lis = Novel()
+				lis:setImageURL(v:selectFirst("img"):attr("src"))
+				local title = v:selectFirst("p.text-sm")
+				lis:setLink(shrinkURL(title:attr("href")))
+				lis:setTitle(title:text())
+				return lis
+			end)
+		end),
+	},
+	getPassage = getPassage,
+	parseNovel = parseNovel,
+	search = search
+}
