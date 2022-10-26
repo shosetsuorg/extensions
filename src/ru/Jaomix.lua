@@ -1,4 +1,4 @@
--- {"id":74,"ver":"1.0.1","libVer":"1.0.0","author":"Rider21"}
+-- {"id":74,"ver":"1.0.0","libVer":"1.0.0","author":"Rider21"}
 
 local baseURL = "https://jaomix.ru"
 
