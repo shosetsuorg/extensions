@@ -26,7 +26,7 @@ local function shrinkURL(url)
 end
 
 local function expandURL(url)
-	return baseURL .. "/" .. url
+	return baseURL .. url
 end
 
 local function getSearch(data)
@@ -49,7 +49,7 @@ local function getSearch(data)
 end
 
 local function getPassage(chapterURL)
-	local doc = GETDocument(baseURL .. chapterURL)
+	local doc = GETDocument(expandURL(chapterURL))
 	local chap = doc:selectFirst(".content-text")
 	chap:child(0):before("<h1>" .. doc:select(".chapter_select > select > option[selected]"):text() .. "</h1>");
 
@@ -66,7 +66,7 @@ local function getPassage(chapterURL)
 end
 
 local function parseNovel(novelURL, loadChapters)
-	local d = GETDocument(baseURL .. novelURL)
+	local d = GETDocument(expandURL(novelURL))
 
 	local novel = NovelInfo {
 		title = d:select(".span8 > h1"):text(),
