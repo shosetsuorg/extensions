@@ -74,6 +74,24 @@ local function parseNovel(novelURL, loadChapters)
 		description = d:select("#Info > div:nth-child(3)"):text(),
 	}
 
+	map(d:select(".span5 > p"), function(v)
+		local str = v:select("strong"):text()
+		if str == "Автор:" then
+			novel:setAuthors({ v:select("em > a"):text():gsub("Автор: ", "") })
+		elseif str == "Выпуск:" then
+			local status = v:select("em"):text()
+			novel:setStatus(NovelStatus(
+					status == "завершён" and 1 or
+					status == "продолжается" and 0 or 3
+				)
+			)
+		elseif str == "Жанры:" then
+			novel:setGenres(map(v:select("em > a"), function(genres) return genres:text() end))
+		elseif str == "Тэги:" then
+			novel:setTags(map(v:select("em > a"), function(tags) return tags:text() end))
+		end
+	end)
+
 	if loadChapters then
 		local order = -1
 		local chapterList = mapNotNil(d:select("tr.chapter_row"), function(v)
@@ -110,7 +128,7 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 
-	hasSearch = true,
+	hasSearch = false,
 	isSearchIncrementing = true,
 	search = getSearch,
 	searchFilters = {
