@@ -66,7 +66,17 @@ local function getPassage(chapterURL)
 end
 
 local function parseNovel(novelURL, loadChapters)
-	local d = GETDocument(expandURL(novelURL))
+	local d = Request(GET(expandURL(novelURL)))
+
+	if d:request():url():toString():match("mature?path=") then --bypass
+		d = Request(POST(d:request():url():toString(), nil,
+			FormBodyBuilder()
+			:add("path", novelURL)
+			:add("ok", "Да"):build()))
+		d = GETDocument(expandURL(novelURL))
+	else
+		d = Document(d:body():string())
+	end
 
 	local novel = NovelInfo {
 		title = d:select(".span8 > h1"):text(),
@@ -128,7 +138,7 @@ return {
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 
-	hasSearch = false,
+	hasSearch = true,
 	isSearchIncrementing = true,
 	search = getSearch,
 	searchFilters = {
