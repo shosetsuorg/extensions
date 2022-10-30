@@ -49,7 +49,11 @@ local function getSearch(data)
 end
 
 local function getPassage(chapterURL)
-	local doc = GETDocument(expandURL(chapterURL))
+	local doc = RequestDocument(GET(expandURL(chapterURL),
+		HeadersBuilder()
+		:add("Cookie", "mature=c3a2ed4b199a1a15f5a5483504c7a75a7030dc4bi%3A1%3B")
+		:build())
+	)
 	local chap = doc:selectFirst(".content-text")
 	chap:child(0):before("<h1>" .. doc:select(".chapter_select > select > option[selected]"):text() .. "</h1>");
 
@@ -66,17 +70,11 @@ local function getPassage(chapterURL)
 end
 
 local function parseNovel(novelURL, loadChapters)
-	local d = Request(GET(expandURL(novelURL)))
-
-	if d:request():url():toString():match("mature?path=") then --bypass
-		d = Request(POST(d:request():url():toString(), nil,
-			FormBodyBuilder()
-			:add("path", novelURL)
-			:add("ok", "Да"):build()))
-		d = GETDocument(expandURL(novelURL))
-	else
-		d = Document(d:body():string())
-	end
+	local d = RequestDocument(GET(expandURL(novelURL),
+		HeadersBuilder()
+		:add("Cookie", "mature=c3a2ed4b199a1a15f5a5483504c7a75a7030dc4bi%3A1%3B")
+		:build())
+	)
 
 	local novel = NovelInfo {
 		title = d:select(".span8 > h1"):text(),
