@@ -33,7 +33,7 @@ local function getSearch(data)
 		url = url .. "t=" .. data[0] .. "&"
 	end
 
-	url = url .. "cat=0&sort=" .. data[ORDER_BY_FILTER]
+	url = url .. "cat=2&sort=" .. data[ORDER_BY_FILTER]
 
 	for k, v in pairs(data) do
 		if v then
@@ -170,31 +170,6 @@ return {
 			"По кол-ву рецензий", --ID: 12
 			"По кол-ву в закладках", --ID: 13
 			"По кол-ву в избранном", --ID: 14
-		}),
-		DropdownFilter(AGE_BY_FILTER, "Возрастные ограничения", {
-			"Все", --ID: 0
-			"Убрать 18+", --ID: 1
-			"Только 18+", --ID: 2
-		}),
-		DropdownFilter(TYPE_BY_FILTER, "Тип", {
-			"Неважно", --ID: 0
-			"Только переводы", --ID: 1
-			"Только авторские", --ID: 2
-		}),
-		DropdownFilter(ATMOSPHERE_BY_FILTER, "Атмосфера", {
-			"Неважно", --ID: 0
-			"Позитивная", --ID: 1
-			"Темная", --ID: 2
-		}),
-		FilterGroup("Другое", {
-			CheckboxFilter(10, "Готовые на 100%"), --ID: ready
-			CheckboxFilter(11, "Доступные для скачивания"), --ID: gen
-			CheckboxFilter(12, "Доступные для перевода"), --ID: tr
-			CheckboxFilter(13, "Завершённые проекты"), --ID: wealth
-			CheckboxFilter(14, "Распродажа"), --ID: discount
-			CheckboxFilter(15, "Только онгоинги"), --ID: ongoings
-			CheckboxFilter(16, "Убрать машинный"), --ID: remove_machinelate
-			CheckboxFilter(17, "без фэндомов"), --ID: fandoms_ex_all
 		}),
 		FilterGroup("Жанры", { --offset: 20
 			CheckboxFilter(21, "Арт"), --ID: 1
@@ -1364,6 +1339,31 @@ return {
 			CheckboxFilter(183, "16+"), --ID: 83
 			CheckboxFilter(1849, "18+"), --ID: 1749
 			CheckboxFilter(3291, "21+"), --ID: 3191
+		}),
+		DropdownFilter(ATMOSPHERE_BY_FILTER, "Атмосфера", {
+			"Неважно", --ID: 0
+			"Позитивная", --ID: 1
+			"Темная", --ID: 2
+		}),
+		DropdownFilter(TYPE_BY_FILTER, "Тип", {
+			"Неважно", --ID: 0
+			"Только переводы", --ID: 1
+			"Только авторские", --ID: 2
+		}),
+		FilterGroup("Другое", {
+			CheckboxFilter(10, "Готовые на 100%"), --ID: ready
+			CheckboxFilter(11, "Доступные для скачивания"), --ID: gen
+			CheckboxFilter(12, "Доступные для перевода"), --ID: tr
+			CheckboxFilter(13, "Завершённые проекты"), --ID: wealth
+			CheckboxFilter(14, "Распродажа"), --ID: discount
+			CheckboxFilter(15, "Только онгоинги"), --ID: ongoings
+			CheckboxFilter(16, "Убрать машинный"), --ID: remove_machinelate
+			CheckboxFilter(17, "без фэндомов"), --ID: fandoms_ex_all
+		}),
+		DropdownFilter(AGE_BY_FILTER, "Возрастные ограничения", {
+			"Все", --ID: 0
+			"Убрать 18+", --ID: 1
+			"Только 18+", --ID: 2
 		}),
 	},
 
