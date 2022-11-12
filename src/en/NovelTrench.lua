@@ -1,4 +1,4 @@
--- {"id":81,"ver":"2.1.2","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":81,"ver":"2.1.3","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.4.2"]}
 
 return Require("Madara")("https://novelhard.com",{
 	id = 81,
@@ -8,11 +8,14 @@ return Require("Madara")("https://novelhard.com",{
 	-- defaults values
 	latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
 	novelListingURLPath = "novel",
-	shrinkURLNovel = "light-novel",
+	shrinkURLNovel = "",
 	searchHasOper = true,
 
+	expandURL = function(url)
+		return "https://novelhard.com/" .. url
+	end,
 	shrinkURL = function(url)
-		return url:gsub("https?://.-/light%-novel/", "")
+		return url:gsub("https://novelhard.com/", "")
 	end,
 
 	genres = {

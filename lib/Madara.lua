@@ -1,4 +1,4 @@
--- {"ver":"2.4.1","author":"TechnoJo4","dep":["url"]}
+-- {"ver":"2.4.2","author":"TechnoJo4","dep":["url"]}
 
 local encode = Require("url").encode
 local text = function(v)
@@ -229,7 +229,7 @@ function defaults:parseNovel(url, loadChapters)
 			else
 				-- Used by BoxNovel, Foxaholic, NovelTrench, LightNovelHeaven, VipNovel and WoopRead.
 				doc = RequestDocument(
-						POST(self.baseURL .. "/" .. self.shrinkURLNovel .. "/" .. url .. self.ajaxSeriesUrl,
+						POST(self.expandURL(url) .. self.ajaxSeriesUrl,
 								nil, nil)
 				)
 			end
