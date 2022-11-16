@@ -1,4 +1,4 @@
--- {"id":4305,"ver":"1.0.0","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4305,"ver":"1.1.0","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://moonlightnovels.com"
 
@@ -20,8 +20,8 @@ end
 local function parseListing(url)
 	local doc = GETDocument(expandURL(url))
 	local data = doc:selectFirst("#content")
-	return mapNotNil(data:select("article.elementor-post"), function(v)
-		local a = v:selectFirst("a")
+	return mapNotNil(data:select(".is-layout-flow.wp-block-query li"), function(v)
+		local a = v:selectFirst("h2"):selectFirst("a")
 		if a ~= nil and string.find(a:attr("href"), "/novels/") then
 			return Novel {
 				title = a:text(),
@@ -32,8 +32,21 @@ local function parseListing(url)
 	end)
 end
 
+local function getChapterList(content)
+	local chapterList = content:selectFirst(".elementor-section.elementor-top-section:nth-last-child(1)"):select("article.elementor-post")
+	local chapters = (mapNotNil(chapterList, function(v, i)
+		local a = v:selectFirst("a")
+		return NovelChapter {
+			order = i,
+			title = a:text(),
+			link = shrinkURL(a:attr("href")),
+		}
+	end))
+	return chapters
+end
+
 local function parseNovel(novelURL, loadChapters)
-	local doc = GETDocument(expandURL(shrinkURL(novelURL)))
+	local doc = GETDocument(expandURL(novelURL))
 	local content = doc:selectFirst("#content")
 	local topSection = content:selectFirst(".elementor-section.elementor-top-section")
 	local description = topSection:selectFirst(".elementor-section:nth-last-child(1)"):selectFirst(".elementor-widget-container")
@@ -55,16 +68,19 @@ local function parseNovel(novelURL, loadChapters)
 	}
 	
 	if loadChapters then
-		local chapterList = content:selectFirst(".elementor-section.elementor-top-section:nth-last-child(1)"):select("article.elementor-post")
-		local chapters = (mapNotNil(chapterList, function(v, i)
-			local a = v:selectFirst("a")
-			return NovelChapter {
-				order = i,
-				title = a:text(),
-				link = shrinkURL(a:attr("href")),
-			}
-		end))
-		chapterList = AsList(chapters)
+		local chapters = {}
+		chapters[#chapters+1] = getChapterList(content)
+		local hasChapterPages = content:selectFirst("a.page-numbers")
+		if hasChapterPages ~= nil then
+			-- Removing the next button and looping throught the numbered page links
+			content:select("a.next.page-numbers"):remove()
+			map(content:select("a.page-numbers"), function(v)
+				doc = GETDocument(v:attr("href"))
+				content = doc:selectFirst("#content")
+				chapters[#chapters+1] = getChapterList(content)
+			end)
+		end
+		local chapterList = AsList(flatten(chapters))
 		info:setChapters(chapterList)
 	end
 	return info
@@ -83,12 +99,17 @@ local function getPassage(chapterURL)
 end
 
 local function getHotListing(data) 
-	local url = "/hot-novels/" ..data[PAGE] .. "/"
+	local url = "/hot-novels/?query-99-page=" ..data[PAGE]
+	return parseListing(url)
+end
+
+local function getCompletedListing(data) 
+	local url = "/completed/?query-99-page=" ..data[PAGE]
 	return parseListing(url)
 end
 
 local function getOrderListing(data) 
-	local url = "/all-novels/" ..data[PAGE] .. "/"
+	local url = "/all-novels/?query-99-page=" ..data[PAGE]
 	return parseListing(url)
 end
 
@@ -106,12 +127,14 @@ return {
 
 	listings = {
 		Listing("Hot Novels", true, getHotListing),
+		Listing("Completed", true, getCompletedListing),
 		Listing("Alphabetical Order", true, getOrderListing)
 	},
 	getPassage = getPassage,
 	parseNovel = parseNovel,
 	
-	hasSearch = true,
+	-- Website has intentially broken their search function (Thus Disabled)
+	hasSearch = false,
 	isSearchIncrementing = true,
 	search = getSearch,
 
