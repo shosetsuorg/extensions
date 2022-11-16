@@ -1,4 +1,4 @@
--- {"id":6118,"ver":"2.0.8","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
+-- {"id":6118,"ver":"2.0.9","libVer":"1.0.0","author":"TechnoJo4","dep":["url>=1.0.0"]}
 
 local baseURL = "https://www.readlightnovel.me"
 local qs = Require("url").querystring
@@ -128,7 +128,7 @@ return {
 
 	search = function(data)
 		return parseTop(RequestDocument(
-			POST(expandURL("/detailed-search-rln"), nil,
+			POST(expandURL("/detailed-search-210922"), nil,
 				RequestBody(qs({ keyword=data[QUERY], search=1 }), MediaType("application/x-www-form-urlencoded")))
 			))
 	end,
