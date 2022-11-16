@@ -1,4 +1,4 @@
--- {"id":4304,"ver":"1.0.1","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4304,"ver":"1.0.2","libVer":"1.0.0","author":"MechTechnology"}
 
 local baseURL = "https://readhive.org"
 
@@ -88,7 +88,7 @@ end
 local function getPassage(chapterURL)
 	local doc = GETDocument(expandURL(chapterURL))
 	local title = doc:selectFirst("h1"):text()
-	local chap = doc:selectFirst(".justify-center.flex-grow.mx-auto.prose")
+	local chap = doc:selectFirst(".justify-center.flex-grow.mx-auto.prose .mb-4")
 	chap = clearNewLines(chap)
 	chap:child(0):before("<h1>" .. title .. "</h1>")
 	return pageOfElem(chap, true)
