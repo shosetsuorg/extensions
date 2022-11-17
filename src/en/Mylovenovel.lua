@@ -1,6 +1,6 @@
--- {"id":4303,"ver":"1.0.3","libVer":"1.0.0","author":"MechTechnology"}
+-- {"id":4303,"ver":"1.1.3","libVer":"1.0.0","author":"MechTechnology"}
 
-local baseURL = "https://www.mylovenovel.com"
+local baseURL = "https://www.novelhold.com"
 
 -- Filter Keys & Values
 local STATUS_FILTER = 2
@@ -43,7 +43,7 @@ local text = function(v)
 end
 
 local function shrinkURL(url)
-	return url:gsub("^.-mylovenovel%.com", "")
+	return url:gsub("^.-novelhold%.com", "")
 end
 
 local function expandURL(url)
