@@ -1,4 +1,4 @@
--- {"id":70,"ver":"1.0.0","libVer":"1.0.0","author":"Rider21"}
+-- {"id":70,"ver":"1.0.1","libVer":"1.0.0","author":"Rider21"}
 
 local baseURL = "https://tl.rulate.ru"
 
@@ -177,7 +177,6 @@ return {
 			CheckboxFilter(23, "Боевые искусства"), --ID: 3
 			CheckboxFilter(24, "Вампиры"), --ID: 4
 			CheckboxFilter(25, "Гарем"), --ID: 5
-			CheckboxFilter(26, "Гендерная интрига"), --ID: 6
 			CheckboxFilter(27, "Героическое фэнтези"), --ID: 7
 			CheckboxFilter(28, "Детектив"), --ID: 8
 			CheckboxFilter(29, "Дзёсэй"), --ID: 9
@@ -199,12 +198,10 @@ return {
 			CheckboxFilter(42, "Приключения"), --ID: 22
 			CheckboxFilter(43, "Психология"), --ID: 23
 			CheckboxFilter(44, "Романтика"), --ID: 24
-			CheckboxFilter(47, "Сёдзё"), --ID: 27
-			CheckboxFilter(48, "Сёдзё-ай"), --ID: 28
-			CheckboxFilter(49, "Сёнэн"), --ID: 29
-			CheckboxFilter(50, "Сёнэн-ай"), --ID: 30
 			CheckboxFilter(45, "Самурайский боевик"), --ID: 25
 			CheckboxFilter(46, "Сверхъестественное"), --ID: 26
+			CheckboxFilter(47, "Сёдзё"), --ID: 27
+			CheckboxFilter(49, "Сёнэн"), --ID: 29
 			CheckboxFilter(65, "Смат"), --ID: 45
 			CheckboxFilter(51, "Спорт"), --ID: 31
 			CheckboxFilter(52, "Сэйнэн"), --ID: 32
@@ -220,8 +217,8 @@ return {
 			CheckboxFilter(57, "Фэнтези"), --ID: 37
 			CheckboxFilter(58, "Школа"), --ID: 38
 			CheckboxFilter(59, "Этти"), --ID: 39
-			CheckboxFilter(60, "Юри"), --ID: 40
-			CheckboxFilter(63, "Яой"), --ID: 43
+			CheckboxFilter(63, "Bl/Яой"), --ID: 43
+			CheckboxFilter(60, "Gl/Юри"), --ID: 40
 		}),
 		FilterGroup("Теги", { --offset: 100
 			CheckboxFilter(8073, "Абсурд"), --ID: 7973
@@ -270,7 +267,6 @@ return {
 			CheckboxFilter(957, "Ангелы"), --ID: 857
 			CheckboxFilter(1427, "Ангелы и демоны"), --ID: 1327
 			CheckboxFilter(4738, "Ангст"), --ID: 4638
-			CheckboxFilter(2435, "Андрогинные персонажи"), --ID: 2335
 			CheckboxFilter(2093, "Андроиды"), --ID: 1993
 			CheckboxFilter(5349, "Анимализм"), --ID: 5249
 			CheckboxFilter(1394, "Аниме"), --ID: 1294
@@ -328,7 +324,6 @@ return {
 			CheckboxFilter(2320, "Биология"), --ID: 2220
 			CheckboxFilter(2068, "Биомехи"), --ID: 1968
 			CheckboxFilter(877, "Биседзе"), --ID: 777
-			CheckboxFilter(5214, "Бисексуалы"), --ID: 5114
 			CheckboxFilter(821, "Битва за веру"), --ID: 721
 			CheckboxFilter(7311, "Битва за трон"), --ID: 7211
 			CheckboxFilter(1251, "Битва королевств"), --ID: 1151
@@ -340,6 +335,7 @@ return {
 			CheckboxFilter(620, "Богатые персонажи"), --ID: 520
 			CheckboxFilter(273, "Боги"), --ID: 173
 			CheckboxFilter(130, "Богини"), --ID: 30
+			CheckboxFilter(8424, "Богиня"), --ID: 8324
 			CheckboxFilter(1353, "Богоубийца"), --ID: 1253
 			CheckboxFilter(195, "Богохульство"), --ID: 95
 			CheckboxFilter(2208, "Боевая академия"), --ID: 2108
@@ -347,12 +343,14 @@ return {
 			CheckboxFilter(2190, "Боевые искусства"), --ID: 2090
 			CheckboxFilter(4817, "Большая грудь"), --ID: 4717
 			CheckboxFilter(5399, "Большой член"), --ID: 5299
+			CheckboxFilter(8419, "Бондаж"), --ID: 8319
 			CheckboxFilter(6633, "Борос"), --ID: 6533
 			CheckboxFilter(2025, "Борьба"), --ID: 1925
 			CheckboxFilter(8172, "Борьба за власть"), --ID: 8072
 			CheckboxFilter(7257, "Босс и подчиненный"), --ID: 7157
 			CheckboxFilter(2407, "Бояръ"), --ID: 2307
 			CheckboxFilter(1658, "Брак"), --ID: 1558
+			CheckboxFilter(8410, "Брак по договоренности"), --ID: 8310
 			CheckboxFilter(1489, "Брак по расчету"), --ID: 1389
 			CheckboxFilter(715, "Брат и сестра"), --ID: 615
 			CheckboxFilter(2421, "Братский комплекс"), --ID: 2321
@@ -367,6 +365,7 @@ return {
 			CheckboxFilter(6312, "В первый раз"), --ID: 6212
 			CheckboxFilter(149, "В этот же мир"), --ID: 49
 			CheckboxFilter(4842, "Вагинальный секс"), --ID: 4742
+			CheckboxFilter(8431, "Ваканда"), --ID: 8331
 			CheckboxFilter(4147, "Валькирии"), --ID: 4047
 			CheckboxFilter(2306, "Вампиры"), --ID: 2206
 			CheckboxFilter(5764, "Веб камера"), --ID: 5664
@@ -374,6 +373,7 @@ return {
 			CheckboxFilter(943, "Ведьмак"), --ID: 843
 			CheckboxFilter(743, "Ведьмы"), --ID: 643
 			CheckboxFilter(1979, "Везучие персонажи"), --ID: 1879
+			CheckboxFilter(8427, "Великолепный лжец"), --ID: 8327
 			CheckboxFilter(4094, "Веном"), --ID: 3994
 			CheckboxFilter(2231, "Вестерн"), --ID: 2131
 			CheckboxFilter(8271, "Вестерос"), --ID: 8171
@@ -386,6 +386,8 @@ return {
 			CheckboxFilter(425, "Виртуальная реальность"), --ID: 325
 			CheckboxFilter(3427, "Вирусы"), --ID: 3327
 			CheckboxFilter(655, "Владыка демонов"), --ID: 555
+			CheckboxFilter(8432, "Властная пара"), --ID: 8332
+			CheckboxFilter(8423, "властная пара"), --ID: 8323
 			CheckboxFilter(856, "Власть"), --ID: 756
 			CheckboxFilter(6232, "Влюбленность"), --ID: 6132
 			CheckboxFilter(2038, "Внешний вид отличается от личности"), --ID: 1938
@@ -428,7 +430,6 @@ return {
 			CheckboxFilter(540, "Гарем"), --ID: 440
 			CheckboxFilter(326, "Гарри поттер"), --ID: 226
 			CheckboxFilter(2230, "Геймеры"), --ID: 2130
-			CheckboxFilter(873, "Гендерная интрига"), --ID: 773
 			CheckboxFilter(1850, "Генетические модификации"), --ID: 1750
 			CheckboxFilter(1600, "Гениальный главный герой"), --ID: 1500
 			CheckboxFilter(1750, "Гений"), --ID: 1650
@@ -466,6 +467,7 @@ return {
 			CheckboxFilter(2517, "Главный герой русский"), --ID: 2417
 			CheckboxFilter(188, "Главный герой сильный с самого начала"), --ID: 88
 			CheckboxFilter(1159, "Главный герой скрывает свою силу"), --ID: 1059
+			CheckboxFilter(8426, "Главный герой эгоист"), --ID: 8326
 			CheckboxFilter(4591, "Глотание спермы"), --ID: 4491
 			CheckboxFilter(1970, "Гномы"), --ID: 1870
 			CheckboxFilter(2129, "Гоблины"), --ID: 2029
@@ -476,7 +478,6 @@ return {
 			CheckboxFilter(8191, "Горничные"), --ID: 8091
 			CheckboxFilter(488, "Гробница"), --ID: 388
 			CheckboxFilter(1414, "Групповой секс"), --ID: 1314
-			CheckboxFilter(1610, "Гуро"), --ID: 1510
 			CheckboxFilter(4212, "Дазай осаму"), --ID: 4112
 			CheckboxFilter(3511, "Даньмэй"), --ID: 3411
 			CheckboxFilter(358, "Даосизм"), --ID: 258
@@ -491,6 +492,7 @@ return {
 			CheckboxFilter(253, "Демон лорд"), --ID: 153
 			CheckboxFilter(2124, "Демонология"), --ID: 2024
 			CheckboxFilter(1506, "Демоны"), --ID: 1406
+			CheckboxFilter(8413, "Депрессия"), --ID: 8313
 			CheckboxFilter(1365, "Детектив"), --ID: 1265
 			CheckboxFilter(680, "Дети"), --ID: 580
 			CheckboxFilter(1033, "Джарвис"), --ID: 933
@@ -644,8 +646,8 @@ return {
 			CheckboxFilter(1168, "Книги"), --ID: 1068
 			CheckboxFilter(621, "Книжный червь"), --ID: 521
 			CheckboxFilter(2781, "Колдовство"), --ID: 2681
-			CheckboxFilter(5158, "Колледж"), --ID: 5058
 			CheckboxFilter(2688, "Коллекционер"), --ID: 2588
+			CheckboxFilter(5158, "Колледж"), --ID: 5058
 			CheckboxFilter(1728, "Кольцо"), --ID: 1628
 			CheckboxFilter(1530, "Комедия"), --ID: 1430
 			CheckboxFilter(1142, "Коммунисты"), --ID: 1042
@@ -660,6 +662,7 @@ return {
 			CheckboxFilter(155, "Королевская власть"), --ID: 55
 			CheckboxFilter(376, "Королевская семья"), --ID: 276
 			CheckboxFilter(1795, "Королевство"), --ID: 1695
+			CheckboxFilter(8406, "Короткие волосы"), --ID: 8306
 			CheckboxFilter(339, "Короткий рассказ"), --ID: 239
 			CheckboxFilter(931, "Коррупция"), --ID: 831
 			CheckboxFilter(2345, "Космическая опера"), --ID: 2245
@@ -686,8 +689,8 @@ return {
 			CheckboxFilter(6234, "Курилин"), --ID: 6134
 			CheckboxFilter(5322, "Кушина узумаки"), --ID: 5222
 			CheckboxFilter(6163, "Лавкрафт"), --ID: 6063
+			CheckboxFilter(8421, "Лактация"), --ID: 8321
 			CheckboxFilter(6535, "Лара крофт"), --ID: 6435
-			CheckboxFilter(3236, "Лгбт"), --ID: 3136
 			CheckboxFilter(5807, "Легенда о зельде"), --ID: 5707
 			CheckboxFilter(1616, "Ленивый главный герой"), --ID: 1516
 			CheckboxFilter(7569, "Леон золдик"), --ID: 7469
@@ -736,6 +739,7 @@ return {
 			CheckboxFilter(2564, "Манга"), --ID: 2464
 			CheckboxFilter(1032, "Манипуляция временем"), --ID: 932
 			CheckboxFilter(2126, "Маньяк"), --ID: 2026
+			CheckboxFilter(8428, "Марвел"), --ID: 8328
 			CheckboxFilter(4035, "Маргери тирелл"), --ID: 3935
 			CheckboxFilter(3275, "Марионетки"), --ID: 3175
 			CheckboxFilter(4113, "Марс"), --ID: 4013
@@ -749,6 +753,7 @@ return {
 			CheckboxFilter(3422, "Мегаполис"), --ID: 3322
 			CheckboxFilter(541, "Медицина"), --ID: 441
 			CheckboxFilter(7562, "Медленное развитие истории"), --ID: 7462
+			CheckboxFilter(8409, "Медленный роман"), --ID: 8309
 			CheckboxFilter(3589, "Межрасовый секс"), --ID: 3489
 			CheckboxFilter(7324, "Мелиодас"), --ID: 7224
 			CheckboxFilter(1607, "Мелодрама"), --ID: 1507
@@ -780,6 +785,7 @@ return {
 			CheckboxFilter(5418, "Много крови"), --ID: 5318
 			CheckboxFilter(1639, "Много персонажей"), --ID: 1539
 			CheckboxFilter(132, "Множество королевств"), --ID: 32
+			CheckboxFilter(8407, "Мо"), --ID: 8307
 			CheckboxFilter(5557, "Модерн"), --ID: 5457
 			CheckboxFilter(4538, "Мокутон"), --ID: 4438
 			CheckboxFilter(5569, "Молоко"), --ID: 5469
@@ -790,7 +796,6 @@ return {
 			CheckboxFilter(5961, "Мортал комбат"), --ID: 5861
 			CheckboxFilter(1059, "Мошенник"), --ID: 959
 			CheckboxFilter(101, "Мрачный мир"), --ID: 1
-			CheckboxFilter(1143, "Мужская беременность"), --ID: 1043
 			CheckboxFilter(131, "Мужчина протагонист"), --ID: 31
 			CheckboxFilter(1283, "Музыка"), --ID: 1183
 			CheckboxFilter(7510, "Мультивселенная"), --ID: 7410
@@ -850,7 +855,8 @@ return {
 			CheckboxFilter(3255, "Огнестрельное оружие"), --ID: 3155
 			CheckboxFilter(808, "Одержимость"), --ID: 708
 			CheckboxFilter(6598, "Один в поле воин"), --ID: 6498
-			CheckboxFilter(305, "Омегаверс"), --ID: 205
+			CheckboxFilter(8434, "Омегаверс"), --ID: 8334
+			CheckboxFilter(8422, "омегаверс"), --ID: 8322
 			CheckboxFilter(1665, "Онлайн игра"), --ID: 1565
 			CheckboxFilter(949, "Ооками теппей"), --ID: 849
 			CheckboxFilter(705, "Оральный секс"), --ID: 605
@@ -868,6 +874,7 @@ return {
 			CheckboxFilter(7506, "Отношения человек/нечеловек"), --ID: 7406
 			CheckboxFilter(3560, "Офис"), --ID: 3460
 			CheckboxFilter(2363, "Охотники"), --ID: 2263
+			CheckboxFilter(8405, "Оценки"), --ID: 8305
 			CheckboxFilter(5201, "Оцуцуки"), --ID: 5101
 			CheckboxFilter(2462, "Ошейник"), --ID: 2362
 			CheckboxFilter(8148, "Ояш"), --ID: 8048
@@ -877,7 +884,6 @@ return {
 			CheckboxFilter(952, "Палач"), --ID: 852
 			CheckboxFilter(2782, "Палочка"), --ID: 2682
 			CheckboxFilter(4460, "Пандорум"), --ID: 4360
-			CheckboxFilter(4406, "Пансексуалы"), --ID: 4306
 			CheckboxFilter(7747, "Папа и дочь"), --ID: 7647
 			CheckboxFilter(1313, "Паразит"), --ID: 1213
 			CheckboxFilter(2192, "Параллельный мир"), --ID: 2092
@@ -916,6 +922,7 @@ return {
 			CheckboxFilter(940, "Письмо"), --ID: 840
 			CheckboxFilter(3222, "Питомцы"), --ID: 3122
 			CheckboxFilter(162, "Планомерное развитие событий"), --ID: 62
+			CheckboxFilter(8403, "Племянник"), --ID: 8303
 			CheckboxFilter(4997, "Пленница"), --ID: 4897
 			CheckboxFilter(4939, "Плети"), --ID: 4839
 			CheckboxFilter(4343, "Пляж"), --ID: 4243
@@ -929,6 +936,7 @@ return {
 			CheckboxFilter(736, "Подростки"), --ID: 636
 			CheckboxFilter(5904, "Подруга"), --ID: 5804
 			CheckboxFilter(4600, "Подчинение и унижение"), --ID: 4500
+			CheckboxFilter(8433, "Покемон"), --ID: 8333
 			CheckboxFilter(2940, "Покемоны"), --ID: 2840
 			CheckboxFilter(1400, "Полиамория"), --ID: 1300
 			CheckboxFilter(1436, "Полигамия"), --ID: 1336
@@ -948,6 +956,7 @@ return {
 			CheckboxFilter(7552, "Похищение"), --ID: 7452
 			CheckboxFilter(1220, "Поэзия"), --ID: 1120
 			CheckboxFilter(2361, "Правитель"), --ID: 2261
+			CheckboxFilter(8411, "Превращени"), --ID: 8311
 			CheckboxFilter(3510, "Превращения в животных"), --ID: 3410
 			CheckboxFilter(2155, "Преданный любовный интерес"), --ID: 2055
 			CheckboxFilter(170, "Предательство"), --ID: 70
@@ -972,6 +981,8 @@ return {
 			CheckboxFilter(1447, "Проклятия"), --ID: 1347
 			CheckboxFilter(1811, "Проработанный мир"), --ID: 1711
 			CheckboxFilter(7862, "Пророчество"), --ID: 7762
+			CheckboxFilter(8425, "Проститутки"), --ID: 8325
+			CheckboxFilter(8415, "Протагонист влюбляется первый"), --ID: 8315
 			CheckboxFilter(3759, "Псайкеры"), --ID: 3659
 			CheckboxFilter(5316, "Псионика"), --ID: 5216
 			CheckboxFilter(7069, "Психбольница"), --ID: 6969
@@ -981,6 +992,7 @@ return {
 			CheckboxFilter(7960, "Публичный дом"), --ID: 7860
 			CheckboxFilter(6747, "Публичный секс"), --ID: 6647
 			CheckboxFilter(110, "Путешествие в другой мир"), --ID: 10
+			CheckboxFilter(8408, "Путешествие во времени"), --ID: 8308
 			CheckboxFilter(4386, "Пух"), --ID: 4286
 			CheckboxFilter(7334, "Пушечное мясо"), --ID: 7234
 			CheckboxFilter(1856, "Пытки"), --ID: 1756
@@ -994,8 +1006,10 @@ return {
 			CheckboxFilter(7303, "Развитие поселения"), --ID: 7203
 			CheckboxFilter(1975, "Развитие технологий"), --ID: 1875
 			CheckboxFilter(2024, "Разврат"), --ID: 1924
+			CheckboxFilter(8402, "Разговор в комнате"), --ID: 8302
 			CheckboxFilter(2162, "Раздвоение личности"), --ID: 2062
 			CheckboxFilter(1288, "Разные расы"), --ID: 1188
+			CheckboxFilter(8414, "Разный социальный статус"), --ID: 8314
 			CheckboxFilter(2157, "Разорванная помолвка"), --ID: 2057
 			CheckboxFilter(2433, "Разработчик"), --ID: 2333
 			CheckboxFilter(1668, "Ранги"), --ID: 1568
@@ -1075,7 +1089,6 @@ return {
 			CheckboxFilter(828, "Семья"), --ID: 728
 			CheckboxFilter(6169, "Сенджу"), --ID: 6069
 			CheckboxFilter(2158, "Сёнэн"), --ID: 2058
-			CheckboxFilter(7743, "Сёнэн-ай"), --ID: 7643
 			CheckboxFilter(361, "Серийный убийца"), --ID: 261
 			CheckboxFilter(2442, "Сестра"), --ID: 2342
 			CheckboxFilter(1119, "Сила глаза"), --ID: 1019
@@ -1104,10 +1117,9 @@ return {
 			CheckboxFilter(7079, "Слизерин"), --ID: 6979
 			CheckboxFilter(1195, "Слизь"), --ID: 1095
 			CheckboxFilter(3586, "Служанка"), --ID: 3486
-			CheckboxFilter(4517, "Слэш"), --ID: 4417
 			CheckboxFilter(557, "Смартфон"), --ID: 457
-			CheckboxFilter(2242, "Смена пола"), --ID: 2142
 			CheckboxFilter(1879, "Смерть"), --ID: 1779
+			CheckboxFilter(8412, "Смерть близких"), --ID: 8312
 			CheckboxFilter(1630, "Смерть основного персонажа"), --ID: 1530
 			CheckboxFilter(6209, "Собаки"), --ID: 6109
 			CheckboxFilter(8094, "Соблазн"), --ID: 7994
@@ -1130,6 +1142,7 @@ return {
 			CheckboxFilter(1756, "Спокойный главный герой"), --ID: 1656
 			CheckboxFilter(3584, "Спор"), --ID: 3484
 			CheckboxFilter(1487, "Спорт"), --ID: 1387
+			CheckboxFilter(8417, "Спортивное тело"), --ID: 8317
 			CheckboxFilter(7884, "Способность кражи"), --ID: 7784
 			CheckboxFilter(123, "Сражения"), --ID: 23
 			CheckboxFilter(1122, "Средневековье"), --ID: 1022
@@ -1165,6 +1178,7 @@ return {
 			CheckboxFilter(7302, "Сюжетные повороты"), --ID: 7202
 			CheckboxFilter(1226, "Сянься"), --ID: 1126
 			CheckboxFilter(689, "Таблетки для развития"), --ID: 589
+			CheckboxFilter(8404, "Табу"), --ID: 8304
 			CheckboxFilter(869, "Таинственное прошлое"), --ID: 769
 			CheckboxFilter(8196, "Тайная личность"), --ID: 8096
 			CheckboxFilter(213, "Тайная любовь"), --ID: 113
@@ -1202,7 +1216,6 @@ return {
 			CheckboxFilter(1171, "Трансмиграция"), --ID: 1071
 			CheckboxFilter(256, "Трансформация"), --ID: 156
 			CheckboxFilter(4716, "Трансформеры"), --ID: 4616
-			CheckboxFilter(6417, "Трап"), --ID: 6317
 			CheckboxFilter(5527, "Тревор филипс"), --ID: 5427
 			CheckboxFilter(1776, "Триллер"), --ID: 1676
 			CheckboxFilter(7269, "Тройняшки"), --ID: 7169
@@ -1267,7 +1280,6 @@ return {
 			CheckboxFilter(4186, "Фольклор"), --ID: 4086
 			CheckboxFilter(6261, "Фугаку"), --ID: 6161
 			CheckboxFilter(6731, "Фурри"), --ID: 6631
-			CheckboxFilter(2096, "Футанари"), --ID: 1996
 			CheckboxFilter(1221, "Футбол"), --ID: 1121
 			CheckboxFilter(274, "Фэнтези"), --ID: 174
 			CheckboxFilter(1656, "Фэнтезийный мир"), --ID: 1556
@@ -1299,6 +1311,7 @@ return {
 			CheckboxFilter(2080, "Церковь"), --ID: 1980
 			CheckboxFilter(1178, "Цундере"), --ID: 1078
 			CheckboxFilter(1493, "Чакра"), --ID: 1393
+			CheckboxFilter(8430, "Черная пантера"), --ID: 8330
 			CheckboxFilter(2968, "Черный юмор"), --ID: 2868
 			CheckboxFilter(5955, "Честная главная героиня"), --ID: 5855
 			CheckboxFilter(229, "Честный главный герой"), --ID: 129
@@ -1322,23 +1335,27 @@ return {
 			CheckboxFilter(2959, "Экшен"), --ID: 2859
 			CheckboxFilter(1364, "Элементальная магия"), --ID: 1264
 			CheckboxFilter(1423, "Элементы бдсм"), --ID: 1323
+			CheckboxFilter(8416, "Элементы рпг"), --ID: 8316
 			CheckboxFilter(1462, "Эльфы"), --ID: 1362
 			CheckboxFilter(2153, "Эротика"), --ID: 2053
 			CheckboxFilter(1417, "Этти"), --ID: 1317
 			CheckboxFilter(7460, "Юмор"), --ID: 7360
-			CheckboxFilter(1899, "Юри"), --ID: 1799
 			CheckboxFilter(301, "Яды"), --ID: 201
 			CheckboxFilter(4699, "Якудза"), --ID: 4599
 			CheckboxFilter(7211, "Яндере"), --ID: 7111
-			CheckboxFilter(1324, "Яой"), --ID: 1224
-			CheckboxFilter(190, "Rpg"), --ID: 90
-			CheckboxFilter(2085, "Star wars"), --ID: 1985
-			CheckboxFilter(924, "Time skip"), --ID: 824
-			CheckboxFilter(5389, "Warrior of light"), --ID: 5289
 			CheckboxFilter(3416, "12+"), --ID: 3316
 			CheckboxFilter(183, "16+"), --ID: 83
 			CheckboxFilter(1849, "18+"), --ID: 1749
 			CheckboxFilter(3291, "21+"), --ID: 3191
+			CheckboxFilter(8420, "Bdsm"), --ID: 8320
+			CheckboxFilter(8382, "Bl"), --ID: 8282
+			CheckboxFilter(8418, "Bo"), --ID: 8318
+			CheckboxFilter(8384, "Gl"), --ID: 8284
+			CheckboxFilter(8429, "Marvel"), --ID: 8329
+			CheckboxFilter(190, "Rpg"), --ID: 90
+			CheckboxFilter(2085, "Star wars"), --ID: 1985
+			CheckboxFilter(924, "Time skip"), --ID: 824
+			CheckboxFilter(5389, "Warrior of light"), --ID: 5289
 		}),
 		DropdownFilter(ATMOSPHERE_BY_FILTER, "Атмосфера", {
 			"Неважно", --ID: 0
