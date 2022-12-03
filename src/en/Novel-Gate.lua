@@ -3,7 +3,7 @@
 
 
 
--- {"id":7619416,"ver":"2.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]} 
+-- {"id":7619416,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs","dep":["url>=1.0.0"]} 
 local baseURL = "https://novel-gate.com"
 local settings = { [1] = 0 } 
 local ORDER_BYS_INT = { [0] = "date",[1] = "name",[2] = "rating",[3] = "view" }
