@@ -1,4 +1,4 @@
--- {"id":75,"ver":"1.0.0","libVer":"1.0.0","author":"Doomsdayrs","dep":["Madara>=2.2.0"]}
+-- {"id":75,"ver":"1.0.5","libVer":"1.0.0","author":["Doomsdayrs", "AbhiTheModder"],"dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://novelcake.com", {
   id = 75,
@@ -7,7 +7,7 @@ return Require("Madara")("https://novelcake.com", {
   shrinkURLNovel = "series",
   novelListingURLPath = "series",
   latestNovelSel = "div.col-6.col-md-3",
-  chaptersScriptLoaded = true,
+  chaptersScriptLoaded = false,
 
   genres = {
     "Action",
