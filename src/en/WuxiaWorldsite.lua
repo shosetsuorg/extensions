@@ -4,7 +4,7 @@ return Require("Madara")("https://WuxiaWorld.site", {
   id = 75,
   name = "WuxiaWorldsite",
   imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
-  shrinkURLNovel = "novel",
+  
   novelListingURLPath = "novels-list",
   latestNovelSel = "div.col-6.col-md-3",
   chaptersScriptLoaded = true,
