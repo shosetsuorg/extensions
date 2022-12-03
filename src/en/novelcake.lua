@@ -4,7 +4,7 @@ return Require("Madara")("https://novelcake.com", {
   id = 75,
   name = "novelcake",
   imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
-  
+  novelListingURLSuffix = "series",
   ajaxUsesFormData = true,
 
   genres = {
