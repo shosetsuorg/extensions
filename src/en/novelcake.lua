@@ -7,9 +7,10 @@ return Require("Madara")("https://novelcake.com", {
   novelListingURLPath = "series",
   ajaxUsesFormData = true,
   hasSearch = true,
-	chapterType = ChapterType.HTML,
+  chapterType = ChapterType.HTML,
 
-	shrinkURLNovel = shrinkURL,
+  shrinkURLNovel = "",
+  shrinkURL = shrinkURL,
 
   genres = {
     "Action",
