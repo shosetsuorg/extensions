@@ -3,7 +3,7 @@
 return Require("Madara")("https://novel-gate.com", {
 	id = 2,
 	name = "LightNovelReader",
-	imageURL = "https://lightnovelreader.me/assets/new/images/logo.png",
+	imageURL = "",
 
 	genres = {
 		"Action",
