@@ -7,7 +7,6 @@ return Require("Madara")("https://novelcake.com", {
   shrinkURLNovel = "series",
   novelListingURLPath = "series",
   latestNovelSel = "div.col-6.col-md-3",
-  ajaxUsesFormData = true,
   chaptersScriptLoaded = true,
 
   genres = {
