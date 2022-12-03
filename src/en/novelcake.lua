@@ -2,9 +2,9 @@
 
 return Require("Madara")("https://novelcake.com", {
   id = 75,
-  name = "Novelcake",
+  name = "novelcake",
   imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/BoxNovel.png",
-novelListingURLPath = "novel",
+  novelListingURLPath = "series",
 
   genres = {
     "Action",
