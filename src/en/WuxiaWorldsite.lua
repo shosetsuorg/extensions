@@ -1,10 +1,10 @@
 -- {"id":75,"ver":"1.0.5","libVer":"1.0.0","author":["Doomsdayrs", "AbhiTheModder"],"dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://WuxiaWorld.site", {
-  id = 75,
+  id = 76,
   name = "WuxiaWorldsite",
-  imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
-  
+  imageURL = "https://drive.google.com/file/d/1ELpip-jgj-oKS0qfQ4PFkdJi-TLVXp-h/view?usp=drivesdk",
+
   novelListingURLPath = "novels-list",
   latestNovelSel = "div.col-6.col-md-3",
   chaptersScriptLoaded = true,
