@@ -5,37 +5,9 @@ return Require("Madara")("https://novelcake.com", {
   name = "Novelcake",
   imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/BoxNovel.png",
 
-  genres = {
-    "Action",
-    "Adventure",
-    "Comedy",
-    "Drama",
-    "Ecchi",
-    "Fantasy",
-    "Gender Bender",
-    "Harem",
-    "Historical",
-    "Horror",
-    "Josei",
-    "Martial Arts",
-    "Mature",
-    "Mecha",
-    "Mystery",
-    "Psychological",
-    "Romance",
-    "School Life",
-    "Sci-fi",
-    "Seinen",
-    "Shoujo",
-    "Shounen",
-    "Slice of Life",
-    "Smut",
-    "Sports",
-    "Supernatural",
-    "Tragedy",
-    "Wuxia",
-    "Xianxia",
-    "Xuanhuan",
-    "Yaoi"
+      path = { 
+        novels: "series",
+        novel: "series", 
+        chapter: "series" 
   }
 })
