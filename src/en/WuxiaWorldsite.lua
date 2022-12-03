@@ -3,7 +3,7 @@
 return Require("Madara")("https://WuxiaWorld.site", {
   id = 76,
   name = "WuxiaWorldsite",
-  imageURL = "https://drive.google.com/file/d/1ELpip-jgj-oKS0qfQ4PFkdJi-TLVXp-h/view?usp=drivesdk",
+  imageURL = "https://cdn.wuxiaworld.site/wp-content/uploads/2019/02/WuxiaWorld-e1567126455773.png",
 
   novelListingURLPath = "novels-list",
   latestNovelSel = "div.col-6.col-md-3",
