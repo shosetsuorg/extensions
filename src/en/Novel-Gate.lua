@@ -1,5 +1,6 @@
+-- {"id":7619416,"ver":"1.0.0","libVer":"1.0.0","author":"AbhiTheModder","dep":["Madara>=2.2.0"]}
 return Require("Madara")("https://novel-gate.com", {
-	id = 2,
+	id = 7619416,
 	name = "Novel-Gate",
 	imageURL = "https://novel-gate.com/wp-content/uploads/2017/10/logo4small.png",
 
