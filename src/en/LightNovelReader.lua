@@ -1,6 +1,6 @@
 -- {"id":7619416,"ver":"1.0.1","libVer":"1.0.0","author":"AbhiTheModder","dep":["Madara>=2.2.0"]}
 
-return Require("Madara")("https://lightnovelreader.me", {
+return Require("Madara")("https://novel-gate.com", {
 	id = 2,
 	name = "LightNovelReader",
 	imageURL = "https://lightnovelreader.me/assets/new/images/logo.png",
