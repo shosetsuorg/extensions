@@ -4,8 +4,11 @@ return Require("Madara")("https://novelcake.com", {
   id = 75,
   name = "novelcake",
   imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
-  novelListingURLSuffix = "series",
+  novelListingURLPath = "series",
   ajaxUsesFormData = true,
+  hasSearch = true,
+	chapterType = ChapterType.HTML,
+	shrinkURLNovel = "",
 
   genres = {
     "Action",
