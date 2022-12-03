@@ -4,9 +4,9 @@ return Require("Madara")("https://novelcake.com", {
   id = 75,
   name = "novelcake",
   imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
-  latestNovelSel = "div.col-12.col-md-4.badge-pos-1",
-	novelListingURLPath = "series",
-	ajaxUsesFormData = true,
+  latestNovelSel = "div.col-12.col-md-6.badge-pos-1",
+  novelListingURLPath = "series",
+  ajaxUsesFormData = true,
 
   genres = {
     "Action",
