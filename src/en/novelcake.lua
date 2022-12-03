@@ -6,7 +6,7 @@ return Require("Madara")("https://novelcake.com", {
   imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
   shrinkURLNovel = "series",
   novelListingURLPath = "series",
-  ajaxUsesFormData = true,
+  latestNovelSel = "div.col-6.col-md-3",
 
   genres = {
     "Action",
