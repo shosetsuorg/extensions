@@ -561,12 +561,12 @@
       "md5": ""
       },
     {
-      "name": "Light Novel Reader",
-      "fileName": "LightNovelReader",
-      "imageURL":"https://lightnovelreader.me/assets/new/images/logo.png",
+      "name": "Novel Gate",
+      "fileName": "Novel-Gate",
+      "imageURL":"https://novel-gate.com/wp-content/uploads/2017/10/logo4small.png",
       "id": 7619416,
       "lang": "en",
-      "ver": "1.0.0",
+      "ver": "1.0.1",
       "libVer": "1.0.0",
       "md5": ""
     }
