@@ -1,8 +1,8 @@
 -- {"id":7619416,"ver":"1.0.1","libVer":"1.0.0","author":"AbhiTheModder","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://novel-gate.com", {
-	id = 2,
-	name = "LightNovelReader",
+	id = 7619416,
+	name = "Novel-Gate",
 	imageURL = "",
 
 	genres = {
