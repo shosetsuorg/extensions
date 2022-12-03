@@ -3,9 +3,8 @@
 return Require("Madara")("https://novelcake.com", {
   id = 75,
   name = "novelcake",
-  imageURL = "https://github.com/shosetsuorg/extensions/raw/dev/icons/BoxNovel.png",
-  novelListingURLPath = "series",
-  shrinkURLNovel = "novels",
+  imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
+  
   ajaxUsesFormData = true,
 
   genres = {
