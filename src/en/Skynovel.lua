@@ -4,14 +4,6 @@ return Require("Madara")("https://skynovel.org", {
   id = 75,
   name = "Skynovel",
   imageURL = "",
-  path = {
-    "novels",
-    "manga",
-    "novel",
-    "manga",
-    "chapter",
-    "manga"
-  }
 
   genres = {
     "Action",
