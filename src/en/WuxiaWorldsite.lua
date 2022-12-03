@@ -1,6 +1,6 @@
 -- {"id":75,"ver":"1.0.5","libVer":"1.0.0","author":["Doomsdayrs", "AbhiTheModder"],"dep":["Madara>=2.2.0"]}
 
-return Require("Madara")("https:// WuxiaWorld.site", {
+return Require("Madara")("https://WuxiaWorld.site", {
   id = 75,
   name = "WuxiaWorldsite",
   imageURL = "https://novelcake.com/wp-content/uploads/2017/10/NOVELCAKE_2.png",
