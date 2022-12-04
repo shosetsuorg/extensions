@@ -8,8 +8,7 @@ return Require("Madara")("https://novelcake.com", {
   novelListingURLPath = "series",
   latestNovelSel = "div.col-6.col-md-3",
   chaptersScriptLoaded = true,
-hasSearch = true,
-  searchHasOper = true,
+  hasSearch = true,
 
   genres = {
     "Action",
