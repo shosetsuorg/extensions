@@ -2,7 +2,7 @@
 
 return Require("Madara")("https://sky-mtl.com", {
   id = 77,
-  name = "Sky-mtl",
+  name = "Sky-mtl(novel-gate)",
   imageURL = "https://sky-mtl.com/wp-content/uploads/2017/10/10.png",
 
   genres = {
