@@ -7,7 +7,7 @@ return Require("Madara")("https://novel-gate.com", {
   shrinkURLNovel = "novel",
   novelListingURLPath = "novels",
   latestNovelSel = "div.col-6.col-md-3",
-  chaptersScriptLoaded = true,
+  chaptersScriptLoaded = false ,
 
   genres = {
     "Action",
