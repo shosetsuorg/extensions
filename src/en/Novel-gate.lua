@@ -4,6 +4,7 @@ return Require("Madara")("https://novel-gate.com", {
   id = 77,
   name = "Novel-gate",
   imageURL = "",
+  shrinkURLNovel = "novel",
   novelListingURLPath = "novels",
   latestNovelSel = "div.col-6.col-md-3",
   chaptersScriptLoaded = true,
