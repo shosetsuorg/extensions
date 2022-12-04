@@ -4,10 +4,8 @@ return Require("Madara")("https://sky-mtl.com", {
   id = 77,
   name = "Sky-mtl",
   imageURL = "https://sky-mtl.com/wp-content/uploads/2017/10/10.png",
-  
   novelListingURLPath = "novel",
-  latestNovelSel = "div.col-6.col-md-3",
-  chaptersScriptLoaded = true,
+  chaptersScriptLoaded = false,
   hasSearch = true,
   searchHasOper = false,
 
