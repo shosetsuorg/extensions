@@ -1,4 +1,4 @@
--- {"id":75,"ver":"1.0.5","libVer":"1.0.0","author":["Doomsdayrs", "AbhiTheModder"],"dep":["Madara>=2.2.0"]}
+-- {"id":75,"ver":"1.0.6","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://novelcake.com", {
   id = 75,
