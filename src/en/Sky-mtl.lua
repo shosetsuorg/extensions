@@ -1,4 +1,4 @@
--- {"id":77,"ver":"1.0.1","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
+-- {"id":77,"ver":"1.0.2","libVer":"1.0.0","author":"Doomsdayrs, AbhiTheModder","dep":["Madara>=2.2.0"]}
 
 return Require("Madara")("https://sky-mtl.com", {
   id = 77,
